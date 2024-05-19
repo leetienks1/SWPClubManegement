@@ -34,6 +34,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             sql = "SELECT TOP (1000) [UserID]\n"
                     + "      ,[Username]\n"
                     + "      ,[Password]\n"
+                    + "      ,[Image]\n"
                     + "      ,[Email]\n"
                     + "      ,[Role]\n"
                     + "  FROM [RealClub].[dbo].[User]";
@@ -51,7 +52,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 u.setUserName(rs.getString("Username"));
                 u.setPassword(rs.getString("Password"));
                 u.setEmail(rs.getString("Email"));
-
+                u.setImage(rs.getString("Image"));
                 u.setRole(u.getRole().valueOf(rs.getString("Role")));
                 users.add(u);
             }
@@ -88,6 +89,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             sql = " SELECT TOP (1000) [UserID]\n"
                     + "      ,[Username]\n"
                     + "      ,[Password]\n"
+                    + "      ,[Image]\n"
                     + "      ,[Email]\n"
                     + "      ,[Role]\n"
                     + "  FROM [RealClub].[dbo].[User] where UserID = ?";
@@ -105,6 +107,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 u.setUserName(rs.getString("Username"));
                 u.setPassword(rs.getString("Password"));
                 u.setEmail(rs.getString("Email"));
+                u.setImage(rs.getString("Image"));
                 u.setRole(u.getRole().valueOf(rs.getString("Role")));
                 return Optional.of(u);
             } else {
@@ -142,17 +145,18 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             sql = "INSERT INTO [dbo].[User]\n"
                     + "           ([Username]\n"
                     + "           ,[Password]\n"
+                    + "           ,[Image]\n"
                     + "           ,[Email]\n"
                     + "           ,[Role])\n"
-                    + "     VALUES\n"
-                    + "           (?,?,?,?)";
+                    + "     VALUES(?,?,?,?,?)";
 
             con = openConnection();
             st = con.prepareStatement(sql);
             st.setString(1, t.getUserName());
             st.setString(2, t.getPassword());
-            st.setString(3, t.getEmail());
-            st.setString(4, t.getRole().toString());
+            st.setString(3, t.getImage());
+            st.setString(4, t.getEmail());
+            st.setString(5, t.getRole().toString());
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -192,6 +196,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             sql = "UPDATE [dbo].[User]\n"
                     + "   SET [Username] = ?\n"
                     + "      ,[Password] = ?\n"
+                    + "      ,[Image] = ?\n"
                     + "      ,[Email] = ?\n"
                     + "      ,[Role] = ?\n"
                     + " WHERE [UserID] = ?";
@@ -199,9 +204,10 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             st = con.prepareStatement(sql);
             st.setString(1, t.getUserName());
             st.setString(2, t.getPassword());
-            st.setString(3, t.getEmail());
-            st.setString(4, t.getRole().toString());
-            st.setInt(5, t.getUserId());
+            st.setString(3, t.getImage());
+            st.setString(4, t.getEmail());
+            st.setString(5, t.getRole().toString());
+            st.setInt(6, t.getUserId());
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
                 System.out.println("That bai");
