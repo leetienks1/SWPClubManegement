@@ -12,7 +12,7 @@ public class User {
 
     private int userId;
     private String userName;
-
+    private String image;
     private String password;
     private String email;
     private Role role;
@@ -36,6 +36,24 @@ public class User {
 
     }
 
+    public User(int userId, String userName, String image, String password, String email, Role role) {
+        this.userId = userId;
+        this.userName = userName;
+        this.image = image;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
+    public User(String userName, String image, String password, String email, Role role) {
+        this.userName = userName;
+        this.image = image;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+    
+
     public Role getRole() {
         return role;
     }
@@ -43,7 +61,7 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
-
+    
     public int getUserId() {
         return userId;
     }
@@ -52,6 +70,14 @@ public class User {
         this.userId = userId;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
     public String getUserName() {
         return userName;
     }
@@ -78,7 +104,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", userName=" + userName + ", password=" + password + ", email=" + email + ", role=" + role + '}';
+        return "User{" + "userId=" + userId + ", userName=" + userName + ", image=" + image + ", password=" + password + ", email=" + email + ", role=" + role + '}';
     }
+
+    
 
 }
