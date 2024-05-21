@@ -7,11 +7,16 @@ package DAO;
 import Model.User;
 import dal.ConnectDB;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,6 +97,8 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "      ,[Image]\n"
                     + "      ,[Email]\n"
                     + "      ,[Role]\n"
+                    + "      ,[Name]\n"
+                    + "       ,[DateOfBirth]\n"
                     + "  FROM [RealClub].[dbo].[User] where UserID = ?";
             try {
                 con = this.openConnection();
@@ -107,8 +114,16 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 u.setUserName(rs.getString("Username"));
                 u.setPassword(rs.getString("Password"));
                 u.setEmail(rs.getString("Email"));
-                u.setImage(rs.getString("Image"));
+                u.setImage(rs.getString("Image").trim());
+
                 u.setRole(u.getRole().valueOf(rs.getString("Role")));
+                u.setName(rs.getString("Name").trim());
+                Date sqlDate = rs.getDate("DateOfBirth");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    u.setDateOfBirth(localDate);
+                }
+
                 return Optional.of(u);
             } else {
 
@@ -204,10 +219,66 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             st = con.prepareStatement(sql);
             st.setString(1, t.getUserName());
             st.setString(2, t.getPassword());
-            st.setString(3, t.getImage());
+            st.setString(3, t.getImage().trim());
             st.setString(4, t.getEmail());
             st.setString(5, t.getRole().toString());
             st.setInt(6, t.getUserId());
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("That bai");
+            } else {
+                System.out.println("Thanh cong");
+            }
+
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void editProfile(User t) throws ParseException {
+        try {
+
+            sql = "UPDATE [dbo].[User]\n"
+                    + "   SET [Username] = ?\n"
+                    + "      ,[Password] = ?\n"
+                    + "      ,[Image] = ?\n"
+                    + "      ,[Email] = ?\n"
+                    + "      ,[Role] = ?,"
+                    + "       [Name] = ?,\n"
+                    + "       [DateOfBirth] = ?\n"
+                    + " WHERE [UserID] = ?";
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setString(1, t.getUserName());
+            st.setString(2, t.getPassword());
+            st.setString(3, t.getImage());
+            st.setString(4, t.getEmail());
+            st.setString(5, t.getRole().toString());
+            st.setString(6, t.getName());
+            st.setDate(7, java.sql.Date.valueOf(t.getDateOfBirth()));
+
+            st.setInt(8, t.getUserId());
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
                 System.out.println("That bai");

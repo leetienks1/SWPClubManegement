@@ -4,6 +4,8 @@
  */
 package Model;
 
+
+import java.time.LocalDate;
 /**
  *
  * @author Desktop
@@ -16,6 +18,8 @@ public class User {
     private String password;
     private String email;
     private Role role;
+    private String name;
+    private LocalDate dateOfBirth;
 
     public User() {
     }
@@ -51,6 +55,22 @@ public class User {
         this.password = password;
         this.email = email;
         this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
     
 
@@ -104,8 +124,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", userName=" + userName + ", image=" + image + ", password=" + password + ", email=" + email + ", role=" + role + '}';
+        return "User{" + "userId=" + userId + ", userName=" + userName + ", image=" + image + ", password=" + password + ", email=" + email + ", role=" + role + ", name=" + name + ", dateOfBirth=" + dateOfBirth.toString() + '}';
     }
+
+    
 
     
 
