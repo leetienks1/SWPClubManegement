@@ -83,8 +83,8 @@ public class EditProfileServlet extends HttpServlet {
                 case "LIST":
                     sendEditFile(request, response);
                     break;
-                case "EDITEMAIL":
-                    updateEmail(request, response);
+                case "EDITUSERNAME":
+                    updateUserName(request, response);
                     break;
                 case "EDITNAME":
                     updateName(request, response);
@@ -96,7 +96,7 @@ public class EditProfileServlet extends HttpServlet {
 
                     break;
                 default:
-
+                    sendEditFile(request, response);
             }
 
         } catch (Exception ex) {
@@ -148,17 +148,18 @@ public class EditProfileServlet extends HttpServlet {
         response.sendRedirect(redirectURL);
     }
 
-    public static void updateEmail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public static void updateUserName(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             UserDAO udao = new UserDAO();
             int uid = Integer.parseInt(request.getParameter("uid"));
             User u = udao.get(uid).get();
             request.getSession().setAttribute("c", request.getParameter("c"));
-            String email = request.getParameter("email");
-            if (email != null && email != "") {
-                u.setEmail(email);
+            String username = request.getParameter("username");
+            if (username != null && username != "") {
+                u.setUserName(username);
                 udao.update(u);
             }
+            request.getSession().setAttribute("user", u);
 
             response.sendRedirect("P/profilePage.jsp");
 
@@ -179,6 +180,7 @@ public class EditProfileServlet extends HttpServlet {
                 u.setName(name);
                 udao.editProfile(u);
             }
+            request.getSession().setAttribute("user", u);
 
         } catch (Exception e) {
             throw e;
@@ -202,6 +204,7 @@ public class EditProfileServlet extends HttpServlet {
                 udao.editProfile(u);
 
             }
+            request.getSession().setAttribute("user", u);
 
         } catch (Exception e) {
             throw e;
@@ -217,6 +220,8 @@ public class EditProfileServlet extends HttpServlet {
         User u = udao.get(userId).get();
         u.setImage(image);
         udao.editProfile(u);
+        request.getSession().setAttribute("user", u);
+
 //        request.getRequestDispatcher("P/profilePage.jsp").forward(request, response);
     }
 
@@ -258,7 +263,7 @@ public class EditProfileServlet extends HttpServlet {
 
                         }
                         file_name = new File(fileItem.getName()).getName();
-                        String filePath = "Z:\\FPT University\\SU24\\SWP391\\Project\\SWPClubManegement\\web\\IMAGE\\AVATAR\\" + file_name;
+                        String filePath = "C:\\Users\\Desktop\\Documents\\NetBeansProjects\\SWPWedRealClubManagement\\web\\IMAGE\\AVATAR\\" + file_name;
 
                         // Đảm bảo thư mục tồn tại
                         File directory = new File(filePath).getParentFile();

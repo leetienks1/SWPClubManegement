@@ -16,7 +16,7 @@
     <body>
         <div class="mainDiv">
             <div class="cardStyle">
-                <form action="" method="post" name="signupForm" id="signupForm">
+                <form action="http://localhost:8080/SWPWedRealClubManagement/ChangePasswordServlet?uid=${user.userId}" method="post" name="signupForm" id="signupForm">
 
                     <img src="" id="signupLogo"/>
 
@@ -37,8 +37,9 @@
                     <div class="buttonWrapper">
                         <button type="submit" id="submitButton" onclick="validateSignupForm()" class="submitButton pure-button pure-button-primary">
                             <span>Continue</span>
-                            <span id="loader"></span>
+                            
                         </button>
+                        <p>${notFit}</p>
                     </div>
 
                 </form>

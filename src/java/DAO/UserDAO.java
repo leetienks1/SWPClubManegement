@@ -88,9 +88,17 @@ public class UserDAO extends ConnectDB implements DAO<User> {
     }
 
     public User login(String email, String password) {
-        User U = new User();
+        User u = new User();
 
-        String sql = "SELECT [UserID], [Username], [Password], [Image], [Email], [Role] FROM [RealClub].[dbo].[User] WHERE [Email] = ? AND [Password] = ?";
+        String sql = "SELECT TOP (1000) [UserID]\n"
+                + "      ,[Username]\n"
+                + "      ,[Password]\n"
+                + "      ,[Image]\n"
+                + "      ,[Email]\n"
+                + "      ,[Role]\n"
+                + "      ,[Name]\n"
+                + "       ,[DateOfBirth]\n"
+                + "FROM [RealClub].[dbo].[User] WHERE [Email] = ? AND [Password] = ?";
 
         try {
             con = this.openConnection();
@@ -101,13 +109,29 @@ public class UserDAO extends ConnectDB implements DAO<User> {
 
             if (rs.next()) {
 
-                U.setUserId(rs.getInt("UserID"));
-                U.setUserName(rs.getString("Username"));
-                U.setPassword(rs.getString("Password"));
-                U.setEmail(rs.getString("Email"));
-                U.setImage(rs.getString("Image"));
-                U.setRole(U.getRole().valueOf(rs.getString("Role"))); // Assuming Role is an enum
-                return U;
+                u.setUserId(rs.getInt("UserID"));
+                u.setUserName(rs.getString("Username"));
+                u.setPassword(rs.getString("Password"));
+                u.setEmail(rs.getString("Email"));
+                String image = rs.getString("Image");
+                if (image != null) {
+                    u.setImage(image.trim());
+
+                }
+
+                u.setRole(u.getRole().valueOf(rs.getString("Role")));
+                String name = rs.getString("Name");
+                if (name != null) {
+                    u.setName(name.trim());
+
+                }
+                Date sqlDate = rs.getDate("DateOfBirth");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    u.setDateOfBirth(localDate);
+                }
+
+                return u;
             }
         } catch (SQLException | ClassNotFoundException e) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -213,10 +237,18 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 u.setUserName(rs.getString("Username"));
                 u.setPassword(rs.getString("Password"));
                 u.setEmail(rs.getString("Email"));
-                u.setImage(rs.getString("Image").trim());
+                String image = rs.getString("Image");
+                if (image != null) {
+                    u.setImage(image.trim());
+
+                }
 
                 u.setRole(u.getRole().valueOf(rs.getString("Role")));
-                u.setName(rs.getString("Name").trim());
+                String name = rs.getString("Name");
+                if (name != null) {
+                    u.setName(name.trim());
+
+                }
                 Date sqlDate = rs.getDate("DateOfBirth");
                 if (sqlDate != null) {
                     LocalDate localDate = sqlDate.toLocalDate();
@@ -251,7 +283,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
         }
         return Optional.empty();
     }
-    
+
     @Override
     public void save(User t) {
         try {
@@ -375,7 +407,12 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             st.setString(4, t.getEmail());
             st.setString(5, t.getRole().toString());
             st.setString(6, t.getName());
-            st.setDate(7, java.sql.Date.valueOf(t.getDateOfBirth()));
+            if (t.getDateOfBirth() != null) {
+                st.setDate(7, java.sql.Date.valueOf(t.getDateOfBirth()));
+            }else
+            {
+                st.setDate(7, null);
+            }
 
             st.setInt(8, t.getUserId());
             int rowsAffected = st.executeUpdate();
