@@ -27,6 +27,7 @@
 
     </head>
     <body>
+        <%session.removeAttribute("error");%>
 
         <%@include file="../INCLUDES/nav.jsp" %>
         <div id="owl-demo" class="slide owl-carousel owl-theme">

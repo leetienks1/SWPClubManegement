@@ -87,6 +87,105 @@ public class UserDAO extends ConnectDB implements DAO<User> {
         return null;
     }
 
+    public User login(String email, String password) {
+        User U = new User();
+
+        String sql = "SELECT [UserID], [Username], [Password], [Image], [Email], [Role] FROM [RealClub].[dbo].[User] WHERE [Email] = ? AND [Password] = ?";
+
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setString(1, email);
+            st.setString(2, password);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+
+                U.setUserId(rs.getInt("UserID"));
+                U.setUserName(rs.getString("Username"));
+                U.setPassword(rs.getString("Password"));
+                U.setEmail(rs.getString("Email"));
+                U.setImage(rs.getString("Image"));
+                U.setRole(U.getRole().valueOf(rs.getString("Role"))); // Assuming Role is an enum
+                return U;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public User getUserByEmail(String email) {
+        try {
+
+            sql = " SELECT TOP (1000) [UserID]\n"
+                    + "      ,[Username]\n"
+                    + "      ,[Password]\n"
+                    + "      ,[Image]\n"
+                    + "      ,[Email]\n"
+                    + "      ,[Role]\n"
+                    + "  FROM [RealClub].[dbo].[User] where Email = ?";
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            st.setString(1, email);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getInt("UserID"));
+                u.setUserName(rs.getString("Username"));
+                u.setPassword(rs.getString("Password"));
+                u.setEmail(rs.getString("Email"));
+                u.setImage(rs.getString("Image"));
+                u.setRole(u.getRole().valueOf(rs.getString("Role")));
+                return u;
+            } else {
+
+            }
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     @Override
     public Optional<User> get(int id) {
         try {
@@ -152,60 +251,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
         }
         return Optional.empty();
     }
-    public User getUserByEmail(String email) {
-        try {
-
-            sql = " SELECT TOP (1000) [UserID]\n"
-                    + "      ,[Username]\n"
-                    + "      ,[Password]\n"
-                    + "      ,[Image]\n"
-                    + "      ,[Email]\n"
-                    + "      ,[Role]\n"
-                    + "  FROM [RealClub].[dbo].[User] where Email = ?";
-            try {
-                con = this.openConnection();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            st = con.prepareStatement(sql);
-            st.setString(1, email);
-            rs = st.executeQuery();
-            if (rs.next()) {
-                User u = new User();
-                u.setUserId(rs.getInt("UserID"));
-                u.setUserName(rs.getString("Username"));
-                u.setPassword(rs.getString("Password"));
-                u.setEmail(rs.getString("Email"));
-                u.setImage(rs.getString("Image"));
-                u.setRole(u.getRole().valueOf(rs.getString("Role")));
-                return u;
-            } else {
-
-            }
-        } catch (SQLException e) {
-            try {
-                throw e;
-            } catch (SQLException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } finally {
-            // Đóng các tài nguyên
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (st != null) {
-                    st.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
+    
     @Override
     public void save(User t) {
         try {

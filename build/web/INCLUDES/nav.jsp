@@ -33,6 +33,7 @@
 </div>
 
 <div id="rightBar">
+
     <c:choose>
         <c:when test="${user == null}">
             <div class="Login" >
@@ -59,6 +60,7 @@
             </div>
         </c:otherwise>
     </c:choose>
+
 
 </div>
 

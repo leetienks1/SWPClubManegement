@@ -5,12 +5,19 @@
         <servlet-class>Controller.EditProfileServlet</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
+=======
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>Servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <url-pattern>/EditProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+>>>>>>> main
         <servlet-name>SendEmail</servlet-name>
         <servlet-class>Servlet.SendEmail</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VerifyEmail</servlet-name>
-        <servlet-class>Servlet.VerifyEmail</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
@@ -20,13 +27,25 @@
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/SendEmail</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>VerifyEmail</servlet-name>
+        <servlet-class>Servlet.VerifyEmail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>VerifyEmail</servlet-name>
         <url-pattern>/VerifyEmail</url-pattern>
+<<<<<<< HEAD
+=======
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+>>>>>>> main
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>HOME/home.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
