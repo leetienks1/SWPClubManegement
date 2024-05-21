@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
             }else if(Role.Coach.equals(account.getRole())){
                  response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/coach.jsp ");
             }else{
-            response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/home.jsp ");
+            response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HomeServlet ");
             }
         } else {
             request.getSession().setAttribute("error", "Invalid email or password. Please try again.");

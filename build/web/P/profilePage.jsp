@@ -30,7 +30,7 @@
 
             /* Định dạng tên người dùng và email */
             div p {
-                 /* Khoảng cách giữa các dòng */
+                /* Khoảng cách giữa các dòng */
             }
 
             /* Định dạng các nút chỉnh sửa */
@@ -49,7 +49,7 @@
             }
 
             /* Định dạng phần chứa thông tin chỉnh sửa */
-           
+
             p{
                 width: 100px;
             }
@@ -92,171 +92,176 @@
                 object-fit: cover;
                 margin-bottom: 20px;
             }
-            
-            
+
+
             form{
                 display: flex;
                 align-items: center;
             }
         </style>
-             <%@include file="../INCLUDES/head.jsp" %> 
+        <%@include file="../INCLUDES/head.jsp" %> 
     </head>
     <body>
-        <% UserDAO udao = new UserDAO();
-            User u = udao.get(1).get();
-            request.setAttribute("u", u);
+        <%
 
             String errorMessage = (String) request.getAttribute("errorMessage");
-            String randomParam = String.valueOf(Math.random());
+
         %>
 
 
 
 
         <div class="container">
-    <h1>User Profile</h1>
-    <!-- Thông tin người dùng -->
-    <div class="row">
-        <div class="col-md-3 ">
-            <div class="card d-flex justify-content-center">
-                <!-- Avatar -->
-                <img id="avatar" src="${u.image}" alt="" class="card-img-top"/>
-                <div class="card-body">
-                    <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" enctype="multipart/form-data" method="POST">
-                        <input type="hidden" name="command" value="EDITIMAGE" />
-                        <input type="hidden" name="uid" value="${u.userId}" />
-                        <input type="file" name="file2" />
-                        <input type="submit" value="Upload" class="btn btn-primary mt-2"/>
-                        <c:if test="<%= errorMessage != null%>">
-                            <p class="text-danger">
-                                <%= errorMessage%>
-                            </p>
-                        </c:if>
-                    </form>
-                    <p id="successMessage" class="mt-2"></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-9">
+            <h1>User Profile</h1>
             <!-- Thông tin người dùng -->
-            <div class="user-info">
-                <strong>Name:</strong>
-                <c:choose>
-                    <c:when test="${c == 'editname'}">
-                        <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
-                            <input type="hidden" name="command" value="EDITNAME" />
-                            <input type="hidden" name="uid" value="${u.userId}" />
-                            <input type="hidden" name="c" value="0" />
-                            <input type="text" name="name" value="${u.name}" class="form-control"/>
-                            <input type="submit" value="OK" class="btn btn-primary mt-2"/>
-                        </form>
-                    </c:when>
-                    <c:when test="${c != 'editname'}">
-                        <c:if test="${u.name == null}">
-                            <%-- Gán giá trị mới cho thuộc tính name của đối tượng u --%>
-                            <% u.setName("Chua co");%>
-                        </c:if>
-                        <p>${u.name}</p>
-                        <button onclick="window.location.href = '<c:url value="/EditProfileServlet?c=editname"/>'" class="btn btn-secondary mt-2">Edit</button>
-                    </c:when>
-                </c:choose>
+            <div class="row">
+                <div class="col-md-3 ">
+                    <div class="card d-flex justify-content-center">
+                        <!-- Avatar -->
+                        <img id="avatar" src="${user.image}" alt="" class="card-img-top"/>
+                        <div class="card-body">
+                            <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" enctype="multipart/form-data" method="POST">
+                                <input type="hidden" name="command" value="EDITIMAGE" />
+                                <input type="hidden" name="uid" value="${user.userId}" />
+                                <input type="file" name="file2" />
+                                <input type="submit" value="Upload" class="btn btn-primary mt-2"/>
+                                <c:if test="<%= errorMessage != null%>">
+                                    <p class="text-danger">
+                                        <%= errorMessage%>
+                                    </p>
+                                </c:if>
+                            </form>
+                            <p id="successMessage" class="mt-2"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <!-- Thông tin người dùng -->
+                    <div class="user-info">
+                        <strong>Name:</strong>
+                        <c:choose>
+                            <c:when test="${c == 'editname'}">
+                                <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
+                                    <input type="hidden" name="command" value="EDITNAME" />
+                                    <input type="hidden" name="uid" value="${user.userId}" />
+                                    <input type="hidden" name="c" value="0" />
+                                    <input type="text" name="name" value="${user.name}" class="form-control"/>
+                                    <input type="submit" value="OK" class="btn btn-primary mt-2"/>
+                                </form>
+                            </c:when>
+                            <c:when test="${c != 'editname'}">
+                                <c:if test="${user.name == null}">
+                                    <%-- Gán giá trị mới cho thuộc tính name của đối tượng u --%>
+                                    ${user.setName("Chua co")} 
+                                </c:if>
+                                <p>${user.name}</p>
+                                <button onclick="window.location.href = '<c:url value="/EditProfileServlet?c=editname"/>'" class="btn btn-secondary mt-2">Edit</button>
+                            </c:when>
+                        </c:choose>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="user-info">
+                        <strong>User Name:</strong> 
+                        <c:choose>
+                            <c:when test="${c == 'editusername'}">
+                                <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
+                                    <input type="hidden" name="command" value="EDITUSERNAME" />
+                                    <input type="hidden" name="uid" value="${user.userId}" />
+                                    <input type="hidden" name="c" value="0" />
+                                    <input type="text" name="username" value="${user.userName}" class="form-control"/>
+                                    <input id="" type="submit" value="OK" class="btn btn-primary mt-2"/>
+                                </form>
+                            </c:when>
+                            <c:when test="${c != 'editusername'}">
+                                <p>${user.userName}</p>
+                                <button onclick="window.location.href = '<c:url value="/EditProfileServlet?c=editusername"/>'" class="btn btn-secondary mt-2">Edit</button>
+                            </c:when>
+                        </c:choose>
+                    </div>
+
+                    <!-- Ngày sinh -->
+                    <div class="user-info">
+                        <strong>Date of Birth:</strong> 
+                        <c:choose>
+                            <c:when test="${c == 'editdate'}">
+                                <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
+                                    <input type="hidden" name="command" value="EDITDATE" />
+                                    <input type="hidden" name="uid" value="${user.userId}" />
+                                    <input type="hidden" name="c" value="0" />
+                                    <input type="date" name="date" value="${user.dateOfBirth}" class="form-control"/>
+                                    <input type="submit" value="OK" class="btn btn-primary mt-2"/>
+                                </form>
+                            </c:when>
+                            <c:when test="${c != 'editdate'}">
+                                <c:if test="${user.dateOfBirth == null}">
+
+                                    <p>...</p>
+                                </c:if>
+                                <p>${user.dateOfBirth}</p>
+
+                                <button onclick="window.location.href = '<c:url value="/EditProfileServlet?c=editdate"/>'" class="btn btn-secondary mt-2">Edit</button>
+                            </c:when>
+                        </c:choose>
+                    </div>
+                </div>
+                <a href="http://localhost:8080/SWPWedRealClubManagement/HomeServlet"> go gome</a>
             </div>
 
-            <!-- Email -->
-            <div class="user-info">
-                <strong>Email:</strong> 
-                <c:choose>
-                    <c:when test="${c == 'editemail'}">
-                        <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
-                            <input type="hidden" name="command" value="EDITEMAIL" />
-                            <input type="hidden" name="uid" value="${u.userId}" />
-                            <input type="hidden" name="c" value="0" />
-                            <input type="email" name="email" value="${u.email}" class="form-control"/>
-                            <input id="" type="submit" value="OK" class="btn btn-primary mt-2"/>
-                        </form>
-                    </c:when>
-                    <c:when test="${c != 'editemail'}">
-                        <p>${u.email}</p>
-                        <button onclick="window.location.href = '<c:url value="/EditProfileServlet?c=editemail"/>'" class="btn btn-secondary mt-2">Edit</button>
-                    </c:when>
-                </c:choose>
-            </div>
-
-            <!-- Ngày sinh -->
-            <div class="user-info">
-                <strong>Date of Birth:</strong> 
-                <c:choose>
-                    <c:when test="${c == 'editdate'}">
-                        <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
-                            <input type="hidden" name="command" value="EDITDATE" />
-                            <input type="hidden" name="uid" value="${u.userId}" />
-                            <input type="hidden" name="c" value="0" />
-                            <input type="date" name="date" value="${u.dateOfBirth}" class="form-control"/>
-                            <input type="submit" value="OK" class="btn btn-primary mt-2"/>
-                        </form>
-                    </c:when>
-                    <c:when test="${c != 'editdate'}">
-                        <p>${u.dateOfBirth}</p>
-                        <button onclick="window.location.href = '<c:url value="/EditProfileServlet?c=editdate"/>'" class="btn btn-secondary mt-2">Edit</button>
-                    </c:when>
-                </c:choose>
-            </div>
         </div>
-    </div>
-</div>
-    <script>
-        var count = 0;
-        var isFirstLoad = true;
-        var isImageUpdated = false;
-        var countSuccess = 0;
-        function reloadImage() {
-            if (count >= 100) {
-                return;
-            }
-            var timestamp = new Date().getTime();
-            ;
-            var avatarImage = document.getElementById("avatar");
-            var avaImages = document.getElementsByClassName("ava");
-           
-
-
-            if (isImageUpdated == false)
-            {
-                avatarImage.src = "${u.image}?timestamp=" + timestamp;
-                for (var i = 0; i < avaImages.length; i++) {
-                    avaImages[i].src = "${u.image}?timestamp=" + timestamp;
+        <script>
+            var count = 0;
+            var isFirstLoad = true;
+            var isImageUpdated = false;
+            var countSuccess = 0;
+            function reloadImage() {
+                if (count >= 100) {
+                    return;
                 }
-                isFirstLoad = true;
-            } else
-            {
-                isFirstLoad = false;
+                var timestamp = new Date().getTime();
+                ;
+                var avatarImage = document.getElementById("avatar");
+
+
+
+
+                if (isImageUpdated == false)
+                {
+                    avatarImage.src = "${u.image}?timestamp=" + timestamp;
+
+                    avatarImage.src = "${user.image}?timestamp=" + timestamp;
+
+                    isFirstLoad = true;
+                } else
+                {
+                    isFirstLoad = false;
+                }
+
+
+
+
+
+                //            avatarImage.onload = function () {
+                //                if (isFirstLoad $$ count > 1) { // Nếu không phải là lần đầu tiên ảnh được load thành công
+                //                    successMessage.innerText = "Cập nhật thành công";
+                //                }
+                //                // Đánh dấu rằng ảnh đã được load ít nhất một lần
+                //                isImageUpdated = true;
+                //
+                //            };
+                count++;
+                setTimeout(reloadImage, 500);
             }
+            function checkAllImagesLoaded() {
 
 
+                document.getElementById("successMessage").setAttribute();
 
+            }
+            reloadImage();
 
+        </script>
 
-//            avatarImage.onload = function () {
-//                if (isFirstLoad $$ count > 1) { // Nếu không phải là lần đầu tiên ảnh được load thành công
-//                    successMessage.innerText = "Cập nhật thành công";
-//                }
-//                // Đánh dấu rằng ảnh đã được load ít nhất một lần
-//                isImageUpdated = true;
-//
-//            };
-            count++;
-            setTimeout(reloadImage, 500);
-        }
-        function checkAllImagesLoaded() {
-
-
-            document.getElementById("successMessage").setAttribute();
-
-        }
-        reloadImage();
-
-    </script>
-
-</body>
+    </body>
 </html>
