@@ -25,6 +25,7 @@
             <label for="name">OTP: </label>
             <input type="text" id="name" name="name" required>
             ${error}
+            <%session.removeAttribute("username");%>
             
 
             <button type="submit" value="Submit">Submit</button>
