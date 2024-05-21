@@ -152,7 +152,60 @@ public class UserDAO extends ConnectDB implements DAO<User> {
         }
         return Optional.empty();
     }
+    public User getUserByEmail(String email) {
+        try {
 
+            sql = " SELECT TOP (1000) [UserID]\n"
+                    + "      ,[Username]\n"
+                    + "      ,[Password]\n"
+                    + "      ,[Image]\n"
+                    + "      ,[Email]\n"
+                    + "      ,[Role]\n"
+                    + "  FROM [RealClub].[dbo].[User] where Email = ?";
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            st.setString(1, email);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getInt("UserID"));
+                u.setUserName(rs.getString("Username"));
+                u.setPassword(rs.getString("Password"));
+                u.setEmail(rs.getString("Email"));
+                u.setImage(rs.getString("Image"));
+                u.setRole(u.getRole().valueOf(rs.getString("Role")));
+                return u;
+            } else {
+
+            }
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
     @Override
     public void save(User t) {
         try {

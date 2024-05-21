@@ -14,7 +14,7 @@
         <%@include file="/INCLUDES/head.jsp" %>
 
         <link rel="stylesheet" href="../CSS/HOMECSS/home.css"/>
-        <link rel="stylesheet" href="../CSS/NAV/navStyle.css"/>
+        <link rel="stylesheet" href="../CSS/NAV/nav.css"/>
         <link rel="stylesheet" href="../CSS/HOMECSS/slide.css"/>
         <link rel="stylesheet" href="../CSS/FOOTER/footer.css"/>
 

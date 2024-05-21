@@ -1,5 +1,14 @@
 
+<%@page import="Model.User"%>
+<%@page import="DAO.UserDAO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<% UserDAO udao = new UserDAO();
+    User u = udao.get(1).get();
+    request.getSession().setAttribute("user", u);
+
+%>
 <div class="nav">
     <div class="nav-logo"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
     <div class="nav-elements">
@@ -15,19 +24,42 @@
             <i class="fas fa-search icon"></i>
         </div>
         <div class="nav-user">
-            <i class="fas fa-user icon"></i>
+           
+                <i class="fas fa-user icon"></i>
+            
         </div>
     </div>
 
 </div>
 
 <div id="rightBar">
-    <div class="Login" >
-        <a style=" color: white; text-decoration:none ;font-size: 12px;text-height: 500">SIGN IN</a>
-    </div>
-    <div  class="register">
-        <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="signUp" > SIGN UP</a>
-    </div>
+    <c:choose>
+        <c:when test="${user == null}">
+            <div class="Login" >
+                <a style=" color: white; text-decoration:none ;font-size: 12px;text-height: 500">SIGN IN</a>
+            </div>
+            <div  class="register">
+                <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="signUp" > SIGN UP</a>
+            </div>
+        </c:when>
+        <c:otherwise>
+
+            <div class="login-block">
+                <img class="avatar" src="${user.image}" alt="alt"/>
+                <h5> ${user.name}</h5>
+                <div class="edit" >
+                    <a href="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
+                </div>
+                <div  class="changepass">
+                    <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="signUp" > Change Password</a>
+                </div>
+                <div  class="logout">
+                    <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="signUp" > Logout</a>
+                </div>
+            </div>
+        </c:otherwise>
+    </c:choose>
+
 </div>
 
 <div id="search">
@@ -45,7 +77,7 @@
 <script>
     $(document).ready(function () {
 //     $("#rightBar").hide();
-       
+
         function toggleRightBar()
         {
             $("#rightBar").toggle();
@@ -58,19 +90,19 @@
         {
             $("#search").toggle();
         }
-        
-        
+
+
         $(".nav-user").click(function ()
         {
             toggleRightBar();
         });
-        $(".fa-times").click(function()
+        $(".fa-times").click(function ()
         {
-           toggleCloseSearch(); 
+            toggleCloseSearch();
         });
-        $(".nav-search").click(function()
+        $(".nav-search").click(function ()
         {
-           toggleOpenSearch(); 
+            toggleOpenSearch();
         });
     });
 </script>
