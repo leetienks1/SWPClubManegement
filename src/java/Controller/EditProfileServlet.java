@@ -258,7 +258,7 @@ public class EditProfileServlet extends HttpServlet {
 
                         }
                         file_name = new File(fileItem.getName()).getName();
-                        String filePath = "C:\\Users\\Desktop\\Documents\\NetBeansProjects\\SWPWedRealClubManagement\\web\\IMAGE\\AVATAR\\" + file_name;
+                        String filePath = "Z:\\FPT University\\SU24\\SWP391\\Project\\SWPClubManegement\\web\\IMAGE\\AVATAR\\" + file_name;
 
                         // Đảm bảo thư mục tồn tại
                         File directory = new File(filePath).getParentFile();
