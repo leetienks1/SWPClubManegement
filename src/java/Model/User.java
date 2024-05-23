@@ -20,6 +20,7 @@ public class User {
     private Role role;
     private String name;
     private LocalDate dateOfBirth;
+    private String about;
 
     public User() {
     }
@@ -57,6 +58,29 @@ public class User {
         this.role = role;
     }
 
+    public User(int userId, String userName, String image, String password, String email, Role role, String name, LocalDate dateOfBirth, String about) {
+        this.userId = userId;
+        this.userName = userName;
+        this.image = image;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.about = about;
+    }
+
+    public User(String userName, String image, String password, String email, Role role, String name, LocalDate dateOfBirth, String about) {
+        this.userName = userName;
+        this.image = image;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.about = about;
+    }
+    
     public String getName() {
         return name;
     }
@@ -122,9 +146,17 @@ public class User {
         this.email = email;
     }
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", userName=" + userName + ", image=" + image + ", password=" + password + ", email=" + email + ", role=" + role + ", name=" + name + ", dateOfBirth=" + dateOfBirth + '}';
+        return "User{" + "userId=" + userId + ", userName=" + userName + ", image=" + image + ", password=" + password + ", email=" + email + ", role=" + role + ", name=" + name + ", dateOfBirth=" + dateOfBirth + ", About:" +about+ '}';
     }
 
     

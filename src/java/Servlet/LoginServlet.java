@@ -48,17 +48,17 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user", account);
             if(Role.Admin.equals(account.getRole())){
-                 response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/admin.jsp ");
+                 response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/admin.jsp ");
             }else if(Role.Medical.equals(account.getRole())){
-               response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/medical.jsp ");
+               response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/medical.jsp ");
             }else if(Role.Coach.equals(account.getRole())){
-                 response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/coach.jsp ");
+                 response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/coach.jsp ");
             }else{
-            response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HomeServlet ");
+            response.sendRedirect("http://localhost:8080/SWPClubManegement/HomeServlet ");
             }
         } else {
             request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
-            response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/login.jsp");
+            response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
         }
         }
     }

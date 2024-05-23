@@ -5,6 +5,7 @@
 package Controller;
 
 import DAO.UserDAO;
+import Model.Role;
 import Model.User;
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +16,10 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -71,37 +74,7 @@ public class EditProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
-            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-            response.setHeader("Pragma", "no-cache");
-            response.setDateHeader("Expires", 0);
-            String theCommand = request.getParameter("command");
-            if (theCommand == null) {
-                theCommand = "LIST";
-            }
-            switch (theCommand) {
-                case "LIST":
-                    sendEditFile(request, response);
-                    break;
-                case "EDITUSERNAME":
-                    updateUserName(request, response);
-                    break;
-                case "EDITNAME":
-                    updateName(request, response);
-                    break;
-                case "EDITDATE":
-                    updateDate(request, response);
-                    break;
-                case "EDITIMAGE":
-
-                    break;
-                default:
-                    sendEditFile(request, response);
-            }
-
-        } catch (Exception ex) {
-
-        }
+        response.sendRedirect("P/editPage.jsp");
     }
 
     /**
@@ -116,14 +89,7 @@ public class EditProfileServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
-            //
-
-            handleUpload(request, response);
-
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(EditProfileServlet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        handleUpload(request, response);
     }
 
     /**
@@ -136,98 +102,14 @@ public class EditProfileServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public static void sendEditFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (request.getParameter("c") == null) {
-            request.getSession().setAttribute("c", "0");
-        } else {
-            request.getSession().setAttribute("c", request.getParameter("c"));
-
-        }
-        // Trả về mã JavaScript để thay đổi URL và tải lại trang
-        String redirectURL = "P/profilePage.jsp";
-        response.sendRedirect(redirectURL);
-    }
-
-    public static void updateUserName(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-            UserDAO udao = new UserDAO();
-            int uid = Integer.parseInt(request.getParameter("uid"));
-            User u = udao.get(uid).get();
-            request.getSession().setAttribute("c", request.getParameter("c"));
-            String username = request.getParameter("username");
-            if (username != null && username != "") {
-                u.setUserName(username);
-                udao.update(u);
-            }
-            request.getSession().setAttribute("user", u);
-
-            response.sendRedirect("P/profilePage.jsp");
-
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    public static void updateName(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-            UserDAO udao = new UserDAO();
-            int uid = Integer.parseInt(request.getParameter("uid"));
-            User u = udao.get(uid).get();
-
-            request.getSession().setAttribute("c", request.getParameter("c"));
-            String name = request.getParameter("name");
-            if (name != null && name != "") {
-                u.setName(name);
-                udao.editProfile(u);
-            }
-            request.getSession().setAttribute("user", u);
-
-        } catch (Exception e) {
-            throw e;
-        }
-        sendEditFile(request, response);
-    }
-
-    public static void updateDate(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-            int uid = Integer.parseInt(request.getParameter("uid"));
-
-            UserDAO udao = new UserDAO();
-            User u = udao.get(uid).get();
-            request.getSession().setAttribute("c", request.getParameter("c"));
-
-            String date = request.getParameter("date");
-            if (date != null && date != "") {
-
-                LocalDate dateOfBirth = LocalDate.parse(date);
-                u.setDateOfBirth(dateOfBirth);
-                udao.editProfile(u);
-
-            }
-            request.getSession().setAttribute("user", u);
-
-        } catch (Exception e) {
-            throw e;
-        }
-        sendEditFile(request, response);
-
-    }
-
-    public static void updateAvatar(String uid, String fileName, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String image = "http://localhost:8080/SWPWedRealClubManagement/IMAGE/AVATAR/" + fileName;
-        int userId = Integer.parseInt(uid);
-        UserDAO udao = new UserDAO();
-        User u = udao.get(userId).get();
-        u.setImage(image);
-        udao.editProfile(u);
-        request.getSession().setAttribute("user", u);
-
-//        request.getRequestDispatcher("P/profilePage.jsp").forward(request, response);
-    }
-
     public static void handleUpload(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String file_name = null;
         String uid = null;
+        String username = null;
+        String fullname = null;
+        String birthday = null;
+        String about = null;
+        String avatar = null;
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         boolean isMultipartContent = ServletFileUpload.isMultipartContent(request);
@@ -235,66 +117,81 @@ public class EditProfileServlet extends HttpServlet {
             out.println("Error: Không chứa dữ liệu đa phần (enctype=multipart/form-data)");
             return;
         }
-        FileItemFactory factory = new DiskFileItemFactory(); // Tạo factory để tạo FileItem
-        ServletFileUpload upload = new ServletFileUpload(factory); // Phân tích và trích xuất FileItem
-
-        try {
-            List<FileItem> fields = upload.parseRequest(request); // FileItem đại diện cho mỗi phần được tải lên
+        FileItemFactory factory = new DiskFileItemFactory(); // Tạo factory chi dinh cach thuc de luu tru file dc tai len
+        ServletFileUpload upload = new ServletFileUpload(factory); // serveletFileUpload xử lý các cái yêu cầu từ http 
+        //ServletFileUpload(factory) se tạo cac fileItem tu factory
+        try {       // FileItem đại diện cho mỗi phần được tải lên( file , form-fields)
+            List<FileItem> fields = upload.parseRequest(request);  // phan tich cac yeu cau va tra ve 1 fileItem
             Iterator<FileItem> it = fields.iterator();
 
             if (!it.hasNext()) {
                 out.println("Error: Không có FileItem nào");
                 return;
             }
-
+            Map<String, String> formFields = new HashMap<>();
             while (it.hasNext()) {
                 FileItem fileItem = it.next();
                 if (fileItem.isFormField()) {
-                    if ("uid".equals(fileItem.getFieldName())) {
-                        uid = fileItem.getString("UTF-8");
-
-                    }
+                    String fieldName = fileItem.getFieldName();
+                    String value = fileItem.getString("UTF-8");
+                    formFields.put(fieldName, value);
                 } else {
                     if (fileItem.getSize() > 0) {
-                        String mimeType = fileItem.getContentType();
+                        String mimeType = fileItem.getContentType(); // get MINE (imgae/ png , image / jpg , application/ pdf)
                         if (mimeType == null || !mimeType.startsWith("image/")) {
-                            request.setAttribute("errorMessage", "Only upload image");
-                            request.getRequestDispatcher("P/profilePage.jsp").forward(request, response);
+                            request.getSession().setAttribute("errorMessage", "Only upload image");
+                            response.sendRedirect("P/editPage.jsp");
+
+                            return;
 
                         }
+                        //fileItem .getName() tra ve 1 tẹp tin day du   file. get nen thi chi tra ve namefile
                         file_name = new File(fileItem.getName()).getName();
-                        String filePath = "C:\\Users\\Desktop\\Documents\\NetBeansProjects\\SWPWedRealClubManagement\\web\\IMAGE\\AVATAR\\" + file_name;
 
+                        String path = request.getServletContext().getRealPath("IMAGE\\AVATAR");
+                        String filePath = path + "\\" + file_name;
+
+//                        String filePath = "SWPWedRealClubManagement\\web\\IMAGE/AVATAR\\" + file_name;
                         // Đảm bảo thư mục tồn tại
                         File directory = new File(filePath).getParentFile();
                         if (!directory.exists()) {
-                            directory.mkdirs();
+                            directory.mkdirs(); // tao cac thu muc cha can thiet;
                         }
 
                         fileItem.write(new File(filePath));
                         out.println("File đã được tải lên thành công: " + file_name);
-
                     }
                 }
             }
+            uid = formFields.get("uid");
+            username = formFields.get("username");
+            fullname = formFields.get("fullname");
+            birthday = formFields.get("birthday");
+            about = formFields.get("about");
+            avatar = formFields.get("avatar");
+            UserDAO udao = new UserDAO();
+            User u = udao.get(Integer.parseInt(uid)).get();
 
+            if (birthday != null && birthday != "") {
+
+                LocalDate dateOfBirth = LocalDate.parse(birthday);
+
+                u.setDateOfBirth(dateOfBirth);
+            }
+            u.setUserName(username);
+            u.setName(fullname);
+            u.setImage("http://localhost:8080/SWPClubManegement/IMAGE/AVATAR/" + file_name);
+            u.setAbout(about);
+
+            udao.update(u);
+            request.getSession().setAttribute("user", u);
+            request.getSession().removeAttribute("errorMessage");
         } catch (Exception e) {
-            // Xử lý lỗi một cách hợp lý
+
             out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
-        if (uid != null && file_name != null) {
-            try {
-                updateAvatar(uid, file_name, request, response);
-            } catch (Exception ex) {
-                java.util.logging.Logger.getLogger(EditProfileServlet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-        } else {
-            out.println("Error: Không lấy được uid hoặc fileName");
-        }
+        response.sendRedirect("P/editPage.jsp");
 
-        sendEditFile(request, response);
-
-// Đảm bảo không có mã nào được thực thi sau chuyển hướng
     }
 }

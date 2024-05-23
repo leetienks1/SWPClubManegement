@@ -110,7 +110,6 @@
 
 
 
-
         <div class="container">
             <h1>User Profile</h1>
             <!-- Thông tin người dùng -->
@@ -120,7 +119,7 @@
                         <!-- Avatar -->
                         <img id="avatar" src="${user.image}" alt="" class="card-img-top"/>
                         <div class="card-body">
-                            <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" enctype="multipart/form-data" method="POST">
+                            <form action="SWPWedRealClubManagement/EditProfileServlet" enctype="multipart/form-data" method="POST">
                                 <input type="hidden" name="command" value="EDITIMAGE" />
                                 <input type="hidden" name="uid" value="${user.userId}" />
                                 <input type="file" name="file2" />
@@ -142,7 +141,7 @@
                         <strong>Name:</strong>
                         <c:choose>
                             <c:when test="${c == 'editname'}">
-                                <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
+                                <form action="./SWPWedRealClubManagement/EditProfileServlet" method="GET">
                                     <input type="hidden" name="command" value="EDITNAME" />
                                     <input type="hidden" name="uid" value="${user.userId}" />
                                     <input type="hidden" name="c" value="0" />

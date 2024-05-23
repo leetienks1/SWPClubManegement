@@ -74,24 +74,23 @@ public class ChangePasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String confirm = request.getParameter("confirmPassword");
+        try {
+             String confirm = request.getParameter("confirmPassword");
         String password = request.getParameter("password");
         int uid = Integer.parseInt(request.getParameter("uid"));
         UserDAO udao = new UserDAO();
         User u = udao.get(uid).get();
         if (password.equals(confirm)) {
-            try {
-                u.setPassword(confirm);
-                udao.editProfile(u);
-                request.getSession().removeAttribute("notFit");
-                response.sendRedirect("HOME/home.jsp");
-            } catch (ParseException ex) {
-                Logger.getLogger(ChangePasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            u.setPassword(confirm);
+            udao.update(u);
+            request.getSession().removeAttribute("notFit");
+            response.sendRedirect("HOME/home.jsp");
 
         } else {
             request.getSession().setAttribute("notFit", "the password does not match");
             response.sendRedirect("HOME/changePass.jsp");
+        }
+        } catch (Exception e) {
         }
     }
 
