@@ -4,10 +4,10 @@
  */
 package Email;
 
+import com.sun.jdi.connect.Transport;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
-
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;

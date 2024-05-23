@@ -5,7 +5,8 @@
 package Servlet;
 
 import DAO.UserDAO;
-import Model.Role;
+import Email.Email;
+import Email.OTP;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,13 +14,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Zanis
  */
-public class LoginServlet extends HttpServlet {
+public class ResetPass extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,31 +35,26 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String email = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        UserDAO accountDAO = new UserDAO();
-        User account=accountDAO.login(email, password);
- 
-         
-      
-        if (account != null) {
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("user", account);
-            if(Role.Admin.equals(account.getRole())){
-                 response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/admin.jsp ");
-            }else if(Role.Medical.equals(account.getRole())){
-               response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/medical.jsp ");
-            }else if(Role.Coach.equals(account.getRole())){
-                 response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/coach.jsp ");
-            }else{
-            response.sendRedirect("http://localhost:8080/SWPClubManegement/HomeServlet ");
+            User user = new User();
+            String email = request.getParameter("email");
+            UserDAO udao = new UserDAO();
+            if (udao.getUserByEmail(email) != null) {
+                String otp = OTP.generateOTP(6);
+                user = udao.getUserByEmail(email);
+                request.getSession().setAttribute("user", user);
+                request.getSession().setAttribute("otp", otp);
+                String tieude = "Reset Password";
+                String noidung = "Enter " + otp + " to reset your password.";
+                if (Email.sendEmail(email, tieude, noidung)) {
+                    response.sendRedirect("HOME/NewPass.jsp");
+                } else {
+                    request.getSession().setAttribute("error", "Error in send");
+                    response.sendRedirect("HOME/RePass.jsp");
+                }
+            } else {
+                request.getSession().setAttribute("error", "Email is not regiter");
+                response.sendRedirect("HOME/RePass.jsp");
             }
-        } else {
-            request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
-            response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
-        }
         }
     }
 
@@ -75,7 +70,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("HOME/login.jsp");
+        processRequest(request, response);
     }
 
     /**
