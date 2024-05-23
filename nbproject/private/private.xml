@@ -3,20 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Servlet/SendEmail.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/HOME/signUp.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Controller/EditProfileServlet.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Test/TestSql.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Model/User.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/INCLUDES/nav.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/P/profilePage.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Servlet/VerifyEmail.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/P/editPage.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Email/Email.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/HOME/home.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/DAO/UserDAO.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/edit.jsp</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/Project/SWPClubManegement/src/java/DAO/UserDAO.java</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/Project/SWPClubManegement/src/java/Servlet/VerifyPass.java</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/Project/SWPClubManegement/web/HOME/RePass.jsp</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/Project/SWPClubManegement/web/HOME/NewPass.jsp</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/Project/SWPClubManegement/src/java/Servlet/ResetPass.java</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/Project/SWPClubManegement/src/java/Test/TestSql.java</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/Project/SWPClubManegement/web/P/profilePage.jsp</file>
         </group>
     </open-files>
 </project-private>

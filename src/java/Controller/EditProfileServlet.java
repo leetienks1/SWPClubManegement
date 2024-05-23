@@ -214,7 +214,8 @@ public class EditProfileServlet extends HttpServlet {
     }
 
     public static void updateAvatar(String uid, String fileName, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String image = "http://localhost:8080/SWPWedRealClubManagement/IMAGE/AVATAR/" + fileName;
+        String path = request.getServletContext().getRealPath("IMAGE\\AVATAR");
+        String image = path + "\\" + fileName;
         int userId = Integer.parseInt(uid);
         UserDAO udao = new UserDAO();
         User u = udao.get(userId).get();
@@ -260,10 +261,11 @@ public class EditProfileServlet extends HttpServlet {
                         if (mimeType == null || !mimeType.startsWith("image/")) {
                             request.setAttribute("errorMessage", "Only upload image");
                             request.getRequestDispatcher("P/profilePage.jsp").forward(request, response);
-
+                            return;
                         }
                         file_name = new File(fileItem.getName()).getName();
-                        String filePath = "C:\\Users\\Desktop\\Documents\\NetBeansProjects\\SWPWedRealClubManagement\\web\\IMAGE\\AVATAR\\" + file_name;
+                        String path = request.getServletContext().getRealPath("IMAGE\\AVATAR");
+                        String filePath = path + "\\" + file_name;
 
                         // Đảm bảo thư mục tồn tại
                         File directory = new File(filePath).getParentFile();

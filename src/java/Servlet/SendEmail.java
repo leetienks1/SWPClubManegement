@@ -53,8 +53,13 @@ public class SendEmail extends HttpServlet {
                 request.getSession().setAttribute("otp",otp);
                 String tieude = "Verify Account";
                 String noidung = "Enter " + otp + " to verify your account.";
-                Email.sendEmail(email, tieude, noidung);
-                response.sendRedirect("HOME/verify.jsp");
+                if(Email.sendEmail(email, tieude, noidung)){
+                    response.sendRedirect("HOME/verify.jsp");
+                }else{
+                    request.getSession().setAttribute("error", "Error in send");
+            response.sendRedirect("HOME/signUp.jsp");
+                }
+                
             }else{
             request.getSession().setAttribute("error", "The email is used. Please enter again");
             response.sendRedirect("HOME/signUp.jsp");

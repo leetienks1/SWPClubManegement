@@ -17,11 +17,11 @@ import java.util.Optional;
 public class TestSql {
     public static void main(String[] args) throws ParseException {
         UserDAO udao = new UserDAO();
-        User u = udao.get(9).get();
-        u.setName("Tien");
-        udao.editProfile(u);
+        User u = udao.getUserByEmail("minhhlnde170009@fpt.edu.vn");
+        System.out.println(u.getPassword());
+        u.setPassword("12345");
+        udao.update(u);
         
-        System.out.println(u);
        
     }
 }

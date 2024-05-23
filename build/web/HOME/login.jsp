@@ -18,6 +18,7 @@
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            <a href="RePass.jsp">Forgot password?</a>
             ${error}
             <%session.removeAttribute("error");%>
             <div class="form-group text-center">

@@ -4,23 +4,18 @@
  */
 package Servlet;
 
-import DAO.UserDAO;
-import Model.Role;
-import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Zanis
  */
-public class LoginServlet extends HttpServlet {
+public class Test extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +29,18 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Test</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Test at " + request.getServletContext().getRealPath("IMAGE\\AVATAR") + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,7 +55,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("HOME/login.jsp");
+        processRequest(request, response);
     }
 
     /**
@@ -63,29 +69,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String email = request.getParameter("username");
-        String password = request.getParameter("password");
-        UserDAO accountDAO = new UserDAO();
-        User account = accountDAO.login(email, password);
-
-        if (account != null) {
-
-            HttpSession session = request.getSession();
-            session.setAttribute("user", account);
-            if (Role.Admin.equals(account.getRole())) {
-                response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/admin.jsp ");
-            } else if (Role.Medical.equals(account.getRole())) {
-                response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/medical.jsp ");
-            } else if (Role.Coach.equals(account.getRole())) {
-                response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/coach.jsp ");
-            } else {
-                response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HomeServlet ");
-            }
-        } else {
-            request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
-            response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/login.jsp");
-        }
+        processRequest(request, response);
     }
 
     /**

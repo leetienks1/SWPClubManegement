@@ -205,6 +205,10 @@
                             </c:when>
                         </c:choose>
                     </div>
+                    <div class="user-info">
+                        <strong>Email:</strong> 
+                        <p>${user.email}</p>
+                    </div>
                 </div>
                 <a href="http://localhost:8080/SWPWedRealClubManagement/HomeServlet"> go gome</a>
             </div>
