@@ -33,7 +33,7 @@
     <c:choose>
         <c:when test="${user == null}">
             <div class="Login" >
-                <a href="http://localhost:8080/SWPWedRealClubManagement/LoginServlet" style=" color: white; text-decoration:none ;font-size: 12px;text-height: 500">SIGN IN</a>
+                <a href="http://localhost:8080/SWPClubManegement/LoginServlet" style=" color: white; text-decoration:none ;font-size: 12px;text-height: 500">SIGN IN</a>
             </div>
             <div  class="register">
                 <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="signUp.jsp" > SIGN UP</a>
@@ -47,68 +47,70 @@
                         <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
                     </c:when>
                     <c:otherwise>
-                        <img class="avatar" src="${user.image}" alt="alt"/>
+                       
+                            
+                            <img id="image-bar" class="avatar" src="${user.image}" alt="alt"/>
 
-                    </c:otherwise>
-                </c:choose> 
-                <h5> ${user.name}</h5>
-                <div class="edit" >
-                    <a href="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
+                        </c:otherwise>
+                    </c:choose> 
+                    <h5> ${user.name}</h5>
+                    <div class="edit" >
+                        <a href="../EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
+                    </div>
+                    <div  class="changepass">
+                        <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" > Change Password</a>
+                    </div>
+                    <div  class="logout">
+                        <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/LogoutServlet" > Logout</a>
+                    </div>
                 </div>
-                <div  class="changepass">
-                    <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPWedRealClubManagement/ChangePasswordServlet" > Change Password</a>
+            </c:otherwise>
+        </c:choose>
+
+
+    </div>
+
+    <div id="search">
+        <div class="overlay">
+            <div class="search-block">
+                <i class="fas fa-times"></i>
+                <p>What are you looking for ? </p>
+                <div class="search-form">
+                    <i class="fas fa-search"></i>
+                    <input class="search-input"  type="text"  placeholder="NEWS , Player , Match , ...."/>
                 </div>
-                <div  class="logout">
-                    <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPWedRealClubManagement/LogoutServlet" > Logout</a>
-                </div>
-            </div>
-        </c:otherwise>
-    </c:choose>
-
-
-</div>
-
-<div id="search">
-    <div class="overlay">
-        <div class="search-block">
-            <i class="fas fa-times"></i>
-            <p>What are you looking for ? </p>
-            <div class="search-form">
-                <i class="fas fa-search"></i>
-                <input class="search-input"  type="text"  placeholder="NEWS , Player , Match , ...."/>
             </div>
         </div>
     </div>
-</div>
-<script>
-    $(document).ready(function () {
-//     $("#rightBar").hide();
+    <script>
+        $(document).ready(function () {
+    //     $("#rightBar").hide();
 
-        function toggleRightBar()
-        {
-            $("#rightBar").toggle();
-        }
-        function toggleCloseSearch()
-        {
-            $("#search").toggle();
-        }
-        function toggleOpenSearch()
-        {
-            $("#search").toggle();
-        }
+            function toggleRightBar()
+            {
+                $("#rightBar").toggle();
+            }
+            function toggleCloseSearch()
+            {
+                $("#search").toggle();
+            }
+            function toggleOpenSearch()
+            {
+                $("#search").toggle();
+            }
 
 
-        $(".nav-user").click(function ()
-        {
-            toggleRightBar();
+            $(".nav-user").click(function ()
+            {
+                toggleRightBar();
+            });
+            $(".fa-times").click(function ()
+            {
+                toggleCloseSearch();
+            });
+            $(".nav-search").click(function ()
+            {
+                toggleOpenSearch();
+            });
         });
-        $(".fa-times").click(function ()
-        {
-            toggleCloseSearch();
-        });
-        $(".nav-search").click(function ()
-        {
-            toggleOpenSearch();
-        });
-    });
-</script>
+    </script>

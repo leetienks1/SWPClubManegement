@@ -42,6 +42,9 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "      ,[Image]\n"
                     + "      ,[Email]\n"
                     + "      ,[Role]\n"
+                    + "      ,[Name]\n"
+                    + "       ,[DateOfBirth]\n"
+                    + "       ,[About]"
                     + "  FROM [RealClub].[dbo].[User]";
             try {
                 con = this.openConnection();
@@ -57,8 +60,24 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 u.setUserName(rs.getString("Username"));
                 u.setPassword(rs.getString("Password"));
                 u.setEmail(rs.getString("Email"));
-                u.setImage(rs.getString("Image"));
+                String image = rs.getString("Image");
+                if (image != null) {
+                    u.setImage(image.trim());
+
+                }
+
                 u.setRole(u.getRole().valueOf(rs.getString("Role")));
+                String name = rs.getString("Name");
+                if (name != null) {
+                    u.setName(name.trim());
+
+                }
+                Date sqlDate = rs.getDate("DateOfBirth");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    u.setDateOfBirth(localDate);
+                }
+                u.setAbout(rs.getString("About"));
                 users.add(u);
             }
             return users;
@@ -98,6 +117,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 + "      ,[Role]\n"
                 + "      ,[Name]\n"
                 + "       ,[DateOfBirth]\n"
+                + "       ,[About]"
                 + "FROM [RealClub].[dbo].[User] WHERE [Email] = ? AND [Password] = ?";
 
         try {
@@ -130,6 +150,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     LocalDate localDate = sqlDate.toLocalDate();
                     u.setDateOfBirth(localDate);
                 }
+                u.setAbout(rs.getString("About"));
 
                 return u;
             }
@@ -164,6 +185,9 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "      ,[Image]\n"
                     + "      ,[Email]\n"
                     + "      ,[Role]\n"
+                    + "      ,[Name]\n"
+                    + "       ,[DateOfBirth]\n"
+                    + "       ,[About]"
                     + "  FROM [RealClub].[dbo].[User] where Email = ?";
             try {
                 con = this.openConnection();
@@ -179,8 +203,24 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 u.setUserName(rs.getString("Username"));
                 u.setPassword(rs.getString("Password"));
                 u.setEmail(rs.getString("Email"));
-                u.setImage(rs.getString("Image"));
+                String image = rs.getString("Image");
+                if (image != null) {
+                    u.setImage(image.trim());
+
+                }
+
                 u.setRole(u.getRole().valueOf(rs.getString("Role")));
+                String name = rs.getString("Name");
+                if (name != null) {
+                    u.setName(name.trim());
+
+                }
+                Date sqlDate = rs.getDate("DateOfBirth");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    u.setDateOfBirth(localDate);
+                }
+                u.setAbout(rs.getString("About"));
                 return u;
             } else {
 
@@ -222,6 +262,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "      ,[Role]\n"
                     + "      ,[Name]\n"
                     + "       ,[DateOfBirth]\n"
+                    + "       ,[About]"
                     + "  FROM [RealClub].[dbo].[User] where UserID = ?";
             try {
                 con = this.openConnection();
@@ -254,6 +295,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     LocalDate localDate = sqlDate.toLocalDate();
                     u.setDateOfBirth(localDate);
                 }
+                u.setAbout(rs.getString("About"));
 
                 return Optional.of(u);
             } else {
@@ -293,8 +335,11 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "           ,[Password]\n"
                     + "           ,[Image]\n"
                     + "           ,[Email]\n"
-                    + "           ,[Role])\n"
-                    + "     VALUES(?,?,?,?,?)";
+                    + "           ,[Role]\n"
+                    + "           ,[Name]\n"
+                    + "           ,[DateOfBirth]\n"
+                    + "             ,[About])"
+                    + "     VALUES(?,?,?,?,?,?,?,?)";
 
             con = openConnection();
             st = con.prepareStatement(sql);
@@ -303,6 +348,14 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             st.setString(3, t.getImage());
             st.setString(4, t.getEmail());
             st.setString(5, t.getRole().toString());
+            st.setString(6, t.getName());
+            if (t.getDateOfBirth() != null) {
+                st.setDate(7, java.sql.Date.valueOf(t.getDateOfBirth()));
+            } else {
+                st.setDate(7, null);
+            }
+            st.setString(8, t.getAbout());
+           
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -339,21 +392,32 @@ public class UserDAO extends ConnectDB implements DAO<User> {
     @Override
     public void update(User t) {
         try {
+
             sql = "UPDATE [dbo].[User]\n"
                     + "   SET [Username] = ?\n"
                     + "      ,[Password] = ?\n"
                     + "      ,[Image] = ?\n"
                     + "      ,[Email] = ?\n"
-                    + "      ,[Role] = ?\n"
+                    + "      ,[Role] = ?,"
+                    + "       [Name] = ?,\n"
+                    + "       [DateOfBirth] = ?\n"
+                    + "       ,[About]=?"
                     + " WHERE [UserID] = ?";
             con = this.openConnection();
             st = con.prepareStatement(sql);
             st.setString(1, t.getUserName());
             st.setString(2, t.getPassword());
-            st.setString(3, t.getImage().trim());
+            st.setString(3, t.getImage());
             st.setString(4, t.getEmail());
             st.setString(5, t.getRole().toString());
-            st.setInt(6, t.getUserId());
+            st.setString(6, t.getName());
+            if (t.getDateOfBirth() != null) {
+                st.setDate(7, java.sql.Date.valueOf(t.getDateOfBirth()));
+            } else {
+                st.setDate(7, null);
+            }
+            st.setString(8, t.getAbout());
+            st.setInt(9, t.getUserId());
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
                 System.out.println("That bai");
@@ -398,6 +462,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "      ,[Role] = ?,"
                     + "       [Name] = ?,\n"
                     + "       [DateOfBirth] = ?\n"
+                    + "       [About]=?"
                     + " WHERE [UserID] = ?";
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -409,12 +474,11 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             st.setString(6, t.getName());
             if (t.getDateOfBirth() != null) {
                 st.setDate(7, java.sql.Date.valueOf(t.getDateOfBirth()));
-            }else
-            {
+            } else {
                 st.setDate(7, null);
             }
-
-            st.setInt(8, t.getUserId());
+            st.setString(8, t.getAbout());
+            st.setInt(9, t.getUserId());
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
                 System.out.println("That bai");
