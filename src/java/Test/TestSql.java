@@ -21,9 +21,8 @@ import java.util.Optional;
 public class TestSql {
     public static void main(String[] args) throws ParseException {
         UserDAO udao = new UserDAO();
-        User u =udao.get(8).get();   
-        u.setName("tien");
-         udao.update(u);
+        User u =udao.getUserByEmail("Admin@gmail.com");
+        
         System.out.println( u);
        
     }
