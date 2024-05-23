@@ -4,7 +4,9 @@
  */
 package Test;
 
+import DAO.PlayerDAO;
 import DAO.UserDAO;
+import Model.Player;
 import Model.User;
 import Model.Role;
 import java.text.ParseException;
@@ -17,9 +19,11 @@ import java.util.Optional;
 public class TestSql {
     public static void main(String[] args) throws ParseException {
         UserDAO udao = new UserDAO();
-        User u = udao.get(9).get();
-        u.setName("Tien");
-        udao.editProfile(u);
+        User u = udao.login("admin@gmail.com","123");
+        PlayerDAO pdao = new PlayerDAO();
+        
+       
+        
         
         System.out.println(u);
        

@@ -3,20 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Servlet/SendEmail.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/HOME/signUp.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Controller/EditProfileServlet.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Test/TestSql.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Model/User.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/INCLUDES/nav.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/P/profilePage.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Servlet/VerifyEmail.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/P/editPage.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/Email/Email.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/HOME/home.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/src/java/DAO/UserDAO.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPWedRealClubManagement/web/edit.jsp</file>
+            <file>file:/C:/Users/satth/SWPClubManegement/src/java/Test/TestSql.java</file>
+            <file>file:/C:/Users/satth/SWPClubManegement/src/java/dal/DatabaseInfor.java</file>
+            <file>file:/C:/Users/satth/SWPClubManegement/src/java/Model/User.java</file>
+            <file>file:/C:/Users/satth/SWPClubManegement/src/java/DAO/PlayerDAO.java</file>
+            <file>file:/C:/Users/satth/SWPClubManegement/src/java/Model/TrainingSchedule.java</file>
+            <file>file:/C:/Users/satth/SWPClubManegement/src/java/DAO/DAO.java</file>
+            <file>file:/C:/Users/satth/SWPClubManegement/src/java/Model/PlayerStat.java</file>
+            <file>file:/C:/Users/satth/SWPClubManegement/src/java/DAO/UserDAO.java</file>
+            <file>file:/C:/Users/satth/SWPClubManegement/src/java/Model/Player.java</file>
         </group>
     </open-files>
 </project-private>
