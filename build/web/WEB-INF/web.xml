@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+
     <!-- Servlet Definitions -->
     <servlet>
         <servlet-name>EditProfileServlet</servlet-name>
@@ -17,7 +18,6 @@
         <servlet-name>VerifyEmail</servlet-name>
         <servlet-class>Servlet.VerifyEmail</servlet-class>
     </servlet>
-    <!-- Servlet Mappings -->
     <servlet>
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>Servlet.HomeServlet</servlet-class>
@@ -30,6 +30,8 @@
         <servlet-name>ChangePasswordServlet</servlet-name>
         <servlet-class>Servlet.ChangePasswordServlet</servlet-class>
     </servlet>
+
+    <!-- Servlet Mappings -->
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/EditProfileServlet</url-pattern>
@@ -46,7 +48,6 @@
         <servlet-name>VerifyEmail</servlet-name>
         <url-pattern>/VerifyEmail</url-pattern>
     </servlet-mapping>
-    <!-- Session Configuration -->
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/HomeServlet</url-pattern>
@@ -59,9 +60,12 @@
         <servlet-name>ChangePasswordServlet</servlet-name>
         <url-pattern>/ChangePasswordServlet</url-pattern>
     </servlet-mapping>
+
+    <!-- Session Configuration -->
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+
     <!-- Welcome File List -->
     <welcome-file-list>
         <welcome-file>HOME/home.jsp</welcome-file>
