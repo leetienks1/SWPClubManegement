@@ -55,7 +55,7 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("http://localhost:8080/SWPWedRealClubManagement/HOME/home.jsp");
+        response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/home.jsp");
     }
 
     /**

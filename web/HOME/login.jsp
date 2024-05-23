@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1 class="my-4 text-center">Login</h1>
-        <form action="http://localhost:8080/SWPWedRealClubManagement/LoginServlet" method="post">
+        <form action="http://localhost:8080/SWPClubManegement/LoginServlet" method="post">
             <div class="form-group">
                 <label for="username">Email:</label>
                 <input type="email" class="form-control" id="username" name="username" required>
@@ -18,6 +18,7 @@
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            <a href="RePass.jsp">forgot password?</a>
             ${error}
             <%session.removeAttribute("error");%>
             <div class="form-group text-center">
