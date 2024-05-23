@@ -13,188 +13,266 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <%@include file="../INCLUDES/head.jsp" %> 
+        <link rel="stylesheet" href="../CSS/NAV/nav.css"/>
+        <link rel="stylesheet" href="../CSS/FOOTER/footer.css"/>
 
     </head>
+    <style>
+        body{
+            margin-top:20px;
+            background-color:#f2f6fc;
+            color:#69707a;
+        }
+        .img-account-profile {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+        .card {
+            box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+        }
+        .card .card-header {
+            font-weight: 500;
+        }
+        .card-header:first-child {
+            border-radius: 0.35rem 0.35rem 0 0;
+        }
+        .card-header {
+            padding: 1rem 1.35rem;
+            margin-bottom: 0;
+            background-color: rgba(33, 40, 50, 0.03);
+            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+        }
+        .form-control, .dataTable-input {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 1.125rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1;
+            color: #69707a;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #c5ccd6;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.35rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .nav-borders {
+            background-color: white;
+            border-bottom: 1px solid #dee2e6;
+            padding: 10px;
+        }
+        .nav-borders .nav-link.active {
+            color: #0061f2;
+            border-bottom-color: #0061f2;
+        }
+        .nav-borders .nav-link {
+            color: #69707a;
+            border-bottom-width: 0.125rem;
+            border-bottom-style: solid;
+            border-bottom-color: transparent;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 1rem;
+            margin-right: 1rem;
+
+        }
+        .loading-spinner {
+
+
+            width: 50px;
+            height: 50px;
+            border: 8px solid rgba(0, 0, 0, 0.1);
+            border-top: 8px solid #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto; /* Center the spinner */
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+
+        }
+        .con
+        {
+            margin-top: 3rem;
+        }
+        footer a
+            {
+                text-decoration: none;
+                color: white;
+
+            }
+    </style>
     <body>
-        <% UserDAO udao = new UserDAO();
-            User u = udao.get(1).get();
-            request.setAttribute("u", u);
-            String errorMessage = (String) request.getAttribute("errorMessage");
-            String randomParam = String.valueOf(Math.random());
+        <%
+
+            String errorMessage = (String) request.getSession().getAttribute("errorMessage");
+
         %>
-        <%@include file="../INCLUDES/head.jsp" %> 
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-        <div class="container">
-            <div class="row flex-lg-nowrap">
-                <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
-                    <div class="card p-3">
-                        <div class="e-navlist e-navlist--active-bg">
-                            <ul class="nav">
-                                <li class="nav-item"><a class="nav-link px-2 active" href="#"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>
+        <%@include file="../INCLUDES/nav.jsp" %>
 
-                                <li class="nav-item"><a class="nav-link px-2" href="https://www.bootdey.com/snippets/view/bs4-edit-profile-page" target="__blank"><i class="fa fa-fw fa-cog mr-1"></i><span>Settings</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <div class="container-xl px-4  con">
+            <!-- Account page navigation-->
+            <nav class="nav nav-borders">
+                <a class="nav-link active ms-0" href="http://localhost:8080/SWPClubManegement/EditProfileServlet" target="__blank">Profile</a>
+                <a class="nav-link" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" target="__blank">Change Password</a>
+                
+            </nav>
+            <hr class="mt-0 mb-4">
 
-                <div class="col">
-                    <div class="row">
-                        <div class="col mb-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="e-profile">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-auto mb-3">
-                                                <div class="mx-auto" style="width: 140px;">
-                                                    <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                        <img src="${u.image}" width="150px" height="150px" alt="alt"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                                <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${u.userName}</h4>
+            <form action="../EditProfileServlet" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-xl-4">
+                        <!-- Profile picture card-->
+                        <div class="card mb-4 mb-xl-0">
+                            <div class="card-header">Profile Picture</div>
+                            <div class="card-body text-center">
+                                <!-- Profile picture image-->
+                                <c:choose>
+                                    <c:when test="${user.image != null}">
+                                        <div class="loading-spinner mb-2" id="loadingSpinner">
 
-                                                    <div class="mt-2">
-                                                        <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" enctype="multipart/form-data" method="POST">
-                                                            <input type="hidden" name="command" value="EDITIMAGE" />
-                                                            <input type="hidden" name="uid" value="${u.userId}" />
-                                                            <input type="file" name="file2" />
-                                                            <input type="submit" value="Upload" class="btn btn-primary mt-2"/>
-                                                            <c:if test="<%= errorMessage != null%>">
-                                                                <p class="text-danger">
-                                                                    <%= errorMessage%>
-                                                                </p>
-                                                            </c:if>
-                                                        </form>
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
                                         </div>
-                                        <ul class="nav nav-tabs">
-                                            <li class="nav-item"><a href="" class="active nav-link">Settings</a></li>
-                                        </ul>
-                                        <div class="tab-content pt-3">
-                                            <div class="tab-pane active">
-                                                <form class="form" novalidate="">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row">
+                                        <img id="image" class="img-account-profile rounded-circle mb-2" src="${user.image}" alt="">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img class="img-account-profile rounded-circle mb-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
+                                    </c:otherwise>
+                                </c:choose>
 
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label>UserName</label>
-                                                                        <input class="form-control" type="text" name="username" placeholder="johnny.s" value="${u.userName}">
-                                                                        <c:choose>
-                                                                            <c:when test="${c == 'editname'}">
-                                                                                <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
-                                                                                    <input type="hidden" name="command" value="EDITNAME" />
-                                                                                    <input type="hidden" name="uid" value="${u.userId}" />
-                                                                                    <input type="hidden" name="c" value="0" />
-                                                                                    <input class="form-control"  type="text" name="name" value="${u.name}" class="form-control"/>
-                                                                                    <input type="submit" value="OK" class="btn btn-primary mt-2"/>
-                                                                                </form>
-                                                                            </c:when>
-                                                                            <c:when test="${c != 'editname'}">
-                                                                                <c:if test="${u.name == null}">
-                                                                                    <%-- Gán giá trị mới cho thuộc tính name của đối tượng u --%>
-                                                                                    <% u.setName("Chua co");%>
-                                                                                </c:if>
-                                                                                <p>${u.name}</p>
-                                                                                <button onclick="window.location.href = '<c:url value="/EditProfileServlet?c=editname"/>'" class="btn btn-secondary mt-2">Edit</button>
+                                <!-- Profile picture help block-->
 
-                                                                            </c:when>
-                                                                        </c:choose>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label>Email</label>
+                                <!-- Profile picture upload button-->
+                                <div class="mb-3">
 
-                                                                        <c:choose>
-                                                                            <c:when test="${c == 'editemail'}">
-                                                                                <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
-                                                                                    <input type="hidden" name="command" value="EDITEMAIL" />
-                                                                                    <input type="hidden" name="uid" value="${u.userId}" />
-                                                                                    <input type="hidden" name="c" value="0" />
-                                                                                    <input class="form-control" type="email" name="email" value="${u.email}" class="form-control"/>
-                                                                                    <input id="" type="submit" value="OK" class="btn btn-primary mt-2"/>
-                                                                                </form>
-                                                                            </c:when>
-                                                                            <c:when test="${c != 'editemail'}">
-                                                                                <p>${u.email}</p>
-                                                                                <button onclick="window.location.href = '<c:url value="/EditProfileServlet?c=editemail"/>'" class="btn btn-secondary mt-2">Edit</button>
-                                                                            </c:when>
-                                                                        </c:choose>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label>Date Of Birth</label>
-                                                                        <input class="form-control" type="date" name="date" placeholder="user@example.com" value="${u.dateOfBirth}">
-                                                                        <c:choose>
-                                                                            <c:when test="${c == 'editdate'}">
-                                                                                <form action="http://localhost:8080/SWPWedRealClubManagement/EditProfileServlet" method="GET">
-                                                                                    <input type="hidden" name="command" value="EDITDATE" />
-                                                                                    <input type="hidden" name="uid" value="${u.userId}" />
-                                                                                    <input type="hidden" name="c" value="0" />
-                                                                                    <input type="date" name="date" value="${u.dateOfBirth}" class="form-control"/>
-                                                                                    <input type="submit" value="OK" class="btn btn-primary mt-2"/>
-                                                                                </form>
-                                                                            </c:when>
-                                                                            <c:when test="${c != 'editdate'}">
-                                                                                <p>${u.dateOfBirth}</p>
-                                                                                <button onclick="window.location.href = '<c:url value="/EditProfileServlet?c=editdate"/>'" class="btn btn-secondary mt-2">Edit</button>
-                                                                            </c:when>
-                                                                        </c:choose>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col d-flex justify-content-end">
-                                                            <button class="btn btn-primary" type="submit">Save Changes</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label for="imageUpload" class="btn btn-primary">Upload new image</label>
+                                    <input type="file" name="avatar" class="form-control" id="imageUpload" style="display: none;" onchange="displayFileName()">
+                                    <p id="file-selected" class="mt-2"></p> <!-- This will display the selected file name -->
+                                    <p id="file-selected" class="mt-2"></p> <!-- This will display the selected file name -->
+                                    <c:if test="<%= errorMessage != null%>">
+                                        <p class="text-danger mt-2">
+                                            <%= errorMessage%>
+                                        </p>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <!-- Account details card-->
+                        <div class="card mb-4">
+                            <div class="card-header">Account Details</div>
+                            <div class="card-body">
 
-                        <div class="col-12 col-md-3 mb-3">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div class="px-xl-3">
-                                        <form action="LogOutServlet">
-                                            <button class="btn btn-block btn-secondary">
-                                                <i class="fa fa-sign-out"></i>
-                                                <span>Logout</span>
-                                            </button>
-                                        </form>
-                                    </div>
+                                <!-- Form Group (username)-->
+                                <input type="hidden" name="uid" value="${user.userId}"/>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
+                                    <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" name="username" value="${user.userName}">
                                 </div>
-                            </div>
+                                <!-- Form Group (name)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputFirstName">Name</label>
+                                    <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your Full name" name="fullname" value="${user.name}">
+                                </div>
+                                <!-- Form Group (email address)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                    <input class="form-control" id="inputEmailAddress" readonly="" type="email" name="email" placeholder="Enter your email address" value="${user.email}">
+                                </div>
+                                <!-- Form Group (birthday)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputBirthday">Birthday</label>
+                                    <input class="form-control" id="inputBirthday" type="date" name="birthday" placeholder="Enter your birthday" value="${user.dateOfBirth}">
+                                </div>
+                                <!-- Form Group (about)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputAbout">About</label>
+                                    <textarea class="form-control" id="inputAbout" name="about" placeholder="Enter something about you">${user.about}</textarea>
+                                </div>
+                                <!-- Save changes button-->
+                                <button class="btn btn-primary" type="submit">Save changes</button>
 
+                            </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
+            </form>
+
+            
+
         </div>
+                                <%@include file="../INCLUDES/footer.jsp" %>
+        <script>
+            function displayFileName() {
+                var input = document.getElementById('imageUpload');
+                var fileName = input.files[0].name;
+                document.getElementById('file-selected').innerHTML = 'Selected file: ' + fileName;
+            }
 
+            var count = 0;
+            var isFirstLoad = true;
+            var isImageUpdated = false;
+            var countSuccess = 0;
+            function reloadImage() {
+                if (count >= 100) {
+                    return;
+                }
+                var timestamp = new Date().getTime();
+                ;
+                var avatarImage = document.getElementById("image");
+                var avatarBar = document.getElementById("image-bar");
+
+
+
+                if (isImageUpdated == false)
+                {
+                    avatarBar.src = "${user.image}?timestamp=" + timestamp;
+
+                    avatarImage.src = "${user.image}?timestamp=" + timestamp;
+
+                    isFirstLoad = true;
+                    image.style.display = "none";
+                } else
+                {
+                    isFirstLoad = false;
+                }
+
+
+
+
+
+                avatarImage.onload = function () {
+
+                    loadingSpinner.style.display = "none";
+                    // Đánh dấu rằng ảnh đã được load ít nhất một lần
+                    isImageUpdated = true;
+                    image.style.display = "inline";
+
+
+                };
+                count++;
+                setTimeout(reloadImage, 500);
+            }
+
+            reloadImage();
+
+
+
+        </script>
     </body>
 </html>

@@ -4,7 +4,7 @@
     Author     : Desktop
 --%>
 
-<div class="footer">
+<footer class="footer">
     <div class="about">
         <h3>RealClub.com</h3>
         <a href="">About</a>
@@ -28,4 +28,4 @@
         <a href=""><img src="../IMAGE/FOOTER/face.png" alt="alt"/></a>
         <a href=""> <img src="../IMAGE/FOOTER/ins.png" alt="alt"/></a>
     </div>
-</div>
+</footer>
