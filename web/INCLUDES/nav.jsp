@@ -33,11 +33,9 @@
     <c:choose>
         <c:when test="${user == null}">
             <div class="Login" >
-<<<<<<< HEAD
-                <a href="login.jsp" style=" color: white; text-decoration:none ;font-size: 12px;text-height: 500">SIGN IN</a>
-=======
+
                 <a href="http://localhost:8080/SWPClubManegement/LoginServlet" style=" color: white; text-decoration:none ;font-size: 12px;text-height: 500">SIGN IN</a>
->>>>>>> e4605f0ed8abdc495081fa77bb962b79869f50c1
+
             </div>
             <div  class="register">
                 <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="signUp.jsp" > SIGN UP</a>

@@ -17,6 +17,14 @@
         <servlet-name>VerifyEmail</servlet-name>
         <servlet-class>Servlet.VerifyEmail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerifyPass</servlet-name>
+        <servlet-class>Servlet.VerifyPass</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPass</servlet-name>
+        <servlet-class>Servlet.ResetPass</servlet-class>
+    </servlet>
     <!-- Servlet Mappings -->
     <servlet>
         <servlet-name>HomeServlet</servlet-name>
@@ -29,6 +37,11 @@
     <servlet>
         <servlet-name>ChangePasswordServlet</servlet-name>
         <servlet-class>Servlet.ChangePasswordServlet</servlet-class>
+    </servlet>
+    <!-- Servlet Mappings -->
+    <servlet>
+        <servlet-name>PlayerController</servlet-name>
+        <servlet-class>Controller.PlayerController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
@@ -46,6 +59,14 @@
         <servlet-name>VerifyEmail</servlet-name>
         <url-pattern>/VerifyEmail</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyPass</servlet-name>
+        <url-pattern>/VerifyPass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPass</servlet-name>
+        <url-pattern>/ResetPass</url-pattern>
+    </servlet-mapping>
     <!-- Session Configuration -->
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -58,6 +79,11 @@
     <servlet-mapping>
         <servlet-name>ChangePasswordServlet</servlet-name>
         <url-pattern>/ChangePasswordServlet</url-pattern>
+    </servlet-mapping>
+    <!-- Session Configuration -->
+    <servlet-mapping>
+        <servlet-name>PlayerController</servlet-name>
+        <url-pattern>/PlayerController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

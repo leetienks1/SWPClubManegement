@@ -4,15 +4,13 @@
  */
 package Test;
 
-<<<<<<< HEAD
+
+import DAO.NewsDAO;
 import DAO.PlayerDAO;
 import DAO.UserDAO;
-import Model.Player;
-=======
-import DAO.NewsDAO;
-import DAO.UserDAO;
 import Model.News;
->>>>>>> e4605f0ed8abdc495081fa77bb962b79869f50c1
+import Model.Player;
+import Model.Position;
 import Model.User;
 import Model.Role;
 import java.text.ParseException;
@@ -26,18 +24,11 @@ import java.util.Optional;
  */
 public class TestSql {
     public static void main(String[] args) throws ParseException {
-        UserDAO udao = new UserDAO();
-<<<<<<< HEAD
-        User u = udao.login("admin@gmail.com","123");
-        PlayerDAO pdao = new PlayerDAO();
-        
-       
-        
-=======
-        User u =udao.getUserByEmail("Admin@gmail.com");
->>>>>>> e4605f0ed8abdc495081fa77bb962b79869f50c1
-        
-        System.out.println( u);
+       NewsDAO ndao = new NewsDAO();
+       News news = ndao.get(2).get();
+       news.setNewsTitle("title");
+       ndao.save(news);
+        System.out.println(news);
        
     }
 }

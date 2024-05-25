@@ -38,6 +38,11 @@
         <servlet-name>ChangePasswordServlet</servlet-name>
         <servlet-class>Servlet.ChangePasswordServlet</servlet-class>
     </servlet>
+    <!-- Servlet Mappings -->
+    <servlet>
+        <servlet-name>PlayerController</servlet-name>
+        <servlet-class>Controller.PlayerController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/EditProfileServlet</url-pattern>
@@ -74,6 +79,11 @@
     <servlet-mapping>
         <servlet-name>ChangePasswordServlet</servlet-name>
         <url-pattern>/ChangePasswordServlet</url-pattern>
+    </servlet-mapping>
+    <!-- Session Configuration -->
+    <servlet-mapping>
+        <servlet-name>PlayerController</servlet-name>
+        <url-pattern>/PlayerController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

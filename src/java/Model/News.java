@@ -16,14 +16,14 @@ public class News {
     private int newsId;
     private String newsTitle;
 
-    private String[] newsImageDescription;
-    private String[] newsContent;
+    private String newsImageDescription;
+    private String newsContent;
     private LocalDate datePosted;
 
     public News() {
     }
 
-    public News(int newsId, String newsTitle, String[] newsImageDescription, String[] newsContent) {
+    public News(int newsId, String newsTitle, String newsImageDescription, String newsContent) {
         this.newsId = newsId;
         this.newsTitle = newsTitle;
         this.newsImageDescription = newsImageDescription;
@@ -31,7 +31,7 @@ public class News {
         this.datePosted = LocalDate.now();
     }
     
-    public News(String newsTitle, String[] newsImageDescription, String[] newsContent) {
+    public News(String newsTitle, String newsImageDescription, String newsContent) {
         this.newsTitle = newsTitle;
         this.newsImageDescription = newsImageDescription;
         this.newsContent = newsContent;
@@ -57,19 +57,19 @@ public class News {
         this.newsTitle = newsTitle;
     }
 
-    public String[] getNewsImageDescription() {
+    public String getNewsImageDescription() {
         return newsImageDescription;
     }
 
-    public void setNewsImageDescription(String[] newsImageDescription) {
+    public void setNewsImageDescription(String newsImageDescription) {
         this.newsImageDescription = newsImageDescription;
     }
 
-    public String[] getNewsContent() {
+    public String getNewsContent() {
         return newsContent;
     }
 
-    public void setNewsContent(String[] newsContent) {
+    public void setNewsContent(String newsContent) {
         this.newsContent = newsContent;
     }
 

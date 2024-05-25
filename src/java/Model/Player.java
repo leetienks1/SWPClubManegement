@@ -4,6 +4,8 @@
  */
 package Model;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author quangminh
@@ -12,14 +14,31 @@ public class Player {
 
     private int playerID;
     private int userID;
-    private String position;
+    private Position position;
     private String name;
-    private int age;
-    private String weight;
+    private LocalDate age;
+    private double weight;
     private int height;
 
+    public Player(Position position, String name, LocalDate age, double weight, int height) {
+        this.position = position;
+        this.name = name;
+        this.age = age;
+        this.weight = weight;
+        this.height = height;
+    }
+
+     public Player( int userID, Position position, String name, LocalDate age, double weight, int height) {
+        
+        this.userID = userID;
+        this.position = position;
+        this.name = name;
+        this.age = age;
+        this.weight = weight;
+        this.height = height;
+    }
     // Constructor
-    public Player(int playerID, int userID, String position, String name, int age, String weight, int height) {
+    public Player(int playerID, int userID, Position position, String name, LocalDate age, double weight, int height) {
         this.playerID = playerID;
         this.userID = userID;
         this.position = position;
@@ -49,11 +68,11 @@ public class Player {
         this.userID = userID;
     }
 
-    public String getPosition() {
+    public Position getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
@@ -65,20 +84,23 @@ public class Player {
         this.name = name;
     }
 
-    public int getAge() {
+    public LocalDate getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(LocalDate age) {
         this.age = age;
     }
 
-    public String getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
-        this.weight = weight;
+    public void setWeight(double weight) {
+        if(weight<0)
+            this.weight=65;
+        else
+            this.weight = weight;
     }
 
     public int getHeight() {
@@ -86,7 +108,10 @@ public class Player {
     }
 
     public void setHeight(int height) {
-        this.height = height;
+        if(height<0)
+            this.height=165;
+        else
+            this.height = height;
     }
 
     @Override

@@ -106,6 +106,74 @@ public class UserDAO extends ConnectDB implements DAO<User> {
         return null;
     }
 
+    public List<User> getListUserUnknow(String role) {
+        try {
+            List<User> users = new ArrayList<>();
+           
+            sql = "SELECT u.* \n"
+                    + "FROM [User] u\n"
+                    + "LEFT JOIN ["+role+"] p ON u.UserID = p.UserID\n"
+                    + "WHERE u.role ='"+role+"' AND p.UserID IS NULL;";
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getInt("UserID"));
+                u.setUserName(rs.getString("Username"));
+                u.setPassword(rs.getString("Password"));
+                u.setEmail(rs.getString("Email"));
+                String image = rs.getString("Image");
+                if (image != null) {
+                    u.setImage(image.trim());
+
+                }
+
+                u.setRole(u.getRole().valueOf(rs.getString("Role")));
+                String name = rs.getString("Name");
+                if (name != null) {
+                    u.setName(name.trim());
+
+                }
+                Date sqlDate = rs.getDate("DateOfBirth");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    u.setDateOfBirth(localDate);
+                }
+                u.setAbout(rs.getString("About"));
+                users.add(u);
+            }
+            return users;
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public User login(String email, String password) {
         User u = new User();
 
@@ -355,7 +423,6 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 st.setDate(7, null);
             }
             st.setString(8, t.getAbout());
-           
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {

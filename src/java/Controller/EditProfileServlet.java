@@ -180,7 +180,10 @@ public class EditProfileServlet extends HttpServlet {
             }
             u.setUserName(username);
             u.setName(fullname);
-            u.setImage("http://localhost:8080/SWPClubManegement/IMAGE/AVATAR/" + file_name);
+            if(file_name != null)
+            {
+                u.setImage("http://localhost:8080/SWPClubManegement/IMAGE/AVATAR/" + file_name);
+            }
             u.setAbout(about);
 
             udao.update(u);
