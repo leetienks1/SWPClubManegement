@@ -53,9 +53,9 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
                 News n = new News();
                 n.setNewsId(rs.getInt(1));
                 n.setNewsTitle(rs.getString(2));
-                String[] images = rs.getString(3).trim().split(",");
+                String images = rs.getString(3);
                 n.setNewsImageDescription(images);
-                String[] contents = rs.getString(4).trim().split("/");
+                String contents = rs.getString(4);
                 n.setNewsContent(contents);
                 Date sqlDate = rs.getDate(5);
                 if (sqlDate != null) {
@@ -115,9 +115,9 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
 
                 n.setNewsId(rs.getInt(1));
                 n.setNewsTitle(rs.getString(2));
-                String[] images = rs.getString(3).trim().split(",");
+                String images = rs.getString(3);
                 n.setNewsImageDescription(images);
-                String[] contents = rs.getString(4).trim().split("/");
+                String contents = rs.getString(4);
                 n.setNewsContent(contents);
                 Date sqlDate = rs.getDate(5);
                 if (sqlDate != null) {
@@ -167,8 +167,8 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             }
             st = con.prepareStatement(sql);
             st.setString(1, t.getNewsTitle());
-            st.setString(2, String.join(",", t.getNewsImageDescription()));
-            st.setString(3, String.join("/", t.getNewsContent()));
+            st.setString(2, t.getNewsImageDescription());
+            st.setString(3,  t.getNewsContent());
             st.setDate(4, java.sql.Date.valueOf(t.getDatePosted()));
 
             int rowsAffected = st.executeUpdate();
@@ -221,8 +221,8 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             }
             st = con.prepareStatement(sql);
             st.setString(1, t.getNewsTitle());
-            st.setString(2, String.join(",", t.getNewsImageDescription()));
-            st.setString(3, String.join("/", t.getNewsContent()));
+            st.setString(2, t.getNewsImageDescription());
+            st.setString(3, t.getNewsContent());
             st.setDate(4, java.sql.Date.valueOf(t.getDatePosted()));
             st.setInt(5, t.getNewsId());
 

@@ -7,6 +7,7 @@ import Model.TrainingSchedule;
 import dal.ConnectDB;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,10 +37,14 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
                 Player p = new Player();
                 p.setPlayerID(rs.getInt("PlayerID"));
                 p.setUserID(rs.getInt("UserID"));
-                p.setPosition(rs.getString("Position"));
+                p.setPosition(p.getPosition().valueOf(rs.getString("Position")));
                 p.setName(rs.getString("Name"));
-                p.setAge(rs.getInt("Age"));
-                p.setWeight(rs.getString("Weight"));
+                Date sqlDate = rs.getDate("Age");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    p.setAge(localDate);
+                }
+                p.setWeight(rs.getDouble("Weight"));
                 p.setHeight(rs.getInt("Height"));
                 players.add(p);
             }
@@ -64,10 +69,15 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
                 p = new Player();
                 p.setPlayerID(rs.getInt("PlayerID"));
                 p.setUserID(rs.getInt("UserID"));
-                p.setPosition(rs.getString("Position"));
+                
+                p.setPosition(p.getPosition().valueOf(rs.getString("Position")));
                 p.setName(rs.getString("Name"));
-                p.setAge(rs.getInt("Age"));
-                p.setWeight(rs.getString("Weight"));
+                Date sqlDate = rs.getDate("Age");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    p.setAge(localDate);
+                }
+                p.setWeight(rs.getDouble("Weight"));
                 p.setHeight(rs.getInt("Height"));
                 return Optional.of(p);
             }
@@ -86,10 +96,14 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
             con = this.openConnection();
             st = con.prepareStatement(sql);
             st.setInt(1, p.getUserID());
-            st.setString(2, p.getPosition());
+            st.setString(2, p.getPosition().toString());
             st.setString(3, p.getName());
-            st.setInt(4, p.getAge());
-            st.setString(5, p.getWeight());
+            if (p.getAge() != null) {
+                st.setDate(4, java.sql.Date.valueOf(p.getAge()));
+            } else {
+                st.setDate(4, null);
+            }
+            st.setDouble(5, p.getWeight());
             st.setInt(6, p.getHeight());
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
@@ -111,10 +125,14 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
             con = this.openConnection();
             st = con.prepareStatement(sql);
             st.setInt(1, p.getUserID());
-            st.setString(2, p.getPosition());
+            st.setString(2, p.getPosition().toString());
             st.setString(3, p.getName());
-            st.setInt(4, p.getAge());
-            st.setString(5, p.getWeight());
+            if (p.getAge() != null) {
+                st.setDate(4, java.sql.Date.valueOf(p.getAge()));
+            } else {
+                st.setDate(4, null);
+            }
+            st.setDouble(5, p.getWeight());
             st.setInt(6, p.getHeight());
             st.setInt(7, p.getPlayerID());
             int rowsAffected = st.executeUpdate();

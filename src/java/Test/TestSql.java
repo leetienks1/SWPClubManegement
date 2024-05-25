@@ -5,7 +5,12 @@
 package Test;
 
 
+import DAO.NewsDAO;
+import DAO.PlayerDAO;
 import DAO.UserDAO;
+import Model.News;
+import Model.Player;
+import Model.Position;
 import Model.User;
 import Model.Role;
 import java.text.ParseException;
@@ -19,10 +24,11 @@ import java.util.Optional;
  */
 public class TestSql {
     public static void main(String[] args) throws ParseException {
-        UserDAO udao = new UserDAO();
-
-        
-        
+       NewsDAO ndao = new NewsDAO();
+       News news = ndao.get(2).get();
+       news.setNewsTitle("title");
+       ndao.save(news);
+        System.out.println(news);
        
     }
 }
