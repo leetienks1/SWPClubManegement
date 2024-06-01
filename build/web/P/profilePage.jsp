@@ -227,6 +227,7 @@
 
                 if (isImageUpdated == false)
                 {
+                    
                     avatarImage.src = "${u.image}?timestamp=" + timestamp;
 
                     avatarImage.src = "${user.image}?timestamp=" + timestamp;

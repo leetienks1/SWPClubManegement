@@ -66,17 +66,17 @@
 
             <div class="form-group">
                 <label for="course_price">DateOfBirth</label>
-                <input type="date" name="dateOfBirth" id="course_price" placeholder="DOB" value="${player.age}" required="required" />
+                <input type="date" name="dateOfBirth"  placeholder="DOB" value="${player.age}" required="required" />
             </div>
 
             <div class="form-group">
                 <label for="course_describe">Weight</label>
-                <input type="number" name="weight" id="weight" placeholder="Weight" min="1" title="Please enter a positive number" step="1" value="${player.weight}">
+                <input type="number" name="weight" id="weight" placeholder="Weight" min="1" title="Please enter a positive number" step="0.1" required="" value="${player.weight}">
             </div>
 
             <div class="form-group">
                 <label for="course_describe">Height</label>
-                <input type="number" name="height" id="height" placeholder="Height" min="1" title="Please enter a positive number" step="1" value="${player.height}">
+                <input type="number" name="height" id="height" placeholder="Height" min="1" title="Please enter a positive number" step="1" required="" value="${player.height}">
             </div>
 
             <div class="button-choice" style="text-align: center;">

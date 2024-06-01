@@ -65,12 +65,12 @@
 
                     <div class="form-group">
                         <label for="course_describe">Weight</label>
-                        <input type="number" name="weight" id="" placeholder="Weight" min="0" title="Please enter a positive number" step="1">
+                        <input type="number" name="weight" id="" placeholder="Weight" min="0" title="Please enter a positive number" step="1" required="">
                     </div>
                     <div class="form-group">
                         <label for="course_describe">Height</label>
                         <!--                        <input type="number" name="height" id="course_describe" placeholder="Height" pattern="[0-9]+" title="Please enter numeric characters only">-->
-                        <input type="number" name="height" id="" placeholder="Height" min="0" title="Please enter a positive number" step="1">
+                        <input type="number" name="height" id="" placeholder="Height" min="0" title="Please enter a positive number" step="1" required="">
                     </div>
 
                     <!--                    <div class="form-upload">

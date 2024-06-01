@@ -15,7 +15,7 @@ public class News {
 
     private int newsId;
     private String newsTitle;
-
+    private String description;
     private String newsImageDescription;
     private String newsContent;
     private LocalDate datePosted;
@@ -38,6 +38,23 @@ public class News {
         this.datePosted = LocalDate.now();
     }
 
+    public News(String newsTitle, String description, String newsImageDescription, String newsContent, LocalDate datePosted) {
+        this.newsTitle = newsTitle;
+        this.description = description;
+        this.newsImageDescription = newsImageDescription;
+        this.newsContent = newsContent;
+        this.datePosted = datePosted;
+    }
+
+    public News(int newsId, String newsTitle, String description, String newsImageDescription, String newsContent, LocalDate datePosted) {
+        this.newsId = newsId;
+        this.newsTitle = newsTitle;
+        this.description = description;
+        this.newsImageDescription = newsImageDescription;
+        this.newsContent = newsContent;
+        this.datePosted = datePosted;
+    }
+    
     
     
     
@@ -81,10 +98,20 @@ public class News {
         this.datePosted = datePosted;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
-        return "News{" + "newsId=" + newsId + ", newsTitle=" + newsTitle + ", newsImageDescription=" + newsImageDescription + ", newsContent=" + newsContent + ", datePosted=" + datePosted + '}';
+        return "News{" + "newsId=" + newsId + ", newsTitle=" + newsTitle + ", description=" + description + ", newsImageDescription=" + newsImageDescription + ", newsContent=" + newsContent + ", datePosted=" + datePosted + '}';
     }
+
+    
     
     
     

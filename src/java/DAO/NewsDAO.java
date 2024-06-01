@@ -39,6 +39,7 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
                     + "      ,[NewsImageDescription]\n"
                     + "      ,[NewsContent]\n"
                     + "      ,[DatePosted]\n"
+                    + ",[Description]"
                     + "  FROM [RealClub].[dbo].[TeamNews]";
 
             try {
@@ -62,6 +63,7 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
                     LocalDate localDate = sqlDate.toLocalDate();
                     n.setDatePosted(localDate);
                 }
+                n.setDescription(rs.getString(6));
 
                 listNews.add(n);
             }
@@ -100,6 +102,7 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
                     + "      ,[NewsImageDescription]\n"
                     + "      ,[NewsContent]\n"
                     + "      ,[DatePosted]\n"
+                    +",[Description]"
                     + "  FROM [RealClub].[dbo].[TeamNews] where NewsID=?";
 
             try {
@@ -124,7 +127,7 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
                     LocalDate localDate = sqlDate.toLocalDate();
                     n.setDatePosted(localDate);
                 }
-
+                n.setDescription(rs.getString(6));
             }
             return Optional.of(n);
         } catch (SQLException e) {
@@ -157,8 +160,8 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
         try {
             News n = new News();
             sql = "INSERT INTO [dbo].[TeamNews] "
-                    + "([NewsTitle], [NewsImageDescription], [NewsContent], [DatePosted]) "
-                    + "VALUES (?, ?, ?, ?)";
+                    + "([NewsTitle], [NewsImageDescription], [NewsContent], [DatePosted],[Description])"
+                    + "VALUES (?, ?, ?, ?, ?)";
 
             try {
                 con = this.openConnection();
@@ -168,9 +171,9 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             st = con.prepareStatement(sql);
             st.setString(1, t.getNewsTitle());
             st.setString(2, t.getNewsImageDescription());
-            st.setString(3,  t.getNewsContent());
+            st.setString(3, t.getNewsContent());
             st.setDate(4, java.sql.Date.valueOf(t.getDatePosted()));
-
+            st.setString(5, t.getDescription());
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
                 System.out.println("That bai");
@@ -212,6 +215,7 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
                     + "      ,[NewsImageDescription] = (?)\n"
                     + "      ,[NewsContent] = (?)\n"
                     + "      ,[DatePosted] = (?)\n"
+                    +",[Description] = (?)"
                     + " WHERE [NewsID]=?";
 
             try {
@@ -224,7 +228,8 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             st.setString(2, t.getNewsImageDescription());
             st.setString(3, t.getNewsContent());
             st.setDate(4, java.sql.Date.valueOf(t.getDatePosted()));
-            st.setInt(5, t.getNewsId());
+            st.setString(5, t.getDescription());
+            st.setInt(6, t.getNewsId());
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -271,7 +276,6 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             }
             st = con.prepareStatement(sql);
             st.setInt(1, id);
-            
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
