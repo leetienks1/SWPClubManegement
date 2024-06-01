@@ -9,5 +9,5 @@ package Model;
  * @author Desktop
  */
 public enum Position {
-    GK,DF,RightBack, LB,RB,CDM,CM,LM,RM,CAM,ST ,CF,LW,RW
+    GK,LCB,RCB,LB,RB,CDM,LCM,RCM,CM,LM,RM,CAM,ST ,CF,LW,RW
 }

@@ -3,12 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/Player.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminPage.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/EditProfileServlet.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/addNews.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/FileUploadServlet.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/BanAccountController.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/P/profilePage.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/Role.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/fileBrowser.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Filter/AccessControlFilter.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/PlayerStat.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/accessDenied.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/editNews.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/DAO/PlayerDAO.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/MatchSchedule.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminListAccounts.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/DAO/CoachDAO.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminNewsList.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/User.java</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Test/TestSql.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/addPlayer.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/HomeServlet.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/Coach.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/EditNewsServlet.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminPage.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/RemoveSessionSuccess.java</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/PlayerController.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/editPlayer.jsp</file>
         </group>
     </open-files>
 </project-private>

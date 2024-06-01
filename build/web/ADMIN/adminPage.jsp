@@ -218,19 +218,25 @@
 
                 <ul class="list-unstyled components">
                     <h3 >ADMIN</h3>
+                    
+                    <li >
+                        <a href="/SWPClubManegement/BanAccountController"> <img src="../IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
+                    </li>
                     <li>
                         <a href="listFullBin.php"> <img src="../IMAGE/HOME/user.png"  width="32px" height="32px"/> Create Account</a>
                     </li>
                     <li class="active">
-                        <a href="account.php"><img src="../IMAGE/HOME/soccer-player.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
-                    </li>
+                        <a href="/SWPClubManegement/PlayerController"><img src="../IMAGE/HOME/soccer-player.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
+                    </li>                    
                     <li >
-
-                        <a href="listAllBin.php"> <img src="../IMAGE/HOME/coach.png"  width="32px" height="32px"/> CRUD Coach</a>
+                        <a href="/SWPClubManegement/NewsController"> <img src="../IMAGE/HOME/news.png"  width="28px" height="28px"/> CRUD News</a>
+                    </li>
+                    <li>
+                        <a href="logout.php"> <img src="../IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD match schedule</a>
                     </li>
 
                     <li>
-                        <a href="logout.php"> <img src="../IMAGE/HOME/logout.png"  width="28px" height="28px"/> Log Out</a>
+                        <a href="/SWPClubManegement/LogoutServlet"> <img src="../IMAGE/HOME/logout.png"  width="28px" height="28px"/> Log Out</a>
                     </li>
                 </ul>
             </nav>
@@ -298,8 +304,9 @@
                                 <td>${p.name}</td>
                                 <td>${p.position}</td>
                                 <td>${p.age}</td>
-                                <td>${p.height} Cm</td>
-                                <td>${p.weight} Kg</td>
+
+                                <td>${p.weight} KG</td>
+                                <td>${p.height} CM</td>
 
 
 
@@ -421,14 +428,15 @@
                                                     }
                                                 }
 
-                                                function validateSelect() {
-                                                    var selectElement = document.getElementById('uid');
-                                                    if (selectElement.value == '') {
-                                                        alert('No more accounts for players');
-                                                        return false;
-                                                    }
-                                                    return true;
-                                                }
+                                                setTimeout(() => {
+                                                    fetch('/SWPClubManegement/RemoveSessionSuccess', {method: 'DELETE'})
+                                                            .then(response => response.text())
+                                                            .then(data => {
+                                                                console.log(data);
+
+                                                            })
+                                                            .catch(error => console.error('Error:', error));
+                                                }, 1000);
                                             });
 
 

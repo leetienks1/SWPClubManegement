@@ -45,6 +45,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "      ,[Name]\n"
                     + "       ,[DateOfBirth]\n"
                     + "       ,[About]"
+                    + "          , [Status]"
                     + "  FROM [RealClub].[dbo].[User]";
             try {
                 con = this.openConnection();
@@ -78,6 +79,94 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     u.setDateOfBirth(localDate);
                 }
                 u.setAbout(rs.getString("About"));
+                u.setStatus(rs.getBoolean("Status"));
+                users.add(u);
+            }
+            return users;
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<User> getListSearchAccount(String searchTerm) {
+        try {
+            String searchValue = "%" + searchTerm + "%";
+            List<User> users = new ArrayList<>();
+            sql = "SELECT \n"
+                    + "      [UserID]\n"
+                    + "      ,[Username]\n"
+                    + "      ,[Password]\n"
+                    + "      ,[Image]\n"
+                    + "      ,[Email]\n"
+                    + "      ,[Role]\n"
+                    + "      ,[Name]\n"
+                    + "      ,[DateOfBirth]\n"
+                    + "      ,[About]\n"
+                    + "      ,[Status]\n"
+                    + "  FROM [RealClub].[dbo].[User]\n"
+                    + "  WHERE [Username] LIKE ?\n"
+                    + "     OR [Email] LIKE ?\n"
+                    + "     OR [Role] LIKE ?\n"
+                    + "     OR [Name] LIKE ?\n"
+                    
+                    + "     OR [Status] LIKE ?"
+                    + "     OR [UserID] LIKE ?;";
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            for (int i = 1; i <= 6; i++) {
+                st.setString(i, searchValue);
+            }
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getInt("UserID"));
+                u.setUserName(rs.getString("Username"));
+                u.setPassword(rs.getString("Password"));
+                u.setEmail(rs.getString("Email"));
+                String image = rs.getString("Image");
+                if (image != null) {
+                    u.setImage(image.trim());
+
+                }
+
+                u.setRole(u.getRole().valueOf(rs.getString("Role")));
+                String name = rs.getString("Name");
+                if (name != null) {
+                    u.setName(name.trim());
+
+                }
+                Date sqlDate = rs.getDate("DateOfBirth");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    u.setDateOfBirth(localDate);
+                }
+                u.setAbout(rs.getString("About"));
+                u.setStatus(rs.getBoolean("Status"));
                 users.add(u);
             }
             return users;
@@ -109,11 +198,11 @@ public class UserDAO extends ConnectDB implements DAO<User> {
     public List<User> getListUserUnknow(String role) {
         try {
             List<User> users = new ArrayList<>();
-           
+
             sql = "SELECT u.* \n"
                     + "FROM [User] u\n"
-                    + "LEFT JOIN ["+role+"] p ON u.UserID = p.UserID\n"
-                    + "WHERE u.role ='"+role+"' AND p.UserID IS NULL;";
+                    + "LEFT JOIN [" + role + "] p ON u.UserID = p.UserID\n"
+                    + "WHERE u.role ='" + role + "' AND p.UserID IS NULL;";
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
@@ -146,6 +235,8 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     u.setDateOfBirth(localDate);
                 }
                 u.setAbout(rs.getString("About"));
+                u.setStatus(rs.getBoolean("Status"));
+
                 users.add(u);
             }
             return users;
@@ -186,6 +277,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 + "      ,[Name]\n"
                 + "       ,[DateOfBirth]\n"
                 + "       ,[About]"
+                + "          , [Status]"
                 + "FROM [RealClub].[dbo].[User] WHERE [Email] = ? AND [Password] = ?";
 
         try {
@@ -219,7 +311,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     u.setDateOfBirth(localDate);
                 }
                 u.setAbout(rs.getString("About"));
-
+                u.setStatus(rs.getBoolean("Status"));
                 return u;
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -256,6 +348,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "      ,[Name]\n"
                     + "       ,[DateOfBirth]\n"
                     + "       ,[About]"
+                    + "          , [Status]"
                     + "  FROM [RealClub].[dbo].[User] where Email = ?";
             try {
                 con = this.openConnection();
@@ -289,6 +382,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     u.setDateOfBirth(localDate);
                 }
                 u.setAbout(rs.getString("About"));
+                u.setStatus(rs.getBoolean("Status"));
                 return u;
             } else {
 
@@ -331,6 +425,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "      ,[Name]\n"
                     + "       ,[DateOfBirth]\n"
                     + "       ,[About]"
+                    + "          , [Status]"
                     + "  FROM [RealClub].[dbo].[User] where UserID = ?";
             try {
                 con = this.openConnection();
@@ -364,7 +459,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     u.setDateOfBirth(localDate);
                 }
                 u.setAbout(rs.getString("About"));
-
+                u.setStatus(rs.getBoolean("Status"));
                 return Optional.of(u);
             } else {
 
@@ -406,8 +501,9 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "           ,[Role]\n"
                     + "           ,[Name]\n"
                     + "           ,[DateOfBirth]\n"
-                    + "             ,[About])"
-                    + "     VALUES(?,?,?,?,?,?,?,?)";
+                    + "             ,[About]"
+                    + "          , [Status])"
+                    + "     VALUES(?,?,?,?,?,?,?,?,?)";
 
             con = openConnection();
             st = con.prepareStatement(sql);
@@ -423,7 +519,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 st.setDate(7, null);
             }
             st.setString(8, t.getAbout());
-
+            st.setBoolean(9, t.getStatus());
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
                 System.out.println("That bai");
@@ -469,6 +565,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "       [Name] = ?,\n"
                     + "       [DateOfBirth] = ?\n"
                     + "       ,[About]=?"
+                    + "          , [Status]=?"
                     + " WHERE [UserID] = ?";
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -484,7 +581,9 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                 st.setDate(7, null);
             }
             st.setString(8, t.getAbout());
-            st.setInt(9, t.getUserId());
+            st.setBoolean(9, t.getStatus());
+
+            st.setInt(10, t.getUserId());
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
                 System.out.println("That bai");

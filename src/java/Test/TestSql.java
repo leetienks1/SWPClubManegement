@@ -4,10 +4,11 @@
  */
 package Test;
 
-
+import DAO.CoachDAO;
 import DAO.NewsDAO;
 import DAO.PlayerDAO;
 import DAO.UserDAO;
+import Model.Coach;
 import Model.News;
 import Model.Player;
 import Model.Position;
@@ -18,17 +19,17 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 /**
  *
  * @author Desktop
  */
 public class TestSql {
+
     public static void main(String[] args) throws ParseException {
-       NewsDAO ndao = new NewsDAO();
-       News news = ndao.get(2).get();
-       news.setNewsTitle("title");
-       ndao.save(news);
-        System.out.println(news);
-       
+
+        Role role = null;
+        role = role.Coach;
+        System.out.println(role.valueOf("Admin"));
     }
 }
