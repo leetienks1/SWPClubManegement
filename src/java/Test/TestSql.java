@@ -4,13 +4,21 @@
  */
 package Test;
 
+<<<<<<< coach
 
 import DAO.MeetingDAO;
+=======
+import DAO.CoachDAO;
+>>>>>>> main
 import DAO.NewsDAO;
 import DAO.PlayerDAO;
 import DAO.TrainingScheduleDAO;
 import DAO.UserDAO;
+<<<<<<< coach
 import Model.Meeting;
+=======
+import Model.Coach;
+>>>>>>> main
 import Model.News;
 import Model.Player;
 import Model.Position;
@@ -23,12 +31,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 /**
  *
  * @author Desktop
  */
 public class TestSql {
+
     public static void main(String[] args) throws ParseException {
+<<<<<<< coach
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
         LocalDate TrainingDate = LocalDate.parse("12-12-2022",formatter);
@@ -43,5 +54,11 @@ public class TestSql {
         tDAO.update(t);
         
        
+=======
+
+        Role role = null;
+        role = role.Coach;
+        System.out.println(role.valueOf("Admin"));
+>>>>>>> main
     }
 }

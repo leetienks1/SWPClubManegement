@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <!-- Servlet Definitions -->
+<!--    <filter>
+        <filter-name>AccessControlFilter</filter-name>
+        <filter-class>Filter.AccessControlFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AccessControlFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
     <servlet>
         <servlet-name>EditProfileServlet</servlet-name>
         <servlet-class>Controller.EditProfileServlet</servlet-class>
@@ -44,8 +52,37 @@
         <servlet-class>Controller.PlayerController</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< coach
         <servlet-name>TrainingServlet</servlet-name>
         <servlet-class>Controller.TrainingServlet</servlet-class>
+=======
+        <servlet-name>FileUploadServlet</servlet-name>
+        <servlet-class>Servlet.FileUploadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsController</servlet-name>
+        <servlet-class>Controller.NewsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddNewsServlet</servlet-name>
+        <servlet-class>Controller.AddNewsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveSessionSuccess</servlet-name>
+        <servlet-class>Servlet.RemoveSessionSuccess</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditNewsServlet</servlet-name>
+        <servlet-class>Controller.EditNewsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FileBrowserServlet</servlet-name>
+        <servlet-class>Servlet.FileBrowserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BanAccountController</servlet-name>
+        <servlet-class>Controller.BanAccountController</servlet-class>
+>>>>>>> main
     </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
@@ -90,8 +127,37 @@
         <url-pattern>/PlayerController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< coach
         <servlet-name>TrainingServlet</servlet-name>
         <url-pattern>/TrainingServlet</url-pattern>
+=======
+        <servlet-name>FileUploadServlet</servlet-name>
+        <url-pattern>/FileUploadServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsController</servlet-name>
+        <url-pattern>/NewsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewsServlet</servlet-name>
+        <url-pattern>/AddNewsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveSessionSuccess</servlet-name>
+        <url-pattern>/RemoveSessionSuccess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditNewsServlet</servlet-name>
+        <url-pattern>/EditNewsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileBrowserServlet</servlet-name>
+        <url-pattern>/FileBrowserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BanAccountController</servlet-name>
+        <url-pattern>/BanAccountController</url-pattern>
+>>>>>>> main
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

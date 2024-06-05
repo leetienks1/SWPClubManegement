@@ -10,12 +10,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style>
+            
+           
+        </style> 
     </head>
     <body>
+        
         <%@include file="../INCLUDES/head.jsp" %>
         <div class="container" style="margin-top: 100px ">
             <!--Section: News of the day-->
-            <section class="border-bottom pb-4 mb-5">
+            <section class="section1 border-bottom pb-4 mb-5">
                 <div class="row gx-5">
                     <div class="col-md-6 mb-4">
                         <div class="bg-image hover-overlay ripple shadow-2-strong rounded-5" data-mdb-ripple-color="light">

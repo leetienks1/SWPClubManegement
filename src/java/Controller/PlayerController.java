@@ -148,16 +148,20 @@ public class PlayerController extends HttpServlet {
             int uid = Integer.parseInt(request.getParameter("uid"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate age = LocalDate.parse(request.getParameter("dateOfBirth"), formatter);
-            int weight = Integer.parseInt(request.getParameter("weight"));
+            
+             String formattedWeight = request.getParameter("weight");
+            double weight = Double.parseDouble(formattedWeight);
+            double roundedWeight = Math.round(weight * 10.0) / 10.0;
+          
             int height = Integer.parseInt(request.getParameter("height"));
 //            if (weight < 0 || height < 0) {
 //                request.getSession().setAttribute("Error", "Khong hop le");
 //            }
-            Player p = new Player(uid, position, playerName, age, weight, height);
+            Player p = new Player(uid, position, playerName, age,roundedWeight, height);
             PlayerDAO pdao = new PlayerDAO();
             pdao.save(p);
             request.getSession().setAttribute("Message", "Add operation successful");
-           
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -173,7 +177,10 @@ public class PlayerController extends HttpServlet {
             int uid = Integer.parseInt(request.getParameter("uid"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate age = LocalDate.parse(request.getParameter("dateOfBirth"), formatter);
-            int weight = Integer.parseInt(request.getParameter("weight"));
+            String formattedWeight = request.getParameter("weight");
+            double weight = Double.parseDouble(formattedWeight);
+            double roundedWeight = Math.round(weight * 10.0) / 10.0;
+            
             int height = Integer.parseInt(request.getParameter("height"));
 //            if (weight < 0 || height < 0) {
 //                request.getSession().setAttribute("Error", "Khong hop le");
@@ -185,7 +192,7 @@ public class PlayerController extends HttpServlet {
             p.setPosition(position);
             p.setUserID(uid);
             p.setAge(age);
-            p.setWeight(weight);
+            p.setWeight(roundedWeight);
             p.setHeight(height);
             pdao.update(p);
             request.getSession().setAttribute("Message", "UPDATE operation successful");
@@ -206,7 +213,7 @@ public class PlayerController extends HttpServlet {
             PlayerDAO pdao = new PlayerDAO();
             pdao.delete(pid);
             request.getSession().setAttribute("Message", "Delete operation successful");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }

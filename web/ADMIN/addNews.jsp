@@ -15,22 +15,45 @@
         <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     </head>
     <body>
-        <h1><c:choose>
-                <c:when test="${news.id != 0}">Sửa Tin tức</c:when>
-                <c:otherwise>Thêm Tin tức</c:otherwise>
-            </c:choose></h1>
-        <form action="news" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="id" value="${news.id}" />
-            <label for="title">Tiêu đề:</label>
-            <input type="text" name="title" value="${news.title}" required /><br>
-            <label for="content">Nội dung:</label>
-            <textarea name="content" required>${news.content}</textarea><br>
-            <input type="submit" value="Lưu" />
-        </form>
+        <%@include file="../INCLUDES/head.jsp" %>
+        <div id="add-form" style="display: none" >
+            <div class="overlay">
+                <form class="card card-on card-add-form mx-auto" action="../AddNewsServlet" method="post" style="transition: ease-in 0.5s"enctype="multipart/form-data" >
+                    <i id="add-close" class="add-player-close fas fa-times"></i>
+                    <h3 class="form-heading">Add New NEWS</h3>
+                    <input type="hidden" name="command" value="ADD" />
+
+
+                    <div class="form-group">
+                        <label for="playerName">News title</label>
+                        <input type="text" name="newstitle" id="newstitle" placeholder="News title" value="" required="You are not fill"/>
+                    </div> 
+                    <div class="form-group">
+                        <label for="playerName">News Description</label>
+                        <input type="text" name="description"  placeholder="News Description" value="" required="You are not fill"/>
+                    </div>   
+
+                    <div class="form-group">
+                        <label for="course_price">News image</label>
+                        <input type="file" name="newsimage" id="newsimage" placeholder="News image" value="" required="You are not fill"/>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea name="content" id="contentNews" required></textarea><br>
+                    </div>
+
+                    <div class="button-choice" style="text-align: center;">
+                        <button style="width: 20%" type="submit" class="save"><i class="fas fa-save"></i></button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
         <script>
-            CKEDITOR.replace('content', {
-                filebrowserUploadUrl: 'upload',
-                filebrowserUploadMethod: 'form'
+            CKEDITOR.replace('contentNews', {
+                 filebrowserUploadUrl: '/SWPClubManegement/FileUploadServlet',
+                filebrowserUploadMethod: 'form',
+                filebrowserBrowseUrl: '/SWPClubManegement/FileBrowserServlet'
             });
         </script>
     </body>

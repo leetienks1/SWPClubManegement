@@ -6,6 +6,9 @@ package Model;
 
 import java.time.LocalDate;
 
+import java.util.Date;
+
+
 /**
  *
  * @author quangminh
@@ -16,6 +19,7 @@ public class Player {
     private int userID;
     private Position position;
     private String name;
+    private LocalDate dateOfBirth;
     private LocalDate age;
     private double weight;
     private int height;
@@ -38,15 +42,17 @@ public class Player {
         this.height = height;
     }
     // Constructor
-    public Player(int playerID, int userID, Position position, String name, LocalDate age, double weight, int height) {
-        this.playerID = playerID;
-        this.userID = userID;
-        this.position = position;
-        this.name = name;
-        this.age = age;
-        this.weight = weight;
-        this.height = height;
-    }
+//    public Player(int playerID, int userID, String position, String name, LocalDate dateOfBirth, String weight, int height) {
+//    }
+//    public Player(int playerID, int userID, Position position, String name, LocalDate age, double weight, int height) {
+//        this.playerID = playerID;
+//        this.userID = userID;
+//        this.position = position;
+//        this.name = name;
+//        this.dateOfBirth = dateOfBirth;
+//        this.weight = weight;
+//        this.height = height;
+//    }
 
     // Default Constructor
     public Player() {}
@@ -82,6 +88,15 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public LocalDate getAge() {
@@ -121,7 +136,7 @@ public class Player {
                 ", userID=" + userID +
                 ", position='" + position + '\'' +
                 ", name='" + name + '\'' +
-                ", age=" + age +
+                ", dateOfBirth=" + dateOfBirth +
                 ", weight='" + weight + '\'' +
                 ", height=" + height +
                 '}';

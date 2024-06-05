@@ -4,10 +4,12 @@
  */
 package Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Desktop
  */
-public enum Role {
+public enum Role implements Serializable{
     Admin, Coach, Player, Medical,User;
 }
