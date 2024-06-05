@@ -13,6 +13,6 @@ public interface DatabaseInfor {
     String url = "jdbc:sqlserver://localhost:1433;databaseName=RealClub;";
     String user = "sa";
 
-    String pass = "Letienks1@";
+    String pass = "admin";
 
 }
