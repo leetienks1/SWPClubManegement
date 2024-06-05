@@ -6,79 +6,76 @@ package Model;
 
 import java.time.LocalDate;
 
-/**
- *
- * @author quangminh
- */
 public class TrainingSchedule {
-    private int scheduleID;
-    private int playerID;
-    private LocalDate trainingDate;
-    private String activity;
-    private String duration;
+    
+    private int TrainingID;
+    private LocalDate TrainingDate;
+    private String TrainingTime;
+    private String Location;
+    private String Description;
 
     // Constructors
     public TrainingSchedule() {
     }
 
-    public TrainingSchedule(int scheduleID, int playerID, LocalDate trainingDate, String activity, String duration) {
-        this.scheduleID = scheduleID;
-        this.playerID = playerID;
-        this.trainingDate = trainingDate;
-        this.activity = activity;
-        this.duration = duration;
+    public TrainingSchedule(int TrainingID, LocalDate TrainingDate, String TrainingTime, String Location, String Description) {
+        this.TrainingID = TrainingID;
+        this.TrainingDate = TrainingDate;
+        this.TrainingTime = TrainingTime;
+        this.Location = Location;
+        this.Description = Description;
+    }
+    public TrainingSchedule(LocalDate TrainingDate, String TrainingTime, String Location, String Description) {
+        this.TrainingDate = TrainingDate;
+        this.TrainingTime = TrainingTime;
+        this.Location = Location;
+        this.Description = Description;
     }
 
-    // Getters and Setters
-    public int getScheduleID() {
-        return scheduleID;
+    public int getTrainingID() {
+        return TrainingID;
     }
 
-    public void setScheduleID(int scheduleID) {
-        this.scheduleID = scheduleID;
-    }
-
-    public int getPlayerID() {
-        return playerID;
-    }
-
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
+    public void setTrainingID(int TrainingID) {
+        this.TrainingID = TrainingID;
     }
 
     public LocalDate getTrainingDate() {
-        return trainingDate;
+        return TrainingDate;
     }
 
-    public void setTrainingDate(LocalDate trainingDate) {
-        this.trainingDate = trainingDate;
+    public void setTrainingDate(LocalDate TrainingDate) {
+        this.TrainingDate = TrainingDate;
     }
 
-    public String getActivity() {
-        return activity;
+    public String getTrainingTime() {
+        return TrainingTime;
     }
 
-    public void setActivity(String activity) {
-        this.activity = activity;
+    public void setTrainingTime(String TrainingTime) {
+        this.TrainingTime = TrainingTime;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getLocation() {
+        return Location;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setLocation(String Location) {
+        this.Location = Location;
     }
 
-    // toString method
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
+
     @Override
     public String toString() {
-        return "TrainingSchedule{" +
-                "scheduleID=" + scheduleID +
-                ", playerID=" + playerID +
-                ", trainingDate=" + trainingDate +
-                ", activity='" + activity + '\'' +
-                ", duration='" + duration + '\'' +
-                '}';
+        return "TrainingSchedule{" + "TrainingID=" + TrainingID + ", TrainingDate=" + TrainingDate + ", TrainingTime=" + TrainingTime + ", Location=" + Location + ", Description=" + Description + '}';
     }
+    
+    
 }

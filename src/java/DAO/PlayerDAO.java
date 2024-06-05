@@ -222,30 +222,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 //        }
 //        return schedules;
 //    }
-    public List<TrainingSchedule> getTrainingSchedules(int playerID) {
-        List<TrainingSchedule> schedules = new ArrayList<>();
-        sql = "SELECT [ScheduleID], [PlayerID], [TrainingDate], [Activity], [Duration] FROM [RealClub].[dbo].[TrainingSchedule] WHERE [PlayerID] = ?";
-        try {
-            con = this.openConnection();
-            st = con.prepareStatement(sql);
-            st.setInt(1, playerID);
-            rs = st.executeQuery();
-            while (rs.next()) {
-                TrainingSchedule schedule = new TrainingSchedule();
-                schedule.setScheduleID(rs.getInt("ScheduleID"));
-                schedule.setPlayerID(rs.getInt("PlayerID"));
-                schedule.setTrainingDate(rs.getDate("TrainingDate").toLocalDate());
-                schedule.setActivity(rs.getString("Activity"));
-                schedule.setDuration(rs.getString("Duration"));
-                schedules.add(schedule);
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
-        } finally {
-            closeResources();
-        }
-        return schedules;
-    }
+    
 
     private void closeResources() {
         try {

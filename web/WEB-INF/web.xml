@@ -43,6 +43,10 @@
         <servlet-name>PlayerController</servlet-name>
         <servlet-class>Controller.PlayerController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TrainingServlet</servlet-name>
+        <servlet-class>Controller.TrainingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/EditProfileServlet</url-pattern>
@@ -84,6 +88,10 @@
     <servlet-mapping>
         <servlet-name>PlayerController</servlet-name>
         <url-pattern>/PlayerController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainingServlet</servlet-name>
+        <url-pattern>/TrainingServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
