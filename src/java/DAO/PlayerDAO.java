@@ -24,9 +24,10 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
     private PreparedStatement st;
     private ResultSet rs;
 
-  public List<Player> getAll() {
+    @Override
+    public List<Player> getAll() {
         List<Player> players = new ArrayList<>();
-        sql = "SELECT [PlayerID], [UserID], [Position], [Name], [DateOfBirth], [Weight], [Height] FROM [RealClub].[dbo].[Player]";
+        sql = "SELECT [PlayerID], [UserID], [Position], [Name], [DOB], [Weight], [Height] FROM [RealClub].[dbo].[Player]";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -37,9 +38,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
                 p.setUserID(rs.getInt("UserID"));
                 p.setPosition(p.getPosition().valueOf(rs.getString("Position")));
                 p.setName(rs.getString("Name"));
-              p.setDateOfBirth(rs.getDate("DateOfBirth").toLocalDate());           
-              p.setWeight(rs.getDouble("Weight"));
-                Date sqlDate = rs.getDate("Age");
+                Date sqlDate = rs.getDate("DOB");
                 if (sqlDate != null) {
                     LocalDate localDate = sqlDate.toLocalDate();
                     p.setAge(localDate);
@@ -58,7 +57,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 
     @Override
     public Optional<Player> get(int id) {
-        sql = "SELECT [PlayerID], [UserID], [Position], [Name], [DateOfBirth], [Weight], [Height] FROM [RealClub].[dbo].[Player] WHERE [PlayerID] = ?";
+        sql = "SELECT [PlayerID], [UserID], [Position], [Name], [DOB], [Weight], [Height] FROM [RealClub].[dbo].[Player] WHERE [PlayerID] = ?";
         Player p = null;
         try {
             con = this.openConnection();
@@ -69,13 +68,10 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
                 p = new Player();
                 p.setPlayerID(rs.getInt("PlayerID"));
                 p.setUserID(rs.getInt("UserID"));
-                
+
                 p.setPosition(p.getPosition().valueOf(rs.getString("Position")));
                 p.setName(rs.getString("Name"));
-                p.setDateOfBirth(rs.getDate("DateOfBirth").toLocalDate());
-                p.setWeight(rs.getDouble("Weight"));
-
-                Date sqlDate = rs.getDate("Age");
+                Date sqlDate = rs.getDate("DOB");
                 if (sqlDate != null) {
                     LocalDate localDate = sqlDate.toLocalDate();
                     p.setAge(localDate);
@@ -94,16 +90,19 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 
     @Override
     public void save(Player p) {
-        sql = "INSERT INTO [RealClub].[dbo].[Player] ([UserID], [Position], [Name], [DateOfBirth], [Weight], [Height]) VALUES (?, ?, ?, ?, ?, ?)";
+        sql = "INSERT INTO [RealClub].[dbo].[Player] ([UserID], [Position], [Name], [DOB], [Weight], [Height]) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, p.getUserID());
+            if (p.getUserID() != null) {
+                st.setInt(1, p.getUserID());
+            } else {
+                st.setNull(1, java.sql.Types.INTEGER);
+
+            }
+
             st.setString(2, p.getPosition().toString());
             st.setString(3, p.getName());
-           p.setDateOfBirth(rs.getDate("DateOfBirth").toLocalDate());
-            st.setDouble(5, p.getWeight());
-
             if (p.getAge() != null) {
                 st.setDate(4, java.sql.Date.valueOf(p.getAge()));
             } else {
@@ -126,15 +125,18 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 
     @Override
     public void update(Player p) {
-        sql = "UPDATE [RealClub].[dbo].[Player] SET [UserID] = ?, [Position] = ?, [Name] = ?, [DateOfBirth] = ?, [Weight] = ?, [Height] = ? WHERE [PlayerID] = ?";
+        sql = "UPDATE [RealClub].[dbo].[Player] SET [UserID] = ?, [Position] = ?, [Name] = ?, [DOB] = ?, [Weight] = ?, [Height] = ? WHERE [PlayerID] = ?";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, p.getUserID());
+            if (p.getUserID() != null && p.getUserID()!=0) {
+                st.setInt(1, p.getUserID());
+            } else {
+                st.setNull(1, java.sql.Types.INTEGER);
+
+            }
             st.setString(2, p.getPosition().toString());
             st.setString(3, p.getName());
-            p.setDateOfBirth(rs.getDate("DateOfBirth").toLocalDate());
-            st.setDouble(5, p.getWeight());
             if (p.getAge() != null) {
                 st.setDate(4, java.sql.Date.valueOf(p.getAge()));
             } else {

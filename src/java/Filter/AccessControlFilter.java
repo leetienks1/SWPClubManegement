@@ -108,10 +108,13 @@ public class AccessControlFilter implements Filter {
         User user = (session != null) ? (User) session.getAttribute("user") : null;
 
         if (user == null || !isAuthorized(user.getRole(), requestURI)) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.jsp");
-            return;
+            if (!httpResponse.isCommitted()) {
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/accessDenied.jsp");
+            }
+            return; // Ensure no further processing occurs
         }
 
+        // Proceed with the next filter or servlet in the chain
         chain.doFilter(request, response);
     }
 

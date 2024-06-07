@@ -4,33 +4,7 @@
  */
 package Test;
 
-<<<<<<< coach
 
-import DAO.MeetingDAO;
-=======
-import DAO.CoachDAO;
->>>>>>> main
-import DAO.NewsDAO;
-import DAO.PlayerDAO;
-import DAO.TrainingScheduleDAO;
-import DAO.UserDAO;
-<<<<<<< coach
-import Model.Meeting;
-=======
-import Model.Coach;
->>>>>>> main
-import Model.News;
-import Model.Player;
-import Model.Position;
-import Model.User;
-import Model.Role;
-import Model.TrainingSchedule;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -39,26 +13,6 @@ import java.util.Optional;
 public class TestSql {
 
     public static void main(String[] args) throws ParseException {
-<<<<<<< coach
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
-        LocalDate TrainingDate = LocalDate.parse("12-12-2022",formatter);
-        String TrainingTime = "2:00";
-        String Location = "location";
-        String Description = "description";
-        TrainingSchedule t = tDAO.get(2).get();
-        t.setTrainingDate(TrainingDate);
-        t.setTrainingTime(TrainingTime);
-        t.setLocation(Location);
-        t.setDescription(Description);
-        tDAO.update(t);
-        
-       
-=======
 
-        Role role = null;
-        role = role.Coach;
-        System.out.println(role.valueOf("Admin"));
->>>>>>> main
     }
 }

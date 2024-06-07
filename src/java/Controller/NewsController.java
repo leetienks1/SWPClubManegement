@@ -11,6 +11,7 @@ import Model.News;
 import Model.Player;
 import Model.Position;
 import Model.User;
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -88,13 +89,13 @@ public class NewsController extends HttpServlet {
                     ListNews(request, response);
                     break;
                 case "ADD":
-                    
+
                     break;
                 case "LOAD":
 
                     break;
                 case "UPDATE":
-                    
+
                     break;
                 case "DELETE":
                     DeleteNews(request, response);
@@ -120,43 +121,57 @@ public class NewsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-    }
-    
-     public void ListNews(HttpServletRequest request, HttpServletResponse response) {
         try {
             NewsDAO ndao = new NewsDAO();
-            List<News> listNews = ndao.getAll();
-            request.getSession().setAttribute("listNews", listNews);
-            
+            String search = request.getParameter("search");
 
-            response.sendRedirect("ADMIN/adminNewsList.jsp");
+            List<News> listNews = null;
+            listNews = ndao.getNewsBySearch(search);
+
+//            if (search != null && search != "") {
+//                listNews = ndao.getAll();
+//
+//            } else {
+//                listNews = ndao.getNewsBySearch(search);
+//            }
+
+            Gson gson = new Gson();
+            String json = gson.toJson(listNews);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+            response.getWriter().flush();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-     public void DeleteNews(HttpServletRequest request, HttpServletResponse response) {
+
+    public void ListNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("/SWPClubManegement/ADMIN/adminNewsList.jsp");
+    }
+
+    public void DeleteNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            
 
             int nid = Integer.parseInt(request.getParameter("nid"));
 
             NewsDAO ndao = new NewsDAO();
             ndao.delete(nid);
             request.getSession().setAttribute("Message", "Delete operation successful");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         ListNews(request, response);
     }
+
     /**
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
      */
-     
-    
     @Override
     public String getServletInfo() {
         return "Short description";

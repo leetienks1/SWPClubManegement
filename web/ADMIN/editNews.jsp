@@ -31,33 +31,33 @@
 
             %>
             <div class="overlay">
-                <form class="card card-on card-add-form mx-auto" action="../EditNewsServlet" method="post" style="transition: ease-in 0.5s" enctype="multipart/form-data">
+                <form id="edit" class="card card-on card-add-form mx-auto" onsubmit="Submit(event , UpdateNews())">
                     <i id="close-edit" class="add-player-close fas fa-times"></i>
-                    <h3 class="form-heading">Edit News</h3>
+                    <h3 class="form-heading">Edit Match Schedule</h3>
                     <input type="hidden" name="command" value="UPDATE" />
-                    <input type="hidden" name="nid" value="${news.newsId}" />
+                    <input type="hidden" name="nid" value="" />
                     <div class="form-group">
                         <label for="playerName">News Title</label>
-                        <input type="text" name="newstitle"  placeholder="News Description" value="${news.newsTitle}" required="You are not fill"/>
+                        <input type="text" name="newstitle1"  placeholder="News Description" value="${news.newsTitle}" required="You are not fill"/>
                     </div>
 
                     <div class="form-group">
                         <label for="playerName">News Description</label>
-                        <input type="text" name="description"  placeholder="News Description" value="${news.description}" required="You are not fill"/>
+                        <input type="text" name="description1"  placeholder="News Description" value="${news.description}" required="You are not fill"/>
                     </div>
 
                     <div class="form-group">
                         <label for="course_price"> Old News image</label>
-                        <img src="../IMAGE/NEWS/${news.newsImageDescription}" width="50px" height="50px" alt="alt"/>
+                        <img src="../IMAGE/NEWS/${news.newsImageDescription}" class="old-image" width="50px" height="50px" alt="alt"/>
                     </div>
                     <div class="form-group">
                         <label for="course_price"> New News image</label>
-                        <input type="file" name="newsimage" id="newsimage" placeholder="News image" " />
+                        <input type="file" name="newsimage1" id="newsimage" placeholder="News image" " />
                     </div>
 
 
                     <div class="form-group">
-                        <textarea name="content" id="contentNews1" required>${news.newsContent}</textarea><br>
+                        <textarea name="content1" id="contentNews1" required>${news.newsContent}</textarea><br>
                     </div>
 
                     <div class="button-choice" style="text-align: center;">
@@ -65,6 +65,9 @@
                     </div>
                 </form>
             </div>
+                    <div class="error-message" id="errorMessage1">
+                        
+                    </div>
         </div>
         <script>
             CKEDITOR.replace('contentNews1', {

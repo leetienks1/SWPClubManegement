@@ -551,7 +551,71 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             }
         }
     }
+    
+    
+    
+    public Boolean saveBool(User t) {
+        try {
 
+            sql = "INSERT INTO [dbo].[User]\n"
+                    + "           ([Username]\n"
+                    + "           ,[Password]\n"
+                    + "           ,[Image]\n"
+                    + "           ,[Email]\n"
+                    + "           ,[Role]\n"
+                    + "           ,[Name]\n"
+                    + "           ,[DateOfBirth]\n"
+                    + "             ,[About]"
+                    + "          , [Status])"
+                    + "     VALUES(?,?,?,?,?,?,?,?,?)";
+
+            con = openConnection();
+            st = con.prepareStatement(sql);
+            st.setString(1, t.getUserName());
+            st.setString(2, t.getPassword());
+            st.setString(3, t.getImage());
+            st.setString(4, t.getEmail());
+            st.setString(5, t.getRole().toString());
+            st.setString(6, t.getName());
+            if (t.getDateOfBirth() != null) {
+                st.setDate(7, java.sql.Date.valueOf(t.getDateOfBirth()));
+            } else {
+                st.setDate(7, null);
+            }
+            st.setString(8, t.getAbout());
+            st.setBoolean(9, t.getStatus());
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
     @Override
     public void update(User t) {
         try {

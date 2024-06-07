@@ -13,6 +13,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="../CSS/ADMIN/admin.css"/>
         <style>
+
             .overlay{
                 background-color: rgba(0,0,0,0.5);
                 position: fixed;
@@ -22,6 +23,147 @@
                 bottom: 0;
                 z-index: 500;
             }
+
+            .card-on
+            {
+
+                background-color: #f0f0f0;
+                position: fixed;
+                top: 50px;
+                right: 0;
+                left: 0;
+                bottom: 100px;
+                height: 500px;
+                width: 800px;
+                z-index: 400;
+                padding: 40px 100px 40px 100px;
+                text-align: center;
+                overflow: scroll;
+                /*    text-align: center;*/
+            }
+            .card-add-form::-webkit-scrollbar {
+                width: 10px; /* Chiều rộng của thanh cuộn */
+            }
+
+            .card-add-form::-webkit-scrollbar-track {
+                background: #f1f1f1; /* Màu nền của thanh cuộn */
+            }
+
+            .card-add-form::-webkit-scrollbar-thumb {
+                background: #888; /* Màu của thanh cuộn */
+                border-radius: 5px; /* Bo tròn góc của thanh cuộn */
+            }
+
+            .card-add-form::-webkit-scrollbar-thumb:hover {
+                background: #555; /* Màu của thanh cuộn khi hover */
+            }
+            .card-add-form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .form-group {
+                width: 100%;
+                margin-bottom: 15px;
+                text-align: left;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea,
+            .form-group .upload-input {
+                width: calc(100% - 20px); /* Độ rộng của input là 100% trừ đi khoảng cách margin ở cả hai phía */
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .form-upload {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .form-upload input {
+                width: calc(100% - 20px); /* Độ rộng của input là 100% trừ đi khoảng cách margin ở cả hai phía */
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .button-choice {
+                width: 100%;
+                text-align: center;
+            }
+
+            .button-choice button {
+                width: 20%;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .form-group input,
+            .form-group select,
+            .form-group textarea,
+            .form-group .upload-input {
+                width: 95%; /* hoặc 100% */
+                /* Thiết lập các thuộc tính khác */
+            }
+            .form-group label {
+                /* Độ rộng của label */
+                text-align: left; /* Canh chỉnh văn bản sang phải */
+                margin-right: 15px; /* Khoảng cách giữa label và input */
+                font-weight: 700;
+            }
+            .add-player-close {
+                position: absolute; /* Đặt vị trí tuyệt đối */
+                top: 0; /* Đặt phần tử ở phía trên cùng của thẻ cha */
+                left: 0; /* Đặt phần tử ở phía bên trái của thẻ cha */
+                padding: 10px; /* Tăng khoảng cách giữa icon và viền của thẻ cha */
+                cursor: pointer; /* Biến con trỏ thành dấu nhấp chuột khi di chuột qua */
+                z-index: 9999; /* Đảm bảo phần tử nằm trên các phần tử khác */
+                font-size: 32px;
+            }
+            .button-choice button.save {
+                width: 20%;
+                background-color: #4CAF50; /* Màu xanh lá cây */
+                color: white; /* Màu chữ trắng */
+                border: none;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 5px; /* Bo tròn góc */
+                transition: transform ease 0.3s; /* Hiệu ứng shadow */
+            }
+            .button-choice button.save:hover {
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Hiệu ứng shadow khi hover */
+                transform: scale(1.1);
+            }
+
+            .open-button {
+                /*                width: 10%;*/
+                background-color: #4CAF50; /* Màu xanh lá cây */
+                color: white; /* Màu chữ trắng */
+                border: none;
+                padding: 10px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 45px; /* Bo tròn góc */
+                transition: transform ease 0.3s; /* Hiệu ứng shadow */
+            }
+            .open-button:hover {
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Hiệu ứng shadow khi hover */
+                transform: scale(1.1);
+            }
             #sidebar
             {
 
@@ -30,6 +172,7 @@
             #content
             {
                 width: 100%;
+                overflow: hidden;
             }
 
             .scrollable-content::-webkit-scrollbar {
@@ -50,7 +193,7 @@
             }
 
             .table-container {
-                max-height: 600px;
+                max-height: 430px;
                 overflow-y: auto;
 
             }
@@ -137,9 +280,10 @@
                 left: 22px;
             }
             .search-container {
-            position: relative;
-            width: 300px; /* Chiều rộng */
-        }
+
+                position: relative;
+                width: 300px; /* Chiều rộng */
+            }
             .search {
                 width: 100%;
                 padding: 10px;
@@ -165,6 +309,71 @@
             .search:focus {
                 border-color: dodgerblue;
             }
+            #generateBtn {
+                display: inline-block; /* Đảm bảo phần tử chỉ chiếm không gian cần thiết */
+                cursor: pointer;
+            }
+
+            #generateBtn label {
+                font-size: 10px; /* Thiết lập kích thước nhỏ hơn cho nhãn */
+                vertical-align: middle; /* Để căn giữa theo chiều dọc với biểu tượng */
+                margin: 0;
+            }
+
+            /* Hiệu ứng hover */
+            #generateBtn i:hover {
+                transform: scale(1.2); /* Phóng to lên 120% */
+                transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi mềm mại */
+            }
+            /*            #generateBtn label:hover {
+                            transform: scale(1.2);  Phóng to lên 120% 
+                            transition: transform 0.3s ease;  Hiệu ứng chuyển đổi mềm mại 
+                        }*/
+            .success-message {
+                display: none;
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+                z-index: 1000;
+                align-items: center;
+                justify-content: center;
+            }
+            .success-message i {
+                margin-right: 5px;
+            }
+            .success-message p
+            {
+                color: snow;
+                font-size: 12px;
+            }
+            .loading-spinner {
+
+
+                display: none;
+                top: 40%;
+                position: fixed;
+                /* width: 50px; */
+                width: 200px;
+                height: 200px;
+                border: 8px solid rgba(0, 0, 0, 0.1);
+                border-top: 8px solid #000;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 0 auto;
+            }
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+
+            }
         </style>
     </head>
     <body onload="search()">
@@ -181,19 +390,20 @@
                     <li class="active">
                         <a href="/SWPClubManegement/BanAccountController"> <img src="../IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
                     </li>
-                    <li>
-                        <a href="listFullBin.php"> <img src="../IMAGE/HOME/user.png"  width="32px" height="32px"/> Create Account</a>
-                    </li>
+
                     <li >
                         <a href="/SWPClubManegement/PlayerController"><img src="../IMAGE/HOME/soccer-player.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
                     </li>                    
                     <li >
                         <a href="/SWPClubManegement/NewsController"> <img src="../IMAGE/HOME/news.png"  width="28px" height="28px"/> CRUD News</a>
                     </li>
-                    <li>
-                        <a href="logout.php"> <img src="../IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD match schedule</a>
+                    <li >
+                        <a href="/SWPClubManegement/MatchStatisticController"> <img src="../IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD Match Schedule</a>
                     </li>
 
+                    <li  >
+                        <a href="/SWPClubManegement/MatchStatisticController"> <img src="../IMAGE/HOME/user.png"  width="32px" height="32px"/> List Match stats</a>
+                    </li>
                     <li>
                         <a href="/SWPClubManegement/LogoutServlet"> <img src="../IMAGE/HOME/logout.png"  width="28px" height="28px"/> Log Out</a>
                     </li>
@@ -217,12 +427,19 @@
                 </nav>
 
 
-                <div class="search-container">
+                <div style="display: flex; justify-content: space-between">
+                    <div class="search-container">
 
-                    <input class="search" type="text" placeholder="ID, Name, Role,Email...">
+                        <input class="search" type="text" placeholder="ID, Name, Role,Email...">
 
-                    <i class="search-icon fas fa-search"></i>
+                        <i class="search-icon fas fa-search"></i>
+
+                    </div>
+                    <!--                    <div  class="open-button"> Add accounts</div>-->
+                    <i id="register-open" class="open-button fas fa-user-plus"></i> 
                 </div>
+
+
                 <div class="table-container">
                     <table class="table table-dark table-striped">
 
@@ -248,344 +465,291 @@
 
                         </thead>
                         <tbody id="accountTableBody">
-                            <c:forEach var="u" items="${listAccounts}" varStatus="status">
-
-
-                                <!--
-                                                                <tr>
-                                                                    <td>${u.userId}</td>
-                                                                    <td><img class="avatar" src="${u.image}" width="45px" height="45px" alt="alt" style="border-radius: 90px"/> ${u.userName}  </td>
-                                                                    <td>${u.email}</td>                                    
-                                                                    <td>${u.role}</td>
-                                
-                                
-                                
-                                
-                                                                    <td>
-                                
-                                
-                                
-                                                                        <div class="toggle-button">
-                                                                            <input type="checkbox" id="statusToggle${u.userId}" class="toggle-input" 
-                                <c:if test="${u.status == true}">checked</c:if> />
-                         <label for="statusToggle${u.userId}" class="toggle-label"></label>
-                         <div class="toggle-handle"></div>
-                     </div>
-
-                 </td>
-
-             </tr>-->
-                            <script>
-                                $(document).ready(function () {
-                                    $('#sidebarCollapse').on('click', function () {
-                                        $('#sidebar').toggleClass('active');
-                                        $(this).toggleClass('active');
-                                    });
-                                });
-                                function avatarOnload()
-                                {
-                                    var avatarImages = document.getElementsByClassName('avatar');
-                                    var check = false
-                                    // Loop through each avatar image element
-                                    for (var i = 0; i < avatarImages.length; i++) {
-                                        var avatarImage = avatarImages[i];
-                                        // Attach an onload event handler if it's not already attached
-
-
-
-                                        avatarImage.onload = function () {
-                                            console.log(this.src);
-                                            check = true;
-                                            console.log("onLoad" + check);
-                                        }
-                                        avatarImage.onerror = function () {
-
-                                            this.src = "https://tse4.mm.bing.net/th?id=OIP.65QkEmpKBM_c-VSeqJfgdQAAAA&pid=Api&P=0&h=220";
-                                        };
-
-
-                                        // Set the source to the base64 encoded image
-
-
-                                    }
-                                }
-                                avatarOnload();
-                                function search() {
-                                    var input = document.querySelector(".search").value;
-                                    console.log(input);
-
-                                    // Save the input value to localStorage
-                                    localStorage.setItem('searchInput', input);
-
-                                    var url = '/SWPClubManegement/BanAccountController?search=' + input + '&command=SEARCH';
-                                    console.log(url);
-
-                                    fetch(url, {method: 'GET'})
-                                            .then(response => {
-                                                if (!response.ok) {
-                                                    throw new Error('Network response was not ok');
-                                                }
-                                                return response.text(); // Get response as text
-                                            })
-                                            .then(text => {
-                                                try {
-                                                    var data = JSON.parse(text); // Convert text to JSON
-                                                    console.log(data);
-                                                    if (data.error) {
-                                                        console.error('Server Error:', data.error);
-                                                        return;
-                                                    }
-                                                    // Call the function to update the table
-                                                    updateAccountTable(data);
-                                                } catch (error) {
-                                                    console.error('Error parsing JSON', error);
-                                                    console.log('Response Text:', text);
-                                                }
-                                            })
-                                            .catch(error => console.error('Error:', error));
-                                }
-
-                                function restoreInput() {
-                                    var savedInput = localStorage.getItem('searchInput');
-                                    if (savedInput) {
-                                        document.querySelector(".search").value = savedInput;
-                                    }
-                                }
-
-                                function updateAccountTable(accounts) {
-                                    if (!Array.isArray(accounts)) {
-                                        console.error('Expected array but got:', accounts);
-                                        return;
-                                    }
-
-                                    const tableBody = document.querySelector("#accountTableBody"); // Assuming you have an ID for tbody
-                                    tableBody.innerHTML = ""; // Clear the existing table body
-
-                                    accounts.forEach(u => {
-                                        const row = document.createElement('tr');
-
-                                        const userIdCell = document.createElement('td');
-                                        userIdCell.textContent = u.userId;
-                                        row.appendChild(userIdCell);
-
-                                        const userImageCell = document.createElement('td');
-                                        const img = document.createElement('img');
-                                        img.classList.add('avatar');
-                                        img.src = u.image;
-                                        img.width = 45;
-                                        img.height = 45;
-                                        img.alt = 'alt';
-                                        img.style.borderRadius = '90px';
-                                        userImageCell.appendChild(img);
-                                        userImageCell.appendChild(document.createTextNode(" " + u.userName));
-                                        row.appendChild(userImageCell);
-
-                                        const emailCell = document.createElement('td');
-                                        emailCell.textContent = u.email;
-                                        row.appendChild(emailCell);
-
-                                        const roleCell = document.createElement('td');
-                                        roleCell.textContent = u.role;
-                                        row.appendChild(roleCell);
-
-                                        const statusCell = document.createElement('td');
-                                        const toggleDiv = document.createElement('div');
-                                        toggleDiv.classList.add('toggle-button');
-
-                                        const checkbox = document.createElement('input');
-                                        checkbox.type = 'checkbox';
-                                        checkbox.id = `statusToggle` + u.userId;
-                                        checkbox.classList.add('toggle-input');
-                                        if (u.status === true) {
-                                            checkbox.checked = true;
-                                        }
-                                        toggleDiv.appendChild(checkbox);
-
-                                        const label = document.createElement('label');
-                                        label.setAttribute('for', `statusToggle` + u.userId);
-                                        label.classList.add('toggle-label');
-                                        toggleDiv.appendChild(label);
-
-                                        const handleDiv = document.createElement('div');
-                                        handleDiv.classList.add('toggle-handle');
-                                        toggleDiv.appendChild(handleDiv);
-
-                                        statusCell.appendChild(toggleDiv);
-                                        row.appendChild(statusCell);
-
-                                        tableBody.appendChild(row);
-
-                                        document.getElementById('statusToggle' + u.userId).addEventListener('change', function () {
-                                            console.log(this);
-                                            console.log(u.userId);
-                                            toggleStatus(this, u.userId);
-                                        });
-                                        avatarOnload();
-                                    });
-                                }
-
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    document.querySelector(".search").addEventListener('input', search);
-                                    restoreInput();
-                                });
-
-
-
-
-
-
-
-
-
-
-
-
-                                // Định nghĩa một hàm JavaScript để xử lý sự kiện thay đổi trạng thái của checkbox
-                                function toggleStatus(statusCheckbox, userId) {
-                                    // Lấy giá trị trạng thái mới
-                                    const newStatus = statusCheckbox.checked;
-                                    const userid = userId;
-                                    console.log(" status" + newStatus);
-                                    console.log(" userid" + userId);
-                                    // Xây dựng URL với trạng thái mới
-                                    const url = '/SWPClubManegement/BanAccountController?status=' + newStatus + '&command=UPDATE&uid=' + userId;
-                                    console.log(url);
-                                    // Gửi yêu cầu GET tới URL
-                                    fetch(url, {method: 'GET'})
-                                            .then(response => response.text())
-                                            .then(data => {
-                                                console.log(data);
-                                            })
-                                            .catch(error => console.error('Error:', error));
-                                }
-
-                                // Gắn sự kiện thay đổi cho checkbox
-//                                document.getElementById('statusToggle${u.userId}').addEventListener('change', function () {
-//                                    console.log(this);
-//                                    console.log(${u.userId});
-//                                    toggleStatus(this, '${u.userId}');
-//                                });
-                            </script>               
-                        </c:forEach>
-
-                        <!--                    <tr>
-                                                <td>
-                                                    <i id="add-button"  class=" fas fa-plus"></i>
-                                                </td>
-                                            </tr>-->
-
                         </tbody>
-
-
                     </table>
-
-                    <!--                    <div class="row">
-                    <c:forEach var="u" items="${listAccounts}" varStatus="status">
-                         Bắt đầu một hàng mới sau mỗi 3 cột 
-                        <c:if test="${status.index % 3 == 0}">
-                            <div class="row">
-                        </c:if>
-
-                        <div class="col-md-4">
-                            <div class="card">
-
-                                <div style="text-align: center; height: 150px">
-                                    <img src="${u.image}" width="100px" height="150px" alt="alt"/>
-                                </div>
-                                <div class="user-info">
-                                    <label>User ID:</label>
-                                    <span>${u.userId}</span>
-                                </div>
-                                <div class="user-info">
-                                    <label>Email:</label>
-                                    <span>${u.email}</span>
-                                </div>
-                                <div class="user-info">
-                                    <label>Role:</label>
-                                    <span>${u.role}</span>
-                                </div>
-                                <div class="user-info">
-                                    <label>Status:</label>
-                                    <div class="toggle-button">
-                                        <input type="checkbox" id="statusToggle${u.userId}" class="toggle-input" 
-                        <c:if test="${u.status == true}">checked</c:if> />
-                 <label for="statusToggle${u.userId}" class="toggle-label"></label>
-                 <div class="toggle-handle"></div>
-             </div>
-         </div>
-
-     </div>
- </div>
- <script>
-     $(document).ready(function () {
-         $('#sidebarCollapse').on('click', function () {
-             $('#sidebar').toggleClass('active');
-             $(this).toggleClass('active');
-         });
-
-
-
-
-
-     });
-     // Định nghĩa một hàm JavaScript để xử lý sự kiện thay đổi trạng thái của checkbox
-     function toggleStatus(statusCheckbox, userId) {
-         // Lấy giá trị trạng thái mới
-         const newStatus = statusCheckbox.checked;
-         const userid = userId;
-         console.log(" status" + newStatus);
-         console.log(" userid" + userId);
-
-         // Xây dựng URL với trạng thái mới
-         const url = '/SWPClubManegement/BanAccountController?status=' + newStatus + '&command=UPDATE&uid=' + userId;
-         console.log(url);
-         // Gửi yêu cầu GET tới URL
-         fetch(url, {method: 'GET'})
-                 .then(response => response.text())
-                 .then(data => {
-                     console.log(data);
-                 })
-                 .catch(error => console.error('Error:', error));
-     }
-
-     // Gắn sự kiện thay đổi cho checkbox
-     document.getElementById('statusToggle${u.userId}').addEventListener('change', function () {
-         console.log(this);
-         console.log(${u.userId});
-
-         toggleStatus(this, '${u.userId}');
-     });
-
- </script>               
-  Đóng hàng sau mỗi 3 cột 
-                        <c:if test="${status.index % 3 == 2}">
-                        </div>
-                        </c:if>
-                    </c:forEach>
-                     Đóng hàng cuối cùng nếu chưa đóng 
-                    <c:if test="${listAccounts.size() % 3 != 0}">
-                    </div>
-                    </c:if>
-
                 </div>
-            </div>-->
-
-
-
-                    <!--                    <tr>
-                                            <td>
-                                                <i id="add-button"  class=" fas fa-plus"></i>
-                                            </td>
-                                        </tr>-->
-
-
-
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check"></i> 
                 </div>
-
-
-
+                <%@include file="createAccount.jsp" %>
             </div>
         </div>
+        <script>
+
+            function SubmitForm(event, method)
+            {
+                event.preventDefault();
+                method();
+            }
+
+            document.getElementById("generateBtn").addEventListener("click", function () {
+                var passwordField = document.getElementById("password");
+                var generatedPassword = generatePassword(8); // Độ dài mật khẩu muốn tạo
+
+                // Gán mật khẩu được tạo vào trường input
+                passwordField.value = generatedPassword;
+            });
+            function generatePassword(length) {
+                var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var password = "";
+                for (var i = 0; i < length; i++) {
+                    var randomIndex = Math.floor(Math.random() * charset.length);
+                    password += charset[randomIndex];
+                }
+
+                return password;
+            }
+
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                    $(this).toggleClass('active');
+                });
+            });
+            function avatarOnload()
+            {
+                var avatarImages = document.getElementsByClassName('avatar');
+                var check = false
+                // Loop through each avatar image element
+                for (var i = 0; i < avatarImages.length; i++) {
+                    var avatarImage = avatarImages[i];
+                    // Attach an onload event handler if it's not already attached
+
+
+
+                    avatarImage.onload = function () {
+                        console.log(this.src);
+                        check = true;
+//                        console.log("onLoad" + check);
+                    }
+                    avatarImage.onerror = function () {
+
+                        this.src = "https://tse4.mm.bing.net/th?id=OIP.65QkEmpKBM_c-VSeqJfgdQAAAA&pid=Api&P=0&h=220";
+                    };
+                    // Set the source to the base64 encoded image
+
+
+                }
+            }
+            avatarOnload();
+            function search() {
+                var input = document.querySelector(".search").value;
+                console.log(input);
+                // Save the input value to localStorage
+                localStorage.setItem('searchInput', input);
+                var url = '/SWPClubManegement/BanAccountController?search=' + input + '&command=SEARCH';
+                console.log(url);
+                fetch(url, {method: 'GET'})
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.text(); // Get response as text
+                        })
+                        .then(text => {
+                            try {
+                                var data = JSON.parse(text); // Convert text to JSON
+                                console.log(data);
+                                if (data.error) {
+                                    console.error('Server Error:', data.error);
+                                    return;
+                                }
+                                // Call the function to update the table
+                                updateAccountTable(data);
+                            } catch (error) {
+                                console.error('Error parsing JSON', error);
+                                console.log('Response Text:', text);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+            }
+
+            function restoreInput() {
+                var savedInput = localStorage.getItem('searchInput');
+                if (savedInput) {
+                    document.querySelector(".search").value = savedInput;
+                }
+            }
+
+            function updateAccountTable(accounts) {
+                if (!Array.isArray(accounts)) {
+                    console.error('Expected array but got:', accounts);
+                    return;
+                }
+
+                const tableBody = document.querySelector("#accountTableBody"); // Assuming you have an ID for tbody
+                tableBody.innerHTML = ""; // Clear the existing table body
+
+                accounts.forEach(u => {
+                    const row = document.createElement('tr');
+                    const userIdCell = document.createElement('td');
+                    userIdCell.textContent = u.userId;
+                    row.appendChild(userIdCell);
+                    const userImageCell = document.createElement('td');
+                    const img = document.createElement('img');
+                    img.classList.add('avatar');
+                    img.src = u.image;
+                    img.width = 45;
+                    img.height = 45;
+                    img.alt = 'alt';
+                    img.style.borderRadius = '90px';
+                    userImageCell.appendChild(img);
+                    userImageCell.appendChild(document.createTextNode(" " + u.userName));
+                    row.appendChild(userImageCell);
+                    const emailCell = document.createElement('td');
+                    emailCell.textContent = u.email;
+                    row.appendChild(emailCell);
+                    const roleCell = document.createElement('td');
+                    roleCell.textContent = u.role;
+                    row.appendChild(roleCell);
+                    const statusCell = document.createElement('td');
+                    const toggleDiv = document.createElement('div');
+                    toggleDiv.classList.add('toggle-button');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `statusToggle` + u.userId;
+                    checkbox.classList.add('toggle-input');
+                    if (u.status === true) {
+                        checkbox.checked = true;
+                    }
+                    toggleDiv.appendChild(checkbox);
+                    const label = document.createElement('label');
+                    label.setAttribute('for', `statusToggle` + u.userId);
+                    label.classList.add('toggle-label');
+                    toggleDiv.appendChild(label);
+                    const handleDiv = document.createElement('div');
+                    handleDiv.classList.add('toggle-handle');
+                    toggleDiv.appendChild(handleDiv);
+                    statusCell.appendChild(toggleDiv);
+                    row.appendChild(statusCell);
+                    tableBody.appendChild(row);
+                    document.getElementById('statusToggle' + u.userId).addEventListener('change', function () {
+                        console.log(this);
+                        console.log(u.userId);
+                        toggleStatus(this, u.userId);
+                    });
+                    avatarOnload();
+                });
+            }
+
+
+
+            document.querySelector('#create-button').addEventListener('click',function () {
+                const load = document.getElementById('loadingSpinner');
+                load.style.display = 'block';
+            });
+            
+
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelector(".search").addEventListener('input', search);
+                restoreInput();
+            });
+            function Register() {
+                var url = "/SWPClubManegement/AdminCreateAccountServlet";
+                const form = document.getElementById('myForm');
+                const formData = new FormData(form);
+                const fileInput = document.getElementById('fileUpload');
+                if (fileInput.files.length !== 0) {
+                    console.log("ima" + fileInput);
+                }
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1]);
+                }
+                console.log("re " + formData);
+                // Thêm dữ liệu vào formData nếu cần
+                console.log("re " + url);
+                fetch(url, {
+                    method: 'POST',
+                    body: formData
+
+                })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Network not okay");
+                            }
+                            return response.text();
+                        })
+                        .then(text => {
+                            const load = document.getElementById('loadingSpinner');
+                            load.style.display = 'none';
+                            console.log(text);
+                            var data = JSON.parse(text);
+                            if (data.status === "error")
+                            {
+                                alert(data.message);
+                                return;
+                            }
+                            var success = document.getElementById('successMessage');
+                            success.style.display = "flex";
+                            successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Create Account Success';
+                            setTimeout(function () {
+                                success.style.display = "none";
+                            }, 1000);
+                            var addForm = document.getElementById('register-form');
+                            addForm.style.display = 'none';
+                            document.querySelector('input[name="email"]').value = "";
+                            document.querySelector('input[name="password"]').value = "";
+                            document.querySelector('input[name="name"]').value = "";
+                        })
+                        .catch(error => {
+                            throw new Error("Error: " + error);
+                        })
+                        .finally(() => {
+                            search();
+                        });
+            }
+
+
+
+
+
+
+
+
+
+
+            // Định nghĩa một hàm JavaScript để xử lý sự kiện thay đổi trạng thái của checkbox
+            function toggleStatus(statusCheckbox, userId) {
+                // Lấy giá trị trạng thái mới
+                const newStatus = statusCheckbox.checked;
+                const userid = userId;
+                console.log(" status" + newStatus);
+                console.log(" userid" + userId);
+                // Xây dựng URL với trạng thái mới
+                const url = '/SWPClubManegement/BanAccountController?status=' + newStatus + '&command=UPDATE&uid=' + userId;
+                console.log(url);
+                // Gửi yêu cầu GET tới URL
+                fetch(url, {method: 'GET'})
+                        .then(response => response.text())
+                        .then(data => {
+                            console.log(data);
+                        })
+                        .catch(error => console.error('Error:', error));
+            }
+            $(document).ready(function () {
+
+                function toggleCloseRegisterform() {
+                    $("#register-form").toggle();
+                }
+
+                function toggleOpenRegisterForm() {
+                    $("#register-form").toggle();
+                }
+
+
+
+
+
+                $("#register-close").click(function () {
+                    toggleCloseRegisterform();
+                });
+                $("#register-open").click(function () {
+                    toggleOpenRegisterForm();
+                });
+            }
+            );
+        </script>               
+
 
         <!-- Import bootstrap 4 scripts -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

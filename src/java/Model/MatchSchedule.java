@@ -4,24 +4,45 @@
  */
 package Model;
 
+import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author quangminh
  */
-public class MatchSchedule {
+public class MatchSchedule implements Serializable{
+    private static final long serialVersionUID = 1L;
+    
+    
     private int matchID;
-    private LocalDate matchDate;
-    private String opponent;
+    private transient LocalDate matchDate;
+    
     private String location;
     private int homeTeamID;
     private int awayTeamID;
+    private Tournament tournament;
+    
+    
+    @SerializedName("matchDate")
+    private String matchDateString;
+    public MatchSchedule() {
+    }
 
-    public MatchSchedule(int matchID, LocalDate matchDate, String opponent, String location, int homeTeamID, int awayTeamID) {
+    public MatchSchedule(LocalDate matchDate, String location, int homeTeamID, int awayTeamID, Tournament tournament) {
+        this.matchDate = matchDate;
+        this.tournament = tournament;
+        this.location = location;
+        this.homeTeamID = homeTeamID;
+        this.awayTeamID = awayTeamID;
+    }
+    
+    
+    public MatchSchedule(int matchID, LocalDate matchDate,  String location, int homeTeamID, int awayTeamID) {
         this.matchID = matchID;
         this.matchDate = matchDate;
-        this.opponent = opponent;
+        
         this.location = location;
         this.homeTeamID = homeTeamID;
         this.awayTeamID = awayTeamID;
@@ -33,6 +54,7 @@ public class MatchSchedule {
 
     public void setMatchID(int matchID) {
         this.matchID = matchID;
+        
     }
 
     public LocalDate getMatchDate() {
@@ -41,15 +63,10 @@ public class MatchSchedule {
 
     public void setMatchDate(LocalDate matchDate) {
         this.matchDate = matchDate;
+        this.matchDateString= matchDate.toString();
     }
 
-    public String getOpponent() {
-        return opponent;
-    }
-
-    public void setOpponent(String opponent) {
-        this.opponent = opponent;
-    }
+   
 
     public String getLocation() {
         return location;
@@ -75,15 +92,19 @@ public class MatchSchedule {
         this.awayTeamID = awayTeamID;
     }
 
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
+
     @Override
     public String toString() {
-        return "MatchSchedule{" +
-                "matchID=" + matchID +
-                ", matchDate=" + matchDate +
-                ", opponent='" + opponent + '\'' +
-                ", location='" + location + '\'' +
-                ", homeTeamID=" + homeTeamID +
-                ", awayTeamID=" + awayTeamID +
-                '}';
+        return "MatchSchedule{" + "matchID=" + matchID + ", matchDate=" + matchDate + ", location=" + location + ", homeTeamID=" + homeTeamID + ", awayTeamID=" + awayTeamID + ", tournament=" + tournament + ", matchDateString=" + matchDateString + '}';
     }
+    
+
+    
 }
