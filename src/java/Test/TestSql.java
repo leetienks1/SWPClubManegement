@@ -25,6 +25,13 @@ import java.util.Optional;
 public class TestSql {
     public static void main(String[] args) throws ParseException {
        NewsDAO ndao = new NewsDAO();
+       UserDAO udao = new UserDAO();
+  
+        User u = udao.login("admin@gmail.com","123");
+        PlayerDAO pdao = new PlayerDAO();
+   
+        
+        System.out.println( u);
        News news = ndao.get(2).get();
        news.setNewsTitle("title");
        ndao.save(news);

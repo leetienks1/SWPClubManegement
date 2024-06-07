@@ -2,8 +2,10 @@ package DAO;
 
 import Model.Player;
 import Model.PlayerStat;
+import Model.Position;
 import Model.TrainingSchedule;
 import dal.ConnectDB;
+import static java.lang.String.valueOf;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -24,7 +26,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
     private PreparedStatement st;
     private ResultSet rs;
 
-  public List<Player> getAll() {
+    public List<Player> getAll() {
         List<Player> players = new ArrayList<>();
         sql = "SELECT [PlayerID], [UserID], [Position], [Name], [DateOfBirth], [Weight], [Height] FROM [RealClub].[dbo].[Player]";
         try {
@@ -37,8 +39,8 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
                 p.setUserID(rs.getInt("UserID"));
                 p.setPosition(p.getPosition().valueOf(rs.getString("Position")));
                 p.setName(rs.getString("Name"));
-              p.setDateOfBirth(rs.getDate("DateOfBirth").toLocalDate());           
-              p.setWeight(rs.getDouble("Weight"));
+                p.setDateOfBirth(rs.getDate("DateOfBirth").toLocalDate());
+                p.setWeight(rs.getDouble("Weight"));
                 Date sqlDate = rs.getDate("Age");
                 if (sqlDate != null) {
                     LocalDate localDate = sqlDate.toLocalDate();
@@ -69,7 +71,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
                 p = new Player();
                 p.setPlayerID(rs.getInt("PlayerID"));
                 p.setUserID(rs.getInt("UserID"));
-                
+
                 p.setPosition(p.getPosition().valueOf(rs.getString("Position")));
                 p.setName(rs.getString("Name"));
                 p.setDateOfBirth(rs.getDate("DateOfBirth").toLocalDate());
@@ -101,7 +103,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
             st.setInt(1, p.getUserID());
             st.setString(2, p.getPosition().toString());
             st.setString(3, p.getName());
-           p.setDateOfBirth(rs.getDate("DateOfBirth").toLocalDate());
+            p.setDateOfBirth(rs.getDate("DateOfBirth").toLocalDate());
             st.setDouble(5, p.getWeight());
 
             if (p.getAge() != null) {
@@ -255,6 +257,79 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         return schedules;
     }
 
+    public List<Player> getPlayersByPosition(String position) {
+        List<Player> players = new ArrayList<>();
+        String sql = "SELECT p.[PlayerID], p.[UserID], p.[Position], p.[Name], p.[DOB], p.[Weight], p.[Height], u.[Image] "
+                + "FROM [RealClub].[dbo].[Player] p "
+                + "JOIN [RealClub].[dbo].[User] u ON p.[UserID] = u.[UserID] "
+                + "WHERE p.[Position] = ?";
+
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setString(1, position);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Player player = new Player();
+                player.setPlayerID(rs.getInt("PlayerID"));
+                player.setUserID(rs.getInt("UserID"));
+                player.setPosition(Position.valueOf(rs.getString("Position")));
+                player.setName(rs.getString("Name"));
+                player.setDateOfBirth(rs.getDate("DOB").toLocalDate());
+                player.setWeight(rs.getDouble("Weight"));
+                player.setHeight(rs.getInt("Height"));
+                player.setImage(rs.getString("Image"));
+
+                players.add(player);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+
+        return players;
+    }
+
+     public List<Player> getAllPlayersImage() {
+        List<Player> players = new ArrayList<>();
+        String sql = "SELECT p.[PlayerID], p.[UserID], p.[Position], p.[Name], p.[DOB], p.[Weight], p.[Height], u.[Image] "
+                + "FROM [RealClub].[dbo].[Player] p "
+                + "JOIN [RealClub].[dbo].[User] u ON p.[UserID] = u.[UserID] ";
+
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Player player = new Player();
+                player.setPlayerID(rs.getInt("PlayerID"));
+                player.setUserID(rs.getInt("UserID"));
+                player.setPosition(Position.valueOf(rs.getString("Position")));
+                player.setName(rs.getString("Name"));
+               Date sqlDate = rs.getDate("DOB");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    player.setDateOfBirth(localDate);
+                }
+                player.setWeight(rs.getDouble("Weight"));
+                player.setHeight(rs.getInt("Height"));
+                player.setImage(rs.getString("Image"));
+
+                players.add(player);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+
+        return players;
+    }
+    
+    
     private void closeResources() {
         try {
             if (rs != null) {

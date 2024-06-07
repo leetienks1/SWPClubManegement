@@ -6,6 +6,10 @@ package Servlet;
 
 import DAO.UserDAO;
 import Model.Role;
+import static Model.Role.Admin;
+import static Model.Role.Coach;
+import static Model.Role.Medical;
+import static Model.Role.User;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,72 +38,55 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             String email = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        UserDAO accountDAO = new UserDAO();
-        User account=accountDAO.login(email, password);
- 
-         
-      
-        if (account != null) {
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("user", account);
-            if(Role.Admin.equals(account.getRole())){
-                 response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/admin.jsp ");
-            }else if(Role.Medical.equals(account.getRole())){
-               response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/medical.jsp ");
-            }else if(Role.Coach.equals(account.getRole())){
-                 response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/coach.jsp ");
-            }else{
-            response.sendRedirect("http://localhost:8080/SWPClubManegement/HomeServlet ");
+            String password = request.getParameter("password");
+
+            UserDAO accountDAO = new UserDAO();
+            User account = accountDAO.login(email, password);
+
+            if (account != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", account);
+                session.setAttribute("role", account.getRole()); // Lưu vai trò vào phiên
+
+                Role userRole = account.getRole();
+
+                switch (userRole) {
+                    case Admin:               
+                        response.sendRedirect(request.getContextPath() + "/ADMIN/adminPage.jsp");
+                        break;
+                    case Medical:      
+                        response.sendRedirect(request.getContextPath() + "/HOME/medical.jsp");
+                        break;
+                    case Coach:
+                        response.sendRedirect(request.getContextPath() + "/COACH/home.jsp");
+                        break;
+                    default:
+                        response.sendRedirect(request.getContextPath() + "/HOME/home.jsp");
+                        
+                        break;
+                }
+            } else {
+                request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
+                response.sendRedirect(request.getContextPath() + "/login.jsp");
             }
-        } else {
-            request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
-            response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
-        }
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.sendRedirect("HOME/login.jsp");
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

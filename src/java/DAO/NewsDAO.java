@@ -305,3 +305,4 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
     }
 
 }
+    

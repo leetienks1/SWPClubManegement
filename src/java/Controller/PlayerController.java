@@ -69,9 +69,12 @@ public class PlayerController extends HttpServlet {
 
             String theCommand = request.getParameter("command");
             if (theCommand == null) {
-                theCommand = "LIST";
+                theCommand = "PLAYER";
             }
             switch (theCommand) {
+                 case "PLAYER":
+                    Player(request, response);
+                    break;
                 case "LIST":
                     ListPlayers(request, response);
                     break;
@@ -121,6 +124,28 @@ public class PlayerController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    public void Player(HttpServletRequest request, HttpServletResponse response) {
+        try {
+             PlayerDAO pdao = new PlayerDAO();
+            List<Player> players = pdao.getAllPlayersImage();
+            request.getSession().setAttribute("listPlayer", players);
+            List<String> positions = new ArrayList<>();
+
+            // Lặp qua tất cả các giá trị enum và thêm chúng vào danh sách
+            for (Position position : Position.values()) {
+                positions.add(position.toString());
+            }
+            request.getSession().setAttribute("positions", positions);
+
+            response.sendRedirect("PLAYER/playerList.jsp");
+            
+          
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void ListPlayers(HttpServletRequest request, HttpServletResponse response) {
         try {
             PlayerDAO pdao = new PlayerDAO();
