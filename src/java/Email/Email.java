@@ -46,7 +46,7 @@ public class Email {
 
 		// Tạo một tin nhắn
 		MimeMessage msg = new MimeMessage(session);
-
+                
 		try {
 			// Kiểu nội dung
 			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
@@ -81,9 +81,9 @@ public class Email {
 	}
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 10; i++) {
-			Email.sendEmail("minhhlnde170009@fpt.edu.vn", System.currentTimeMillis() + "", "Đây là phần nội dung!");
-		}
+		
+			Email.sendEmail("anhemgameplay@gmail.com", System.currentTimeMillis() + "", "Đây là phần nội dung!");
+		
 
 	}
 

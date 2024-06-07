@@ -30,6 +30,73 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
     private PreparedStatement st;
     private ResultSet rs;
 
+    public List<News> getNewsBySearch(String searchValue) {
+        String search = "%" + searchValue + "%";
+        try {
+            List listNews = new ArrayList<>();
+            sql = "SELECT TOP (1000) [NewsID]\n"
+                    + "      ,[NewsTitle]\n"
+                    + "      ,[NewsImageDescription]\n"
+                    + "      ,[NewsContent]\n"
+                    + "      ,[DatePosted]\n"
+                    + "      ,[Description]\n"
+                    + "  FROM [RealClub].[dbo].[TeamNews]\n"
+                    + "  where NewsID like ? or NewsTitle like ?";
+
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            st.setString(1, search);
+            st.setString(2, search);
+
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                News n = new News();
+                n.setNewsId(rs.getInt(1));
+                n.setNewsTitle(rs.getString(2));
+                String images = rs.getString(3);
+                n.setNewsImageDescription(images);
+                String contents = rs.getString(4);
+                n.setNewsContent(contents);
+                Date sqlDate = rs.getDate(5);
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    n.setDatePosted(localDate);
+                }
+                n.setDescription(rs.getString(6));
+
+                listNews.add(n);
+            }
+            return listNews;
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     @Override
     public List<News> getAll() {
         try {
@@ -102,7 +169,7 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
                     + "      ,[NewsImageDescription]\n"
                     + "      ,[NewsContent]\n"
                     + "      ,[DatePosted]\n"
-                    +",[Description]"
+                    + ",[Description]"
                     + "  FROM [RealClub].[dbo].[TeamNews] where NewsID=?";
 
             try {
@@ -215,7 +282,7 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
                     + "      ,[NewsImageDescription] = (?)\n"
                     + "      ,[NewsContent] = (?)\n"
                     + "      ,[DatePosted] = (?)\n"
-                    +",[Description] = (?)"
+                    + ",[Description] = (?)"
                     + " WHERE [NewsID]=?";
 
             try {

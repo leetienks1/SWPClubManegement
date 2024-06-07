@@ -77,7 +77,7 @@
             <div class="row" style="width: 100vw;">
                 <div class="col-12">
                     <div class="card" style="width: 100vw;">
-                        <div class="card-body">
+                        <div class="card-content card-body">
                             <h1>${news.newsTitle}</h1>
                             <!-- Hiển thị nội dung bài báo -->
                             ${news.newsContent}

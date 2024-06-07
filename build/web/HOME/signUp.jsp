@@ -14,7 +14,7 @@
     </head>
     <body>
         <h1>Sign Up</h1>
-        <form action="http://localhost:8080/SWPWedRealClubManagement/SendEmail" method="POST">
+        <form action="/SWPClubManegement/SendEmail" method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             
