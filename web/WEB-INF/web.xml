@@ -41,6 +41,10 @@
         <servlet-class>Controller.PlayerController</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< coach
+        <servlet-name>TrainingServlet</servlet-name>
+        <servlet-class>Controller.TrainingServlet</servlet-class>
+=======
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>Servlet.FileUploadServlet</servlet-class>
     </servlet>
@@ -67,6 +71,7 @@
     <servlet>
         <servlet-name>BanAccountController</servlet-name>
         <servlet-class>Controller.BanAccountController</servlet-class>
+>>>>>>> main
     </servlet>
     <servlet>
         <servlet-name>MatchScheduleController</servlet-name>
@@ -121,6 +126,10 @@
         <url-pattern>/PlayerController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< coach
+        <servlet-name>TrainingServlet</servlet-name>
+        <url-pattern>/TrainingServlet</url-pattern>
+=======
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/FileUploadServlet</url-pattern>
     </servlet-mapping>
@@ -147,6 +156,7 @@
     <servlet-mapping>
         <servlet-name>BanAccountController</servlet-name>
         <url-pattern>/BanAccountController</url-pattern>
+>>>>>>> main
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MatchScheduleController</servlet-name>

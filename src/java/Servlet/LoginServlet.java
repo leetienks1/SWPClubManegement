@@ -52,7 +52,9 @@ public class LoginServlet extends HttpServlet {
             }else if(Role.Medical.equals(account.getRole())){
                response.sendRedirect("/SWPClubManegement/HOME/medical.jsp ");
             }else if(Role.Coach.equals(account.getRole())){
-                 response.sendRedirect("/SWPClubManegement/HOME/coach.jsp ");
+
+                 response.sendRedirect("http://localhost:8080/SWPClubManegement/COACH/CoachWelcome.jsp ");
+
             }else{
             response.sendRedirect("/SWPClubManegement/HomeServlet ");
             }
