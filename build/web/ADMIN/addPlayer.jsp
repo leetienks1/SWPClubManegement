@@ -44,7 +44,7 @@
 
                     <div class="form-group">
                         <label for="uid">Player Accounts</label>                       
-                        <select name="uid" id="uid" required title="No more accounts for players">
+                        <select name="uid" id="uid"  title="No more accounts for players">
                             <c:choose>
                                 <c:when test="${not empty listUsers}">
                                     <c:forEach var="u" items="${listUsers}">

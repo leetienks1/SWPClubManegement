@@ -4,6 +4,8 @@
  */
 package Model;
 
+import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -11,15 +13,18 @@ import java.time.LocalDateTime;
  *
  * @author Desktop
  */
-public class News {
+public class News implements Serializable{
 
     private int newsId;
     private String newsTitle;
     private String description;
     private String newsImageDescription;
     private String newsContent;
-    private LocalDate datePosted;
-
+    private transient LocalDate datePosted;
+    
+    
+    @SerializedName("datePosted")
+    private String datePostedString;
     public News() {
     }
 
@@ -96,6 +101,7 @@ public class News {
 
     public void setDatePosted(LocalDate datePosted) {
         this.datePosted = datePosted;
+        this.datePostedString = datePosted.toString();
     }
 
     public String getDescription() {

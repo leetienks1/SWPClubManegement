@@ -19,19 +19,25 @@
 <%@include file="../INCLUDES/head.jsp" %>
 <div id="edit-form" style="display: none" >
     <%
-        UserDAO udao1 = new UserDAO();
-        PlayerDAO pdao1 = new PlayerDAO();
-        String pid1 = request.getParameter("pid");
-        String open = request.getParameter("open");
-        if (pid1 != null && open != null) {
-            Player p = pdao1.get(Integer.parseInt(pid1)).get();
-            request.setAttribute("openEdit", open);
-            request.setAttribute("player", p);
-            request.setAttribute("user", udao1.get(p.getUserID()).get());
-        }
+            UserDAO udao1 = new UserDAO();
+            PlayerDAO pdao1 = new PlayerDAO();
+            String pid1 = request.getParameter("pid");
+            String open = request.getParameter("open");
+            if (pid1 != null && open != null) {
+                Player p = pdao1.get(Integer.parseInt(pid1)).get();
+                request.setAttribute("openEdit", open);
+                request.setAttribute("player", p);
+                if (p.getUserID() != 0) {
+                    request.setAttribute("user", udao1.get(p.getUserID()).get());
+                }
+            }
+
         
 
-        if(open !=null)
+        if(open
+
+        
+            !=null)
         {
             request.getSession().removeAttribute("Message");
         }
@@ -61,7 +67,7 @@
 
             <div class="form-group">
                 <label for="uid">Player Account</label>
-                <input type="text"  id="uid" value="${user.email}" readonly="">
+                <input type="text"  id="uid" value="${player.userID!=0?user.email:"None Account"}" readonly="">
             </div>
 
             <div class="form-group">

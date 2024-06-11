@@ -10,6 +10,7 @@ import java.util.Optional;
 /**
  *
  * @author Desktop
+ * @param <T>
  */
 public interface DAO<T> {
     List<T> getAll();

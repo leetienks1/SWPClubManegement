@@ -42,7 +42,7 @@
                 right: 0;
                 left: 0;
                 bottom: 50px;
-                height: 500px;
+                height: 400px;
                 width: 800px;
                 z-index: 400;
                 padding: 40px 100px 40px 100px;
@@ -159,6 +159,7 @@
             {
                 transition: transform ease 0.2s;
                 border-radius: 45px;
+                cursor: pointer;
             }
             #add-button:hover
             {
@@ -222,9 +223,7 @@
                     <li >
                         <a href="/SWPClubManegement/BanAccountController"> <img src="../IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
                     </li>
-                    <li>
-                        <a href="listFullBin.php"> <img src="../IMAGE/HOME/user.png"  width="32px" height="32px"/> Create Account</a>
-                    </li>
+                    
                     <li class="active">
                         <a href="/SWPClubManegement/PlayerController"><img src="../IMAGE/HOME/soccer-player.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
                     </li>                    
@@ -232,7 +231,10 @@
                         <a href="/SWPClubManegement/NewsController"> <img src="../IMAGE/HOME/news.png"  width="28px" height="28px"/> CRUD News</a>
                     </li>
                     <li>
-                        <a href="logout.php"> <img src="../IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD match schedule</a>
+                        <a href="/SWPClubManegement/MatchScheduleController"> <img src="../IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD Match Schedule</a>
+                    </li>
+                    <li>
+                        <a href="/SWPClubManegement/MatchStatisticController"> <img src="../IMAGE/HOME/user.png"  width="32px" height="32px"/> CRUD Match Stats</a>
                     </li>
 
                     <li>
@@ -314,7 +316,7 @@
 
 
 
-                                    <a class="update-button" href="adminPage.jsp?pid=${p.playerID}&uid=${p.userID}&open=openedit" onclick="event.handleLinkClick(event);"> <i class="fas fa-edit"></i></a>
+                                    <a class="update-button" href="adminPage.jsp?pid=${p.playerID}&uid=${p.userID==0?"":p.userID}&open=openedit" onclick="event.handleLinkClick(event);"> <i class="fas fa-edit"></i></a>
                                         <c:if test="${not empty deleteLink}">
                                         <a href="${deleteLink}" onclick="return handleDeleteClick(event);">
                                             <i class="fas fa-trash-alt"></i>

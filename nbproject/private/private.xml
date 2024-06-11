@@ -3,12 +3,60 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/User.java</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Test/TestSql.java</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/LoginServlet.java</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/INCLUDES/nav.jsp</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Filter/AccessControlFilter.java</file>
+=======
+
+
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminListMatchSchedule.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/EditNewsServlet.java</file>
+
+
+            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/web/COACH/Training.jsp</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/web/COACH/editTraining.jsp</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/src/java/Email/Email.java</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/web/COACH/addTraining.jsp</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/src/java/Controller/TrainingServlet.java</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/src/java/DAO/TrainingScheduleDAO.java</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/src/java/Test/TestSql.java</file>
+            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/web/HOME/signUp.jsp</file>
+
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/EditProfileServlet.java</file>
+
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/addNews.jsp</file>
+
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Test/TestSql.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/STORE/productDetail.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/OrderJerseyDetails.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/STORE/paymentJersey.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/JerseyPaymentServlet.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/INCLUDES/nav.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/PaymentServlet.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/STORE/product.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/DAO/OrderDAO.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/CSS/STORE/main.css</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminNewsList.jsp</file>
+
+
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/NewsController.java</file>
+
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/User.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Test/TestSql.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/HomeServlet.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/Coach.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/EditNewsServlet.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminPage.jsp</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/RemoveSessionSuccess.java</file>
+            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/PlayerController.java</file>
+
+
+>>>>>>> 43dfcdbb4798f657e6fd07a9fe7abea30ac19097
         </group>
     </open-files>
 </project-private>
