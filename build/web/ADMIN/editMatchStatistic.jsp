@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="score1"> Score</label>
-                        <input  name="score1"    value="" type="number"  min="0"  step="1" required=""/>
+                    <input  name="score1"    value="" type="number"  min="0"  step="1" required=""/>
 
                     </div>
                     <div class="form-group">

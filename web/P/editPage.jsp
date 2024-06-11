@@ -197,7 +197,7 @@
                                 <!-- Form Group (birthday)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                    <input class="form-control" id="inputBirthday" type="date" name="birthday" placeholder="Enter your birthday" value="${user.dateOfBirth}">
+                                    <input class="form-control" id="inputBirthday" type="date" name="birthday" required="" placeholder="Enter your birthday" value="${user.dateOfBirth}">
                                 </div>
                                 <!-- Form Group (about)-->
                                 <div class="mb-3">

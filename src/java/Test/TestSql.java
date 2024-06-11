@@ -5,16 +5,23 @@
 package Test;
 
 import DAO.CoachDAO;
+import DAO.JerseyDAO;
+import DAO.JerseySizeDAO;
 import DAO.MatchScheduleDAO;
 import DAO.MatchStatisticDAO;
 import DAO.NewsDAO;
+import DAO.OrderDAO;
+import DAO.OrderJerseyDetailsDAO;
 import DAO.PlayerDAO;
 import DAO.TeamDAO;
 import DAO.UserDAO;
 import Model.Coach;
+import Model.JerseySize;
 import Model.MatchSchedule;
 import Model.MatchStatistic;
 import Model.News;
+import Model.OrderJersey;
+import Model.OrderJerseyDetails;
 import Model.Player;
 import Model.Position;
 import Model.User;
@@ -39,14 +46,15 @@ public class TestSql {
     public static void main(String[] args) throws ParseException {
 
      
-        MatchScheduleDAO mDAO = new MatchScheduleDAO();
-                System.out.println(mDAO.getMatchHaveNotStatistic());
-                
-                
-                MatchStatisticDAO mstdao = new MatchStatisticDAO();
-                
-        System.out.println(mDAO.getMatchHaveNotStatistic());
-      
+        OrderJerseyDetailsDAO oddao= new OrderJerseyDetailsDAO();
+        oddao.save(new OrderJerseyDetails(1, 1, 1, 1));
+        System.out.println();
+
+    JerseySizeDAO jsdao = new JerseySizeDAO();
+        System.out.println(jsdao.getSizeByJerseyID(3));
+
+//        OrderDAO odao = new OrderDAO();
+//        System.out.println(odao.getLatestOrderByUID(1).get());
       
     }
 }
