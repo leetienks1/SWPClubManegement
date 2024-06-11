@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    <filter>
+        <filter-name>StoreJerseyFiller</filter-name>
+        <filter-class>Filter.StoreJerseyFiller</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>StoreJerseyFiller</filter-name>
+        <url-pattern>/STORE/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>EditProfileServlet</servlet-name>
         <servlet-class>Controller.EditProfileServlet</servlet-class>
@@ -85,6 +93,26 @@
         <servlet-name>AdminCreateAccountServlet</servlet-name>
         <servlet-class>Servlet.AdminCreateAccountServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProductDetailServlet</servlet-name>
+        <servlet-class>Servlet.ProductDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShopJerseyServlet</servlet-name>
+        <servlet-class>Servlet.ShopJerseyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JerseyPaymentServlet</servlet-name>
+        <servlet-class>Servlet.JerseyPaymentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>Servlet.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>Servlet.ajaxServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/EditProfileServlet</url-pattern>
@@ -169,6 +197,26 @@
     <servlet-mapping>
         <servlet-name>AdminCreateAccountServlet</servlet-name>
         <url-pattern>/AdminCreateAccountServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductDetailServlet</servlet-name>
+        <url-pattern>/ProductDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShopJerseyServlet</servlet-name>
+        <url-pattern>/ShopJerseyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JerseyPaymentServlet</servlet-name>
+        <url-pattern>/JerseyPaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/PaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/ajaxServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

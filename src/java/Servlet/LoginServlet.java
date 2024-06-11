@@ -36,32 +36,36 @@ public class LoginServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String email = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        UserDAO accountDAO = new UserDAO();
-        User account=accountDAO.login(email, password);
- 
-         
-      
-        if (account != null) {
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("user", account);
-            if(Role.Admin.equals(account.getRole())){
-                 response.sendRedirect("/SWPClubManegement/BanAccountController");
-            }else if(Role.Medical.equals(account.getRole())){
-               response.sendRedirect("/SWPClubManegement/HOME/medical.jsp ");
-            }else if(Role.Coach.equals(account.getRole())){
 
-                 response.sendRedirect("http://localhost:8080/SWPClubManegement/COACH/CoachWelcome.jsp ");
+            String password = request.getParameter("password");
 
-            }else{
-            response.sendRedirect("/SWPClubManegement/HomeServlet ");
+            UserDAO accountDAO = new UserDAO();
+            User account = accountDAO.login(email, password);
+
+            if (account != null && account.getStatus() == true) {
+
+                HttpSession session = request.getSession();
+                session.setAttribute("user", account);
+                if (Role.Admin.equals(account.getRole())) {
+                    response.sendRedirect("/SWPClubManegement/BanAccountController");
+                } else if (Role.Medical.equals(account.getRole())) {
+                    response.sendRedirect("/SWPClubManegement/HOME/medical.jsp ");
+                } else if (Role.Coach.equals(account.getRole())) {
+                    response.sendRedirect("/SWPClubManegement/HOME/coach.jsp ");
+                } else {
+                    response.sendRedirect("/SWPClubManegement/HomeServlet ");
+                }
+            } else {
+                if (account.getStatus() != true) {
+                    request.getSession().setAttribute("error", "Your account has been locked");
+                    response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
+                } else {
+                    request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
+                    response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
+                }
+
+
             }
-        } else {
-            request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
-            response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
-        }
         }
     }
 

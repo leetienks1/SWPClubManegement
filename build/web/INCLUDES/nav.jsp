@@ -13,6 +13,7 @@
         <a class="nav-click">News</a>
         <a class="nav-click">Player</a>
         <a class="nav-click">Ticket</a>
+        <a href="/SWPClubManegement/ShopJerseyServlet" class="nav-click">Store</a>
 
     </div>
     <div class="nav-icons">
