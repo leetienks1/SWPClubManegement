@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String email = request.getParameter("username");
+
             String password = request.getParameter("password");
 
             UserDAO accountDAO = new UserDAO();
@@ -62,6 +63,7 @@ public class LoginServlet extends HttpServlet {
                     request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
                     response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
                 }
+
 
             }
         }

@@ -4,6 +4,7 @@
  */
 package Test;
 
+
 import DAO.CoachDAO;
 import DAO.JerseyDAO;
 import DAO.JerseySizeDAO;
@@ -37,6 +38,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
+
+
 /**
  *
  * @author Desktop
@@ -45,16 +49,6 @@ public class TestSql {
 
     public static void main(String[] args) throws ParseException {
 
-     
-        OrderJerseyDetailsDAO oddao= new OrderJerseyDetailsDAO();
-        oddao.save(new OrderJerseyDetails(1, 1, 1, 1));
-        System.out.println();
 
-    JerseySizeDAO jsdao = new JerseySizeDAO();
-        System.out.println(jsdao.getSizeByJerseyID(3));
-
-//        OrderDAO odao = new OrderDAO();
-//        System.out.println(odao.getLatestOrderByUID(1).get());
-      
     }
 }

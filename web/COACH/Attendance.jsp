@@ -1,6 +1,6 @@
 <%-- 
-    Document   : coach
-    Created on : May 21, 2024, 6:23:40 PM
+    Document   : Attendance
+    Created on : Jun 1, 2024, 7:44:55 AM
     Author     : Zanis
 --%>
 
@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
-        <h1>Hello World!</h1>
+    <body style="background-color: greenyellow;">
+            <%@include file="/COACH/CoachFun.jsp" %> 
     </body>
 </html>
