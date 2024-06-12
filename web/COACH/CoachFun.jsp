@@ -17,13 +17,12 @@
         <div class="sidebar">
             <header>Coach</header>
             <ul>
-                <li><a href="Attendance.jsp"><i class="fas fa-qrcode"></i>Attendance</a></li>
+                <li><a href="/SWPClubManegement/AttendanceServlet"><i class="fas fa-qrcode"></i>Attendance</a></li>
                 <li><a href="Lineup.jsp"><i class="fas fa-link"></i>Expected Lineups</a></li>
                 <li><a href="#"><i class="fas fa-stream"></i>Player Stats</a></li>
-                <li><a href="http://localhost:8080/SWPClubManegement/TrainingServlet"><i class="fas fa-calendar-week"></i>Training Schedule</a></li>
-                <li><a href="#"><i class="far fa-question-circle"></i>Meeting Schedule</a></li>
-                <li><a href="#"><i class="fas fa-sliders-h"></i>Services</a></li>
-                <li><a href="#"><i class="far fa-envelope"></i>Contact</a></li>
+                <li><a href="/SWPClubManegement/TrainingServlet"><i class="fas fa-calendar-week"></i>Training Schedule</a></li>
+                <li><a href="/SWPClubManegement/MeetingServlet"><i class="far fa-question-circle"></i>Meeting Schedule</a></li>
+                <li><a href="/SWPClubManegement/LogoutServlet"><i class="fas fa-sliders-h"></i>Logout</a></li>
             </ul>
         </div>
         <section></section>

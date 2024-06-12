@@ -4,12 +4,15 @@
  */
 package Controller;
 
+import DAO.AttendanceDAO;
+import DAO.PlayerDAO;
 import DAO.TrainingScheduleDAO;
+import Model.Attendance;
+import Model.Player;
 import Model.TrainingSchedule;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Zanis
  */
-public class TrainingServlet extends HttpServlet {
+public class AttendanceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +45,10 @@ public class TrainingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TrainingServlet</title>");
+            out.println("<title>Servlet AttendanceServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet TrainingServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AttendanceServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,24 +74,27 @@ public class TrainingServlet extends HttpServlet {
             }
             switch (theCommand) {
                 case "LIST":
-                    ListTraining(request, response);
+                    ListAttendance(request, response);
                     break;
                 case "ADD":
-                    AddTraining(request, response);
+                    addAttendance(request, response);
+                    break;
+                case "LOAD":
+
                     break;
                 case "UPDATE":
-                    UpdateTraining(request, response);
+                    updateAttendance(request,response);
                     break;
                 case "DELETE":
-                    DeleteTraining(request, response);
+
                     break;
                 default:
-                    ListTraining(request, response);
+
             }
 
         } catch (Exception ex) {
 
-            Logger.getLogger(TrainingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AttendanceServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -116,51 +122,62 @@ public class TrainingServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void ListTraining(HttpServletRequest request, HttpServletResponse response) {
+    private void addAttendance(HttpServletRequest request, HttpServletResponse response) {
+        AttendanceDAO aDAO = new AttendanceDAO();
+        PlayerDAO pDAO = new PlayerDAO();
+        String[] playerID = request.getParameterValues("check");
+        int TrainingID = Integer.parseInt(request.getParameter("cid"));
+        List<Player> listPlayer = pDAO.getAll();
+        List<Attendance> listAtten = new ArrayList<>();
+        for (Player p : listPlayer) {
+            listAtten.add(new Attendance(p.getPlayerID(), TrainingID, LocalDate.now(), false));
+        }
+        for (Attendance a : listAtten) {
+            for (String pID : playerID) {
+                if(a.getPlayerID() == Integer.parseInt(pID)){
+                    a.setIsPresent(true);
+                }
+            }
+        }
+        for (Attendance attendance : listAtten) {
+            aDAO.save(attendance);
+        }
+        ListAttendance(request, response);
+    }
+
+    public void ListAttendance(HttpServletRequest request, HttpServletResponse response) {
         try {
             TrainingScheduleDAO tdao = new TrainingScheduleDAO();
             List<TrainingSchedule> list = tdao.getAll();
             request.getSession().setAttribute("sessionlist", list);
-            response.sendRedirect("COACH/Training.jsp");
+            response.sendRedirect("COACH/Attendance.jsp");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
 
-    public void AddTraining(HttpServletRequest request, HttpServletResponse response) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
-        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"));
-        String TrainingTime = request.getParameter("trainingTime");
-        String Location = request.getParameter("location");
-        String Description = request.getParameter("description");
-        TrainingSchedule t = new TrainingSchedule(TrainingDate, TrainingTime, Location, Description);
-        tDAO.save(t);
-        ListTraining(request, response);
-    }
-
-    private void DeleteTraining(HttpServletRequest request, HttpServletResponse response) {
-        int cid = Integer.parseInt(request.getParameter("cid"));;
-        new TrainingScheduleDAO().delete(cid);
-        ListTraining(request, response);
-    }
-
-    private void UpdateTraining(HttpServletRequest request, HttpServletResponse response) {
-        int cid = Integer.parseInt(request.getParameter("cid"));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
-        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"));
-        String TrainingTime = request.getParameter("trainingTime");
-        String Location = request.getParameter("location");
-        String Description = request.getParameter("description");
-        TrainingSchedule t = tDAO.get(cid).get();
-        t.setTrainingDate(TrainingDate);
-        t.setTrainingTime(TrainingTime);
-        t.setLocation(Location);
-        t.setDescription(Description);
-        tDAO.update(t);
-        ListTraining(request, response);
+    private void updateAttendance(HttpServletRequest request, HttpServletResponse response) {
+        AttendanceDAO aDAO = new AttendanceDAO();
+        PlayerDAO pDAO = new PlayerDAO();
+        String[] playerID = request.getParameterValues("check");
+        int TrainingID = Integer.parseInt(request.getParameter("cid"));
+        List<Attendance> listAtten = aDAO.getAttendance(TrainingID);
+        for (Attendance a : listAtten) {
+            a.setIsPresent(false);
+        }
+        if(playerID!=null){
+        for (Attendance a : listAtten) {
+            for (String pID : playerID) {
+                if(a.getPlayerID() == Integer.parseInt(pID)){
+                    a.setIsPresent(true);
+                }
+            }
+        }
+        }
+        for (Attendance attendance : listAtten) {
+            aDAO.update(attendance);
+        }
+        ListAttendance(request, response);
     }
 
 }

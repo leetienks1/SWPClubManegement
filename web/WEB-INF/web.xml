@@ -17,6 +17,18 @@
         <servlet-class>Servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TrainingServlet</servlet-name>
+        <servlet-class>Controller.TrainingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceServlet</servlet-name>
+        <servlet-class>Controller.AttendanceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MeetingServlet</servlet-name>
+        <servlet-class>Controller.MeetingServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SendEmail</servlet-name>
         <servlet-class>Servlet.SendEmail</servlet-class>
     </servlet>
@@ -49,10 +61,6 @@
         <servlet-class>Controller.PlayerController</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< coach
-        <servlet-name>TrainingServlet</servlet-name>
-        <servlet-class>Controller.TrainingServlet</servlet-class>
-=======
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>Servlet.FileUploadServlet</servlet-class>
     </servlet>
@@ -79,7 +87,6 @@
     <servlet>
         <servlet-name>BanAccountController</servlet-name>
         <servlet-class>Controller.BanAccountController</servlet-class>
->>>>>>> main
     </servlet>
     <servlet>
         <servlet-name>MatchScheduleController</servlet-name>
@@ -142,6 +149,18 @@
         <url-pattern>/HomeServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>TrainingServlet</servlet-name>
+        <url-pattern>/TrainingServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>AttendanceServlet</servlet-name>
+        <url-pattern>/AttendanceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MeetingServlet</servlet-name>
+        <url-pattern>/MeetingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
@@ -154,10 +173,6 @@
         <url-pattern>/PlayerController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< coach
-        <servlet-name>TrainingServlet</servlet-name>
-        <url-pattern>/TrainingServlet</url-pattern>
-=======
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/FileUploadServlet</url-pattern>
     </servlet-mapping>
@@ -184,7 +199,6 @@
     <servlet-mapping>
         <servlet-name>BanAccountController</servlet-name>
         <url-pattern>/BanAccountController</url-pattern>
->>>>>>> main
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MatchScheduleController</servlet-name>
