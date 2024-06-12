@@ -4,16 +4,17 @@
  */
 package Controller;
 
+import DAO.MeetingDAO;
 import DAO.TrainingScheduleDAO;
+import Model.Meeting;
 import Model.TrainingSchedule;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Zanis
  */
-public class TrainingServlet extends HttpServlet {
+public class MeetingServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +43,10 @@ public class TrainingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TrainingServlet</title>");
+            out.println("<title>Servlet MeetingServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet TrainingServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet MeetingServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,24 +72,23 @@ public class TrainingServlet extends HttpServlet {
             }
             switch (theCommand) {
                 case "LIST":
-                    ListTraining(request, response);
+                    ListMeeting(request, response);
                     break;
                 case "ADD":
-                    AddTraining(request, response);
+                    AddMeeting(request, response);
                     break;
                 case "UPDATE":
-                    UpdateTraining(request, response);
+                    UpdateMeeting(request, response);
                     break;
                 case "DELETE":
-                    DeleteTraining(request, response);
+                    DeleteMeeting(request, response);
                     break;
                 default:
-                    ListTraining(request, response);
+                    ListMeeting(request, response);
             }
 
         } catch (Exception ex) {
-
-            Logger.getLogger(TrainingServlet.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
     }
 
@@ -116,51 +116,36 @@ public class TrainingServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void ListTraining(HttpServletRequest request, HttpServletResponse response) {
+    private void ListMeeting(HttpServletRequest request, HttpServletResponse response) {
         try {
-            TrainingScheduleDAO tdao = new TrainingScheduleDAO();
-            List<TrainingSchedule> list = tdao.getAll();
+            MeetingDAO tdao = new MeetingDAO();
+            List<Meeting> list = tdao.getAll();
             request.getSession().setAttribute("sessionlist", list);
-            response.sendRedirect("COACH/Training.jsp");
+            response.sendRedirect("COACH/Meeting.jsp");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
 
-    public void AddTraining(HttpServletRequest request, HttpServletResponse response) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
-        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"));
-        String TrainingTime = request.getParameter("trainingTime");
+    private void AddMeeting(HttpServletRequest request, HttpServletResponse response) {
+        MeetingDAO tDAO = new MeetingDAO();
+        LocalDate MeetingDate = LocalDate.parse(request.getParameter("meetingDate"));
+        String MeetingTime = request.getParameter("meetingTime");
         String Location = request.getParameter("location");
         String Description = request.getParameter("description");
-        TrainingSchedule t = new TrainingSchedule(TrainingDate, TrainingTime, Location, Description);
+        Meeting t = new Meeting(MeetingDate, MeetingTime, Location, Description);
         tDAO.save(t);
-        ListTraining(request, response);
+        ListMeeting(request, response);
     }
 
-    private void DeleteTraining(HttpServletRequest request, HttpServletResponse response) {
+    private void UpdateMeeting(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void DeleteMeeting(HttpServletRequest request, HttpServletResponse response) {
         int cid = Integer.parseInt(request.getParameter("cid"));;
-        new TrainingScheduleDAO().delete(cid);
-        ListTraining(request, response);
-    }
-
-    private void UpdateTraining(HttpServletRequest request, HttpServletResponse response) {
-        int cid = Integer.parseInt(request.getParameter("cid"));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
-        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"));
-        String TrainingTime = request.getParameter("trainingTime");
-        String Location = request.getParameter("location");
-        String Description = request.getParameter("description");
-        TrainingSchedule t = tDAO.get(cid).get();
-        t.setTrainingDate(TrainingDate);
-        t.setTrainingTime(TrainingTime);
-        t.setLocation(Location);
-        t.setDescription(Description);
-        tDAO.update(t);
-        ListTraining(request, response);
+        new MeetingDAO().delete(cid);
+        ListMeeting(request, response);
     }
 
 }
