@@ -63,7 +63,8 @@ public class LoginServlet extends HttpServlet {
                     request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
                     response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
                 }
-
+                
+                    
 
             }
         }

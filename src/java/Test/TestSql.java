@@ -46,8 +46,13 @@ import java.util.Optional;
  * @author Desktop
  */
 public class TestSql {
+    
 
     public static void main(String[] args) throws ParseException {
+        PlayerDAO ms = new PlayerDAO();
+        ms.getAll();
+        System.out.print(ms.getAllPlayersImage().get(0).getImage());
+        
 
 
     }

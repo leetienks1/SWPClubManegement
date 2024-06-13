@@ -19,7 +19,8 @@ public class Player {
     private LocalDate age;
     private double weight;
     private int height;
-
+    private String image;
+    
     public Player(Position position, String name, LocalDate age, double weight, int height) {
         this.position = position;
         this.name = name;
@@ -46,6 +47,26 @@ public class Player {
         this.age = age;
         this.weight = weight;
         this.height = height;
+        this.image=image;
+    }
+
+ 
+    public Player(int playerID, int userID, Position position, String name, LocalDate age , double weight, int height,String image) {
+        this.playerID = playerID;
+        this.userID = userID;
+        this.position = position;
+        this.name = name;
+        this.age = age;
+        this.weight = weight;
+        this.height = height;
+        this.image=image;
+    }
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     // Default Constructor

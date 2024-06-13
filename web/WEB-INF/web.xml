@@ -4,6 +4,33 @@
         <filter-name>StoreJerseyFiller</filter-name>
         <filter-class>Filter.StoreJerseyFiller</filter-class>
     </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>Filter.AdminFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>CoachFilter</filter-name>
+        <filter-class>Filter.CoachFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>MedicalFilter</filter-name>
+        <filter-class>Filter.MedicalFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>MedicalFilter</filter-name>
+        <url-pattern>/MEDICAL/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CoachFilter</filter-name>
+        <url-pattern>/COACH/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/ADMIN/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>StoreJerseyFiller</filter-name>
         <url-pattern>/STORE/*</url-pattern>
@@ -120,6 +147,10 @@
         <servlet-name>ajaxServlet</servlet-name>
         <servlet-class>Servlet.ajaxServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PlayerListServlet</servlet-name>
+        <servlet-class>Controller.PlayerListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/EditProfileServlet</url-pattern>
@@ -152,7 +183,7 @@
         <servlet-name>TrainingServlet</servlet-name>
         <url-pattern>/TrainingServlet</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AttendanceServlet</servlet-name>
         <url-pattern>/AttendanceServlet</url-pattern>
     </servlet-mapping>
@@ -231,6 +262,10 @@
     <servlet-mapping>
         <servlet-name>ajaxServlet</servlet-name>
         <url-pattern>/ajaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PlayerListServlet</servlet-name>
+        <url-pattern>/Players</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

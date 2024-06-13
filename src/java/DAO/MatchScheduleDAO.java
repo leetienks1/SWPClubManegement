@@ -61,7 +61,7 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
                     LocalDate localDate = sqlDate.toLocalDate();
                     m.setMatchDate(localDate);
                 }
-                m.setLocation(rs.getString(5));
+                m.setMatchLocation(rs.getString(5));
                 String tour = rs.getString(6);
                 if (tour != null) {
                     m.setTournament(m.getTournament().valueOf(rs.getString(6).trim()));
@@ -138,7 +138,7 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
                     LocalDate localDate = sqlDate.toLocalDate();
                     m.setMatchDate(localDate);
                 }
-                m.setLocation(rs.getString(5));
+                m.setMatchLocation(rs.getString(5));
                 String tour = rs.getString(6);
                 if (tour != null) {
                     m.setTournament(m.getTournament().valueOf(rs.getString(6).trim()));
@@ -201,7 +201,7 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
                     LocalDate localDate = sqlDate.toLocalDate();
                     m.setMatchDate(localDate);
                 }
-                m.setLocation(rs.getString(5));
+                m.setMatchLocation(rs.getString(5));
                 String tour = rs.getString(6);
                 if (tour != null) {
                     m.setTournament(m.getTournament().valueOf(rs.getString(6).trim()));
@@ -253,7 +253,7 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
                     LocalDate localDate = sqlDate.toLocalDate();
                     m.setMatchDate(localDate);
                 }
-                m.setLocation(rs.getString("MatchLocation"));
+                m.setMatchLocation(rs.getString("MatchLocation"));
                 String tour = rs.getString(6);
                 if (tour != null) {
                     m.setTournament(m.getTournament().valueOf(tour.trim()));
@@ -297,7 +297,7 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
                 st.setDate(3, null);
             }
 
-            st.setString(4, t.getLocation());
+            st.setString(4, t.getMatchLocation());
             st.setString(5, t.getTournament().toString());
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
@@ -326,7 +326,7 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
             st.setInt(1, t.getAwayTeamID());
             st.setInt(2, t.getHomeTeamID());
             st.setDate(3, Date.valueOf(t.getMatchDate()));
-            st.setString(4, t.getLocation());
+            st.setString(4, t.getMatchLocation());
             st.setString(5, t.getTournament().toString());
             st.setInt(6, t.getMatchID());
             st.executeUpdate();
@@ -403,6 +403,42 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
         }
         return false;
     }
+    public void add(MatchSchedule match) {
+    try {
+        // Tạo câu lệnh SQL để chèn một trận đấu mới vào cơ sở dữ liệu
+        String sql = "INSERT INTO [RealClub].[dbo].[MatchSchedule] ([AwayTeamID], [HomeTeamID], [MatchDate], [MatchLocation], [Tournament]) VALUES (?, ?, ?, ?, ?)";
+
+        // Mở kết nối đến cơ sở dữ liệu
+        con = this.openConnection();
+
+        // Tạo một PreparedStatement từ kết nối với câu lệnh SQL
+        st = con.prepareStatement(sql);
+
+        // Đặt các tham số cho câu lệnh SQL từ đối tượng MatchSchedule được truyền vào
+        st.setInt(1, match.getAwayTeamID());
+        st.setInt(2, match.getHomeTeamID());
+        st.setDate(3, Date.valueOf(match.getMatchDate()));
+        st.setString(4, match.getMatchLocation());
+        st.setString(5, match.getTournament().toString());
+
+        // Thực thi câu lệnh SQL
+        st.executeUpdate();
+    } catch (SQLException | ClassNotFoundException e) {
+        e.printStackTrace();
+    } finally {
+        // Đóng các tài nguyên
+        try {
+            if (st != null) {
+                st.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
 
     public List<MatchSchedule> SearchMatch(String valueSearch) {
         try {
@@ -452,7 +488,7 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
                     LocalDate localDate = sqlDate.toLocalDate();
                     m.setMatchDate(localDate);
                 }
-                m.setLocation(rs.getString("MatchLocation"));
+                m.setMatchLocation(rs.getString("MatchLocation"));
                 String tour = rs.getString("Tournament");
                 if (tour != null) {
                     m.setTournament(Tournament.valueOf(tour.trim()));
