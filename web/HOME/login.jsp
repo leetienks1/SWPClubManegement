@@ -5,6 +5,30 @@
     <title>Login</title>
     <!-- Link to Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 100px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .forgot-password {
+            font-size: 14px;
+        }
+        .btn-login {
+            width: 100%;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -18,12 +42,14 @@
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <a href="RePass.jsp">forgot password?</a>
+            <div class="form-group">
+                <a href="RePass.jsp" class="forgot-password">Forgot password?</a>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-login">Login</button>
+            </div>
             ${error}
             <%session.removeAttribute("error");%>
-            <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary">Login</button>
-            </div>
         </form>
     </div>
     <!-- Link to Bootstrap JS and dependencies -->
