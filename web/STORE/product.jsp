@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Book Library</title>
+        <title>RealFC Store</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="../css/STORE/apple-touch-icon.png">
@@ -137,7 +137,7 @@
                                 <h1>All Products</h1>
                                 <ol class="tg-breadcrumb">
                                     <li><a href="/SWPClubManegement/HomeServlet">home</a></li>
-                                    <li class="tg-active">Products</li>
+                                    <li class="tg-active">RealFC</li>
                                 </ol>
                             </div>
                         </div>

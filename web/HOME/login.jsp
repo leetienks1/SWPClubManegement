@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="../CSS/NAV/nav.css"/>
     <!-- Link to Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -31,6 +32,7 @@
     </style>
 </head>
 <body>
+    <%@include file="../INCLUDES/nav.jsp" %>
     <div class="container">
         <h1 class="my-4 text-center">Login</h1>
         <form action="http://localhost:8080/SWPClubManegement/LoginServlet" method="post">

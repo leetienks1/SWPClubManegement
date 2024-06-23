@@ -14,7 +14,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Book Library</title>
+       <title>RealFC Store</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="../css/STORE/apple-touch-icon.png">
@@ -305,6 +305,23 @@
                 border-radius: 45px;
                 align-items: center;
             }
+            .btn {
+                display: inline-block;
+                width: 40%;
+                font-size: 16px;
+                color: #fff;
+                background-color: #007bff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                transition: background-color 0.3s ease;
+            }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
         </style>
         <div id="tg-wrapper" class="tg-wrapper tg-haslayout">
             <!--************************************
@@ -394,8 +411,8 @@
                             <div class="tg-innerbannercontent">
                                 <h1>All Products</h1>
                                 <ol class="tg-breadcrumb">
-                                    <li><a href="javascript:void(0);">home</a></li>
-                                    <li class="tg-active">Products</li>
+                                    <li><a href="/SWPClubManegement/HomeServlet">home</a></li>
+                                    <li class="tg-active">RealFC</li>
                                 </ol>
                             </div>
                         </div>
@@ -603,6 +620,7 @@
 
 
 <script src="../OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 <script>
                                                 $(document).ready(function () {
 
@@ -634,20 +652,38 @@
 
                                                     });
                                                 });
+                                                // ma hoa
+                                                function encryptData(data, key) {
+                                                    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
+                                                    return encryptedData;
+                                                }
+                                                // lấy lại khi cần thiết
+                                                function decryptData(encryptedData, key) {
+                                                    const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, key);
+                                                    const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+                                                    return decryptedData;
+                                                }
+
+
+
 
 
                                                 let cart = [];
                                                 const user = ${user.userId};
                                                 console.log(user);
-                                                function saveCart()
-                                                {
-                                                    sessionStorage.setItem('usercart' + user, JSON.stringify(cart));
+                                                function saveCart() {
+                                                    const encryptedCart = encryptData(cart, "swp" + user);
+                                                    localStorage.setItem('usercart_' + user, encryptedCart);
                                                 }
+
+
                                                 function loadCart() {
-                                                    const storedCart = sessionStorage.getItem('usercart' + user);
+                                                    const storedCart = localStorage.getItem('usercart_' + user);
                                                     if (storedCart) {
-                                                        cart = JSON.parse(storedCart);
-                                                        renderCart();
+                                                        const decryptedCart = decryptData(storedCart, "swp" + user);
+                                                        cart = decryptedCart;
+//                                                        renderCart();
+                                                        updateCart();
                                                     }
                                                 }
                                                 function addToCart() {
@@ -681,7 +717,17 @@
                                                     for (let i = 0; i < cart.length; i++) {
                                                         let item = cart[i];
                                                         if (item.name === productName && item.size === selectedSize.value) {
-                                                            item.quantity += quantity;
+
+                                                            if ((item.quantity + quantity) > parseInt(availableLabel))
+                                                            {
+                                                                item.quantity = parseInt(availableLabel);
+
+                                                            } else
+                                                            {
+                                                                item.quantity += quantity;
+
+
+                                                            }
                                                             itemExists = true;
                                                             break;
                                                         }
@@ -711,21 +757,31 @@
                                                     const totalItem = document.querySelector('.total-in-cart');
                                                     let total = 0;
                                                     let totalIncart = 0;
-                                                    cart.forEach(function (item, index) {
+                                                    if (cart.length === 0)
+                                                    {
+                                                        totalItem.textContent = "";
+                                                        totalItem.textContent = 0;
+                                                        document.getElementById('cart-total').textContent = '$' + 0;
+                                                    } else {
+                                                        cart.forEach(function (item, index) {
 
 
-                                                        const itemTotal = parseFloat(item.price).toFixed(2) * parseInt(item.quantity);
-                                                        total += itemTotal;
-                                                        totalIncart += item.quantity;
-                                                        totalItem.textContent = totalIncart;
-                                                    });
-                                                    document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+                                                            const itemTotal = parseFloat(item.price).toFixed(2) * parseInt(item.quantity);
+                                                            total += itemTotal;
+                                                            totalIncart += parseInt(item.quantity);
+                                                            totalItem.textContent = totalIncart;
+                                                        });
+                                                        document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+                                                    }
+
                                                     saveCart();
+                                                    renderCart();
                                                 }
 
                                                 function removeItem(index) {
                                                     cart.splice(index, 1);
                                                     saveCart();
+                                                    updateCart();
                                                     renderCart();
                                                 }
                                                 function updateQuantity(index, quantity) {
@@ -750,13 +806,15 @@
                                                                 '<div>' + '<h5>' + item.name + '</h3>' +
                                                                 '<h6> Size: ' + item.size + '</h6>' +
                                                                 '<h6 class ="price"> Price: ' + item.price + '</h6>' +
-                                                                '<input type="number" min="0" value="' + item.quantity + '" onchange="updateQuantity(' + index + ', this.value)" max="' + item.quantityAvailable + '">' +
+                                                                '<input type="number" min="0" value="' + item.quantity + '" onchange="updateQuantity(' + index + ', this.value); updateCart();" max="' + item.quantityAvailable + '">' +
+                                                                '<div  class="btn" onclick="removeItem(' + index + ')"><i class="fas fa-trash"></i></div>' +
                                                                 '</div>';
 //                                                               
                                                         cartItems.appendChild(row);
                                                         console.log(item);
                                                     });
-                                                    updateCart();
+
+
                                                 }
                                                 function BuyNow() {
                                                     let cartNow = [];
@@ -796,6 +854,7 @@
                                                     cartNow.push(product);
 
 
+
                                                     sessionStorage.setItem('itemTrue' + user, JSON.stringify(cartNow));
                                                     window.location.href = '/SWPClubManegement/STORE/paymentJersey.jsp';
                                                 }
@@ -825,13 +884,18 @@
                                                 });
 
                                                 document.querySelectorAll('input[name="size"]').forEach(item => {
-                                                    console.log("item", item);
+                                                    // Lắng nghe sự kiện change cho mỗi input[name="size"]
                                                     item.addEventListener('change', function () {
+                                                        // Lấy ra size đã chọn
                                                         const selectedSize = document.querySelector('input[name="size"]:checked');
-                                                        const parentDiv = selectedSize.closest('div');
-                                                        const availableLabel = parentDiv.querySelector('label.available').textContent;
-                                                        console.log("quan", availableLabel); // Kiểm tra giá trị đã lấy được
+                                                        if (!selectedSize)
+                                                            return; // Nếu không có size nào được chọn, thoát
 
+                                                        // Lấy ra giá trị của label có class "available"
+                                                        const parentDiv = selectedSize.closest('div');
+                                                        const availableLabel = parentDiv.querySelector('label.available').textContent.trim();
+
+                                                        // Kiểm tra số lượng nhập vào
                                                         const quantityInput = document.getElementById('quantity');
                                                         if (parseInt(quantityInput.value) > parseInt(availableLabel)) {
                                                             quantityInput.value = availableLabel;
@@ -839,8 +903,39 @@
                                                         quantityInput.max = availableLabel;
                                                     });
                                                 });
-</script>
+                                                //ngăn vượt quá số lượng ở cửa hàng
+                                                document.getElementById('quantity').addEventListener('input', function () {
+                                                    const quantityInput = this;
+                                                    const maxValue = parseInt(quantityInput.getAttribute('max'));
+                                                    const enteredValue = parseInt(quantityInput.value);
 
+                                                    if (enteredValue > maxValue) {
+                                                        quantityInput.value = maxValue;
+                                                    }
+                                                });
+
+                                                // ngăn vượt quá số lương trong giỏ
+                                                function updateQuantity(index, value) {
+                                                    const quantityInput = document.querySelectorAll('.sub-item input[type="number"]')[index];
+                                                    const maxAvailable = parseInt(quantityInput.getAttribute('max'));
+                                                    const newValue = parseInt(value);
+
+                                                    if (newValue > maxAvailable) {
+                                                        quantityInput.value = maxAvailable; // Đặt giá trị nhập vào thành giá trị lớn nhất có sẵn
+                                                    } else
+                                                    {
+                                                        if (newValue < 1)
+                                                        {
+                                                            quantityInput.value = 1;
+                                                        }
+                                                    }
+                                                    cart[index].quantity = quantityInput.value;
+                                                    saveCart();
+
+
+                                                }
+
+</script>
 <script src="../CSS/STORE/vendor/jquery-library.js"></script>
 <script src="../CSS/STORE/vendor/bootstrap.min.js"></script>
 <script src="https://maps.google.com/maps/api/js?key=AIzaSyCR-KEWAVCn52mSdeVeTqZjtqbmVJyfSus&amp;language=en"></script>
