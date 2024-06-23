@@ -9,7 +9,7 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>T?o m?i ??n hàng</title>
+        <title>Orders</title>
         <!-- Bootstrap core CSS -->
         <link rel="apple-touch-icon" href="../css/STORE/apple-touch-icon.png">
         <link rel="stylesheet" href="../CSS/STORE/bootstrap.min.css">

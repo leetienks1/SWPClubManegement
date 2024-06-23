@@ -186,6 +186,7 @@
             {
                 animation: shake 0.5s ease-in-out infinite alternate;
             }
+
             #rightBar
             {
 
@@ -254,6 +255,7 @@
                 ;
             }
            
+
             @keyframes shake {
                 0% {
                     transform: translateY(-2px); /* Di chuyển lên */
@@ -292,7 +294,9 @@
                                     </li>
                                 </ul>
 
+
                                 <div class="tg-userlogin" onclick="toggleRightBar()">
+
                                     <figure><a  href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
                                 </div>
@@ -436,16 +440,20 @@
 
 
     </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+<
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
 
     <script>
         const user = ${user.userId};
         console.log(user);
 
+
         function toggleRightBar() {
             var rightBar = document.getElementById("rightBar");
             rightBar.classList.toggle("showlog"); // Thêm hoặc loại bỏ lớp "show"
         }
+
         function encryptData(data, key) {
             const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
             return encryptedData;
@@ -540,7 +548,9 @@
         {
             sessionStorage.removeItem('itemTrue');
 
-            let cartRemove = decryptData(localStorage.getItem('usercart_' + user), "swp" + user);
+
+            let cartRemove = decryptData(localStorage.getItem('usercart_' + user), "swp"+user);
+
 
             console.log("before" + cartRemove);
             cartRemove.forEach((item, index) => {
@@ -550,7 +560,9 @@
                 }
             });
 
-            const encryptedCart = encryptData(cartRemove, "swp" + user);
+
+            const encryptedCart = encryptData(cartRemove, "swp"+user);
+
             localStorage.setItem('usercart_' + user, encryptedCart);
 
 //            let cart = JSON.parse(sessionStorage.getItem('usercart' + user));

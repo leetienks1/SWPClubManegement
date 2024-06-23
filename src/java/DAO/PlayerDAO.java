@@ -2,6 +2,7 @@ package DAO;
 
 import Model.Player;
 import Model.PlayerStat;
+import Model.Position;
 import Model.TrainingSchedule;
 import dal.ConnectDB;
 
@@ -306,6 +307,45 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 //        }
 //        return schedules;
 //    }
+
+    public List<Player> getAllPlayersImage() {
+        List<Player> players = new ArrayList<>();
+        String sql = "SELECT p.[PlayerID], p.[UserID], p.[Position], p.[Name], p.[DOB], p.[Weight], p.[Height], u.[Image] "
+                + "FROM [RealClub].[dbo].[Player] p "
+                + "JOIN [RealClub].[dbo].[User] u ON p.[UserID] = u.[UserID] ";
+
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Player player = new Player();
+                player.setPlayerID(rs.getInt("PlayerID"));
+                player.setUserID(rs.getInt("UserID"));
+                player.setPosition(Position.valueOf(rs.getString("Position")));
+                player.setName(rs.getString("Name"));
+                Date sqlDate = rs.getDate("DOB");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    player.setAge(localDate);
+                }
+                player.setWeight(rs.getDouble("Weight"));
+                player.setHeight(rs.getInt("Height"));
+                player.setImage(rs.getString("Image"));
+
+                players.add(player);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+
+        return players;
+    }
+
+
     private void closeResources() {
         try {
             if (rs != null) {
