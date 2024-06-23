@@ -8,15 +8,15 @@
 <!DOCTYPE html>
 <div id="add-course-form" class="hidden" >
     <div class="overlay">
-        <form class="card card-on card-add-form mx-auto" action="../TrainingServlet" method="GET" style="transition: ease-in 0.5s">
+        <form class="card card-on card-add-form mx-auto" action="../MeetingServlet" method="GET" style="transition: ease-in 0.5s">
             <i id="add-course-close" class="fas fa-times"></i>
-            <h3 class="form-heading">Add New Training</h3>
+            <h3 class="form-heading">Add New Meeting</h3>
             <input type="hidden" name="command" value="ADD" />
             <div class="form-group">
-                <input type="date" name="trainingDate" placeholder="Training Date" value="" />
+                <input type="date" name="meetingDate" placeholder="Meeting Date" value="" />
             </div>
             <div class="form-group">
-                <input type="time" name="trainingTime" placeholder="Training Time" value="" />
+                <input type="time" name="meetingTime" placeholder="Meeting Time" value="" />
             </div>
             <div class="form-group">
                 <input type="text" name="location" placeholder="Location" value="" />

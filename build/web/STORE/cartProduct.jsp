@@ -116,13 +116,13 @@
 
                 position: fixed;
                 top: -300px;
-                right: 10px; /* Ban ??u ??t thanh bÍn ph?i ngo‡i t?m nhÏn */
+                right: 10px; /* Ban ??u ??t thanh b√™n ph?i ngo√†i t?m nh√¨n */
                 bottom: 0;
-                z-index: 900; /* ??m b?o thanh bÍn ph?i n?m trÍn c·c ph?n t? kh·c */
-                width: 250px; /* ?i?u ch?nh ?? r?ng c?a thanh bÍn ph?i */
+                z-index: 900; /* ??m b?o thanh b√™n ph?i n?m tr√™n c√°c ph?n t? kh√°c */
+                width: 250px; /* ?i?u ch?nh ?? r?ng c?a thanh b√™n ph?i */
                 height: 250px;
-                background-color: #FFFFFF; /* M‡u n?n c?a thanh bÍn ph?i */
-                padding: 20px; /* Kho?ng c·ch gi?a c·c ph?n t? trong thanh bÍn ph?i */
+                background-color: #FFFFFF; /* M√†u n?n c?a thanh b√™n ph?i */
+                padding: 20px; /* Kho?ng c√°ch gi?a c√°c ph?n t? trong thanh b√™n ph?i */
                 overflow-y: auto;
                 border-radius: 20px;
                 align-items: center;
@@ -135,7 +135,7 @@
 
             }
             .tg-userlogin {
-                cursor: pointer; /* ThÍm con tr? tr? tay khi hover v‡o ph?n t? */
+                cursor: pointer; /* Th√™m con tr? tr? tay khi hover v√†o ph?n t? */
             }
             .avatar
             {
@@ -370,10 +370,12 @@
                             const user = ${user.userId};
                             console.log(user);
 
+
                             function toggleRightBar() {
                                 var rightBar = document.getElementById("rightBar");
-                                rightBar.classList.toggle("showlog"); // ThÍm ho?c lo?i b? l?p "show"
+                                rightBar.classList.toggle("showlog"); // Th√™m ho?c lo?i b? l?p "show"
                             }
+
                             function encryptData(data, key) {
                                 const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
                                 return encryptedData;
@@ -407,8 +409,8 @@
                                 let totalIncart = 0;
                                 cart.forEach(function (item, index) {
                                     const str = item.price;
-                                    const priceParts = str.split('/'); // T·ch chu?i th‡nh m?ng c·c ph?n, ph‚n t·ch b?i d?u "/"
-                                    const firstPrice = priceParts[0].substring(1); // L?y ph?n t? ??u tiÍn v‡ lo?i b? d?u "$"
+                                    const priceParts = str.split('/'); // T√°ch chu?i th√†nh m?ng c√°c ph?n, ph√¢n t√°ch b?i d?u "/"
+                                    const firstPrice = priceParts[0].substring(1); // L?y ph?n t? ??u ti√™n v√† lo?i b? d?u "$"
                                     console.log(firstPrice); // Output: "39.99"
                                     console.log(firstPrice + item.quantity);
                                     const itemTotal = parseFloat(firstPrice).toFixed(2) * parseInt(item.quantity);
@@ -483,7 +485,9 @@
                                     return;
                                 }
                                 console.log(itemTrue);
-                                sessionStorage.setItem("itemTrue" + user, JSON.stringify(itemTrue));
+
+                                sessionStorage.setItem("itemTrue" + user,JSON.stringify(itemTrue));
+
                                 window.location.href = '/SWPClubManegement/STORE/paymentJersey.jsp';
                             }
                             function updateQuantity(index, value) {
@@ -495,7 +499,7 @@
                                 const newValue = parseInt(value);
 
                                 if (newValue > maxAvailable) {
-                                    quantityInput.value = maxAvailable; // ??t gi· tr? nh?p v‡o th‡nh gi· tr? l?n nh?t cÛ s?n
+                                    quantityInput.value = maxAvailable; // ??t gi√° tr? nh?p v√†o th√†nh gi√° tr? l?n nh?t c√≥ s?n
                                 } else
                                 {
                                     if (newValue < 1)

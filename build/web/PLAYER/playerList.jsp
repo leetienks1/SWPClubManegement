@@ -5,14 +5,24 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="stylesheet" href="../CSS/HOMECSS/home.css"/>
+        <link rel="stylesheet" href="../CSS/NAV/nav.css"/>
+        <link rel="stylesheet" href="../CSS/HOMECSS/slide.css"/>
+        <link rel="stylesheet" href="../CSS/FOOTER/footer.css"/>
 
+        <link rel="stylesheet" href="../OwlCarousel2-2.3.4/dist/assets/owl.carousel.css">
+        <link rel="stylesheet" href="../OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Jura:wght@400;700&display=swap" rel="stylesheet">
+        <title>REAL - FC</title>
+        <%@include file="/INCLUDES/head.jsp" %>
     </head>
     <body>
+        <%@include file="../INCLUDES/nav.jsp" %>
         <style>
             #team {
                 padding: 60px 0;
@@ -45,8 +55,9 @@
                 margin-bottom: 20px;
                 position: relative;
                 overflow: hidden;
-                background-color: #ffffff;
+                background-color: #808080;
                 padding: 10px;
+                padding-top: 10px;
                 border-radius: 15px 0px 15px 0px;
                 box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
             }
@@ -88,469 +99,396 @@
                 font-size: 18px;
                 margin: 0 2px;
             }
-            
+            .banner {
+                background-color: #145889;
+                color: white;
+                text-align: center;
+                padding: 20px 0;
+                padding-top: 100px;
+                min-height:70px;
+            }
+
+            .banner h1 {
+                font-size: 36px;
+                margin: 0;
+            }
 
         </style>
-        <%@include file="../INCLUDES/head.jsp" %>
+        <div class="banner">
+            <h1>REAL - FC</h1>
+        </div>
         <section id="team">
             <div class="container">
-                <div class="row justify-content-center ">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Central Attacking Midfielder</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'CAM'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+
+
+                <!-- Example for displaying Defenders -->
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Central Defensive Midfielder</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'CDM'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>                      
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Centre Forward</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'CF'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>Defender</span>
+                                        <div class="member-info">
+                                            <h4>${player.name}</h4>
+                                            <span>${player.position}</span>
+                                            <span>Date of Birth: ${player.age}</span>
+                                            <span>Weight: ${player.weight} kg</span>
+                                            <span>Height: ${player.height} cm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Central Midfielder</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'CM'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>Defender</span>
+                                        <div class="member-info">
+                                            <h4>${player.name}</h4>
+                                            <span>${player.position}</span>
+                                            <span>Date of Birth: ${player.age}</span>
+                                            <span>Weight: ${player.weight} kg</span>
+                                            <span>Height: ${player.height} cm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+                <div class="row justify-content-center">
                     <div class="col-md-6">
                         <h2>Goalkeeper</h2>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t4.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Emma White</h4>
-                                <span>Web Designer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'GK'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>Defender</span>
+                                        <div class="member-info">
+                                            <h4>${player.name}</h4>
+                                            <span>${player.position}</span>
+                                            <span>Date of Birth: ${player.age}</span>
+                                            <span>Weight: ${player.weight} kg</span>
+                                            <span>Height: ${player.height} cm</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t3.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Bobby Robins</h4>
-                                <span>Web Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t2.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Gena lee</h4>
-                                <span>SEO Expert</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t1.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Noel Flantier</h4>
-                                <span>ISO Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </c:if>
+                    </c:forEach>
                 </div>
-                
-                
-                
+
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <h2>Defender</h2>
-                        
+                        <h2>Left Center Back</h2>
                     </div>
                 </div>
-                
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t4.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Emma White</h4>
-                                <span>Web Designer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'LCB'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t3.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Bobby Robins</h4>
-                                <span>Web Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t2.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Gena lee</h4>
-                                <span>SEO Expert</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t1.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Noel Flantier</h4>
-                                <span>ISO Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </c:if>
+                    </c:forEach>
                 </div>
-                
-                
-                
-                
-                 <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Midfielder</h2>
-                    </div>
-                </div>
-                
-                
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t4.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Emma White</h4>
-                                <span>Web Designer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t3.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Bobby Robins</h4>
-                                <span>Web Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t2.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Gena lee</h4>
-                                <span>SEO Expert</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t1.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Noel Flantier</h4>
-                                <span>ISO Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                
-                
-                
-                
-                 <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Forwards</h2>
-                    </div>
-                </div>
-                
-                
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t4.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Emma White</h4>
-                                <span>Web Designer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t3.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Bobby Robins</h4>
-                                <span>Web Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t2.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Gena lee</h4>
-                                <span>SEO Expert</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t1.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Noel Flantier</h4>
-                                <span>ISO Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                
-                
-                
-                
-                
-                
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <h2>Coach</h2>
+                        <h2>Left Back </h2>
                     </div>
                 </div>
-                
-                
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t4.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Emma White</h4>
-                                <span>Web Designer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'LB'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
 
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t3.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Bobby Robins</h4>
-                                <span>Web Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t2.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Gena lee</h4>
-                                <span>SEO Expert</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t1.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Noel Flantier</h4>
-                                <span>ISO Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t1.jpg" class="img-fluid" alt="">
-                            </div>
-                            <div class="member-info">
-                                <h4>Noel Flantier</h4>
-                                <span>ISO Developer</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Left Midfielder</h2>
                     </div>
                 </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'LM'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Left Winger</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'LW'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Right Center Back</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'RCB'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Right Central Midfielder</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'RCM'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Right Winger</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'RW'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Striker</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'ST'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <h4>${player.name}</h4>
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+                
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-    </body>
+</body>
 </html>
