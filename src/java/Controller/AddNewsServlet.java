@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.AdminController;
+package Controller;
 
 import DAO.NewsDAO;
 import Model.News;
@@ -28,7 +28,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  *
  * @author Desktop
  */
-public class EditNewsServlet extends HttpServlet {
+public class AddNewsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,10 +47,10 @@ public class EditNewsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditNewsServlet</title>");
+            out.println("<title>Servlet AddNewsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddNewsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -82,7 +82,8 @@ public class EditNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        editNews(request, response);
+        AddNews(request, response);
+        request.setAttribute("addResult", "success");
 
     }
 
@@ -103,7 +104,12 @@ public class EditNewsServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    public void editNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+    public void AddNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String newsTitle = null;
         String newsImage = null;
@@ -112,11 +118,10 @@ public class EditNewsServlet extends HttpServlet {
         String description = null;
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
+
         boolean isMultipartContent = ServletFileUpload.isMultipartContent(request);
         if (!isMultipartContent) {
-
-            SendErrorMessage(out, "  Không chứa dữ liệu đa phần (enctype=multipart/form-data)");
-
+            out.println("Error: Không chứa dữ liệu đa phần (enctype=multipart/form-data)");
             return;
         }
         FileItemFactory factory = new DiskFileItemFactory(); // Tạo factory chi dinh cach thuc de luu tru file dc tai len
@@ -127,8 +132,7 @@ public class EditNewsServlet extends HttpServlet {
             Iterator<FileItem> it = fields.iterator();
 
             if (!it.hasNext()) {
-                SendErrorMessage(out, "  Không có FileItem nào");
-
+                SendErrorMessage(out, " There is no FileItem");
                 return;
             }
             Map<String, String> formFields = new HashMap<>();
@@ -144,7 +148,6 @@ public class EditNewsServlet extends HttpServlet {
                         if (mimeType == null || !mimeType.startsWith("image/")) {
 
                             SendErrorMessage(out, "  Only upload image");
-
                             return;
 
                         }
@@ -162,26 +165,22 @@ public class EditNewsServlet extends HttpServlet {
                         }
 
                         fileItem.write(new File(filePath));
-
+//                        out.println("File đã được tải lên thành công: " + file_name);
                     }
                 }
             }
-            int nid = Integer.parseInt(formFields.get("nid"));
-            newsTitle = formFields.get("newstitle1");
-            newsImage = formFields.get("newsimage1");
-
-            newsContent = formFields.get("content1");
-            description = formFields.get("description1");
+            newsTitle = formFields.get("newstitle");
+            newsImage = file_name;
+            newsContent = formFields.get("content");
+            description = formFields.get("description");
             NewsDAO ndao = new NewsDAO();
-            News news = ndao.get(nid).get();
+            News news = new News();
             news.setNewsTitle(newsTitle);
-            if (file_name != null) {
-                news.setNewsImageDescription(file_name);
-            }
+            news.setNewsImageDescription(newsImage);
             news.setNewsContent(newsContent);
             news.setDatePosted(LocalDate.now());
             news.setDescription(description);
-            ndao.update(news);
+            ndao.save(news);
             Gson gson = new Gson();
 
             out.print(gson.toJson("success"));
@@ -207,10 +206,5 @@ public class EditNewsServlet extends HttpServlet {
         out.flush();
 
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

@@ -2,28 +2,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.AdminController;
+package Controller;
 
-import DAO.TrainingScheduleDAO;
-import Model.TrainingSchedule;
+import DAO.NewsDAO;
+import DAO.PlayerDAO;
+import DAO.UserDAO;
+import Model.News;
+import Model.Player;
+import Model.Position;
+import Model.User;
+import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
- * @author Zanis
+ * @author Desktop
  */
-public class TrainingServlet extends HttpServlet {
+public class NewsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +57,10 @@ public class TrainingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TrainingServlet</title>");
+            out.println("<title>Servlet NewsController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet TrainingServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet NewsController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,27 +86,27 @@ public class TrainingServlet extends HttpServlet {
             }
             switch (theCommand) {
                 case "LIST":
-                    ListTraining(request, response);
+                    ListNews(request, response);
                     break;
                 case "ADD":
-                    AddTraining(request, response);
+
                     break;
                 case "LOAD":
 
                     break;
                 case "UPDATE":
-                    UpdateTraining(request, response);
+
                     break;
                 case "DELETE":
-                    DeleteTraining(request, response);
+                    DeleteNews(request, response);
                     break;
                 default:
-                    ListTraining(request, response);
+
             }
 
         } catch (Exception ex) {
 
-            Logger.getLogger(TrainingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -106,7 +121,50 @@ public class TrainingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            NewsDAO ndao = new NewsDAO();
+            String search = request.getParameter("search");
+
+            List<News> listNews = null;
+            listNews = ndao.getNewsBySearch(search);
+
+//            if (search != null && search != "") {
+//                listNews = ndao.getAll();
+//
+//            } else {
+//                listNews = ndao.getNewsBySearch(search);
+//            }
+
+            Gson gson = new Gson();
+            String json = gson.toJson(listNews);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+            response.getWriter().flush();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ListNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("/SWPClubManegement/ADMIN/adminNewsList.jsp");
+    }
+
+    public void DeleteNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+
+            int nid = Integer.parseInt(request.getParameter("nid"));
+
+            NewsDAO ndao = new NewsDAO();
+            ndao.delete(nid);
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 
     /**
@@ -118,51 +176,5 @@ public class TrainingServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    public void ListTraining(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            TrainingScheduleDAO tdao = new TrainingScheduleDAO();
-            List<TrainingSchedule> list = tdao.getAll();
-            request.getSession().setAttribute("sessionlist", list);
-            response.sendRedirect("COACH/Training.jsp");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void AddTraining(HttpServletRequest request, HttpServletResponse response) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
-        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"), formatter);
-        String TrainingTime = request.getParameter("trainingTime");
-        String Location = request.getParameter("location");
-        String Description = request.getParameter("description");
-        TrainingSchedule t = new TrainingSchedule(TrainingDate, TrainingTime, Location, Description);
-        tDAO.save(t);
-        ListTraining(request, response);
-    }
-
-    private void DeleteTraining(HttpServletRequest request, HttpServletResponse response) {
-        int cid = Integer.parseInt(request.getParameter("cid"));;
-        new TrainingScheduleDAO().delete(cid);
-        ListTraining(request, response);
-    }
-
-    private void UpdateTraining(HttpServletRequest request, HttpServletResponse response) {
-        int cid = Integer.parseInt(request.getParameter("cid"));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
-        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"), formatter);
-        String TrainingTime = request.getParameter("trainingTime");
-        String Location = request.getParameter("location");
-        String Description = request.getParameter("description");
-        TrainingSchedule t = tDAO.get(cid).get();
-        t.setTrainingDate(TrainingDate);
-        t.setTrainingTime(TrainingTime);
-        t.setLocation(Location);
-        t.setDescription(Description);
-        tDAO.update(t);
-        ListTraining(request, response);
-    }
 
 }
