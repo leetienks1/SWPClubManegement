@@ -4,22 +4,36 @@
  */
 package Controller;
 
+import DAO.NewsDAO;
 import DAO.PlayerDAO;
+import DAO.UserDAO;
+import Model.News;
 import Model.Player;
 import Model.Position;
+import Model.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -73,13 +87,13 @@ public class PlayerController extends HttpServlet {
             }
             switch (theCommand) {
                 case "LIST":
-                    ListPlayers(request, response);
+                    response.sendRedirect("/SWPClubManegement/ADMIN/adminPage.jsp");
                     break;
                 case "ADD":
                     AddPlayer(request, response);
                     break;
                 case "LOAD":
-
+                    ListPlayers(request, response);
                     break;
                 case "UPDATE":
                     UpdatePlayer(request, response);
@@ -108,7 +122,7 @@ public class PlayerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        UpdatePlayer(request, response);
     }
 
     /**
@@ -123,21 +137,35 @@ public class PlayerController extends HttpServlet {
 
     public void ListPlayers(HttpServletRequest request, HttpServletResponse response) {
         try {
+            String search = request.getParameter("search");
+            if (search == null) {
+                search = "";
+            }
             PlayerDAO pdao = new PlayerDAO();
-            List<Player> players = pdao.getAll();
-            request.getSession().setAttribute("listPlayer", players);
+            UserDAO udao = new UserDAO();
+            List<Player> players = pdao.getBySearch(search);
+
             List<String> positions = new ArrayList<>();
+            List<User> users = new ArrayList<>();
+
+            for (Player p : players) {
+                User u = udao.get(p.getUserID()).orElse(null);
+                users.add(u);
+            }
 
             // Lặp qua tất cả các giá trị enum và thêm chúng vào danh sách
-            for (Position position : Position.values()) {
-                positions.add(position.toString());
-            }
-            request.getSession().setAttribute("positions", positions);
-
-            response.sendRedirect("ADMIN/adminPage.jsp");
+            Gson gson = new Gson();
+            JsonObject json = new JsonObject();
+            json.add("players", gson.toJsonTree(players));
+            json.add("users", gson.toJsonTree(users));
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json.toString());
+            response.getWriter().flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void AddPlayer(HttpServletRequest request, HttpServletResponse response) {
@@ -158,61 +186,143 @@ public class PlayerController extends HttpServlet {
                 int uid = Integer.parseInt(request.getParameter("uid"));
                 p.setUserID(uid);
             }
-            
+
             p.setHeight(height);
             p.setWeight(roundedWeight);
             p.setName(playerName);
             p.setPosition(position);
             p.setAge(age);
-            
+
             PlayerDAO pdao = new PlayerDAO();
+            UserDAO udao = new UserDAO();
+
             pdao.save(p);
-            request.getSession().setAttribute("Message", "Add operation successful");
+
+            Gson gson = new Gson();
+            String json = gson.toJson(udao.getListUserUnknow("Player"));
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+            response.getWriter().flush();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ListPlayers(request, response);
+
     }
 
     public void UpdatePlayer(HttpServletRequest request, HttpServletResponse response) {
         try {
-            int pid = Integer.parseInt(request.getParameter("pid"));
-            String playerName = request.getParameter("playerName");
 
-            Position position = Position.valueOf(request.getParameter("position"));
-            
+            String playerName = null;
+
+            Position position = null;
+            String file_name = null;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate age = LocalDate.parse(request.getParameter("dateOfBirth"), formatter);
-            String formattedWeight = request.getParameter("weight");
-            double weight = Double.parseDouble(formattedWeight);
-            double roundedWeight = Math.round(weight * 10.0) / 10.0;
+            LocalDate age = null;
+            String formattedWeight = null;
+            double weight;
+            double roundedWeight;
+            int height;
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            boolean isMultipartContent = ServletFileUpload.isMultipartContent(request);
+            if (!isMultipartContent) {
 
-            int height = Integer.parseInt(request.getParameter("height"));
-//            if (weight < 0 || height < 0) {
-//                request.getSession().setAttribute("Error", "Khong hop le");
-//            }
-            PlayerDAO pdao = new PlayerDAO();
+                SendErrorMessage(out, "  Không chứa dữ liệu đa phần (enctype=multipart/form-data)");
 
-            Player p = pdao.get(pid).get();
-            if (request.getParameter("uid") != null && request.getParameter("uid")!="0" ) {
-                int uid = Integer.parseInt(request.getParameter("uid"));
-                p.setUserID(uid);
+                return;
             }
-            p.setName(playerName);
-            p.setPosition(position);
-            
-            p.setAge(age);
-            p.setWeight(roundedWeight);
-            p.setHeight(height);
-            pdao.update(p);
-            request.getSession().setAttribute("Message", "UPDATE operation successful");
+            FileItemFactory factory = new DiskFileItemFactory(); // Tạo factory chi dinh cach thuc de luu tru file dc tai len
+            ServletFileUpload upload = new ServletFileUpload(factory); // serveletFileUpload xử lý các cái yêu cầu từ http 
+            //ServletFileUpload(factory) se tạo cac fileItem tu factory
+            try {       // FileItem đại diện cho mỗi phần được tải lên( file , form-fields)
+                List<FileItem> fields = upload.parseRequest(request);  // phan tich cac yeu cau va tra ve 1 fileItem
+                Iterator<FileItem> it = fields.iterator();
 
-            request.getSession().removeAttribute("openEdit");
+                if (!it.hasNext()) {
+                    SendErrorMessage(out, "  Không có FileItem nào");
+
+                    return;
+                }
+                Map<String, String> formFields = new HashMap<>();
+                while (it.hasNext()) {
+                    FileItem fileItem = it.next();
+                    if (fileItem.isFormField()) {
+                        String fieldName = fileItem.getFieldName();
+                        String value = fileItem.getString("UTF-8");
+                        formFields.put(fieldName, value);
+                    } else {
+                        if (fileItem.getSize() > 0) {
+                            String mimeType = fileItem.getContentType(); // get MINE (imgae/ png , image / jpg , application/ pdf)
+                            if (mimeType == null || !mimeType.startsWith("image/")) {
+
+                                SendErrorMessage(out, "  Only upload image");
+
+                                return;
+
+                            }
+                            //fileItem .getName() tra ve 1 tẹp tin day du   file. get nen thi chi tra ve namefile
+                            file_name = new File(fileItem.getName()).getName()+System.currentTimeMillis();
+
+                            String path = request.getServletContext().getRealPath("IMAGE\\PLAYER");
+                            String filePath = path + "\\" + file_name;
+
+//                        String filePath = "SWPWedRealClubManagement\\web\\IMAGE/AVATAR\\" + file_name;
+                            // Đảm bảo thư mục tồn tại
+                            File directory = new File(filePath).getParentFile();
+                            if (!directory.exists()) {
+                                directory.mkdirs(); // tao cac thu muc cha can thiet;
+                            }
+
+                            fileItem.write(new File(filePath));
+
+                        }
+                    }
+                }
+                int pid = Integer.parseInt(formFields.get("pid"));
+                playerName = formFields.get("playerName1");
+                position = Position.valueOf(formFields.get("position1"));
+
+                age = LocalDate.parse(formFields.get("dateOfBirth1"), formatter);
+                formattedWeight = formFields.get("weight1");
+                weight = Double.parseDouble(formattedWeight);
+                roundedWeight = Math.round(weight * 10.0) / 10.0;
+
+                height = Integer.parseInt(formFields.get("height1"));
+                PlayerDAO pdao = new PlayerDAO();
+                Player p = pdao.get(Integer.parseInt(formFields.get("pid"))).orElse(null);
+                UserDAO udao = new UserDAO();
+                User u = udao.getUserByEmail(formFields.get("email1"));
+                if (file_name != null && u != null) {
+
+                    u.setImage(request.getContextPath() + "\\IMAGE\\PLAYER\\" + file_name);
+                    udao.update(u);
+                }
+
+                p.setHeight(height);
+                p.setWeight(roundedWeight);
+                p.setName(playerName);
+                p.setPosition(position);
+                p.setAge(age);
+
+                pdao.update(p);
+                Gson gson = new Gson();
+
+                out.print(gson.toJson("success"));
+                out.flush();
+
+            } catch (Exception e) {
+
+                out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ListPlayers(request, response);
+
     }
 
     public void DeletePlayer(HttpServletRequest request, HttpServletResponse response) {
@@ -220,15 +330,41 @@ public class PlayerController extends HttpServlet {
             String playerName = request.getParameter("playerName");
 
             int pid = Integer.parseInt(request.getParameter("pid"));
-
+            Gson gson = new Gson();
             PlayerDAO pdao = new PlayerDAO();
-            pdao.delete(pid);
-            request.getSession().setAttribute("Message", "Delete operation successful");
+            Player p = pdao.get(pid).orElse(null);
+            if (pdao.deleteBool(pid) == true) {
+
+                String json = gson.toJson(p);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+                response.getWriter().flush();
+            } else {
+                String json = gson.toJson("fail");
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+                response.getWriter().flush();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ListPlayers(request, response);
+
+    }
+
+    public void SendErrorMessage(PrintWriter out, String message) {
+        Map<String, String> errors = new HashMap<>();
+
+        errors.put("status", "error");
+        errors.put("message", message);
+
+        Gson gson = new Gson();
+
+        out.print(gson.toJson(errors));
+        out.flush();
+
     }
 
 }

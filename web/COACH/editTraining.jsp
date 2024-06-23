@@ -20,7 +20,7 @@
     %>
     <div class="overlay">
 
-        <form class="card card-update-form  mx-auto" action="../TrainingServlet" method="GET">
+        <form class="card card-on card-update-form  mx-auto" action="../TrainingServlet" method="GET">
             <div id="update-course-close" style="width: 20%">
                 <i class="add-course-button fas fa-times"></i>
             </div>
@@ -28,10 +28,10 @@
             <input type="hidden" name="command" value="UPDATE" />
             <input type="hidden" name="cid" value="${t.getTrainingID()}" />
             <div class="form-group">
-                <input type="text" name="trainingDate" placeholder="Training Date" value="${t.getTrainingDate()}" />
+                <input type="date" name="trainingDate" placeholder="Training Date" value="${t.getTrainingDate()}" />
             </div>
             <div class="form-group">
-                <input type="text" name="trainingTime" placeholder="Training Time" value="${t.getTrainingTime()}" />
+                <input type="time" name="trainingTime" placeholder="Training Time" value="${t.getTrainingTime()}" />
             </div>
             <div class="form-group">
                 <input type="text" name="location" placeholder="Location" value="${t.getLocation()}" />

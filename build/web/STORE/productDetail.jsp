@@ -14,7 +14,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Book Library</title>
+       <title>RealFC Store</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="../css/STORE/apple-touch-icon.png">
@@ -305,6 +305,102 @@
                 border-radius: 45px;
                 align-items: center;
             }
+            .btn {
+                display: inline-block;
+                width: 40%;
+                font-size: 16px;
+                color: #fff;
+                background-color: #007bff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                transition: background-color 0.3s ease;
+            }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+
+            #rightBar
+            {
+
+                position: fixed;
+                top: -300px;
+                right: 10px; /* Ban đầu đặt thanh bên phải ngoài tầm nhìn */
+                bottom: 0;
+                z-index: 900; /* Đảm bảo thanh bên phải nằm trên các phần tử khác */
+                width: 250px; /* Điều chỉnh độ rộng của thanh bên phải */
+                height: 250px;
+                background-color: #FFFFFF; /* Màu nền của thanh bên phải */
+                padding: 20px; /* Khoảng cách giữa các phần tử trong thanh bên phải */
+                overflow-y: auto;
+                border-radius: 20px;
+                align-items: center;
+                transition: top 0.3s ease;
+            }
+
+            #rightBar.showlog
+            {
+                top: 30px;
+
+            }
+            .tg-userlogin {
+                cursor: pointer; /* Thêm con trỏ trỏ tay khi hover vào phần tử */
+            }
+            .avatar
+            {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                object-fit: cover;
+
+            }
+            .login-block
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .edit , .changepass, .logout
+            {
+                transition: transform 0.3s ease;
+
+                border-radius: 45px;
+            }
+            .changepass:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .logout:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .edit:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .tg-header {
+                z-index: 3;
+                position: fixed;
+            }
+            .tg-header .tg-topbar {
+                background-color: white;
+                width: 100%;
+                float: left;
+                border-bottom: 1px solid #dbdbdb;
+            }
+
         </style>
         <div id="tg-wrapper" class="tg-wrapper tg-haslayout">
             <!--************************************
@@ -330,9 +426,41 @@
                                     </li>
                                 </ul>
 
-                                <div class="tg-userlogin">
+                                <div class="tg-userlogin" onclick="toggleRightBar()">
                                     <figure><a href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
+                                </div>
+                                <div id="rightBar">
+
+
+
+
+                                    <div class="login-block">
+                                        <c:choose >
+                                            <c:when test="${user.image==null}">
+                                                <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
+                                            </c:when>
+                                            <c:otherwise>
+
+
+                                                <img id="image-bar" class="avatar" src="${user.image}" alt="alt"/>
+
+                                            </c:otherwise>
+                                        </c:choose> 
+                                        <h5> ${user.name}</h5>
+                                        <div class="edit" >
+                                            <a href="../EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
+                                        </div>
+                                        <div  class="changepass">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" > Change Password</a>
+                                        </div>
+                                        <div  class="logout">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/LogoutServlet" > Logout</a>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -394,8 +522,8 @@
                             <div class="tg-innerbannercontent">
                                 <h1>All Products</h1>
                                 <ol class="tg-breadcrumb">
-                                    <li><a href="javascript:void(0);">home</a></li>
-                                    <li class="tg-active">Products</li>
+                                    <li><a href="/SWPClubManegement/HomeServlet">home</a></li>
+                                    <li class="tg-active">RealFC</li>
                                 </ol>
                             </div>
                         </div>
@@ -603,21 +731,27 @@
 
 
 <script src="../OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 <script>
+
+                                                function toggleRightBar() {
+                                                    var rightBar = document.getElementById("rightBar");
+                                                    rightBar.classList.toggle("showlog"); // Thêm hoặc loại bỏ lớp "show"
+                                                }
+
                                                 $(document).ready(function () {
+
                                                     $(".cart-icon").click(function () {
                                                         $(".cart").toggleClass('show');
                                                     });
-
-                                                    function reviewClose() {
+                                                    function reviewClose()
+                                                    {
                                                         $("#review-form").toggle();
                                                     }
-
-                                                    $(".review-close").click(function () {
+                                                    $(".review-close").click(function ()
+                                                    {
                                                         reviewClose();
                                                     });
-
                                                     $("#owl-demo").owlCarousel({
                                                         loop: true,
                                                         navigation: true, // Show next and prev buttons
@@ -632,45 +766,111 @@
                                                         autoplay: true,
                                                         autoplayTimeout: 5000,
                                                         autoplayHoverPause: false
+
                                                     });
                                                 });
+                                                // ma hoa
+                                                function encryptData(data, key) {
+                                                    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
+                                                    return encryptedData;
+                                                }
+                                                // lấy lại khi cần thiết
+                                                function decryptData(encryptedData, key) {
+                                                    const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, key);
+                                                    const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+                                                    return decryptedData;
+                                                }
+
+
+
+
 
                                                 let cart = [];
-                                                const user = ${user.userId}; // Sử dụng userId trong một môi trường hợp lệ
+                                                const user = ${user.userId};
                                                 console.log(user);
-
                                                 function saveCart() {
-                                                    sessionStorage.setItem('usercart' + user, JSON.stringify(cart));
+                                                    const encryptedCart = encryptData(cart, "swp" + user);
+                                                    localStorage.setItem('usercart_' + user, encryptedCart);
                                                 }
+
 
                                                 function loadCart() {
-                                                    const storedCart = sessionStorage.getItem('usercart' + user);
+
+                                                    const storedCart = localStorage.getItem('usercart_' + user);
                                                     if (storedCart) {
-                                                        cart = JSON.parse(storedCart);
-                                                        renderCart();
+                                                        const decryptedCart = decryptData(storedCart, "swp" + user);
+                                                        cart = decryptedCart;
+//                                                        renderCart();
+                                                        updateCart();
                                                     }
                                                 }
-
                                                 function addToCart() {
                                                     const selectedSize = document.querySelector('input[name="size"]:checked');
+                                                    var availableLabel = "";
                                                     if (!selectedSize) {
                                                         alert('Please select a size.');
                                                         return;
+                                                    } else
+                                                    {
+                                                        const parentDiv = selectedSize.closest('div');
+                                                        availableLabel = parentDiv.querySelector('label.available').textContent;
                                                     }
-                                                    const parentDiv = selectedSize.closest('div');
-                                                    const availableLabel = parentDiv.querySelector('label.available').textContent;
+
 
                                                     const productId = document.querySelector('.jid').value;
-                                                    const image = document.querySelector('.jersey-image').src;
+                                                    console.log(productId);
+                                                    const image = document.getElementsByClassName('jersey-image');
+                                                    const itemImage = image[0].src;
                                                     const productName = document.querySelector('.jname').textContent;
-                                                    const productPrice = document.querySelector('.jprice').textContent.split('/')[0].substring(1);
+                                                    const productPrice = document.querySelector('.jprice').textContent;
+                                                    const str = productPrice;
+                                                    const priceParts = str.split('/'); // Tách chuỗi thành mảng các phần, phân tách bởi dấu "/"
+                                                    const firstPrice = priceParts[0].substring(1);
                                                     const quantity = parseInt(document.getElementById('quantity').value);
+
+
+                                                    console.log("quan " + quantity);
+
+                                                    if (parseInt(availableLabel) <= 0)
+                                                    {
+                                                        alert("Het Hang");
+                                                        return;
+                                                    }
+
+
+
+
 
                                                     let itemExists = false;
                                                     for (let i = 0; i < cart.length; i++) {
                                                         let item = cart[i];
+                                                        console.log("item add " + item.quantity);
+                                                        var itemQuantity =parseInt(parseInt(item.quantity))
+                                                        var choiceQuantity = parseInt(parseInt(quantity));
+                                                        let totalQuantity = itemQuantity + choiceQuantity;
                                                         if (item.name === productName && item.size === selectedSize.value) {
-                                                            item.quantity += quantity;
+
+
+                                                            if ( totalQuantity > parseInt(availableLabel))
+                                                            {
+                                                                console.log("item if quan " + item.quantity);
+                                                                console.log("item if quan " + quantity);
+                                                                console.log("item if to " + (item.quantity + quantity));
+
+
+                                                                item.quantity = parseInt(availableLabel);
+                                                                console.log("quan if " + item.quantity);
+
+
+
+                                                            } else
+                                                            {
+                                                                item.quantity  = parseInt(item.quantity) + choiceQuantity;
+                                                                console.log("quan esl " + itemQuantity);
+
+
+
+                                                            }
                                                             itemExists = true;
                                                             break;
                                                         }
@@ -686,6 +886,7 @@
                                                             quantity: quantity,
                                                             selected: true,
                                                             quantityAvailable: availableLabel
+
                                                         };
                                                         cart.push(product);
                                                     }
@@ -694,75 +895,94 @@
                                                     updateCart();
                                                     renderCart();
                                                 }
-
                                                 function updateCart() {
+                                                    const rows = document.querySelectorAll('#cart-items .sub-item');
                                                     const totalItem = document.querySelector('.total-in-cart');
                                                     let total = 0;
                                                     let totalIncart = 0;
+                                                    if (cart.length === 0)
+                                                    {
+                                                        totalItem.textContent = "";
+                                                        totalItem.textContent = 0;
+                                                        document.getElementById('cart-total').textContent = '$' + 0;
+                                                    } else {
+                                                        cart.forEach(function (item, index) {
 
-                                                    cart.forEach(function (item) {
-                                                        const itemTotal = parseFloat(item.price) * parseInt(item.quantity);
-                                                        total += itemTotal;
-                                                        totalIncart += item.quantity;
-                                                    });
 
-                                                    totalItem.textContent = totalIncart;
-                                                    document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+                                                            const itemTotal = parseFloat(item.price).toFixed(2) * parseInt(item.quantity);
+                                                            total += itemTotal;
+                                                            totalIncart += parseInt(item.quantity);
+                                                            totalItem.textContent = totalIncart;
+                                                        });
+                                                        document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+                                                    }
+
                                                     saveCart();
+                                                    renderCart();
                                                 }
 
                                                 function removeItem(index) {
                                                     cart.splice(index, 1);
                                                     saveCart();
+                                                    updateCart();
                                                     renderCart();
                                                 }
-
                                                 function updateQuantity(index, quantity) {
+
                                                     cart[index].quantity = parseInt(quantity);
                                                     if (quantity == 0) {
-                                                        removeItem(index);
+                                                        removeItem(index); // Nếu số lượng là 0, loại bỏ mặt hàng
                                                     } else {
-                                                        saveCart();
-                                                        updateCart();
+                                                        saveCart(); // Lưu giỏ hàng
+                                                        updateCart(); // Cập nhật giỏ hàng và tổng tiền
                                                     }
                                                 }
+                                                function renderCart()
+                                                {
 
-                                                function renderCart() {
                                                     const cartItems = document.getElementById('cart-items');
                                                     cartItems.innerHTML = '';
-
-                                                    cart.forEach((item, index) => {
+                                                    cart.forEach((item, index) =>
+                                                    {
                                                         const row = document.createElement("div");
-                                                        row.className = 'sub-item';
-                                                        row.innerHTML = `
-            <figure><img src="${item.image}"></figure>
-            <div>
-                <h5>${item.name}</h5>
-                <h6>Size: ${item.size}</h6>
-                <h6 class="price">Price: ${item.price}</h6>
-                <input type="number" min="0" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)" max="${item.quantityAvailable}">
-            </div>`;
+                                                        row.innerHTML = '<div class="sub-item">' + '<figure>' + '<img src="' + item.image + '">' + '</figure>' +
+                                                                '<div>' + '<h5>' + item.name + '</h3>' +
+                                                                '<h6> Size: ' + item.size + '</h6>' +
+                                                                '<h6 class ="price"> Price: ' + item.price + '</h6>' +
+                                                                '<input type="number" min="0" value="' + item.quantity + '" onchange="updateQuantity(' + index + ', this.value); updateCart();" max="' + item.quantityAvailable + '">' +
+                                                                '<div  class="btn" onclick="removeItem(' + index + ')"><i class="fas fa-trash"></i></div>' +
+                                                                '</div>';
+//                                                               
                                                         cartItems.appendChild(row);
+                                                        console.log(item);
                                                     });
-                                                    updateCart();
-                                                }
 
+
+                                                }
                                                 function BuyNow() {
                                                     let cartNow = [];
                                                     const selectedSize = document.querySelector('input[name="size"]:checked');
+                                                    var availableLabel = "";
                                                     if (!selectedSize) {
                                                         alert('Please select a size.');
                                                         return;
+                                                    } else
+                                                    {
+                                                        const parentDiv = selectedSize.closest('div');
+                                                        availableLabel = parentDiv.querySelector('label.available').textContent;
                                                     }
-                                                    const parentDiv = selectedSize.closest('div');
-                                                    const availableLabel = parentDiv.querySelector('label.available').textContent;
+
 
                                                     const productId = document.querySelector('.jid').value;
-                                                    const image = document.querySelector('.jersey-image').src;
+                                                    console.log(productId);
+                                                    const image = document.getElementsByClassName('jersey-image');
+                                                    const itemImage = image[0].src;
                                                     const productName = document.querySelector('.jname').textContent;
-                                                    const productPrice = document.querySelector('.jprice').textContent.split('/')[0].substring(1);
+                                                    const productPrice = document.querySelector('.jprice').textContent;
+                                                    const str = productPrice;
+                                                    const priceParts = str.split('/'); // Tách chuỗi thành mảng các phần, phân tách bởi dấu "/"
+                                                    const firstPrice = priceParts[0].substring(1);
                                                     const quantity = parseInt(document.getElementById('quantity').value);
-
                                                     const product = {
                                                         id: productId,
                                                         name: productName,
@@ -772,8 +992,11 @@
                                                         quantity: quantity,
                                                         selected: true,
                                                         quantityAvailable: availableLabel
+
                                                     };
                                                     cartNow.push(product);
+
+
 
                                                     sessionStorage.setItem('itemTrue' + user, JSON.stringify(cartNow));
                                                     window.location.href = '/SWPClubManegement/STORE/paymentJersey.jsp';
@@ -783,19 +1006,52 @@
                                                     loadCart();
                                                 };
 
+//                                               
+
                                                 document.addEventListener('click', function (event) {
+
                                                     if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
+
                                                         const reviewButton = document.getElementById('review-form');
+                                                        console.log(reviewButton);
+                                                        reviewButton.style.display = 'block';
+                                                    }
+                                                });
+
+                                                document.addEventListener('click', function (event) {
+
+                                                    if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
+
+
+                                                        const reviewButton = document.getElementById('review-form');
+                                                        console.log(reviewButton);
+                                                        reviewButton.style.display = 'block';
+                                                    }
+                                                });
+                                                document.addEventListener('click', function (event) {
+
+                                                    if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
+
+
+                                                        const reviewButton = document.getElementById('review-form');
+                                                        console.log(reviewButton);
                                                         reviewButton.style.display = 'block';
                                                     }
                                                 });
 
                                                 document.querySelectorAll('input[name="size"]').forEach(item => {
+                                                    // Lắng nghe sự kiện change cho mỗi input[name="size"]
                                                     item.addEventListener('change', function () {
+                                                        // Lấy ra size đã chọn
                                                         const selectedSize = document.querySelector('input[name="size"]:checked');
-                                                        const parentDiv = selectedSize.closest('div');
-                                                        const availableLabel = parentDiv.querySelector('label.available').textContent;
+                                                        if (!selectedSize)
+                                                            return; // Nếu không có size nào được chọn, thoát
 
+                                                        // Lấy ra giá trị của label có class "available"
+                                                        const parentDiv = selectedSize.closest('div');
+                                                        const availableLabel = parentDiv.querySelector('label.available').textContent.trim();
+
+                                                        // Kiểm tra số lượng nhập vào
                                                         const quantityInput = document.getElementById('quantity');
                                                         if (parseInt(quantityInput.value) > parseInt(availableLabel)) {
                                                             quantityInput.value = availableLabel;
@@ -803,6 +1059,37 @@
                                                         quantityInput.max = availableLabel;
                                                     });
                                                 });
+                                                //ngăn vượt quá số lượng ở cửa hàng
+                                                document.getElementById('quantity').addEventListener('input', function () {
+                                                    const quantityInput = this;
+                                                    const maxValue = parseInt(quantityInput.getAttribute('max'));
+                                                    const enteredValue = parseInt(quantityInput.value);
+
+                                                    if (enteredValue > maxValue) {
+                                                        quantityInput.value = maxValue;
+                                                    }
+                                                });
+
+                                                // ngăn vượt quá số lương trong giỏ
+                                                function updateQuantity(index, value) {
+                                                    const quantityInput = document.querySelectorAll('.sub-item input[type="number"]')[index];
+                                                    const maxAvailable = parseInt(quantityInput.getAttribute('max'));
+                                                    const newValue = parseInt(value);
+
+                                                    if (newValue > maxAvailable) {
+                                                        quantityInput.value = maxAvailable; // Đặt giá trị nhập vào thành giá trị lớn nhất có sẵn
+                                                    } else
+                                                    {
+                                                        if (newValue < 1)
+                                                        {
+                                                            quantityInput.value = 1;
+                                                        }
+                                                    }
+                                                    cart[index].quantity = quantityInput.value;
+                                                    saveCart();
+
+
+                                                }
 
 </script>
 <script src="../CSS/STORE/vendor/jquery-library.js"></script>

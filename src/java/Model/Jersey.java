@@ -4,11 +4,13 @@
  */
 package Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Desktop
  */
-public class Jersey {
+public class Jersey implements Serializable{
     private int jerseyID;
     private String jerseyName;
     private String jerseyDescription;

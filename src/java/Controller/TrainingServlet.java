@@ -76,9 +76,6 @@ public class TrainingServlet extends HttpServlet {
                 case "ADD":
                     AddTraining(request, response);
                     break;
-                case "LOAD":
-
-                    break;
                 case "UPDATE":
                     UpdateTraining(request, response);
                     break;
@@ -129,11 +126,12 @@ public class TrainingServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+    
 
     public void AddTraining(HttpServletRequest request, HttpServletResponse response) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
-        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"), formatter);
+        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"));
         String TrainingTime = request.getParameter("trainingTime");
         String Location = request.getParameter("location");
         String Description = request.getParameter("description");
@@ -152,7 +150,7 @@ public class TrainingServlet extends HttpServlet {
         int cid = Integer.parseInt(request.getParameter("cid"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
-        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"), formatter);
+        LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"));
         String TrainingTime = request.getParameter("trainingTime");
         String Location = request.getParameter("location");
         String Description = request.getParameter("description");

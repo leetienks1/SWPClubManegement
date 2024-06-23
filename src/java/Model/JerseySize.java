@@ -4,11 +4,13 @@
  */
 package Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Desktop
  */
-public class JerseySize {
+public class JerseySize implements Serializable{
     
     private int sizeID;
     private int jerseyID;

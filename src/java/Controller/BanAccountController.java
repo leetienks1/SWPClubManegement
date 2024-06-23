@@ -5,6 +5,7 @@
 package Controller;
 
 import DAO.UserDAO;
+import Email.Email;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -74,6 +77,9 @@ public class BanAccountController extends HttpServlet {
                 case "ADD":
 
                     break;
+                case "SEND":
+                    SendMessageBan(request, response);
+                    break;
                 case "SEARCH":
                     SearchAccount(request, response);
                     break;
@@ -123,6 +129,33 @@ public class BanAccountController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public void SendMessageBan(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        if (request.getParameter("uid") != null) {
+            String message = request.getParameter("message");
+            if(message == null || message =="")
+            {
+                message=" đã mở khóa tài khoản";
+            }else
+            {
+                message = "đã khóa tải khoản với lý do: "+message;
+            }
+            UserDAO udao = new UserDAO();
+            int id = Integer.parseInt(request.getParameter("uid"));
+            User u = udao.get(id).orElse(null);
+            Email.sendEmail(u.getEmail(), "Ban your email at wedsite RealFC", "kính gửi tài khoản: "+u.getEmail()+" "+message);
+
+        } else {
+            SendErrorMessage(out, "Send email Fail");
+        }
+        Gson gson = new Gson();
+
+        out.print(gson.toJson("success"));
+        out.flush();
+
+    }
 
     public void ListAccounts(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -189,5 +222,18 @@ public class BanAccountController extends HttpServlet {
             response.getWriter().write("{\"error\": \"An error occurred.\"}");
             response.getWriter().flush();
         }
+    }
+
+    public void SendErrorMessage(PrintWriter out, String message) {
+        Map<String, String> errors = new HashMap<>();
+
+        errors.put("status", "error");
+        errors.put("message", message);
+
+        Gson gson = new Gson();
+
+        out.print(gson.toJson(errors));
+        out.flush();
+
     }
 }

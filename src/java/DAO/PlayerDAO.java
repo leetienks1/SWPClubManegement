@@ -2,6 +2,7 @@ package DAO;
 
 import Model.Player;
 import Model.PlayerStat;
+import Model.Position;
 import Model.TrainingSchedule;
 import dal.ConnectDB;
 
@@ -23,6 +24,62 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
     private Connection con;
     private PreparedStatement st;
     private ResultSet rs;
+
+    public List<Player> getBySearch(String searchValue) {
+        String param = "%" + searchValue + "%";
+        List<Player> players = new ArrayList<>();
+        String sql = "SELECT \n"
+                + "    p.[PlayerID], \n"
+                + "    p.[UserID], \n"
+                + "    p.[Position], \n"
+                + "    p.[Name], \n"
+                + "    p.[DOB], \n"
+                + "    p.[Weight], \n"
+                + "    p.[Height], \n"
+                + "    u.[Email]\n"
+                + "FROM \n"
+                + "    [RealClub].[dbo].[Player] p\n"
+                + "JOIN \n"
+                + "    [RealClub].[dbo].[User] u  \n"
+                + "    ON p.[UserID] = u.[UserID]\n"
+                + "WHERE \n"
+                + "    p.[PlayerID] LIKE ? OR \n"
+                + "    p.[UserID] LIKE ? OR \n"
+                + "    p.[Position] LIKE ? OR \n"
+                + "    p.[Name] LIKE ? OR \n"
+                + "    p.[DOB] LIKE ? OR \n"
+                + "    p.[Weight] LIKE ? OR \n"
+                + "    p.[Height] LIKE ? OR \n"
+                + "    u.[Email] LIKE ?;";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            for (int i = 1; i <= 8; i++) {
+                st.setString(i, param);
+            }
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Player p = new Player();
+                p.setPlayerID(rs.getInt("PlayerID"));
+                p.setUserID(rs.getInt("UserID"));
+                p.setPosition(p.getPosition().valueOf(rs.getString("Position")));
+                p.setName(rs.getString("Name"));
+                Date sqlDate = rs.getDate("DOB");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    p.setAge(localDate);
+                }
+                p.setWeight(rs.getDouble("Weight"));
+                p.setHeight(rs.getInt("Height"));
+                players.add(p);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return players;
+    }
 
     @Override
     public List<Player> getAll() {
@@ -129,7 +186,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            if (p.getUserID() != null && p.getUserID()!=0) {
+            if (p.getUserID() != null && p.getUserID() != 0) {
                 st.setInt(1, p.getUserID());
             } else {
                 st.setNull(1, java.sql.Types.INTEGER);
@@ -176,6 +233,24 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         } finally {
             closeResources();
         }
+    }
+
+    public boolean deleteBool(int id) {
+        sql = "DELETE FROM [RealClub].[dbo].[Player] WHERE [PlayerID] = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, id);
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return false;
     }
 
     public List<PlayerStat> getPlayerStats(int playerID) {
@@ -232,7 +307,44 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 //        }
 //        return schedules;
 //    }
-    
+
+    public List<Player> getAllPlayersImage() {
+        List<Player> players = new ArrayList<>();
+        String sql = "SELECT p.[PlayerID], p.[UserID], p.[Position], p.[Name], p.[DOB], p.[Weight], p.[Height], u.[Image] "
+                + "FROM [RealClub].[dbo].[Player] p "
+                + "JOIN [RealClub].[dbo].[User] u ON p.[UserID] = u.[UserID] ";
+
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Player player = new Player();
+                player.setPlayerID(rs.getInt("PlayerID"));
+                player.setUserID(rs.getInt("UserID"));
+                player.setPosition(Position.valueOf(rs.getString("Position")));
+                player.setName(rs.getString("Name"));
+                Date sqlDate = rs.getDate("DOB");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    player.setAge(localDate);
+                }
+                player.setWeight(rs.getDouble("Weight"));
+                player.setHeight(rs.getInt("Height"));
+                player.setImage(rs.getString("Image"));
+
+                players.add(player);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+
+        return players;
+    }
+
 
     private void closeResources() {
         try {

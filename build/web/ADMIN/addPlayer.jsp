@@ -21,7 +21,7 @@
         <%@include file="../INCLUDES/head.jsp" %>
         <div id="add-form" style="display: none" >
             <div class="overlay">
-                <form class="card card-on card-add-form mx-auto" action="../PlayerController" method="GET" style="transition: ease-in 0.5s">
+                <form id="add"class="card card-on card-add-form mx-auto" onsubmit="addPlayer(event)" style="transition: ease-in 0.5s">
                     <i id="add-close" class="add-player-close fas fa-times"></i>
                     <h3 class="form-heading">Add New Player</h3>
                     <input type="hidden" name="command" value="ADD" />
@@ -44,7 +44,7 @@
 
                     <div class="form-group">
                         <label for="uid">Player Accounts</label>                       
-                        <select name="uid" id="uid"  title="No more accounts for players">
+                        <select name="uid" id="uid" required="" title="No more accounts for players">
                             <c:choose>
                                 <c:when test="${not empty listUsers}">
                                     <c:forEach var="u" items="${listUsers}">
