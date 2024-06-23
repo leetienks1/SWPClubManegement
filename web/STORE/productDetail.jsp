@@ -14,7 +14,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Book Library</title>
+       <title>RealFC Store</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="../css/STORE/apple-touch-icon.png">
@@ -322,6 +322,7 @@
             .btn:hover {
                 background-color: #0056b3;
             }
+
             #rightBar
             {
 
@@ -399,6 +400,7 @@
                 float: left;
                 border-bottom: 1px solid #dbdbdb;
             }
+
         </style>
         <div id="tg-wrapper" class="tg-wrapper tg-haslayout">
             <!--************************************
@@ -793,7 +795,7 @@
 
 
                                                 function loadCart() {
-                                                    cart = [];
+
                                                     const storedCart = localStorage.getItem('usercart_' + user);
                                                     if (storedCart) {
                                                         const decryptedCart = decryptData(storedCart, "swp" + user);
@@ -826,6 +828,7 @@
                                                     const firstPrice = priceParts[0].substring(1);
                                                     const quantity = parseInt(document.getElementById('quantity').value);
 
+
                                                     console.log("quan " + quantity);
 
                                                     if (parseInt(availableLabel) <= 0)
@@ -833,6 +836,10 @@
                                                         alert("Het Hang");
                                                         return;
                                                     }
+
+
+
+
 
                                                     let itemExists = false;
                                                     for (let i = 0; i < cart.length; i++) {
@@ -842,6 +849,7 @@
                                                         var choiceQuantity = parseInt(parseInt(quantity));
                                                         let totalQuantity = itemQuantity + choiceQuantity;
                                                         if (item.name === productName && item.size === selectedSize.value) {
+
 
                                                             if ( totalQuantity > parseInt(availableLabel))
                                                             {
@@ -859,6 +867,7 @@
                                                             {
                                                                 item.quantity  = parseInt(item.quantity) + choiceQuantity;
                                                                 console.log("quan esl " + itemQuantity);
+
 
 
                                                             }
@@ -998,6 +1007,7 @@
                                                 };
 
 //                                               
+
                                                 document.addEventListener('click', function (event) {
 
                                                     if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
@@ -1007,9 +1017,21 @@
                                                         reviewButton.style.display = 'block';
                                                     }
                                                 });
+
                                                 document.addEventListener('click', function (event) {
 
                                                     if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
+
+
+                                                        const reviewButton = document.getElementById('review-form');
+                                                        console.log(reviewButton);
+                                                        reviewButton.style.display = 'block';
+                                                    }
+                                                });
+                                                document.addEventListener('click', function (event) {
+
+                                                    if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
+
 
                                                         const reviewButton = document.getElementById('review-form');
                                                         console.log(reviewButton);

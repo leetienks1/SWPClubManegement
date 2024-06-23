@@ -50,7 +50,7 @@ public class TrainingScheduleDAO extends ConnectDB implements DAO<TrainingSchedu
                     LocalDate localDate = sqlDate.toLocalDate();
                     t.setTrainingDate(localDate);
                 }
-                t.setTrainingTime(String.valueOf(rs.getTime("TrainingTime")));
+                t.setTrainingTime(rs.getString("TrainingTime"));
                 t.setLocation(rs.getString("Location"));
                 t.setDescription(rs.getString("Description"));
                 list.add(t);
@@ -101,7 +101,7 @@ public class TrainingScheduleDAO extends ConnectDB implements DAO<TrainingSchedu
                     LocalDate localDate = sqlDate.toLocalDate();
                     t.setTrainingDate(localDate);
                 }
-                t.setTrainingTime(String.valueOf(rs.getTime("TrainingTime")));
+                t.setTrainingTime(rs.getString("TrainingTime"));
                 t.setLocation(rs.getString("Location"));
                 t.setDescription(rs.getString("Description"));
                 return Optional.of(t);
@@ -150,7 +150,7 @@ public class TrainingScheduleDAO extends ConnectDB implements DAO<TrainingSchedu
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TrainingScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
             st = con.prepareStatement(sql);
             st.setDate(1, Date.valueOf(t.getTrainingDate()));
