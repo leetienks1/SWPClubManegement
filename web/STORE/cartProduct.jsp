@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -110,6 +111,74 @@
             .btn-update:hover {
                 background-color: #218838;
             }
+            #rightBar
+            {
+
+                position: fixed;
+                top: -300px;
+                right: 10px; /* Ban ??u ??t thanh bên ph?i ngoài t?m nhìn */
+                bottom: 0;
+                z-index: 900; /* ??m b?o thanh bên ph?i n?m trên các ph?n t? khác */
+                width: 250px; /* ?i?u ch?nh ?? r?ng c?a thanh bên ph?i */
+                height: 250px;
+                background-color: #FFFFFF; /* Màu n?n c?a thanh bên ph?i */
+                padding: 20px; /* Kho?ng cách gi?a các ph?n t? trong thanh bên ph?i */
+                overflow-y: auto;
+                border-radius: 20px;
+                align-items: center;
+                transition: top 0.3s ease;
+            }
+
+            #rightBar.showlog
+            {
+                top: 30px;
+
+            }
+            .tg-userlogin {
+                cursor: pointer; /* Thêm con tr? tr? tay khi hover vào ph?n t? */
+            }
+            .avatar
+            {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                object-fit: cover;
+
+            }
+            .login-block
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .edit , .changepass, .logout
+            {
+                transition: transform 0.3s ease;
+
+                border-radius: 45px;
+            }
+            .changepass:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .logout:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .edit:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            
 
             /* Responsive */
             @media (max-width: 768px) {
@@ -165,9 +234,37 @@
                                     </li>
                                 </ul>
 
-                                <div class="tg-userlogin">
+                                <div class="tg-userlogin" onclick="toggleRightBar()">
                                     <figure><a href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
+                                </div>
+                                <div id="rightBar">
+                                    <div class="login-block">
+                                        <c:choose >
+                                            <c:when test="${user.image==null}">
+                                                <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
+                                            </c:when>
+                                            <c:otherwise>
+
+
+                                                <img id="image-bar" class="avatar" src="${user.image}" alt="alt"/>
+
+                                            </c:otherwise>
+                                        </c:choose> 
+                                        <h5> ${user.name}</h5>
+                                        <div class="edit" >
+                                            <a href="../EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
+                                        </div>
+                                        <div  class="changepass">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" > Change Password</a>
+                                        </div>
+                                        <div  class="logout">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/LogoutServlet" > Logout</a>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -273,6 +370,12 @@
                             const user = ${user.userId};
                             console.log(user);
 
+
+                            function toggleRightBar() {
+                                var rightBar = document.getElementById("rightBar");
+                                rightBar.classList.toggle("showlog"); // Thêm ho?c lo?i b? l?p "show"
+                            }
+
                             function encryptData(data, key) {
                                 const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
                                 return encryptedData;
@@ -306,8 +409,8 @@
                                 let totalIncart = 0;
                                 cart.forEach(function (item, index) {
                                     const str = item.price;
-                                    const priceParts = str.split('/'); // T�ch chu?i th�nh m?ng c�c ph?n, ph�n t�ch b?i d?u "/"
-                                    const firstPrice = priceParts[0].substring(1); // L?y ph?n t? ??u ti�n v� lo?i b? d?u "$"
+                                    const priceParts = str.split('/'); // Tách chu?i thành m?ng các ph?n, phân tách b?i d?u "/"
+                                    const firstPrice = priceParts[0].substring(1); // L?y ph?n t? ??u tiên và lo?i b? d?u "$"
                                     console.log(firstPrice); // Output: "39.99"
                                     console.log(firstPrice + item.quantity);
                                     const itemTotal = parseFloat(firstPrice).toFixed(2) * parseInt(item.quantity);
@@ -382,7 +485,9 @@
                                     return;
                                 }
                                 console.log(itemTrue);
+
                                 sessionStorage.setItem("itemTrue" + user,JSON.stringify(itemTrue));
+
                                 window.location.href = '/SWPClubManegement/STORE/paymentJersey.jsp';
                             }
                             function updateQuantity(index, value) {
@@ -394,7 +499,7 @@
                                 const newValue = parseInt(value);
 
                                 if (newValue > maxAvailable) {
-                                    quantityInput.value = maxAvailable; // ??t gi� tr? nh?p v�o th�nh gi� tr? l?n nh?t c� s?n
+                                    quantityInput.value = maxAvailable; // ??t giá tr? nh?p vào thành giá tr? l?n nh?t có s?n
                                 } else
                                 {
                                     if (newValue < 1)
@@ -407,7 +512,7 @@
                             }
                             window.onload = function () {
                                 loadCart();
-                                
+
                             };
 
 

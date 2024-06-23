@@ -49,6 +49,10 @@
         <servlet-class>Controller.PlayerController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TrainingServlet</servlet-name>
+        <servlet-class>Controller.TrainingServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>Servlet.FileUploadServlet</servlet-class>
     </servlet>
@@ -108,6 +112,10 @@
         <servlet-name>ajaxServlet</servlet-name>
         <servlet-class>Servlet.ajaxServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadExcelServlet</servlet-name>
+        <servlet-class>Servlet.UploadExcelServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/EditProfileServlet</url-pattern>
@@ -147,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>PlayerController</servlet-name>
         <url-pattern>/PlayerController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainingServlet</servlet-name>
+        <url-pattern>/TrainingServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
@@ -207,6 +219,10 @@
     <servlet-mapping>
         <servlet-name>ajaxServlet</servlet-name>
         <url-pattern>/ajaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadExcelServlet</servlet-name>
+        <url-pattern>/UploadExcelServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -54,6 +54,7 @@ public class TestSql {
         System.out.println(mDao.getAll());
         
 
-
+        PlayerDAO pdao = new PlayerDAO();
+        System.out.println(pdao.getBySearch(""));
     }
 }

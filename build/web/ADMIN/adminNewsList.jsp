@@ -589,8 +589,6 @@
                     setTimeout(function () {
                         success.style.display = "none";
                     }, 1000);
-                } else {
-                    alert("Please Remove MatchID: " + mid + " in matchStats after remove this");
                 }
 
             })

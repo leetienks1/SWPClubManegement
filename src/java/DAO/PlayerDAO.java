@@ -25,6 +25,62 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
     private PreparedStatement st;
     private ResultSet rs;
 
+    public List<Player> getBySearch(String searchValue) {
+        String param = "%" + searchValue + "%";
+        List<Player> players = new ArrayList<>();
+        String sql = "SELECT \n"
+                + "    p.[PlayerID], \n"
+                + "    p.[UserID], \n"
+                + "    p.[Position], \n"
+                + "    p.[Name], \n"
+                + "    p.[DOB], \n"
+                + "    p.[Weight], \n"
+                + "    p.[Height], \n"
+                + "    u.[Email]\n"
+                + "FROM \n"
+                + "    [RealClub].[dbo].[Player] p\n"
+                + "JOIN \n"
+                + "    [RealClub].[dbo].[User] u  \n"
+                + "    ON p.[UserID] = u.[UserID]\n"
+                + "WHERE \n"
+                + "    p.[PlayerID] LIKE ? OR \n"
+                + "    p.[UserID] LIKE ? OR \n"
+                + "    p.[Position] LIKE ? OR \n"
+                + "    p.[Name] LIKE ? OR \n"
+                + "    p.[DOB] LIKE ? OR \n"
+                + "    p.[Weight] LIKE ? OR \n"
+                + "    p.[Height] LIKE ? OR \n"
+                + "    u.[Email] LIKE ?;";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            for (int i = 1; i <= 8; i++) {
+                st.setString(i, param);
+            }
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Player p = new Player();
+                p.setPlayerID(rs.getInt("PlayerID"));
+                p.setUserID(rs.getInt("UserID"));
+                p.setPosition(p.getPosition().valueOf(rs.getString("Position")));
+                p.setName(rs.getString("Name"));
+                Date sqlDate = rs.getDate("DOB");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    p.setAge(localDate);
+                }
+                p.setWeight(rs.getDouble("Weight"));
+                p.setHeight(rs.getInt("Height"));
+                players.add(p);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return players;
+    }
+
     @Override
     public List<Player> getAll() {
         List<Player> players = new ArrayList<>();
@@ -179,6 +235,24 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         }
     }
 
+    public boolean deleteBool(int id) {
+        sql = "DELETE FROM [RealClub].[dbo].[Player] WHERE [PlayerID] = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, id);
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return false;
+    }
+
     public List<PlayerStat> getPlayerStats(int playerID) {
         List<PlayerStat> stats = new ArrayList<>();
         sql = "SELECT [StatID], [PlayerID], [Date], [GoalsScored], [Assists], [YellowCards], [RedCards] FROM [RealClub].[dbo].[PlayerStat] WHERE [PlayerID] = ?";
@@ -233,6 +307,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 //        }
 //        return schedules;
 //    }
+
     public List<Player> getAllPlayersImage() {
         List<Player> players = new ArrayList<>();
         String sql = "SELECT p.[PlayerID], p.[UserID], p.[Position], p.[Name], p.[DOB], p.[Weight], p.[Height], u.[Image] "
@@ -269,6 +344,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 
         return players;
     }
+
 
     private void closeResources() {
         try {
