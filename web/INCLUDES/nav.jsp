@@ -6,7 +6,7 @@
 
 
 <div class="nav" style="position: fixed; width: 100% ; top: 0; z-index: 300">
-    <div class="nav-logo"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
+    <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href='/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
     <div class="nav-elements">
         <a class="nav-click">About </a>
         <a class="nav-click">Match Centre</a>

@@ -94,7 +94,7 @@
                 <td>${match.matchDate}</td>
                 <td>${match.matchLocation}</td>
                 <td>${match.tournament}</td>
-                 <td>${match.matchHomeTeam.score}-${match.matchAwayTeam.score}</td>
+                <td>${match.matchHomeTeam.score}-${match.matchAwayTeam.score}</td>
                 <td>
                     <c:choose>
                         <c:when test="${match.matchDate.isBefore(now)}">

@@ -178,6 +178,28 @@
                 display: flex;
                 border: black solid 1px;
             }
+            .status {
+                color: #761c19;
+                animation: shake 0.5s infinite alternate; /* Sử dụng animation shake */
+            }
+            .go-stote-btn
+            {
+                animation: shake 0.5s ease-in-out infinite alternate;
+            }
+
+            @keyframes shake {
+                0% {
+                    transform: translateY(-2px); /* Di chuyển lên */
+                }
+                50% {
+                    transform: translateY(2px); /* Di chuyển xuống */
+                }
+                100% {
+                    transform: translateY(-2px); /* Di chuyển lên */
+                }
+            }
+
+
         </style>
         <div id="tg-wrapper" class="tg-wrapper tg-haslayout">
             <!--************************************
@@ -204,7 +226,7 @@
                                 </ul>
 
                                 <div class="tg-userlogin">
-                                    <figure><a href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
+                                    <figure><a  href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
                                 </div>
                             </div>
@@ -301,8 +323,8 @@
                     <div class="pay-button">
                         <c:choose>
                             <c:when test="${status== 'success'}">
-                                <p style="color: greenyellow" class="status">Success</p>
-                                <a href="/SWPClubManegement/STORE/product.jsp">Go back to store</a>
+                                <p  class="status">Success</p>
+                                <a class="go-stote-btn" href="/SWPClubManegement/STORE/product.jsp">Go back to store</a>
                             </c:when>
                             <c:otherwise>
                                 <p style="color: red" class="status">Unpaid</p>
@@ -319,10 +341,22 @@
 
 
     </body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
     <script>
         const user = ${user.userId};
         console.log(user);
 
+        function encryptData(data, key) {
+            const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
+            return encryptedData;
+        }
+        // lấy lại khi cần thiết
+        function decryptData(encryptedData, key) {
+            const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, key);
+            const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+            return decryptedData;
+        }
         function renderCart() {
             const cartItems = document.getElementById('cart-items');
             cartItems.innerHTML = '';
@@ -380,11 +414,11 @@
             const totalElement = document.getElementById('cart-total');
             if (totalElement) {
                 const totalValue = totalElement.textContent.slice(1).trim();
-                console.log("Total Value: " + parseFloat(totalValue* 22000).toFixed(0) ); // Debugging: Kiểm tra giá trị của totalValue
+                console.log("Total Value: " + parseFloat(totalValue * 22000).toFixed(0)); // Debugging: Kiểm tra giá trị của totalValue
 
                 // Tìm phần tử <a> cần gán giá trị
                 const payLink = document.querySelector('a[href="/SWPClubManegement/VNPAY/vnpay_pay.jsp"]');
-                var payValue = parseFloat(totalValue* 22000).toFixed(0) ;
+                var payValue = parseFloat(totalValue * 22000).toFixed(0);
                 // Gán giá trị vào thuộc tính href của thẻ <a>
                 if (payLink) {
                     payLink.href += '?total=' + payValue;
@@ -402,13 +436,14 @@
 
 
         };
+        
         function removeAfterFinish()
         {
             sessionStorage.removeItem('itemTrue');
 
-            let cartRemove = JSON.parse(sessionStorage.getItem('usercart' + user));
+            let cartRemove = decryptData(localStorage.getItem('usercart_' + user), "swp"+user);
 
-            console.log("before" + sessionStorage.getItem('usercart' + user));
+            console.log("before" + cartRemove);
             cartRemove.forEach((item, index) => {
                 if (item.selected === true)
                 {
@@ -416,10 +451,11 @@
                 }
             });
 
-            sessionStorage.setItem('usercart' + user, JSON.stringify(cartRemove));
+            const encryptedCart = encryptData(cartRemove, "swp"+user);
+            localStorage.setItem('usercart_' + user, encryptedCart);
 
-            let cart = JSON.parse(sessionStorage.getItem('usercart' + user));
-            console.log("after" + sessionStorage.getItem('usercart' + user));
+//            let cart = JSON.parse(sessionStorage.getItem('usercart' + user));
+//            console.log("after" + sessionStorage.getItem('usercart' + user));
 
         }
 
