@@ -37,7 +37,7 @@
     </filter-mapping>
     <servlet>
         <servlet-name>EditProfileServlet</servlet-name>
-        <servlet-class>Controller.AdminController.EditProfileServlet</servlet-class>
+        <servlet-class>Controller.EditProfileServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -85,12 +85,12 @@
     </servlet>
     <servlet>
         <servlet-name>PlayerController</servlet-name>
-        <servlet-class>Controller.AdminController.PlayerController</servlet-class>
+        <servlet-class>Controller.PlayerController</servlet-class>
     </servlet>
     <servlet>
 
         <servlet-name>TrainingServlet</servlet-name>
-        <servlet-class>Controller.AdminController.TrainingServlet</servlet-class>
+        <servlet-class>Controller.TrainingServlet</servlet-class>
     </servlet>
     <servlet>
 
@@ -99,11 +99,11 @@
     </servlet>
     <servlet>
         <servlet-name>NewsController</servlet-name>
-        <servlet-class>Controller.AdminController.NewsController</servlet-class>
+        <servlet-class>Controller.NewsController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddNewsServlet</servlet-name>
-        <servlet-class>Controller.AdminController.AddNewsServlet</servlet-class>
+        <servlet-class>Controller.AddNewsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RemoveSessionSuccess</servlet-name>
@@ -111,7 +111,7 @@
     </servlet>
     <servlet>
         <servlet-name>EditNewsServlet</servlet-name>
-        <servlet-class>Controller.AdminController.EditNewsServlet</servlet-class>
+        <servlet-class>Controller.EditNewsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FileBrowserServlet</servlet-name>
@@ -120,16 +120,16 @@
     <servlet>
         <servlet-name>BanAccountController</servlet-name>
 
-        <servlet-class>Controller.AdminController.BanAccountController</servlet-class>
+        <servlet-class>Controller.BanAccountController</servlet-class>
 
     </servlet>
     <servlet>
         <servlet-name>MatchScheduleController</servlet-name>
-        <servlet-class>Controller.AdminController.MatchScheduleController</servlet-class>
+        <servlet-class>Controller.MatchScheduleController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MatchStatisticController</servlet-name>
-        <servlet-class>Controller.AdminController.MatchStatisticController</servlet-class>
+        <servlet-class>Controller.MatchStatisticController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminCreateAccountServlet</servlet-name>
@@ -159,6 +159,11 @@
 
         <servlet-name>UploadExcelServlet</servlet-name>
         <servlet-class>Servlet.UploadExcelServlet</servlet-class>
+
+
+        <servlet-name>PlayerListServlet</servlet-name>
+        <servlet-class>Controller.PlayerListServlet</servlet-class>
+
 
     </servlet>
     <servlet-mapping>
@@ -281,11 +286,20 @@
     </servlet-mapping>
     <servlet-mapping>
 
+
         <servlet-name>PlayerListServlet</servlet-name>
         <url-pattern>/Players</url-pattern>
 
         <servlet-name>UploadExcelServlet</servlet-name>
         <url-pattern>/UploadExcelServlet</url-pattern>
+
+
+        <servlet-name>UploadExcelServlet</servlet-name>
+        <url-pattern>/UploadExcelServlet</url-pattern>
+
+        <servlet-name>PlayerListServlet</servlet-name>
+        <url-pattern>/Players</url-pattern>
+
 
     </servlet-mapping>
     <session-config>

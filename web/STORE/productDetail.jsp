@@ -838,6 +838,7 @@
                                                     }
 
 
+
                                                     let itemExists = false;
                                                     for (let i = 0; i < cart.length; i++) {
                                                         let item = cart[i];
@@ -1004,6 +1005,7 @@
                                                 };
 
 //                                               
+
                                                 document.addEventListener('click', function (event) {
 
                                                     if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
@@ -1013,9 +1015,21 @@
                                                         reviewButton.style.display = 'block';
                                                     }
                                                 });
+
                                                 document.addEventListener('click', function (event) {
 
                                                     if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
+
+
+                                                        const reviewButton = document.getElementById('review-form');
+                                                        console.log(reviewButton);
+                                                        reviewButton.style.display = 'block';
+                                                    }
+                                                });
+                                                document.addEventListener('click', function (event) {
+
+                                                    if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
+
 
                                                         const reviewButton = document.getElementById('review-form');
                                                         console.log(reviewButton);

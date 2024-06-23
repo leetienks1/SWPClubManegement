@@ -116,13 +116,15 @@
 
                 position: fixed;
                 top: -300px;
-                right: 10px; /* Ban ??u ??t thanh b�n ph?i ngo�i t?m nh�n */
+
+                right: 10px; /* Ban ??u ??t thanh bên ph?i ngoài t?m nhìn */
                 bottom: 0;
-                z-index: 900; /* ??m b?o thanh b�n ph?i n?m tr�n c�c ph?n t? kh�c */
-                width: 250px; /* ?i?u ch?nh ?? r?ng c?a thanh b�n ph?i */
+                z-index: 900; /* ??m b?o thanh bên ph?i n?m trên các ph?n t? khác */
+                width: 250px; /* ?i?u ch?nh ?? r?ng c?a thanh bên ph?i */
                 height: 250px;
-                background-color: #FFFFFF; /* M�u n?n c?a thanh b�n ph?i */
-                padding: 20px; /* Kho?ng c�ch gi?a c�c ph?n t? trong thanh b�n ph?i */
+                background-color: #FFFFFF; /* Màu n?n c?a thanh bên ph?i */
+                padding: 20px; /* Kho?ng cách gi?a các ph?n t? trong thanh bên ph?i */
+
                 overflow-y: auto;
                 border-radius: 20px;
                 align-items: center;
@@ -135,7 +137,9 @@
 
             }
             .tg-userlogin {
-                cursor: pointer; /* Th�m con tr? tr? tay khi hover v�o ph?n t? */
+
+                cursor: pointer; /* Thêm con tr? tr? tay khi hover vào ph?n t? */
+
             }
             .avatar
             {
@@ -371,9 +375,11 @@
                             console.log(user);
 
 
-                   function toggleRightBar() {
+
+                            function toggleRightBar() {
                                 var rightBar = document.getElementById("rightBar");
-                                rightBar.classList.toggle("showlog"); // Th�m ho?c lo?i b? l?p "show"
+                                rightBar.classList.toggle("showlog"); // Thêm ho?c lo?i b? l?p "show"
+
                             }
 
                             function encryptData(data, key) {
@@ -409,8 +415,10 @@
                                 let totalIncart = 0;
                                 cart.forEach(function (item, index) {
                                     const str = item.price;
-                                    const priceParts = str.split('/'); // T�ch chu?i th�nh m?ng c�c ph?n, ph�n t�ch b?i d?u "/"
-                                    const firstPrice = priceParts[0].substring(1); // L?y ph?n t? ??u ti�n v� lo?i b? d?u "$"
+
+                                    const priceParts = str.split('/'); // Tách chu?i thành m?ng các ph?n, phân tách b?i d?u "/"
+                                    const firstPrice = priceParts[0].substring(1); // L?y ph?n t? ??u tiên và lo?i b? d?u "$"
+
                                     console.log(firstPrice); // Output: "39.99"
                                     console.log(firstPrice + item.quantity);
                                     const itemTotal = parseFloat(firstPrice).toFixed(2) * parseInt(item.quantity);
@@ -487,7 +495,8 @@
                                 console.log(itemTrue);
 
 
-                                sessionStorage.setItem("itemTrue" + user, JSON.stringify(itemTrue));
+                                sessionStorage.setItem("itemTrue" + user,JSON.stringify(itemTrue));
+
 
                                 window.location.href = '/SWPClubManegement/STORE/paymentJersey.jsp';
                             }
@@ -500,7 +509,9 @@
                                 const newValue = parseInt(value);
 
                                 if (newValue > maxAvailable) {
-                                    quantityInput.value = maxAvailable; // ??t gi� tr? nh?p v�o th�nh gi� tr? l?n nh?t c� s?n
+
+                                    quantityInput.value = maxAvailable; // ??t giá tr? nh?p vào thành giá tr? l?n nh?t có s?n
+
                                 } else
                                 {
                                     if (newValue < 1)
