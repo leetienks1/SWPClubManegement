@@ -56,16 +56,20 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("/SWPClubManegement/HomeServlet ");
                 }
             } else {
-                if (account.getStatus() != true) {
+                if (account != null && account.getStatus() != true) {
                     request.getSession().setAttribute("error", "Your account has been locked");
                     response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
-                } else {
-                    request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
-                    response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
+                }else
+                {
+                    if (account == null) {
+                        request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
+                        response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
+                    }
                 }
 
-
             }
+                    
+                
         }
     }
 

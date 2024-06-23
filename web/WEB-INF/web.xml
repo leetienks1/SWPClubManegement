@@ -10,7 +10,7 @@
     </filter-mapping>
     <servlet>
         <servlet-name>EditProfileServlet</servlet-name>
-        <servlet-class>Controller.EditProfileServlet</servlet-class>
+        <servlet-class>Controller.AdminController.EditProfileServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -46,23 +46,23 @@
     </servlet>
     <servlet>
         <servlet-name>PlayerController</servlet-name>
-        <servlet-class>Controller.PlayerController</servlet-class>
+        <servlet-class>Controller.AdminController.PlayerController</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< coach
         <servlet-name>TrainingServlet</servlet-name>
-        <servlet-class>Controller.TrainingServlet</servlet-class>
-=======
+        <servlet-class>Controller.AdminController.TrainingServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>Servlet.FileUploadServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NewsController</servlet-name>
-        <servlet-class>Controller.NewsController</servlet-class>
+        <servlet-class>Controller.AdminController.NewsController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddNewsServlet</servlet-name>
-        <servlet-class>Controller.AddNewsServlet</servlet-class>
+        <servlet-class>Controller.AdminController.AddNewsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RemoveSessionSuccess</servlet-name>
@@ -70,7 +70,7 @@
     </servlet>
     <servlet>
         <servlet-name>EditNewsServlet</servlet-name>
-        <servlet-class>Controller.EditNewsServlet</servlet-class>
+        <servlet-class>Controller.AdminController.EditNewsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FileBrowserServlet</servlet-name>
@@ -78,16 +78,15 @@
     </servlet>
     <servlet>
         <servlet-name>BanAccountController</servlet-name>
-        <servlet-class>Controller.BanAccountController</servlet-class>
->>>>>>> main
+        <servlet-class>Controller.AdminController.BanAccountController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MatchScheduleController</servlet-name>
-        <servlet-class>Controller.MatchScheduleController</servlet-class>
+        <servlet-class>Controller.AdminController.MatchScheduleController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MatchStatisticController</servlet-name>
-        <servlet-class>Controller.MatchStatisticController</servlet-class>
+        <servlet-class>Controller.AdminController.MatchStatisticController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminCreateAccountServlet</servlet-name>
@@ -112,6 +111,10 @@
     <servlet>
         <servlet-name>ajaxServlet</servlet-name>
         <servlet-class>Servlet.ajaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadExcelServlet</servlet-name>
+        <servlet-class>Servlet.UploadExcelServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
@@ -154,10 +157,10 @@
         <url-pattern>/PlayerController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< coach
         <servlet-name>TrainingServlet</servlet-name>
         <url-pattern>/TrainingServlet</url-pattern>
-=======
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/FileUploadServlet</url-pattern>
     </servlet-mapping>
@@ -184,7 +187,6 @@
     <servlet-mapping>
         <servlet-name>BanAccountController</servlet-name>
         <url-pattern>/BanAccountController</url-pattern>
->>>>>>> main
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MatchScheduleController</servlet-name>
@@ -217,6 +219,10 @@
     <servlet-mapping>
         <servlet-name>ajaxServlet</servlet-name>
         <url-pattern>/ajaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadExcelServlet</servlet-name>
+        <url-pattern>/UploadExcelServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

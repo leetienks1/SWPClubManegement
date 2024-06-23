@@ -37,7 +37,7 @@ public class JerseySizeDAO extends dal.ConnectDB implements DAO<JerseySize> {
         List<JerseySize> jerseySizeList = new ArrayList<>();
         try {
             sql = "SELECT [SizeID], [JerseyID], [JerseySize], [JerseyQuantity] "
-                    + "FROM [RealClub].[dbo].[JerseySizes] WHERE JerseyID = ?" ;
+                    + "FROM [RealClub].[dbo].[JerseySizes] WHERE JerseyID = ? And [JerseyQuantity] >0 " ;
             try {
                 con = openConnection(); // Mở kết nối đến cơ sở dữ liệu
             } catch (ClassNotFoundException ex) {

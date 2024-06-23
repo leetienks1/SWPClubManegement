@@ -49,6 +49,7 @@ public class TestSql {
 
     public static void main(String[] args) throws ParseException {
 
-
+        PlayerDAO pdao = new PlayerDAO();
+        System.out.println(pdao.getBySearch(""));
     }
 }
