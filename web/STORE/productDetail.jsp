@@ -322,6 +322,85 @@
             .btn:hover {
                 background-color: #0056b3;
             }
+
+            #rightBar
+            {
+
+                position: fixed;
+                top: -300px;
+                right: 10px; /* Ban đầu đặt thanh bên phải ngoài tầm nhìn */
+                bottom: 0;
+                z-index: 900; /* Đảm bảo thanh bên phải nằm trên các phần tử khác */
+                width: 250px; /* Điều chỉnh độ rộng của thanh bên phải */
+                height: 250px;
+                background-color: #FFFFFF; /* Màu nền của thanh bên phải */
+                padding: 20px; /* Khoảng cách giữa các phần tử trong thanh bên phải */
+                overflow-y: auto;
+                border-radius: 20px;
+                align-items: center;
+                transition: top 0.3s ease;
+            }
+
+            #rightBar.showlog
+            {
+                top: 30px;
+
+            }
+            .tg-userlogin {
+                cursor: pointer; /* Thêm con trỏ trỏ tay khi hover vào phần tử */
+            }
+            .avatar
+            {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                object-fit: cover;
+
+            }
+            .login-block
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .edit , .changepass, .logout
+            {
+                transition: transform 0.3s ease;
+
+                border-radius: 45px;
+            }
+            .changepass:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .logout:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .edit:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .tg-header {
+                z-index: 3;
+                position: fixed;
+            }
+            .tg-header .tg-topbar {
+                background-color: white;
+                width: 100%;
+                float: left;
+                border-bottom: 1px solid #dbdbdb;
+            }
+
         </style>
         <div id="tg-wrapper" class="tg-wrapper tg-haslayout">
             <!--************************************
@@ -347,9 +426,41 @@
                                     </li>
                                 </ul>
 
-                                <div class="tg-userlogin">
+                                <div class="tg-userlogin" onclick="toggleRightBar()">
                                     <figure><a href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
+                                </div>
+                                <div id="rightBar">
+
+
+
+
+                                    <div class="login-block">
+                                        <c:choose >
+                                            <c:when test="${user.image==null}">
+                                                <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
+                                            </c:when>
+                                            <c:otherwise>
+
+
+                                                <img id="image-bar" class="avatar" src="${user.image}" alt="alt"/>
+
+                                            </c:otherwise>
+                                        </c:choose> 
+                                        <h5> ${user.name}</h5>
+                                        <div class="edit" >
+                                            <a href="../EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
+                                        </div>
+                                        <div  class="changepass">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" > Change Password</a>
+                                        </div>
+                                        <div  class="logout">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/LogoutServlet" > Logout</a>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -622,6 +733,12 @@
 <script src="../OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 <script>
+
+                                                function toggleRightBar() {
+                                                    var rightBar = document.getElementById("rightBar");
+                                                    rightBar.classList.toggle("showlog"); // Thêm hoặc loại bỏ lớp "show"
+                                                }
+
                                                 $(document).ready(function () {
 
                                                     $(".cart-icon").click(function () {
@@ -678,6 +795,7 @@
 
 
                                                 function loadCart() {
+
                                                     const storedCart = localStorage.getItem('usercart_' + user);
                                                     if (storedCart) {
                                                         const decryptedCart = decryptData(storedCart, "swp" + user);
@@ -711,20 +829,42 @@
                                                     const quantity = parseInt(document.getElementById('quantity').value);
 
 
+                                                    console.log("quan " + quantity);
+
+                                                    if (parseInt(availableLabel) <= 0)
+                                                    {
+                                                        alert("Het Hang");
+                                                        return;
+                                                    }
 
 
                                                     let itemExists = false;
                                                     for (let i = 0; i < cart.length; i++) {
                                                         let item = cart[i];
+                                                        console.log("item add " + item.quantity);
+                                                        var itemQuantity =parseInt(parseInt(item.quantity))
+                                                        var choiceQuantity = parseInt(parseInt(quantity));
+                                                        let totalQuantity = itemQuantity + choiceQuantity;
                                                         if (item.name === productName && item.size === selectedSize.value) {
 
-                                                            if ((item.quantity + quantity) > parseInt(availableLabel))
+
+                                                            if ( totalQuantity > parseInt(availableLabel))
                                                             {
+                                                                console.log("item if quan " + item.quantity);
+                                                                console.log("item if quan " + quantity);
+                                                                console.log("item if to " + (item.quantity + quantity));
+
+
                                                                 item.quantity = parseInt(availableLabel);
+                                                                console.log("quan if " + item.quantity);
+
+
 
                                                             } else
                                                             {
-                                                                item.quantity += quantity;
+                                                                item.quantity  = parseInt(item.quantity) + choiceQuantity;
+                                                                console.log("quan esl " + itemQuantity);
+
 
 
                                                             }

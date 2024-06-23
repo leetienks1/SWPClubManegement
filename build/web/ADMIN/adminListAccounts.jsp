@@ -374,6 +374,105 @@
                 }
 
             }
+            #message-form
+            {
+                display: none;
+
+            }
+            .input-container {
+
+                position: fixed;
+                z-index: 9999; /* Đảm bảo nổi lên trên các thẻ khác */
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                text-align: center;
+                top: 30%;
+                left: 30%;
+                width: 45vw;
+                height: 45vh;
+                vertical-align: middle;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+
+            .input-container h2 {
+                margin-bottom: 20px;
+                font-size: 24px;
+            }
+
+            /* Style for the input field */
+            .input-container input[type="text"] {
+                width: 80%;
+                padding: 10px;
+               
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            /* Style for the buttons */
+            .input-container button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                margin: 5px;
+                width: 90px;
+            }
+
+            .input-container button.send {
+                background-color: #4CAF50; /* Green */
+                color: white;
+            }
+
+            .input-container button.cancel {
+                background-color: #f44336; /* Red */
+                color: white;
+            }
+
+            /* Hover effects for buttons */
+            .input-container button.send:hover {
+                background-color: #45a049;
+            }
+
+            .input-container button.cancel:hover {
+                background-color: #da190b;
+            }
+            .error-message {
+                display: none;
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: #f8d7da;
+                color: #721c24;
+                padding: 10px;
+                border: 1px solid #f5c6cb;
+                border-radius: 5px;
+                z-index: 2000;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .error-message.show {
+                display: block;
+                animation: fadeOut 2s forwards;
+            }
+
+            @keyframes fadeOut {
+                0% {
+                    opacity: 1;
+                }
+                80% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                }
+            }
         </style>
     </head>
     <body onload="search()">
@@ -427,7 +526,8 @@
                 </nav>
 
 
-                <div style="display: flex; justify-content: space-between">
+                <div style="display: flex;
+                     justify-content: space-between">
                     <div class="search-container">
 
                         <input class="search" type="text" placeholder="ID, Name, Role,Email...">
@@ -468,10 +568,24 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="error-message" id="errorMessage">
+
+                </div>
                 <div class="success-message" id="successMessage">
                     <i class="fas fa-check"></i> 
                 </div>
                 <%@include file="createAccount.jsp" %>
+                <div class="overlay" id="message-form">
+                    <div class="input-container">
+                        <h2>Send the reason </h2>
+                        <input type="text" name="message" placeholder="Enter your message here...">
+                        <br>
+                        <div>
+                            <button class="send">Send</button>
+                            <button class="cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <script>
@@ -520,13 +634,13 @@
                     avatarImage.onload = function () {
                         console.log(this.src);
                         check = true;
-//                        console.log("onLoad" + check);
+                        //                        console.log("onLoad" + check);
                     }
                     avatarImage.onerror = function () {
 
                         this.src = "https://tse4.mm.bing.net/th?id=OIP.65QkEmpKBM_c-VSeqJfgdQAAAA&pid=Api&P=0&h=220";
                     };
-                    // Set the source to the base64 encoded image
+
 
 
                 }
@@ -581,64 +695,127 @@
                 tableBody.innerHTML = ""; // Clear the existing table body
 
                 accounts.forEach(u => {
-                    const row = document.createElement('tr');
-                    const userIdCell = document.createElement('td');
-                    userIdCell.textContent = u.userId;
-                    row.appendChild(userIdCell);
-                    const userImageCell = document.createElement('td');
-                    const img = document.createElement('img');
-                    img.classList.add('avatar');
-                    img.src = u.image;
-                    img.width = 45;
-                    img.height = 45;
-                    img.alt = 'alt';
-                    img.style.borderRadius = '90px';
-                    userImageCell.appendChild(img);
-                    userImageCell.appendChild(document.createTextNode(" " + u.userName));
-                    row.appendChild(userImageCell);
-                    const emailCell = document.createElement('td');
-                    emailCell.textContent = u.email;
-                    row.appendChild(emailCell);
-                    const roleCell = document.createElement('td');
-                    roleCell.textContent = u.role;
-                    row.appendChild(roleCell);
-                    const statusCell = document.createElement('td');
-                    const toggleDiv = document.createElement('div');
-                    toggleDiv.classList.add('toggle-button');
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.id = `statusToggle` + u.userId;
-                    checkbox.classList.add('toggle-input');
-                    if (u.status === true) {
-                        checkbox.checked = true;
+                    if (u.role !== "Admin")
+                    {
+                        const row = document.createElement('tr');
+                        const userIdCell = document.createElement('td');
+                        userIdCell.textContent = u.userId;
+                        row.appendChild(userIdCell);
+                        const userImageCell = document.createElement('td');
+                        const img = document.createElement('img');
+                        img.classList.add('avatar');
+                        img.src = u.image;
+                        img.width = 45;
+                        img.height = 45;
+                        img.alt = 'alt';
+                        img.style.borderRadius = '90px';
+                        userImageCell.appendChild(img);
+                        userImageCell.appendChild(document.createTextNode(" " + u.userName));
+                        row.appendChild(userImageCell);
+                        const emailCell = document.createElement('td');
+                        emailCell.textContent = u.email;
+                        row.appendChild(emailCell);
+                        const roleCell = document.createElement('td');
+                        roleCell.textContent = u.role;
+                        row.appendChild(roleCell);
+
+
+                        const statusCell = document.createElement('td');
+                        const toggleDiv = document.createElement('div');
+                        toggleDiv.classList.add('toggle-button');
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = `statusToggle` + u.userId;
+                        checkbox.classList.add('toggle-input');
+                        if (u.status === true) {
+                            checkbox.checked = true;
+                        }
+                        toggleDiv.appendChild(checkbox);
+                        const label = document.createElement('label');
+                        label.setAttribute('for', `statusToggle` + u.userId);
+                        label.classList.add('toggle-label');
+                        toggleDiv.appendChild(label);
+                        const handleDiv = document.createElement('div');
+                        handleDiv.classList.add('toggle-handle');
+
+                        toggleDiv.appendChild(handleDiv);
+                        statusCell.appendChild(toggleDiv);
+                        row.appendChild(statusCell);
+
+
+
+                        tableBody.appendChild(row);
+                        const statusToggle = document.querySelector('#statusToggle' + u.userId);
+                        statusToggle.addEventListener('click', function () {
+                            console.log("this: " + document.getElementById('statusToggle' + u.userId).id);
+                            console.log("status" + u.userId);
+                            const blockSendMessage = document.querySelector('#message-form');
+                            blockSendMessage.style.display = 'block';
+                            document.querySelector('input[name="message"]').value = "";
+
+                            if (this.checked === true)
+                            {
+                                blockSendMessage.style.display = 'none';
+                                toggleStatus(this, u.userId, "");
+                                return;
+
+                            }
+
+                            const sendButton = document.querySelector('.send');
+                            const newSendButton = sendButton.cloneNode(true);
+                            sendButton.parentNode.replaceChild(newSendButton, sendButton);
+
+                            const cancelButton = document.querySelector('.cancel');
+                            const newCancelButton = cancelButton.cloneNode(true);
+                            cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
+
+                            // Event listener for sending a message
+                            newSendButton.addEventListener('click', function () {
+                                console.log("click sent");
+                                const mess = document.querySelector('input[name="message"]').value;
+                                if (mess !== null && mess !== "") {
+                                    console.log("click sent");
+                                    toggleStatus(statusToggle, u.userId, mess);
+                                    blockSendMessage.style.display = 'none';
+                                } else {
+                                    alert("Message empty");
+                                }
+                            });
+
+                            // Event listener for cancel action
+                            newCancelButton.addEventListener('click', function () {
+                                statusToggle.checked = true;
+                                console.log("this.checked: " + statusToggle.checked);
+
+                                const errorMessage = document.getElementById('errorMessage');
+                                errorMessage.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Cancel';
+                                errorMessage.classList.add('show');
+
+                                setTimeout(function () {
+                                    errorMessage.classList.remove('show');
+                                }, 3000);
+
+                                blockSendMessage.style.display = 'none';
+                                return;
+                            });
+
+
+
+
+                        });
+
+                        avatarOnload();
                     }
-                    toggleDiv.appendChild(checkbox);
-                    const label = document.createElement('label');
-                    label.setAttribute('for', `statusToggle` + u.userId);
-                    label.classList.add('toggle-label');
-                    toggleDiv.appendChild(label);
-                    const handleDiv = document.createElement('div');
-                    handleDiv.classList.add('toggle-handle');
-                    toggleDiv.appendChild(handleDiv);
-                    statusCell.appendChild(toggleDiv);
-                    row.appendChild(statusCell);
-                    tableBody.appendChild(row);
-                    document.getElementById('statusToggle' + u.userId).addEventListener('change', function () {
-                        console.log(this);
-                        console.log(u.userId);
-                        toggleStatus(this, u.userId);
-                    });
-                    avatarOnload();
                 });
             }
 
 
 
-            document.querySelector('#create-button').addEventListener('click',function () {
+            document.querySelector('#create-button').addEventListener('click', function () {
                 const load = document.getElementById('loadingSpinner');
                 load.style.display = 'block';
             });
-            
+
 
             document.addEventListener('DOMContentLoaded', function () {
                 document.querySelector(".search").addEventListener('input', search);
@@ -709,7 +886,7 @@
 
 
             // Định nghĩa một hàm JavaScript để xử lý sự kiện thay đổi trạng thái của checkbox
-            function toggleStatus(statusCheckbox, userId) {
+            function toggleStatus(statusCheckbox, userId, mess) {
                 // Lấy giá trị trạng thái mới
                 const newStatus = statusCheckbox.checked;
                 const userid = userId;
@@ -722,9 +899,51 @@
                 fetch(url, {method: 'GET'})
                         .then(response => response.text())
                         .then(data => {
+                            //                            console.log(data);
+                            var statusMessage;
+                            if (newStatus)
+                            {
+                                statusMessage = "Unban Account Success";
+                            } else
+                            {
+                                statusMessage = "Ban Account Success";
+
+                            }
+                            var success = document.getElementById('successMessage');
+                            success.style.display = "flex";
+                            successMessage.innerHTML = '<i class="fas fa-check-circle"></i>' + statusMessage;
+                            setTimeout(function () {
+                                success.style.display = "none";
+                            }, 2000);
+                        })
+                        .catch(error => {
+                            alert(error);
+                            console.error('Error:', error);
+                        }).
+                        finally(() => {
+                            sendEmail(userId, mess);
+                        }
+                        );
+            }
+            function sendEmail(id, mess)
+            {
+                console.log("mes" + mess);
+                const url = '/SWPClubManegement/BanAccountController?&command=SEND&uid=' + id + '&message=' + mess;
+                console.log(url);
+
+                fetch(url, {method: 'GET'})
+                        .then(response => JSON.parse(response))
+                        .then(data => {
+
                             console.log(data);
+                            if (data.status === "error")
+                            {
+                                console.log(data.message);
+                                return;
+                            }
                         })
                         .catch(error => console.error('Error:', error));
+
             }
             $(document).ready(function () {
 

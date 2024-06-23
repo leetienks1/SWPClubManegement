@@ -1,26 +1,35 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Model;
 
+import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author quangminh
  */
-public class Player {
+public class Player implements Serializable{
 
     private int playerID;
     private Integer userID;
     private Position position;
     private String name;
-    private LocalDate age;
+    private transient LocalDate age;
     private double weight;
     private int height;
+
     private String image;
     
+
+    
+    @SerializedName("age")
+    private String ageString;
+
     public Player(Position position, String name, LocalDate age, double weight, int height) {
         this.position = position;
         this.name = name;
@@ -103,6 +112,7 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+        
     }
 
     public LocalDate getAge() {
@@ -111,6 +121,7 @@ public class Player {
 
     public void setAge(LocalDate age) {
         this.age = age;
+        this.ageString= age.toString();
     }
 
     public double getWeight() {
@@ -137,14 +148,8 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "playerID=" + playerID +
-                ", userID=" + userID +
-                ", position='" + position + '\'' +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", weight='" + weight + '\'' +
-                ", height=" + height +
-                '}';
+        return "Player{" + "playerID=" + playerID + ", userID=" + userID + ", position=" + position + ", name=" + name + ", age=" + age + ", weight=" + weight + ", height=" + height + ", ageString=" + ageString + '}';
     }
+
+    
 }

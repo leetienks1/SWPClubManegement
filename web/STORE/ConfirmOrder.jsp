@@ -187,6 +187,75 @@
                 animation: shake 0.5s ease-in-out infinite alternate;
             }
 
+            #rightBar
+            {
+
+                position: fixed;
+                top: -300px;
+                right: 10px; /* Ban đầu đặt thanh bên phải ngoài tầm nhìn */
+                bottom: 0;
+                z-index: 900; /* Đảm bảo thanh bên phải nằm trên các phần tử khác */
+                width: 250px; /* Điều chỉnh độ rộng của thanh bên phải */
+                height: 250px;
+                background-color: #FFFFFF; /* Màu nền của thanh bên phải */
+                padding: 20px; /* Khoảng cách giữa các phần tử trong thanh bên phải */
+                overflow-y: auto;
+                border-radius: 20px;
+                align-items: center;
+                transition: top 0.3s ease;
+            }
+
+            #rightBar.showlog
+            {
+                top: 30px;
+
+            }
+            .tg-userlogin {
+                cursor: pointer; /* Thêm con trỏ trỏ tay khi hover vào phần tử */
+            }
+            .avatar
+            {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                object-fit: cover;
+
+            }
+            .login-block
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .edit , .changepass, .logout
+            {
+                transition: transform 0.3s ease;
+
+                border-radius: 45px;
+            }
+            .changepass:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .logout:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .edit:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+           
+
             @keyframes shake {
                 0% {
                     transform: translateY(-2px); /* Di chuyển lên */
@@ -225,9 +294,39 @@
                                     </li>
                                 </ul>
 
-                                <div class="tg-userlogin">
+
+                                <div class="tg-userlogin" onclick="toggleRightBar()">
+
                                     <figure><a  href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
+                                </div>
+                                <div id="rightBar">
+                                    <div class="login-block">
+                                        <c:choose >
+                                            <c:when test="${user.image==null}">
+                                                <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
+                                            </c:when>
+                                            <c:otherwise>
+
+
+                                                <img id="image-bar" class="avatar" src="${user.image}" alt="alt"/>
+
+                                            </c:otherwise>
+                                        </c:choose> 
+                                        <h5> ${user.name}</h5>
+                                        <div class="edit" >
+                                            <a href="../EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
+                                        </div>
+                                        <div  class="changepass">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" > Change Password</a>
+                                        </div>
+                                        <div  class="logout">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/LogoutServlet" > Logout</a>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -341,11 +440,19 @@
 
 
     </body>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
 
     <script>
         const user = ${user.userId};
         console.log(user);
+
+
+        function toggleRightBar() {
+            var rightBar = document.getElementById("rightBar");
+            rightBar.classList.toggle("showlog"); // Thêm hoặc loại bỏ lớp "show"
+        }
 
         function encryptData(data, key) {
             const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
@@ -436,12 +543,16 @@
 
 
         };
-        
+
         function removeAfterFinish()
         {
             sessionStorage.removeItem('itemTrue');
 
-            let cartRemove = decryptData(localStorage.getItem('usercart_' + user), "swp"+user);
+
+          
+
+            let cartRemove = decryptData(localStorage.getItem('usercart_' + user), "swp" + user);
+
 
             console.log("before" + cartRemove);
             cartRemove.forEach((item, index) => {
@@ -451,7 +562,9 @@
                 }
             });
 
-            const encryptedCart = encryptData(cartRemove, "swp"+user);
+
+            const encryptedCart = encryptData(cartRemove, "swp" + user);
+
             localStorage.setItem('usercart_' + user, encryptedCart);
 
 //            let cart = JSON.parse(sessionStorage.getItem('usercart' + user));

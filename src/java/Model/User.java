@@ -40,6 +40,7 @@ public class User implements Serializable{
         this.password = password;
         this.email = email;
         this.role = role;
+        this.status = true;
     }
 
     public User(String userName, String password, String email, Role role) {
@@ -47,6 +48,7 @@ public class User implements Serializable{
         this.password = password;
         this.email = email;
         this.role = role;
+        this.status = true;
 
     }
 
@@ -57,6 +59,7 @@ public class User implements Serializable{
         this.password = password;
         this.email = email;
         this.role = role;
+        this.status = true;
     }
 
     public User(String userName, String image, String password, String email, Role role) {
@@ -65,6 +68,7 @@ public class User implements Serializable{
         this.password = password;
         this.email = email;
         this.role = role;
+        this.status = true;
     }
 
     public User(int userId, String userName, String image, String password, String email, Role role, String name, LocalDate dateOfBirth, String about) {
