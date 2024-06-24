@@ -7,108 +7,133 @@
     <head>
         <meta charset="UTF-8">
         <title>Match Schedule</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
         <style>
             body {
                 font-family: Arial, sans-serif;
                 margin: 20px;
                 background-color: #f2f2f2;
+                background-image: url('https://images.baodantoc.vn/uploads/2021/Th%C3%A1ng_10/ng%C3%A0y%206/Thanh/UEFA_EURO_2024_Germany-1633518379601.jpg');
+                background-position: center; /* Center the image */
+                background-repeat: no-repeat;
+                background-size: cover;
             }
+
             h1, h2 {
                 text-align: center;
                 color: #333;
             }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 20px;
-                background-color: #fff;
-                border: 1px solid #ddd;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-            th, td {
-                padding: 10px;
-                text-align: left;
-                border: 1px solid #ddd;
-            }
-            th {
-                background-color: #4CAF50;
-                color: white;
-            }
-            tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-            tr:hover {
-                background-color: #ddd;
-            }
-            .match-type {
-                margin-bottom: 10px;
-                font-size: 18px;
-                font-weight: bold;
-                color: #333;
-            }
-            .upcoming-match {
-                background-color: #e0f7fa;
-            }
-            .completed-match {
-                background-color: #cfe2f3;
-            }
-            .home-button {
-                display: block;
-                width: 100px;
-                margin: 20px auto;
-                padding: 10px;
-                text-align: center;
-                background-color: #4CAF50;
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            }
-            .home-button:hover {
-                background-color: #45a049;
-            }
+            /*            table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 20px;
+                            background-color: #fff;
+                            border: 1px solid #ddd;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        }
+                        th, td {
+                            padding: 10px;
+                            text-align: left;
+                            border: 1px solid #ddd;
+                        }
+                        th {
+                            background-color: #4CAF50;
+                            color: white;
+                        }
+                        tr:nth-child(even) {
+                            background-color: #f2f2f2;
+                        }
+                        tr:hover {
+                            background-color: #ddd;
+                        }
+                        .match-type {
+                            margin-bottom: 10px;
+                            font-size: 18px;
+                            font-weight: bold;
+                            color: #333;
+                        }
+                        .upcoming-match {
+                            background-color: #e0f7fa;
+                        }
+                        .completed-match {
+                            background-color: #cfe2f3;
+                        }
+                        .home-button {
+                            display: block;
+                            width: 100px;
+                            margin: 20px auto;
+                            padding: 10px;
+                            text-align: center;
+                            background-color: #4CAF50;
+                            color: white;
+                            text-decoration: none;
+                            border-radius: 5px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                        }
+                        .home-button:hover {
+                            background-color: #45a049;
+                        }*/
         </style>
     </head>
-    <body>
+    <body >
         <h1>Match Schedule</h1>
 
         <h2 class="match-type">Matches</h2>
-        <table>
-            <tr>
-                <th>Match ID</th>
-                <th>Home Team</th>
-                <th>Away Team</th>
-                <th>Match Date</th>
-                <th>Match Location</th>
-                <th>Tournament</th>
-                <th>Score</th>
-                <th>Status</th>
-            </tr>
-            <c:set var="now" value="${currentDate}" />
-            <c:forEach items="${matches}" var="match">
+        <div style="                background-color: #f2f2f2; padding:10px; border-radius: 10px; ">
 
+            <table id="example" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Match ID</th>
 
-                <td>${match.matchID}</td>
-                <td>${match.homeTeam.teamName}</td>
-                <td>${match.awayTeam.teamName}</td>
-                <td>${match.matchDate}</td>
-                <td>${match.matchLocation}</td>
-                <td>${match.tournament}</td>
-                <td>${match.matchHomeTeam.score}-${match.matchAwayTeam.score}</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${match.matchDate.isBefore(now)}">
-                            Completed
-                        </c:when>
-                        <c:otherwise>
-                            Upcoming
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+                        <th>Match Date</th>
+                        <th>Home Team</th>
+                        <th>Score</th>
+                        <th>Away Team</th>
+                        <th>Match Location</th>
+                        <th>Tournament</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:set var="now" value="${currentDate}" />
+                    <c:forEach items="${matches}" var="match">
 
-    <a href="HOME/home.jsp" class="home-button">Home</a>
-</body>
+                    <td>${match.matchID}</td>
+
+                    <td>${match.matchDate}</td>
+                    <td>${match.homeTeam.teamName} &#127884</td>
+                    <td>${match.matchHomeTeam.score}-${match.matchAwayTeam.score}</td>
+                    <td>${match.awayTeam.teamName} &#127884</td>
+                    <td>${match.matchLocation}</td>
+                    <td>${match.tournament}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${match.matchDate.isBefore(now)}">
+                                Completed
+                            </c:when>
+                            <c:otherwise>
+                                Upcoming
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+            <a href="HOME/home.jsp" class="btn btn-success">Home</a>
+        </div>
+
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+
+    </body>
 </html>
