@@ -603,21 +603,20 @@
 
 
 <script src="../OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
-
 <script>
                                                 $(document).ready(function () {
+
                                                     $(".cart-icon").click(function () {
                                                         $(".cart").toggleClass('show');
                                                     });
-
-                                                    function reviewClose() {
+                                                    function reviewClose()
+                                                    {
                                                         $("#review-form").toggle();
                                                     }
-
-                                                    $(".review-close").click(function () {
+                                                    $(".review-close").click(function ()
+                                                    {
                                                         reviewClose();
                                                     });
-
                                                     $("#owl-demo").owlCarousel({
                                                         loop: true,
                                                         navigation: true, // Show next and prev buttons
@@ -632,17 +631,18 @@
                                                         autoplay: true,
                                                         autoplayTimeout: 5000,
                                                         autoplayHoverPause: false
+
                                                     });
                                                 });
 
-                                                let cart = [];
-                                                const user = ${user.userId}; // Sử dụng userId trong một môi trường hợp lệ
-                                                console.log(user);
 
-                                                function saveCart() {
+                                                let cart = [];
+                                                const user = ${user.userId};
+                                                console.log(user);
+                                                function saveCart()
+                                                {
                                                     sessionStorage.setItem('usercart' + user, JSON.stringify(cart));
                                                 }
-
                                                 function loadCart() {
                                                     const storedCart = sessionStorage.getItem('usercart' + user);
                                                     if (storedCart) {
@@ -650,21 +650,32 @@
                                                         renderCart();
                                                     }
                                                 }
-
                                                 function addToCart() {
                                                     const selectedSize = document.querySelector('input[name="size"]:checked');
+                                                    var availableLabel = "";
                                                     if (!selectedSize) {
                                                         alert('Please select a size.');
                                                         return;
+                                                    } else
+                                                    {
+                                                        const parentDiv = selectedSize.closest('div');
+                                                        availableLabel = parentDiv.querySelector('label.available').textContent;
                                                     }
-                                                    const parentDiv = selectedSize.closest('div');
-                                                    const availableLabel = parentDiv.querySelector('label.available').textContent;
+
 
                                                     const productId = document.querySelector('.jid').value;
-                                                    const image = document.querySelector('.jersey-image').src;
+                                                    console.log(productId);
+                                                    const image = document.getElementsByClassName('jersey-image');
+                                                    const itemImage = image[0].src;
                                                     const productName = document.querySelector('.jname').textContent;
-                                                    const productPrice = document.querySelector('.jprice').textContent.split('/')[0].substring(1);
+                                                    const productPrice = document.querySelector('.jprice').textContent;
+                                                    const str = productPrice;
+                                                    const priceParts = str.split('/'); // Tách chuỗi thành mảng các phần, phân tách bởi dấu "/"
+                                                    const firstPrice = priceParts[0].substring(1);
                                                     const quantity = parseInt(document.getElementById('quantity').value);
+
+
+
 
                                                     let itemExists = false;
                                                     for (let i = 0; i < cart.length; i++) {
@@ -686,6 +697,7 @@
                                                             quantity: quantity,
                                                             selected: true,
                                                             quantityAvailable: availableLabel
+
                                                         };
                                                         cart.push(product);
                                                     }
@@ -694,19 +706,19 @@
                                                     updateCart();
                                                     renderCart();
                                                 }
-
                                                 function updateCart() {
+                                                    const rows = document.querySelectorAll('#cart-items .sub-item');
                                                     const totalItem = document.querySelector('.total-in-cart');
                                                     let total = 0;
                                                     let totalIncart = 0;
+                                                    cart.forEach(function (item, index) {
 
-                                                    cart.forEach(function (item) {
-                                                        const itemTotal = parseFloat(item.price) * parseInt(item.quantity);
+
+                                                        const itemTotal = parseFloat(item.price).toFixed(2) * parseInt(item.quantity);
                                                         total += itemTotal;
                                                         totalIncart += item.quantity;
+                                                        totalItem.textContent = totalIncart;
                                                     });
-
-                                                    totalItem.textContent = totalIncart;
                                                     document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
                                                     saveCart();
                                                 }
@@ -716,53 +728,60 @@
                                                     saveCart();
                                                     renderCart();
                                                 }
-
                                                 function updateQuantity(index, quantity) {
+
                                                     cart[index].quantity = parseInt(quantity);
                                                     if (quantity == 0) {
-                                                        removeItem(index);
+                                                        removeItem(index); // Nếu số lượng là 0, loại bỏ mặt hàng
                                                     } else {
-                                                        saveCart();
-                                                        updateCart();
+                                                        saveCart(); // Lưu giỏ hàng
+                                                        updateCart(); // Cập nhật giỏ hàng và tổng tiền
                                                     }
                                                 }
+                                                function renderCart()
+                                                {
 
-                                                function renderCart() {
                                                     const cartItems = document.getElementById('cart-items');
                                                     cartItems.innerHTML = '';
-
-                                                    cart.forEach((item, index) => {
+                                                    cart.forEach((item, index) =>
+                                                    {
                                                         const row = document.createElement("div");
-                                                        row.className = 'sub-item';
-                                                        row.innerHTML = `
-            <figure><img src="${item.image}"></figure>
-            <div>
-                <h5>${item.name}</h5>
-                <h6>Size: ${item.size}</h6>
-                <h6 class="price">Price: ${item.price}</h6>
-                <input type="number" min="0" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)" max="${item.quantityAvailable}">
-            </div>`;
+                                                        row.innerHTML = '<div class="sub-item">' + '<figure>' + '<img src="' + item.image + '">' + '</figure>' +
+                                                                '<div>' + '<h5>' + item.name + '</h3>' +
+                                                                '<h6> Size: ' + item.size + '</h6>' +
+                                                                '<h6 class ="price"> Price: ' + item.price + '</h6>' +
+                                                                '<input type="number" min="0" value="' + item.quantity + '" onchange="updateQuantity(' + index + ', this.value)" max="' + item.quantityAvailable + '">' +
+                                                                '</div>';
+//                                                               
                                                         cartItems.appendChild(row);
+                                                        console.log(item);
                                                     });
                                                     updateCart();
                                                 }
-
                                                 function BuyNow() {
                                                     let cartNow = [];
                                                     const selectedSize = document.querySelector('input[name="size"]:checked');
+                                                    var availableLabel = "";
                                                     if (!selectedSize) {
                                                         alert('Please select a size.');
                                                         return;
+                                                    } else
+                                                    {
+                                                        const parentDiv = selectedSize.closest('div');
+                                                        availableLabel = parentDiv.querySelector('label.available').textContent;
                                                     }
-                                                    const parentDiv = selectedSize.closest('div');
-                                                    const availableLabel = parentDiv.querySelector('label.available').textContent;
+
 
                                                     const productId = document.querySelector('.jid').value;
-                                                    const image = document.querySelector('.jersey-image').src;
+                                                    console.log(productId);
+                                                    const image = document.getElementsByClassName('jersey-image');
+                                                    const itemImage = image[0].src;
                                                     const productName = document.querySelector('.jname').textContent;
-                                                    const productPrice = document.querySelector('.jprice').textContent.split('/')[0].substring(1);
+                                                    const productPrice = document.querySelector('.jprice').textContent;
+                                                    const str = productPrice;
+                                                    const priceParts = str.split('/'); // Tách chuỗi thành mảng các phần, phân tách bởi dấu "/"
+                                                    const firstPrice = priceParts[0].substring(1);
                                                     const quantity = parseInt(document.getElementById('quantity').value);
-
                                                     const product = {
                                                         id: productId,
                                                         name: productName,
@@ -772,8 +791,10 @@
                                                         quantity: quantity,
                                                         selected: true,
                                                         quantityAvailable: availableLabel
+
                                                     };
                                                     cartNow.push(product);
+
 
                                                     sessionStorage.setItem('itemTrue' + user, JSON.stringify(cartNow));
                                                     window.location.href = '/SWPClubManegement/STORE/paymentJersey.jsp';
@@ -783,18 +804,33 @@
                                                     loadCart();
                                                 };
 
+//                                               
                                                 document.addEventListener('click', function (event) {
+
                                                     if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
+
                                                         const reviewButton = document.getElementById('review-form');
+                                                        console.log(reviewButton);
+                                                        reviewButton.style.display = 'block';
+                                                    }
+                                                });
+                                                document.addEventListener('click', function (event) {
+
+                                                    if (event.target.classList.contains('guide-size') || event.target.classList.contains('fa-tshirt')) {
+
+                                                        const reviewButton = document.getElementById('review-form');
+                                                        console.log(reviewButton);
                                                         reviewButton.style.display = 'block';
                                                     }
                                                 });
 
                                                 document.querySelectorAll('input[name="size"]').forEach(item => {
+                                                    console.log("item", item);
                                                     item.addEventListener('change', function () {
                                                         const selectedSize = document.querySelector('input[name="size"]:checked');
                                                         const parentDiv = selectedSize.closest('div');
                                                         const availableLabel = parentDiv.querySelector('label.available').textContent;
+                                                        console.log("quan", availableLabel); // Kiểm tra giá trị đã lấy được
 
                                                         const quantityInput = document.getElementById('quantity');
                                                         if (parseInt(quantityInput.value) > parseInt(availableLabel)) {
@@ -803,8 +839,8 @@
                                                         quantityInput.max = availableLabel;
                                                     });
                                                 });
-
 </script>
+
 <script src="../CSS/STORE/vendor/jquery-library.js"></script>
 <script src="../CSS/STORE/vendor/bootstrap.min.js"></script>
 <script src="https://maps.google.com/maps/api/js?key=AIzaSyCR-KEWAVCn52mSdeVeTqZjtqbmVJyfSus&amp;language=en"></script>

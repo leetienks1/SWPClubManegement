@@ -3,51 +3,47 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-
-
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminListMatchSchedule.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/EditNewsServlet.java</file>
-
-
-            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/web/COACH/Training.jsp</file>
-            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/web/COACH/editTraining.jsp</file>
-            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/src/java/Email/Email.java</file>
-            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/web/COACH/addTraining.jsp</file>
-            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/src/java/Controller/TrainingServlet.java</file>
-            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/src/java/DAO/TrainingScheduleDAO.java</file>
-            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/src/java/Test/TestSql.java</file>
-            <file>file:/Z:/FPT%20University/SU24/SWP391/SWPClubManegement/web/HOME/signUp.jsp</file>
-
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/EditProfileServlet.java</file>
-
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/addNews.jsp</file>
-
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Test/TestSql.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/STORE/productDetail.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/OrderJerseyDetails.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/STORE/paymentJersey.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/JerseyPaymentServlet.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/INCLUDES/nav.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/PaymentServlet.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/STORE/product.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/DAO/OrderDAO.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/CSS/STORE/main.css</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminNewsList.jsp</file>
-
-
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/NewsController.java</file>
-
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/User.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Test/TestSql.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/HomeServlet.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/Coach.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/EditNewsServlet.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/adminPage.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/RemoveSessionSuccess.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Controller/PlayerController.java</file>
-
-
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/MeetingServlet.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/player/DietPlan.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/COACH/CoachFun.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/plandetail.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/DAO/MatchStatisticDAO.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/player/MeetingSchedulePlayer.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/playerList.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/MatchStatisticController.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/COACH/Lineup.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/COACH/CoachWelcome.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/COACH/Meeting.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/player/TreatmentChedule.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/HOME/match.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Filter/MedicalFilter.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/player/PhysicalConditions.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/DAO/TrainingScheduleDAO.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/COACH/addTraining.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/siderbar.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/trainingSchedule.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/COACH/Training.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/meetingSchedule.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/player/DetailNutrients.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/EditProfileServlet.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Model/MatchSchedule.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/dietplan.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Filter/PlayerFilter.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/CreateMatchScheduleServlet.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/matchSchedule.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/ADMIN/adminListMatchSchedule.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Filter/CoachFilter.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/player/TrainingSchedulePlayer.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/physicalCondition.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/MatchScheduleController.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/player/MatchScheduleController.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/treatment.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/player/PlayerStatus.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/DAO/PlayerDAO.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/DAO/MatchScheduleDAO.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/src/java/Controller/TrainingServlet.java</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/PLAYER/playerStatus.jsp</file>
+            <file>file:/D:/SWP309/SWPClubManegement/web/COACH/Attendance.jsp</file>
         </group>
     </open-files>
 </project-private>

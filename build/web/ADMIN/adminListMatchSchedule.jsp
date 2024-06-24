@@ -540,6 +540,8 @@
                                 return;
                             }
                             // Call the function to update the table
+                            console.log('Response data:', data);
+
                             ListMatchesSchedule(data);
                             hideLoading();
                         } catch (error) {
@@ -732,7 +734,7 @@
 
                         });
                 const locationCell = document.createElement('td');
-                locationCell.textContent = m.location;
+                locationCell.textContent = m.matchLocation;
                 row.appendChild(locationCell);
                 const tournament = document.createElement('td');
                 tournament.textContent = m.tournament;

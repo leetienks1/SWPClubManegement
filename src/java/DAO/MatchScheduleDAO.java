@@ -171,6 +171,9 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
         return null;
     }
 
+    public static void main(String[] args) {
+        System.out.println(new MatchScheduleDAO().getAll());
+    }
     @Override
     public List<MatchSchedule> getAll() {
         try {

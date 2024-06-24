@@ -180,7 +180,39 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
         }
         return Optional.empty();
     }
-
+    
+    public Optional<MatchStatistic> getByTeamIdAndMatchId(int tid, int mid) {
+        String sql = "SELECT [MatchStatisticID], [MatchID], [TeamID], [Score], [YellowCards], [RedCards], [TotalShots], [CornerKicks], [BallPossession], [Passes] FROM [dbo].[MatchStatistic]"
+                + " WHERE  [TeamID] = ? and  [MatchID] = ?";
+        try (Connection con = openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
+            st.setInt(1, tid);
+            st.setInt(2, mid);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    MatchStatistic m = new MatchStatistic();
+                    m.setMatchStatisticID(rs.getInt("MatchStatisticID"));
+                    m.setMatchID(rs.getInt("MatchID"));
+                    m.setTeamID(rs.getInt("TeamID"));
+                    m.setScore(rs.getInt("Score"));
+                    m.setYellowCards(rs.getInt("YellowCards"));
+                    m.setRedCards(rs.getInt("RedCards"));
+                    m.setTotalShots(rs.getInt("TotalShots"));
+                    m.setCornerKicks(rs.getInt("CornerKicks"));
+                    m.setBallPossession(rs.getInt("BallPossession"));
+                    m.setPasses(rs.getInt("Passes"));
+                    return Optional.of(m);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return Optional.empty();
+    }
+    public static void main(String[] args) {
+        System.out.println(new MatchStatisticDAO().get(1));
+    }
     @Override
     public void save(MatchStatistic t) {
         String sql = "INSERT INTO [dbo].[MatchStatistic] ([MatchID], [TeamID], [Score], [YellowCards], [RedCards], [TotalShots], [CornerKicks], [BallPossession], [Passes]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
