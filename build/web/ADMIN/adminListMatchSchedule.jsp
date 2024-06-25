@@ -732,7 +732,7 @@
 
                         });
                 const locationCell = document.createElement('td');
-                locationCell.textContent = m.location;
+                locationCell.textContent = m.matchLocation;
                 row.appendChild(locationCell);
                 const tournament = document.createElement('td');
                 tournament.textContent = m.tournament;

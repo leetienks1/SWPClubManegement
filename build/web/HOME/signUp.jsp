@@ -14,7 +14,9 @@
     </head>
     <body>
         <h1>Sign Up</h1>
+
         <form action="/SWPClubManegement/SendEmail" method="POST">
+
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             

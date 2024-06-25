@@ -3,7 +3,7 @@ package DAO;
 import Model.Player;
 import Model.PlayerStat;
 import Model.Position;
-import Model.TrainingSchedule;
+import Model.*;
 import dal.ConnectDB;
 
 import java.sql.Connection;
@@ -24,6 +24,62 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
     private Connection con;
     private PreparedStatement st;
     private ResultSet rs;
+
+    public List<Player> getBySearch(String searchValue) {
+        String param = "%" + searchValue + "%";
+        List<Player> players = new ArrayList<>();
+        String sql = "SELECT \n"
+                + "    p.[PlayerID], \n"
+                + "    p.[UserID], \n"
+                + "    p.[Position], \n"
+                + "    p.[Name], \n"
+                + "    p.[DOB], \n"
+                + "    p.[Weight], \n"
+                + "    p.[Height], \n"
+                + "    u.[Email]\n"
+                + "FROM \n"
+                + "    [RealClub].[dbo].[Player] p\n"
+                + "JOIN \n"
+                + "    [RealClub].[dbo].[User] u  \n"
+                + "    ON p.[UserID] = u.[UserID]\n"
+                + "WHERE \n"
+                + "    p.[PlayerID] LIKE ? OR \n"
+                + "    p.[UserID] LIKE ? OR \n"
+                + "    p.[Position] LIKE ? OR \n"
+                + "    p.[Name] LIKE ? OR \n"
+                + "    p.[DOB] LIKE ? OR \n"
+                + "    p.[Weight] LIKE ? OR \n"
+                + "    p.[Height] LIKE ? OR \n"
+                + "    u.[Email] LIKE ?;";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            for (int i = 1; i <= 8; i++) {
+                st.setString(i, param);
+            }
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Player p = new Player();
+                p.setPlayerID(rs.getInt("PlayerID"));
+                p.setUserID(rs.getInt("UserID"));
+                p.setPosition(p.getPosition().valueOf(rs.getString("Position")));
+                p.setName(rs.getString("Name"));
+                Date sqlDate = rs.getDate("DOB");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    p.setAge(localDate);
+                }
+                p.setWeight(rs.getDouble("Weight"));
+                p.setHeight(rs.getInt("Height"));
+                players.add(p);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return players;
+    }
 
     @Override
     public List<Player> getAll() {
@@ -179,33 +235,24 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         }
     }
 
-    public List<PlayerStat> getPlayerStats(int playerID) {
-        List<PlayerStat> stats = new ArrayList<>();
-        sql = "SELECT [StatID], [PlayerID], [Date], [GoalsScored], [Assists], [YellowCards], [RedCards] FROM [RealClub].[dbo].[PlayerStat] WHERE [PlayerID] = ?";
+    public boolean deleteBool(int id) {
+        sql = "DELETE FROM [RealClub].[dbo].[Player] WHERE [PlayerID] = ?";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, playerID);
-            rs = st.executeQuery();
-            while (rs.next()) {
-                int statID = rs.getInt("StatID");
-                LocalDate date = rs.getDate("Date").toLocalDate();
-                int goalsScored = rs.getInt("GoalsScored");
-                int assists = rs.getInt("Assists");
-                int yellowCards = rs.getInt("YellowCards");
-                int redCards = rs.getInt("RedCards");
-
-                // Create a new PlayerStat object using the constructor
-                PlayerStat stat = new PlayerStat(statID, date, goalsScored, assists, yellowCards, redCards);
-                stats.add(stat);
+            st.setInt(1, id);
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                return true;
             }
         } catch (SQLException | ClassNotFoundException e) {
             Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             closeResources();
         }
-        return stats;
+        return false;
     }
+
 
 //    public List<MatchSchedule> getMatchSchedules(int playerID) {
 //        List<MatchSchedule> schedules = new ArrayList<>();
@@ -233,6 +280,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 //        }
 //        return schedules;
 //    }
+
     public List<Player> getAllPlayersImage() {
         List<Player> players = new ArrayList<>();
         String sql = "SELECT p.[PlayerID], p.[UserID], p.[Position], p.[Name], p.[DOB], p.[Weight], p.[Height], u.[Image] "
@@ -270,6 +318,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         return players;
     }
 
+
     private void closeResources() {
         try {
             if (rs != null) {
@@ -284,5 +333,117 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+     public List<PlayerStat> getPlayerStats(int playerID) {
+        List<PlayerStat> stats = new ArrayList<>();
+        sql = "SELECT  [PlayerID], [YellowCards], [RedCards],GoalsScored FROM [RealClub].[dbo].[PlayerPerformance] WHERE [PlayerID] = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                //  int statID = rs.getInt("StatID");
+                // LocalDate date = rs.getDate("Date").toLocalDate();
+                int goalsScored = rs.getInt("GoalsScored");
+                //  int assists = rs.getInt("Assists");
+                int yellowCards = rs.getInt("YellowCards");
+                int redCards = rs.getInt("RedCards");
+
+                // Create a new PlayerStat object using the constructor
+                PlayerStat stat = new PlayerStat(1, new Date(2024, 04, 06).toLocalDate(), goalsScored, 0, yellowCards, redCards);
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
+
+    public List<PhysicalCondition> getPlayerCondition(int playerID) {
+        List<PhysicalCondition> stats = new ArrayList<>();
+        sql = "SELECT *  FROM [RealClub].[dbo].[PlayerPhysicalCondition] where PlayerID = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                // Create a new PlayerStat object using the constructor
+                PhysicalCondition stat = new PhysicalCondition(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDate(4));
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
+
+    public List<DietPlans> getDietPlans(int playerID) {
+        List<DietPlans> stats = new ArrayList<>();
+        sql = "SELECT *  FROM [RealClub].[dbo].[DietPlan] where PlayerID = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                // Create a new PlayerStat object using the constructor
+                DietPlans stat = new DietPlans(rs.getInt(1), rs.getInt(2), rs.getString(3));
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
+
+    public List<Treatment> getTreatment(int playerID) {
+        List<Treatment> stats = new ArrayList<>();
+        sql = "SELECT * FROM [TreatmentSchedule] where PlayerID = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Treatment stat = new Treatment(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
+
+    public List<DietPlanDetail> getDietPlansDetail(String id) {
+        List<DietPlanDetail> stats = new ArrayList<>();
+        sql = "  select f.*,d.PortionSize from Foods f join DietPlanFoods d on f.FoodID = d.FoodID where f.FoodID = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setString(1, id);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                // Create a new PlayerStat object using the constructor
+                DietPlanDetail stat = new DietPlanDetail(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
     }
 }

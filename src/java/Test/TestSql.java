@@ -15,6 +15,7 @@ import DAO.OrderDAO;
 import DAO.OrderJerseyDetailsDAO;
 import DAO.PlayerDAO;
 import DAO.TeamDAO;
+import DAO.TrainingScheduleDAO;
 import DAO.UserDAO;
 import Model.Coach;
 import Model.JerseySize;
@@ -49,11 +50,11 @@ public class TestSql {
     
 
     public static void main(String[] args) throws ParseException {
-        PlayerDAO ms = new PlayerDAO();
-        ms.getAll();
-        System.out.print(ms.getAllPlayersImage().get(0).getImage());
+        MatchScheduleDAO mDao = new MatchScheduleDAO();
+        System.out.println(mDao.getAll());
         
 
-
+        PlayerDAO pdao = new PlayerDAO();
+        System.out.println(pdao.getBySearch(""));
     }
 }

@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Book Library</title>
+        <title>RealFC Store</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="../css/STORE/apple-touch-icon.png">
@@ -47,6 +47,95 @@
             {
                 height: 600px;
             }
+            #rightBar
+            {
+
+                position: fixed;
+                top: -300px;
+                right: 10px; /* Ban đầu đặt thanh bên phải ngoài tầm nhìn */
+                bottom: 0;
+                z-index: 900; /* Đảm bảo thanh bên phải nằm trên các phần tử khác */
+                width: 250px; /* Điều chỉnh độ rộng của thanh bên phải */
+                height: 250px;
+                background-color: #FFFFFF; /* Màu nền của thanh bên phải */
+                padding: 20px; /* Khoảng cách giữa các phần tử trong thanh bên phải */
+                overflow-y: auto;
+                border-radius: 20px;
+                align-items: center;
+                transition: top 0.3s ease;
+            }
+
+            #rightBar.showlog
+            {
+                top: 30px;
+
+            }
+            .tg-userlogin {
+                cursor: pointer; /* Thêm con trỏ trỏ tay khi hover vào phần tử */
+            }
+            .avatar
+            {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                object-fit: cover;
+
+            }
+            .login-block
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .edit , .changepass, .logout
+            {
+                transition: transform 0.3s ease;
+
+                border-radius: 45px;
+            }
+            .changepass:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .logout:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .edit:hover
+            {
+                color: orangered;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                ;
+            }
+            .tg-header {
+                z-index: 3;
+                position: fixed;
+            }
+            .tg-header .tg-topbar {
+                background-color: white;
+                width: 100%;
+                float: left;
+                border-bottom: 1px solid #dbdbdb;
+            }
+            .pagination {
+                width: 100%;
+                text-align: center;
+            }
+
+            .pagination button {
+                margin: 0 5px;
+            }
+
+            .pagination #pageNumbers button {
+                margin: 0 2px;
+            }
         </style>
         <div id="tg-wrapper" class="tg-wrapper tg-haslayout">
             <!--************************************
@@ -72,9 +161,41 @@
                                     </li>
                                 </ul>
 
-                                <div class="tg-userlogin">
+                                <div class="tg-userlogin" onclick="toggleRightBar()">
                                     <figure><a href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
+                                </div>
+                                <div id="rightBar">
+
+
+
+
+                                    <div class="login-block">
+                                        <c:choose >
+                                            <c:when test="${user.image==null}">
+                                                <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
+                                            </c:when>
+                                            <c:otherwise>
+
+
+                                                <img id="image-bar" class="avatar" src="${user.image}" alt="alt"/>
+
+                                            </c:otherwise>
+                                        </c:choose> 
+                                        <h5> ${user.name}</h5>
+                                        <div class="edit" >
+                                            <a href="../EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
+                                        </div>
+                                        <div  class="changepass">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" > Change Password</a>
+                                        </div>
+                                        <div  class="logout">
+                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/LogoutServlet" > Logout</a>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -109,8 +230,8 @@
 
                                             </li>
                                             <li><a href="contactus.html">Contact</a></li>
-                                            
-                                            
+
+
                                             <li><a href="/SWPClubManegement/STORE/cartProduct.jsp"> Cart</a></li>
 
 
@@ -137,7 +258,7 @@
                                 <h1>All Products</h1>
                                 <ol class="tg-breadcrumb">
                                     <li><a href="/SWPClubManegement/HomeServlet">home</a></li>
-                                    <li class="tg-active">Products</li>
+                                    <li class="tg-active">RealFC</li>
                                 </ol>
                             </div>
                         </div>
@@ -209,75 +330,18 @@
                                                 </div>
                                             </div>
                                             <div class="tg-productgrid">
-                                                <div class="tg-refinesearch">
-                                                    <span>showing 1 to 8 of 20 total</span>
-                                                    <form class="tg-formtheme tg-formsortshoitems">
-                                                        <fieldset>
-                                                            <div class="form-group">
-                                                                <label>sort by:</label>
-                                                                <span class="tg-select">
-                                                                    <select>
-                                                                        <option>name</option>
-                                                                        <option>name</option>
-                                                                        <option>name</option>
-                                                                    </select>
-                                                                </span>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>show:</label>
-                                                                <span class="tg-select">
-                                                                    <select>
-                                                                        <option>8</option>
-                                                                        <option>16</option>
-                                                                        <option>20</option>
-                                                                    </select>
-                                                                </span>
-                                                            </div>
-                                                        </fieldset>
-                                                    </form>
+
+                                                <div id="listJersey">
+
+
                                                 </div>
 
-
-
-                                                <!--         ÁO Ở ĐÂY                                       -->
-                                                <c:forEach var="j" items="${listJersey}">
-                                                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
-                                                        <div class="tg-postbook">
-                                                            <figure class="tg-featureimg">
-                                                                <div class="tg-bookimg">
-                                                                    <div class="tg-frontcover"><img src="../IMAGE/STORE/${j.jerseyImage}" alt="image description" style="height: 35vh"></div>
-                                                                    <div class="tg-backcover"><img src="../IMAGE/STORE/${j.jerseyImage}"  alt="image description" style="height: 35vh"></div>
-                                                                </div>
-                                                                <a class="tg-btnaddtowishlist" href="/SWPClubManegement/ProductDetailServlet?jid=${j.jerseyID}">
-                                                                    <i class="fa fa-shopping-basket"></i>
-                                                                    <span>Buy now</span>
-                                                                </a>
-                                                            </figure>
-                                                            <div class="tg-postbookcontent">
-                                                                <ul class="tg-bookscategories">
-                                                                    <li><a href="javascript:void(0);">Art &amp; Photography</a></li>
-                                                                </ul>
-                                                                <div class="tg-themetagbox"><span class="tg-themetag">sale</span></div>
-                                                                <div class="tg-booktitle">
-                                                                    <h3><a href="/SWPClubManegement/ProductDetailServlet?jid=${j.jerseyID}">${j.jerseyName} </a></h3>
-                                                                </div>
-                                                                <span class="tg-bookwriter"> ${j.jerseyDescription}</span>
-
-                                                                <span class="tg-bookprice">
-                                                                    <ins>$${j.jerseyPrice}</ins>
-                                                                    <del>$47.20</del>
-                                                                </span>
-                                                                <a class="tg-btn tg-btnstyletwo" href="/SWPClubManegement/ProductDetailServlet?jid=${j.jerseyID}">
-                                                                    <i class="fa fa-shopping-basket"></i>
-                                                                    <em>Buy now</em>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </c:forEach>
-
-
+                                            </div>
+                                            <div class="pagination">
+                                                <span id="paginationInfo"></span>
+                                                <button id="prevPage">Previous</button>
+                                                <span id="pageNumbers"></span>
+                                                <button id="nextPage">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -294,22 +358,17 @@
                                         </div>
                                         <div class="tg-widget tg-catagories">
                                             <div class="tg-widgettitle">
-                                                <h3>Categories</h3>
+                                                <h3>Search by Price</h3>
                                             </div>
                                             <div class="tg-widgetcontent">
-                                                <ul>
-                                                    <li><a href="javascript:void(0);"><span>Art &amp; Photography</span><em>28245</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>Biography</span><em>4856</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>Children’s Book</span><em>8654</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>Craft &amp; Hobbies</span><em>6247</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>Crime &amp; Thriller</span><em>888654</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>Fantasy &amp; Horror</span><em>873144</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>Fiction</span><em>18465</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>Fod &amp; Drink</span><em>3148</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>Graphic, Anime &amp; Manga</span><em>77531</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>Science Fiction</span><em>9247</em></a></li>
-                                                    <li><a href="javascript:void(0);"><span>View All</span></a></li>
-                                                </ul>
+                                                <label><input type="checkbox" name="price-range" value="0-50"> $0 - $50</label>
+                                                <label><input type="checkbox" name="price-range" value="50-100"> $50 - $100</label>
+                                                <label><input type="checkbox" name="price-range" value="100-200"> $100 - $200</label>
+                                                <label><input type="checkbox" name="price-range" value="200-500"> $200 - $500</label>
+                                                <label><input type="checkbox" name="price-range" value="500-1000"> $500 - $1000</label>
+                                                <label><input type="checkbox" name="price-range" value="1000-999999"> $1000+</label>
+
+
                                             </div>
                                         </div>
 
@@ -404,5 +463,139 @@
         <script src="../CSS/STORE/gmap3.js"></script>
         <script src="../CSS/STORE/main.js"></script>
     </body>
+    <script>
+                                    function toggleRightBar() {
+                                        var rightBar = document.getElementById("rightBar");
+                                        rightBar.classList.toggle("showlog");
+                                    }
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var checkboxes = document.querySelectorAll('input[name="price-range"]');
+                                        var inputSearch = document.querySelector('input[name="search"]');
 
+                                        var currentPage = 1;
+
+                                        inputSearch.addEventListener('input', function () {
+                                            searchByPriceAndName();
+                                            currentPage = 1;
+
+                                        });
+
+                                        checkboxes.forEach(function (checkbox) {
+                                            checkbox.addEventListener('change', function () {
+                                                searchByPriceAndName();
+                                                 currentPage = 1;
+
+                                            });
+                                        });
+
+
+
+                                        document.getElementById('prevPage').addEventListener('click', function () {
+                                            if (currentPage > 1) {
+                                                currentPage--;
+                                                searchByPriceAndName();
+                                            }
+                                        });
+
+                                        document.getElementById('nextPage').addEventListener('click', function () {
+                                            currentPage++;
+                                            searchByPriceAndName();
+                                        });
+
+                                        function createPageNumbers(totalPages) {
+                                            var pageNumbersDiv = document.getElementById('pageNumbers');
+                                            pageNumbersDiv.innerHTML = '';
+                                            for (var i = 1; i <= totalPages; i++) {
+                                                var pageButton = document.createElement('button');
+                                                pageButton.textContent = i;
+                                                pageButton.addEventListener('click', (function (pageNumber) {
+                                                    return function () {
+                                                        currentPage = pageNumber;
+                                                        searchByPriceAndName();
+                                                    };
+                                                })(i));
+                                                pageNumbersDiv.appendChild(pageButton);
+                                            }
+                                        }
+
+                                        searchByPriceAndName(); // Initial load
+
+                                        function searchByPriceAndName() {
+                                            var checkboxes = document.querySelectorAll('input[name="price-range"]:checked');
+                                            var selectedRanges = Array.from(checkboxes).map(cb => cb.value);
+                                            var nameSearch = document.querySelector('input[name="search"]').value;
+
+
+
+                                            console.log(selectedRanges);
+                                            console.log(JSON.stringify({priceRanges: selectedRanges, nameSearch: nameSearch}));
+
+                                            fetch('/SWPClubManegement/ShopJerseyServlet', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify({
+                                                    priceRanges: selectedRanges,
+                                                    nameSearch: nameSearch,
+
+                                                    currentPage: currentPage
+                                                })
+                                            })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        console.log(data);
+                                                        updateProductList(data.products);
+
+
+                                                        document.getElementById('paginationInfo').textContent = `Page ` + currentPage;
+                                                    })
+                                                    .catch(error => console.error('Error:', error));
+                                        }
+
+                                        function updateProductList(products) {
+                                            var listJersey = document.getElementById('listJersey');
+                                            listJersey.innerHTML = '';
+
+                                            products.forEach(j => {
+                                                var productDiv = document.createElement('div');
+                                                productDiv.className = 'col-xs-6 col-sm-6 col-md-4 col-lg-3';
+                                                productDiv.innerHTML = `
+                <div class="tg-postbook">
+                    <figure class="tg-featureimg">
+                        <div class="tg-bookimg">
+                            <div class="tg-frontcover"><img src="../IMAGE/STORE/\${j.jerseyImage}" alt="image description" style="height: 35vh"></div>
+                            <div class="tg-backcover"><img src="../IMAGE/STORE/\${j.jerseyImage}" alt="image description" style="height: 35vh"></div>
+                        </div>
+                        <a class="tg-btnaddtowishlist" href="/SWPClubManegement/ProductDetailServlet?jid=\${j.jerseyID}">
+                            <i class="fa fa-shopping-basket"></i>
+                            <span>Buy now</span>
+                        </a>
+                    </figure>
+                    <div class="tg-postbookcontent">
+                        <ul class="tg-bookscategories">
+                            <li><a href="javascript:void(0);">Art &amp; Photography</a></li>
+                        </ul>
+                        <div class="tg-themetagbox"><span class="tg-themetag">sale</span></div>
+                        <div class="tg-booktitle">
+                            <h3><a href="/SWPClubManegement/ProductDetailServlet?jid=\${j.jerseyID}">\${j.jerseyName}</a></h3>
+                        </div>
+                        <span class="tg-bookwriter">\${j.jerseyDescription}</span>
+                        <span class="tg-bookprice">
+                            <ins>$\${j.jerseyPrice}</ins>
+                            <del>$47.20</del>
+                        </span>
+                        <a class="tg-btn tg-btnstyletwo" href="/SWPClubManegement/ProductDetailServlet?jid=\${j.jerseyID}">
+                            <i class="fa fa-shopping-basket"></i>
+                            <em>Buy now</em>
+                        </a>
+                    </div>
+                </div>
+            `;
+                                                listJersey.appendChild(productDiv);
+                                            });
+                                        }
+                                    });
+    </script>
 </html>
+

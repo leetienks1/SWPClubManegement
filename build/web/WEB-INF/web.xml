@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+
+    <!-- Filters -->
     <filter>
         <filter-name>StoreJerseyFiller</filter-name>
         <filter-class>Filter.StoreJerseyFiller</filter-class>
@@ -16,6 +18,8 @@
         <filter-name>MedicalFilter</filter-name>
         <filter-class>Filter.MedicalFilter</filter-class>
     </filter>
+
+    <!-- Filter Mappings -->
     <filter-mapping>
         <filter-name>MedicalFilter</filter-name>
         <url-pattern>/MEDICAL/*</url-pattern>
@@ -35,6 +39,8 @@
         <filter-name>StoreJerseyFiller</filter-name>
         <url-pattern>/STORE/*</url-pattern>
     </filter-mapping>
+
+    <!-- Servlets -->
     <servlet>
         <servlet-name>EditProfileServlet</servlet-name>
         <servlet-class>Controller.EditProfileServlet</servlet-class>
@@ -148,9 +154,15 @@
         <servlet-class>Servlet.ajaxServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>UploadExcelServlet</servlet-name>
+        <servlet-class>Servlet.UploadExcelServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>PlayerListServlet</servlet-name>
         <servlet-class>Controller.PlayerListServlet</servlet-class>
     </servlet>
+
+    <!-- Servlet Mappings -->
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/EditProfileServlet</url-pattern>
@@ -264,12 +276,20 @@
         <url-pattern>/ajaxServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>UploadExcelServlet</servlet-name>
+        <url-pattern>/UploadExcelServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>PlayerListServlet</servlet-name>
         <url-pattern>/Players</url-pattern>
     </servlet-mapping>
+
+    <!-- Session Configuration -->
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+
+    <!-- Welcome File List -->
     <welcome-file-list>
         <welcome-file>HOME/home.jsp</welcome-file>
     </welcome-file-list>

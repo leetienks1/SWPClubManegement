@@ -159,12 +159,12 @@ public class NewsController extends HttpServlet {
 
             NewsDAO ndao = new NewsDAO();
             ndao.delete(nid);
-            request.getSession().setAttribute("Message", "Delete operation successful");
+            
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ListNews(request, response);
+        
     }
 
     /**
