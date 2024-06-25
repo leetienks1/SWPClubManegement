@@ -2,14 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Servlet;
+package Controller.player;
 
-import DAO.UserDAO;
-import Model.Role;
+import DAO.DashboardPlayerDAO;
+import DAO.PlayerDAO;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +19,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Zanis
+ * @author quangminh
  */
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "PlayerDashboard", urlPatterns = {"/PLAYER/PlayerDashboard"})
+public class PlayerDashboard extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,43 +38,15 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String email = request.getParameter("username");
-
-            String password = request.getParameter("password");
-
-            UserDAO accountDAO = new UserDAO();
-            User account = accountDAO.login(email, password);
-
-            if (account != null && account.getStatus() == true) {
-
-                HttpSession session = request.getSession();
-                session.setAttribute("user", account);
-                if (Role.Admin.equals(account.getRole())) {
-                    response.sendRedirect("/SWPClubManegement/BanAccountController");
-                } else if (Role.Medical.equals(account.getRole())) {
-                    response.sendRedirect("/SWPClubManegement/HOME/medical.jsp ");
-                } else if (Role.Coach.equals(account.getRole())) {
-                    response.sendRedirect("/SWPClubManegement/COACH/CoachWelcome.jsp");
-                } else if (Role.Player.equals(account.getRole())) {
-                    response.sendRedirect("/SWPClubManegement/PLAYER/PlayerDashboard");
-                } else {
-                    response.sendRedirect("/SWPClubManegement/HomeServlet ");
-                }
-            } else {
-                if (account != null && account.getStatus() != true) {
-                    request.getSession().setAttribute("error", "Your account has been locked");
-                    response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
-                }else
-                {
-                    if (account == null) {
-                        request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
-                        response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
-                    }
-                }
-
-            }
-                    
-                
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet PlayerDashboard</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet PlayerDashboard at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -87,7 +62,24 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("HOME/login.jsp");
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("/SWPClubManegement/HOME/login.jsp");
+        } else {
+            User account = (User) session.getAttribute("user");
+            request.setAttribute("a", new DashboardPlayerDAO().getDashboard1DTO(account.getUserId()));
+            ArrayList<Integer> listMeeeting = new ArrayList<>();
+            ArrayList<Integer> listTreatment = new ArrayList<>();
+            for (int i = 1; i <= 12; i++) {
+                int totalMeet = new DashboardPlayerDAO().gettotalMeetingInMonth(i);
+                listMeeeting.add(totalMeet);
+                
+                listTreatment.add(new DashboardPlayerDAO().gettotalTreatmentInMonth(i));
+            }
+            request.setAttribute("n",listMeeeting);
+            request.setAttribute("nm",listTreatment);
+            request.getRequestDispatcher("Dashboard.jsp").forward(request, response);
+        }
     }
 
     /**

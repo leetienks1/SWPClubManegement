@@ -20,7 +20,7 @@
         <div>
             <%@include file="../PLAYER/siderbar.jsp" %>
         </div>  
-        <div class="coach-fun-content" style="padding: 10px; background-color: white;">
+         <div class="coach-fun-content" style="padding: 20px; background-color: white; box-shadow: 0 0 12px 12px lightblue;">
             <div style="width: 100%; height: 100px"></div>
             <h1 style="text-align: center; color: black;">Player Physical Condition</h1>
             <table id="example" class="table table-bordered"  style="color: black">

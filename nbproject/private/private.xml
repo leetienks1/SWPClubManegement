@@ -3,14 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/Player.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/CSS/NAV/nav.css</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/STORE/ConfirmOrder.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/STORE/product.jsp</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Servlet/ShopJerseyServlet.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/Jersey.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Model/JerseySize.java</file>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/INCLUDES/nav.jsp</file>
+            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/INCLUDES/nav.jsp</file>
+            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/home.jsp</file>
+            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/PLAYER/dietplan.jsp</file>
+            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/CreateMatchScheduleServlet.java</file>
+            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/PLAYER/playerList.jsp</file>
+            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/PLAYER/playerStatus.jsp</file>
+            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/PLAYER/siderbar.jsp</file>
+            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/match.jsp</file>
+            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/NewsController.java</file>
         </group>
     </open-files>
 </project-private>

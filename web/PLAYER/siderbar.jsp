@@ -71,6 +71,7 @@
         <div class="sidebar">
             <header>Player</header>
             <ul>
+                <li><a href="/SWPClubManegement/PLAYER/PlayerDashboard"><i class="far fa-question-circle"></i>Dashboard</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/PhysicalConditions"><i class="far fa-question-circle"></i>Phys Condition</a></li>
                 <li><a href="/SWPClubManegement/MeetingSchedulePlayer"><i class="fas fa-qrcode"></i>Meeting Schedule</a></li>
                 <li><a href="/SWPClubManegement/MatchSchedulePlayer"><i class="fas fa-link"></i>Match Schedule</a></li>
@@ -78,7 +79,8 @@
                 <li><a href="/SWPClubManegement/TrainingSchedulePlayer"><i class="fas fa-calendar-week"></i>Training Schedule</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/DietPlan"><i class="far fa-question-circle"></i>Diet plan</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/TreatmentChedule"><i class="far fa-question-circle"></i>Treatment</a></li>
-                <li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-sliders-h"></i>Logout</a></li>
+                <li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-sliders-h"></i>Back Home</a></li>
+                <!--<li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-sliders-h"></i>Logout</a></li>-->
             </ul>
         </div>
         <section>

@@ -31,7 +31,7 @@ public class PlayerListServlet extends HttpServlet {
             PlayerDAO pdao = new PlayerDAO();
             List<Player> players = pdao.getAllPlayersImage();
             request.getSession().setAttribute("listPlayer", players);        
-            response.sendRedirect("PLAYER/playerList.jsp");
+            response.sendRedirect("HOME/playerList.jsp");
         } catch (Exception e) {
             e.printStackTrace();
         }
