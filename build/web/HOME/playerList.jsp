@@ -60,6 +60,7 @@
                 padding-top: 10px;
                 border-radius: 15px 0px 15px 0px;
                 box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
+                min-height: 266px;
             }
             #team .member .member-info {
                 display: block;
@@ -114,379 +115,120 @@
             }
 
         </style>
-        <div class="banner">
-            <h1>REAL - FC</h1>
+        <div style="background-image: url('../IMAGE/HOME/Red and Black Sportive Next Match Youtube Thumbnail.png');" class="banner">
+            <h1 style="color: #0056b3">REAL - FC</h1>
         </div>
-        <section id="team">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Central Attacking Midfielder</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'CAM'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-
-
-                <!-- Example for displaying Defenders -->
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Central Defensive Midfielder</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'CDM'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>                      
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Centre Forward</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'CF'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>Defender</span>
-                                        <div class="member-info">
-                                            <h4>${player.name}</h4>
-                                            <span>${player.position}</span>
-                                            <span>Date of Birth: ${player.age}</span>
-                                            <span>Weight: ${player.weight} kg</span>
-                                            <span>Height: ${player.height} cm</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Central Midfielder</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'CM'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>Defender</span>
-                                        <div class="member-info">
-                                            <h4>${player.name}</h4>
-                                            <span>${player.position}</span>
-                                            <span>Date of Birth: ${player.age}</span>
-                                            <span>Weight: ${player.weight} kg</span>
-                                            <span>Height: ${player.height} cm</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Goalkeeper</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'GK'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>Defender</span>
-                                        <div class="member-info">
-                                            <h4>${player.name}</h4>
-                                            <span>${player.position}</span>
-                                            <span>Date of Birth: ${player.age}</span>
-                                            <span>Weight: ${player.weight} kg</span>
-                                            <span>Height: ${player.height} cm</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Left Center Back</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'LCB'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Left Back </h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'LB'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Left Midfielder</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'LM'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Left Winger</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'LW'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Right Center Back</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'RCB'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Right Central Midfielder</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'RCM'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Right Winger</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'RW'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h2>Striker</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <c:forEach var="player" items="${listPlayer}">
-                        <c:if test="${player.position == 'ST'}">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="member">
-                                    <div class="member-img">
-                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                                    </div>
-                                    <h4>${player.name}</h4>
-                                    <div class="member-info">
-                                        <h4>${player.name}</h4>
-                                        <span>${player.position}</span>
-                                        <span>Date of Birth: ${player.age}</span>
-                                        <span>Weight: ${player.weight} kg</span>
-                                        <span>Height: ${player.height} cm</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-                
+     <section id="team" style="background-color: #fff">
+    <div class="container">
+        
+        <!-- Goalkeepers -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Goalkeepers</h2>
             </div>
         </div>
+        <div class="row">
+            <c:forEach var="player" items="${listPlayer}">
+                <c:if test="${player.position == 'GK'}">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="member">
+                            <div class="member-img">
+                                <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                            </div>
+                            <h4>${player.name}</h4>
+                            <div class="member-info">
+                                <span>${player.position}</span>
+                                <span>Date of Birth: ${player.age}</span>
+                                <span>Weight: ${player.weight} kg</span>
+                                <span>Height: ${player.height} cm</span>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
+            </c:forEach>
+        </div>
+
+        <!-- Defenders -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Defenders</h2>
+            </div>
+        </div>
+        <div class="row">
+            <c:forEach var="player" items="${listPlayer}">
+                <c:if test="${player.position == 'LB' || player.position == 'LCB' || player.position == 'RCB' || player.position == 'RB'}">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="member">
+                            <div class="member-img">
+                                <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                            </div>
+                            <h4>${player.name}</h4>
+                            <div class="member-info">
+                                <span>${player.position}</span>
+                                <span>Date of Birth: ${player.age}</span>
+                                <span>Weight: ${player.weight} kg</span>
+                                <span>Height: ${player.height} cm</span>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
+            </c:forEach>
+        </div>
+
+        <!-- Midfielders -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Midfielders</h2>
+            </div>
+        </div>
+        <div class="row">
+            <c:forEach var="player" items="${listPlayer}">
+                <c:if test="${player.position == 'CM' || player.position == 'CAM' || player.position == 'CDM' || player.position == 'LM' || player.position == 'RM'}">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="member">
+                            <div class="member-img">
+                                <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                            </div>
+                            <h4>${player.name}</h4>
+                            <div class="member-info">
+                                <span>${player.position}</span>
+                                <span>Date of Birth: ${player.age}</span>
+                                <span>Weight: ${player.weight} kg</span>
+                                <span>Height: ${player.height} cm</span>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
+            </c:forEach>
+        </div>
+
+        <!-- Forwards -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Forwards</h2>
+            </div>
+        </div>
+        <div class="row">
+            <c:forEach var="player" items="${listPlayer}">
+                <c:if test="${player.position == 'CF' || player.position == 'LW' || player.position == 'RW' || player.position == 'ST'}">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="member">
+                            <div class="member-img">
+                                <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                            </div>
+                            <h4>${player.name}</h4>
+                            <div class="member-info">
+                                <span>${player.position}</span>
+                                <span>Date of Birth: ${player.age}</span>
+                                <span>Weight: ${player.weight} kg</span>
+                                <span>Height: ${player.height} cm</span>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
+            </c:forEach>
+        </div>
+
     </div>
 </section>
 

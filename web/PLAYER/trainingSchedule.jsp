@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
     </head>
-    <body style="background-image: url('../IMAGE/HOME/stock-photo-modern-football-stadium-with-green-lawn-and-blue-spotlight-soccer-background-football-champions-2410554333.jpg');">
+    <body >
         <div>
             <%@include file="../PLAYER/siderbar.jsp" %>
         </div>  

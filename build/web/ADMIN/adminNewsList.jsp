@@ -380,7 +380,8 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <img src="../IMAGE/HOME/REALFC.png" alt="alt"/>
+                    <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
+
                 </div>
 
                 <ul class="list-unstyled components">
@@ -503,487 +504,487 @@
     <script>
 
 
-        function Submit(event, method) {
-            event.preventDefault(); // Prevent the default form submission
+                                            function Submit(event, method) {
+                                                event.preventDefault(); // Prevent the default form submission
 
-            // Your form handling logic here
-            method();
-        }
+                                                // Your form handling logic here
+                                                method();
+                                            }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelector(".search").addEventListener('input', ListNews);
-            console.log("search");
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                document.querySelector(".search").addEventListener('input', ListNews);
+                                                console.log("search");
 
-        });
+                                            });
 
-        function showLoading() {
-            const loadingElement = document.getElementById('loading');
-            console.log(loadingElement);
+                                            function showLoading() {
+                                                const loadingElement = document.getElementById('loading');
+                                                console.log(loadingElement);
 
-            if (loadingElement) {
-                loadingElement.style.display = 'block';
-            }
-        }
-
-
-        function hideLoading() {
-            const loadingElement = document.getElementById('loading');
-            console.log(loadingElement);
-            if (loadingElement) {
-                loadingElement.style.display = 'none';
-            }
-        }
-        function ListNews() {
-            var input = document.querySelector(".search").value;
-            console.log(input);
-            var url = '/SWPClubManegement/NewsController?search=' + input;
-            console.log(url);
-
-            fetch(url, {method: 'POST'})
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.text(); // Get response as text
-                    })
-                    .then(text => {
-                        try {
-                            console.log(text);
-                            var data = JSON.parse(text); // Convert text to JSON
-                            console.log(data);
-                            if (data.error) {
-                                console.error('Server Error:', data.error);
-                                return;
-                            }
-                            // Call the function to update the table
-                            UpdateTtableListNews(data);
-
-                        } catch (error) {
-                            console.error('Error parsing JSON', error);
-                            console.log('Response Text:', text);
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+                                                if (loadingElement) {
+                                                    loadingElement.style.display = 'block';
+                                                }
+                                            }
 
 
-        }
+                                            function hideLoading() {
+                                                const loadingElement = document.getElementById('loading');
+                                                console.log(loadingElement);
+                                                if (loadingElement) {
+                                                    loadingElement.style.display = 'none';
+                                                }
+                                            }
+                                            function ListNews() {
+                                                var input = document.querySelector(".search").value;
+                                                console.log(input);
+                                                var url = '/SWPClubManegement/NewsController?search=' + input;
+                                                console.log(url);
+
+                                                fetch(url, {method: 'POST'})
+                                                        .then(response => {
+                                                            if (!response.ok) {
+                                                                throw new Error('Network response was not ok');
+                                                            }
+                                                            return response.text(); // Get response as text
+                                                        })
+                                                        .then(text => {
+                                                            try {
+                                                                console.log(text);
+                                                                var data = JSON.parse(text); // Convert text to JSON
+                                                                console.log(data);
+                                                                if (data.error) {
+                                                                    console.error('Server Error:', data.error);
+                                                                    return;
+                                                                }
+                                                                // Call the function to update the table
+                                                                UpdateTtableListNews(data);
+
+                                                            } catch (error) {
+                                                                console.error('Error parsing JSON', error);
+                                                                console.log('Response Text:', text);
+                                                            }
+                                                        })
+                                                        .catch(error => console.error('Error:', error));
 
 
-        function deleteNews(nid)
-        {
-            var url = '/SWPClubManegement/NewsController?command=DELETE&nid=' + nid;
-            console.log("URL = " + url);
-            fetch(url, {method: 'GET'}).then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.text();
-            }).then(text => {
-
-                console.log("delete " + text);
-                if (text.trim() !== '"fail"')
-                {
-                    var success = document.getElementById('successMessage');
-                    success.style.display = "flex";
-                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Delete operation successful';
-                    setTimeout(function () {
-                        success.style.display = "none";
-                    }, 1000);
-                }
-
-            })
-                    .catch(error => {
-                        console.error('Error', error);
-                        alert("delete fail");
-                    })
-                    .finally(() => {
-                        ListNews();
-                    });
+                                            }
 
 
-        }
+                                            function deleteNews(nid)
+                                            {
+                                                var url = '/SWPClubManegement/NewsController?command=DELETE&nid=' + nid;
+                                                console.log("URL = " + url);
+                                                fetch(url, {method: 'GET'}).then(response => {
+                                                    if (!response.ok) {
+                                                        throw new Error("Network response was not ok");
+                                                    }
+                                                    return response.text();
+                                                }).then(text => {
 
-        function addNews()
-        {
-            var newsTitle = document.querySelector('input[name="newstitle"]').value;
-            var description = document.querySelector('input[name="description"]').value;
-            var newsimage = document.querySelector('input[name="newsimage"]').value;
-            var contentNews = document.querySelector('textarea#contentNews').value;
+                                                    console.log("delete " + text);
+                                                    if (text.trim() !== '"fail"')
+                                                    {
+                                                        var success = document.getElementById('successMessage');
+                                                        success.style.display = "flex";
+                                                        successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Delete operation successful';
+                                                        setTimeout(function () {
+                                                            success.style.display = "none";
+                                                        }, 1000);
+                                                    }
 
-            var editor = CKEDITOR.instances['contentNews'];
-            if (editor) {
+                                                })
+                                                        .catch(error => {
+                                                            console.error('Error', error);
+                                                            alert("delete fail");
+                                                        })
+                                                        .finally(() => {
+                                                            ListNews();
+                                                        });
 
-                var content = editor.getData();
-                if (content.trim() === '')
-                {
 
-                    alert(" Please fill the news content");
+                                            }
 
-                    return;
-                }
-                // Use the content as needed
-                console.log(" editor " + content);
-            } else {
-                console.error('CKEditor instance not found');
-            }
-            const form = document.querySelector('#add-news');
+                                            function addNews()
+                                            {
+                                                var newsTitle = document.querySelector('input[name="newstitle"]').value;
+                                                var description = document.querySelector('input[name="description"]').value;
+                                                var newsimage = document.querySelector('input[name="newsimage"]').value;
+                                                var contentNews = document.querySelector('textarea#contentNews').value;
+
+                                                var editor = CKEDITOR.instances['contentNews'];
+                                                if (editor) {
+
+                                                    var content = editor.getData();
+                                                    if (content.trim() === '')
+                                                    {
+
+                                                        alert(" Please fill the news content");
+
+                                                        return;
+                                                    }
+                                                    // Use the content as needed
+                                                    console.log(" editor " + content);
+                                                } else {
+                                                    console.error('CKEditor instance not found');
+                                                }
+                                                const form = document.querySelector('#add-news');
 //            form.set('content1', content);
 // Khởi tạo một FormData object
-            const formData = new FormData(form);
-            formData.set('content', content);
+                                                const formData = new FormData(form);
+                                                formData.set('content', content);
 
-            for (const pair of formData.entries()) {
-                console.log(pair[0] + ': ' + pair[1]);
-            }
-
-
-
-
-
-            if (!newsTitle || !description || !editor) {
-                console.error('Missing required input value');
-                return;
-            }
-            var url = '/SWPClubManegement/AddNewsServlet'
-            console.log("URL = " + url);
-            fetch(url, {method: 'POST',
-                body: formData
-            })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
-
-                        }
-                        return response.text();
-
-
-                    }).then(text => {
-                var success = document.getElementById('successMessage');
-                console.log(text);
-
-                var data = JSON.parse(text);
-
-                if (data.status === 'error')
-                {
-                    var errorMessage = document.getElementById('errorMessage');
-                    errorMessage.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + data.message;
-                    errorMessage.classList.add('show');
-
-                    setTimeout(function () {
-                        errorMessage.classList.remove('show');
-                    }, 3000);
-                    return;
-                }
-                success.style.display = "flex";
-                successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Add operation successful';
-                setTimeout(function () {
-                    success.style.display = "none";
-                }, 1000);
-                var addForm = document.getElementById('add-form');
-                addForm.style.display = 'none';
-
-                document.querySelector('input[name="newstitle"]').value = "";
-
-                document.querySelector('input[name="description"]').value = "";
-
-                document.querySelector('input[name="newsimage"]').value = "";
-                document.querySelector('textarea[name="content"]').value = "";
-            })
-                    .catch(error => {
-                        console.error('Error', error);
-                        alert("Add fail");
-                    })
-                    .finally(() => {
-                        ListNews();
-                    });
-
-
-        }
+                                                for (const pair of formData.entries()) {
+                                                    console.log(pair[0] + ': ' + pair[1]);
+                                                }
 
 
 
 
 
-        function UpdateNews()
-        {
-            var nid = document.querySelector('input[name="nid"]').value
-            var newsTitle = document.querySelector('input[name="newstitle1"]').value;
-            var description = document.querySelector('input[name="description1"]').value;
-            var newsimage = document.querySelector('input[name="newsimage1"]').value;
-            console.log(" Emage" + newsimage);
-            var editor = CKEDITOR.instances['contentNews1'];
-            if (editor) {
+                                                if (!newsTitle || !description || !editor) {
+                                                    console.error('Missing required input value');
+                                                    return;
+                                                }
+                                                var url = '/SWPClubManegement/AddNewsServlet'
+                                                console.log("URL = " + url);
+                                                fetch(url, {method: 'POST',
+                                                    body: formData
+                                                })
+                                                        .then(response => {
+                                                            if (!response.ok) {
+                                                                throw new Error("Network response was not ok");
 
-                var content = editor.getData();
-                if (content.trim() === '')
-                {
-                    alert(" Please fill the news content");
-                    return;
-                }
+                                                            }
+                                                            return response.text();
 
-                console.log(" editor " + content);
-            } else {
-                console.error('CKEditor instance not found');
-            }
-            const form = document.querySelector('#edit');
+
+                                                        }).then(text => {
+                                                    var success = document.getElementById('successMessage');
+                                                    console.log(text);
+
+                                                    var data = JSON.parse(text);
+
+                                                    if (data.status === 'error')
+                                                    {
+                                                        var errorMessage = document.getElementById('errorMessage');
+                                                        errorMessage.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + data.message;
+                                                        errorMessage.classList.add('show');
+
+                                                        setTimeout(function () {
+                                                            errorMessage.classList.remove('show');
+                                                        }, 3000);
+                                                        return;
+                                                    }
+                                                    success.style.display = "flex";
+                                                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Add operation successful';
+                                                    setTimeout(function () {
+                                                        success.style.display = "none";
+                                                    }, 1000);
+                                                    var addForm = document.getElementById('add-form');
+                                                    addForm.style.display = 'none';
+
+                                                    document.querySelector('input[name="newstitle"]').value = "";
+
+                                                    document.querySelector('input[name="description"]').value = "";
+
+                                                    document.querySelector('input[name="newsimage"]').value = "";
+                                                    document.querySelector('textarea[name="content"]').value = "";
+                                                })
+                                                        .catch(error => {
+                                                            console.error('Error', error);
+                                                            alert("Add fail");
+                                                        })
+                                                        .finally(() => {
+                                                            ListNews();
+                                                        });
+
+
+                                            }
+
+
+
+
+
+                                            function UpdateNews()
+                                            {
+                                                var nid = document.querySelector('input[name="nid"]').value
+                                                var newsTitle = document.querySelector('input[name="newstitle1"]').value;
+                                                var description = document.querySelector('input[name="description1"]').value;
+                                                var newsimage = document.querySelector('input[name="newsimage1"]').value;
+                                                console.log(" Emage" + newsimage);
+                                                var editor = CKEDITOR.instances['contentNews1'];
+                                                if (editor) {
+
+                                                    var content = editor.getData();
+                                                    if (content.trim() === '')
+                                                    {
+                                                        alert(" Please fill the news content");
+                                                        return;
+                                                    }
+
+                                                    console.log(" editor " + content);
+                                                } else {
+                                                    console.error('CKEditor instance not found');
+                                                }
+                                                const form = document.querySelector('#edit');
 //            form.set('content1', content);
 // Khởi tạo một FormData object
-            const formData = new FormData(form);
-            formData.set('content1', content);
+                                                const formData = new FormData(form);
+                                                formData.set('content1', content);
 
-            for (const pair of formData.entries()) {
-                console.log(pair[0] + ': ' + pair[1]);
-            }
-
-
+                                                for (const pair of formData.entries()) {
+                                                    console.log(pair[0] + ': ' + pair[1]);
+                                                }
 
 
-            if (!newsTitle || !description || !editor) {
-                console.error('Missing required input value');
-                return;
-            }
-            var url = '/SWPClubManegement/EditNewsServlet'
-            console.log("URL = " + url);
-            fetch(url, {method: 'POST',
-                body: formData
-            })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
-
-                        }
-                        return response.text();
 
 
-                    }).then(text => {
-                console.log(text);
-                var data = JSON.parse(text);
-                if (data.status === 'error')
-                {
-                    var errorMessage = document.getElementById('errorMessage1');
-                    errorMessage.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + data.message;
-                    errorMessage.classList.add('show');
+                                                if (!newsTitle || !description || !editor) {
+                                                    console.error('Missing required input value');
+                                                    return;
+                                                }
+                                                var url = '/SWPClubManegement/EditNewsServlet'
+                                                console.log("URL = " + url);
+                                                fetch(url, {method: 'POST',
+                                                    body: formData
+                                                })
+                                                        .then(response => {
+                                                            if (!response.ok) {
+                                                                throw new Error("Network response was not ok");
 
-                    setTimeout(function () {
-                        errorMessage.classList.remove('show');
-                    }, 3000);
-                    return;
-                }
-
-                var success = document.getElementById('successMessage');
-                success.style.display = "flex";
-                successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Add operation successful';
-                setTimeout(function () {
-                    success.style.display = "none";
-                }, 1000);
-                var editForm = document.getElementById('edit-form');
-                editForm.style.display = 'none';
+                                                            }
+                                                            return response.text();
 
 
-            })
-                    .catch(error => {
-                        console.error('Error', error);
-                        alert("Add fail");
-                    })
-                    .finally(() => {
-                        ListNews();
-                    });
-           
+                                                        }).then(text => {
+                                                    console.log(text);
+                                                    var data = JSON.parse(text);
+                                                    if (data.status === 'error')
+                                                    {
+                                                        var errorMessage = document.getElementById('errorMessage1');
+                                                        errorMessage.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + data.message;
+                                                        errorMessage.classList.add('show');
 
-        }
+                                                        setTimeout(function () {
+                                                            errorMessage.classList.remove('show');
+                                                        }, 3000);
+                                                        return;
+                                                    }
+
+                                                    var success = document.getElementById('successMessage');
+                                                    success.style.display = "flex";
+                                                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Add operation successful';
+                                                    setTimeout(function () {
+                                                        success.style.display = "none";
+                                                    }, 1000);
+                                                    var editForm = document.getElementById('edit-form');
+                                                    editForm.style.display = 'none';
 
 
+                                                })
+                                                        .catch(error => {
+                                                            console.error('Error', error);
+                                                            alert("Add fail");
+                                                        })
+                                                        .finally(() => {
+                                                            ListNews();
+                                                        });
+
+
+                                            }
 
 
 
 
 
-        function UpdateTtableListNews(ListNews) {
+
+
+                                            function UpdateTtableListNews(ListNews) {
 //                                if (!Array.isArray(matches)) {
 //                                    console.error('Expected array but got:', matches);
 //                                    return;
 //                                }
 
-            const tableBody = document.querySelector("#matchTableBody");
-            const content = document.querySelector("#content");
-            tableBody.innerHTML = "";
+                                                const tableBody = document.querySelector("#matchTableBody");
+                                                const content = document.querySelector("#content");
+                                                tableBody.innerHTML = "";
 
-            ListNews.forEach(m => {
-                const row = document.createElement('tr');
-                const newsIdCell = document.createElement('td');
-                newsIdCell.textContent = m.newsId;
-                row.appendChild(newsIdCell);
+                                                ListNews.forEach(m => {
+                                                    const row = document.createElement('tr');
+                                                    const newsIdCell = document.createElement('td');
+                                                    newsIdCell.textContent = m.newsId;
+                                                    row.appendChild(newsIdCell);
 
 //                                    
 
 
 
 
-                const newsTitleCell = document.createElement('td');
-                newsTitleCell.textContent = m.newsTitle;
-                row.appendChild(newsTitleCell);
-                const descriptionCell = document.createElement('td');
-                descriptionCell.textContent = m.description;
-                row.appendChild(descriptionCell);
-                const newsImageDescriptionCell = document.createElement('td');
-                const imageDes = document.createElement('img');
-                imageDes.src = "../IMAGE/NEWS/" + m.newsImageDescription;
-                imageDes.style.width = "100px";
-                imageDes.style.height = "100px";
+                                                    const newsTitleCell = document.createElement('td');
+                                                    newsTitleCell.textContent = m.newsTitle;
+                                                    row.appendChild(newsTitleCell);
+                                                    const descriptionCell = document.createElement('td');
+                                                    descriptionCell.textContent = m.description;
+                                                    row.appendChild(descriptionCell);
+                                                    const newsImageDescriptionCell = document.createElement('td');
+                                                    const imageDes = document.createElement('img');
+                                                    imageDes.src = "../IMAGE/NEWS/" + m.newsImageDescription;
+                                                    imageDes.style.width = "100px";
+                                                    imageDes.style.height = "100px";
 
 
-                newsImageDescriptionCell.appendChild(imageDes);
-                row.appendChild(newsImageDescriptionCell);
+                                                    newsImageDescriptionCell.appendChild(imageDes);
+                                                    row.appendChild(newsImageDescriptionCell);
 
-                const newsContentCell = document.createElement('td');
-                const reviewButton = document.createElement('i');
-                reviewButton.classList.add("fas", "fa-search-plus", "review-button");
-                const newsBlockDiv = document.createElement('div');
-                newsBlockDiv.classList.add("news-content", "scrollable-content");
-                newsBlockDiv.innerHTML = m.newsContent;
-                newsContentCell.appendChild(reviewButton);
-                newsContentCell.appendChild(newsBlockDiv);
-                row.appendChild(newsContentCell);
-                const datePostedCell = document.createElement('td');
-                datePostedCell.textContent = m.datePosted;
-                row.appendChild(datePostedCell);
-
-
-
+                                                    const newsContentCell = document.createElement('td');
+                                                    const reviewButton = document.createElement('i');
+                                                    reviewButton.classList.add("fas", "fa-search-plus", "review-button");
+                                                    const newsBlockDiv = document.createElement('div');
+                                                    newsBlockDiv.classList.add("news-content", "scrollable-content");
+                                                    newsBlockDiv.innerHTML = m.newsContent;
+                                                    newsContentCell.appendChild(reviewButton);
+                                                    newsContentCell.appendChild(newsBlockDiv);
+                                                    row.appendChild(newsContentCell);
+                                                    const datePostedCell = document.createElement('td');
+                                                    datePostedCell.textContent = m.datePosted;
+                                                    row.appendChild(datePostedCell);
 
 
 
 
-                const Button = document.createElement('div');
-                Button.classList.add('button');
-                const iconUpdate = document.createElement('i');
-                iconUpdate.classList.add('update-button');
-                iconUpdate.classList.add('fas');
-                iconUpdate.classList.add('fa-edit', 'update-button');
-                const iconDelete = document.createElement('i');
-                iconDelete.classList.add('fas');
-                iconDelete.classList.add('fa-trash-alt', 'delete-button');
-                Button.appendChild(iconUpdate);
-                Button.appendChild(iconDelete);
-                const actionCell = document.createElement('td');
-                actionCell.appendChild(Button);
-                row.appendChild(actionCell);
-                tableBody.appendChild(row);
 
-                // update icon
-                iconUpdate.addEventListener('click', function () {
+
+
+                                                    const Button = document.createElement('div');
+                                                    Button.classList.add('button');
+                                                    const iconUpdate = document.createElement('i');
+                                                    iconUpdate.classList.add('update-button');
+                                                    iconUpdate.classList.add('fas');
+                                                    iconUpdate.classList.add('fa-edit', 'update-button');
+                                                    const iconDelete = document.createElement('i');
+                                                    iconDelete.classList.add('fas');
+                                                    iconDelete.classList.add('fa-trash-alt', 'delete-button');
+                                                    Button.appendChild(iconUpdate);
+                                                    Button.appendChild(iconDelete);
+                                                    const actionCell = document.createElement('td');
+                                                    actionCell.appendChild(Button);
+                                                    row.appendChild(actionCell);
+                                                    tableBody.appendChild(row);
+
+                                                    // update icon
+                                                    iconUpdate.addEventListener('click', function () {
 //                    
 
-                    document.querySelector('input[name="nid"]').value = newsIdCell.textContent;
-                    document.querySelector('input[name="newstitle1"]').value = newsTitleCell.textContent;
-                    document.querySelector('input[name="description1"]').value = descriptionCell.textContent;
+                                                        document.querySelector('input[name="nid"]').value = newsIdCell.textContent;
+                                                        document.querySelector('input[name="newstitle1"]').value = newsTitleCell.textContent;
+                                                        document.querySelector('input[name="description1"]').value = descriptionCell.textContent;
 
 
-                    var editorInstance = CKEDITOR.instances.contentNews1; // Đảm bảo yourEditorId chính xác
-                    editorInstance.setData(newsBlockDiv.innerHTML);
-                    document.querySelector('textarea#contentNews1').value = editorInstance.getData();
+                                                        var editorInstance = CKEDITOR.instances.contentNews1; // Đảm bảo yourEditorId chính xác
+                                                        editorInstance.setData(newsBlockDiv.innerHTML);
+                                                        document.querySelector('textarea#contentNews1').value = editorInstance.getData();
 
-                    document.querySelector('.old-image').src = "../IMAGE/NEWS/" + m.newsImageDescription;
-
-
-
-                });
-
-                reviewButton.addEventListener('click', function () {
-                    var editorInstance = CKEDITOR.instances.contentNews1; // Đảm bảo yourEditorId chính xác
-                    editorInstance.setData(newsBlockDiv.innerHTML);
-                    var cardContent = document.querySelector('.review');
-                    cardContent.innerHTML = '<h1> ' + m.newsTitle + '<h1>' + newsBlockDiv.innerHTML;
-
-
-                });
-
-                // delete 
-
-                iconDelete.addEventListener('click', function () {
-                    deleteNews(m.newsId);
-                });
-            });
-
-
-        }
-        document.addEventListener('click', function (event) {
-
-            if (event.target.classList.contains('review-button')) {
-
-                const reviewButton = document.getElementById('review-form');
-                console.log(reviewButton);
-                reviewButton.style.display = 'block';
-            }
-        });
-
-
-        document.addEventListener('click', function (event) {
-
-            if (event.target.classList.contains('update-button')) {
-
-                const updateButton = document.getElementById('edit-form');
-                console.log(updateButton);
-                updateButton.style.display = 'block';
-            }
-        });
-        document.addEventListener('DOMContentLoaded', function () {
-            // Gọi hàm ListMatches ngay khi trang web tải xong
-            ListNews();
-        });
-
-
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-                $(this).toggleClass('active');
-            });
-
-            function toggleCloseAddform() {
-                $("#add-form").toggle();
-            }
-
-            function toggleOpenAdd() {
-                $("#add-form").toggle();
-            }
-
-            function reviewClose()
-            {
-                $("#review-form").toggle();
-            }
-
-
-            function toggleOpenEdit() {
-                $("#edit-form").toggle();
-            }
-            function toggleCloseEdit() {
-                $("#edit-form").toggle();
-            }
-
-            $(".review-close").click(function ()
-            {
-                reviewClose();
-            });
-
-
-            $("#add-close").click(function () {
-                toggleCloseAddform();
-            });
-
-            $("#add-button").click(function () {
-                toggleOpenAdd();
-            });
-            $(".update-button").click(function () {
-                toggleOpenEdit();
-            });
-            $("#close-edit").click(function () {
-                toggleCloseEdit();
-            });
-            // Display success message if it exists
+                                                        document.querySelector('.old-image').src = "../IMAGE/NEWS/" + m.newsImageDescription;
 
 
 
-        });
+                                                    });
+
+                                                    reviewButton.addEventListener('click', function () {
+                                                        var editorInstance = CKEDITOR.instances.contentNews1; // Đảm bảo yourEditorId chính xác
+                                                        editorInstance.setData(newsBlockDiv.innerHTML);
+                                                        var cardContent = document.querySelector('.review');
+                                                        cardContent.innerHTML = '<h1> ' + m.newsTitle + '<h1>' + newsBlockDiv.innerHTML;
+
+
+                                                    });
+
+                                                    // delete 
+
+                                                    iconDelete.addEventListener('click', function () {
+                                                        deleteNews(m.newsId);
+                                                    });
+                                                });
+
+
+                                            }
+                                            document.addEventListener('click', function (event) {
+
+                                                if (event.target.classList.contains('review-button')) {
+
+                                                    const reviewButton = document.getElementById('review-form');
+                                                    console.log(reviewButton);
+                                                    reviewButton.style.display = 'block';
+                                                }
+                                            });
+
+
+                                            document.addEventListener('click', function (event) {
+
+                                                if (event.target.classList.contains('update-button')) {
+
+                                                    const updateButton = document.getElementById('edit-form');
+                                                    console.log(updateButton);
+                                                    updateButton.style.display = 'block';
+                                                }
+                                            });
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                // Gọi hàm ListMatches ngay khi trang web tải xong
+                                                ListNews();
+                                            });
+
+
+                                            $(document).ready(function () {
+                                                $('#sidebarCollapse').on('click', function () {
+                                                    $('#sidebar').toggleClass('active');
+                                                    $(this).toggleClass('active');
+                                                });
+
+                                                function toggleCloseAddform() {
+                                                    $("#add-form").toggle();
+                                                }
+
+                                                function toggleOpenAdd() {
+                                                    $("#add-form").toggle();
+                                                }
+
+                                                function reviewClose()
+                                                {
+                                                    $("#review-form").toggle();
+                                                }
+
+
+                                                function toggleOpenEdit() {
+                                                    $("#edit-form").toggle();
+                                                }
+                                                function toggleCloseEdit() {
+                                                    $("#edit-form").toggle();
+                                                }
+
+                                                $(".review-close").click(function ()
+                                                {
+                                                    reviewClose();
+                                                });
+
+
+                                                $("#add-close").click(function () {
+                                                    toggleCloseAddform();
+                                                });
+
+                                                $("#add-button").click(function () {
+                                                    toggleOpenAdd();
+                                                });
+                                                $(".update-button").click(function () {
+                                                    toggleOpenEdit();
+                                                });
+                                                $("#close-edit").click(function () {
+                                                    toggleCloseEdit();
+                                                });
+                                                // Display success message if it exists
+
+
+
+                                            });
 
 
 

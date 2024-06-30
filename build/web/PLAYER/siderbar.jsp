@@ -65,22 +65,23 @@
                 margin-left: 270px; /* Space for the sidebar */
                 padding: 20px;
             }
+            
         </style>
     </head>
     <body>
         <div class="sidebar">
-            <header>Player</header>
+            <header><a href="/SWPClubManegement/HOME/home.jsp">Player</a></header>
             <ul>
-                <li><a href="/SWPClubManegement/PLAYER/PlayerDashboard"><i class="far fa-question-circle"></i>Dashboard</a></li>
-                <li><a href="/SWPClubManegement/PLAYER/PhysicalConditions"><i class="far fa-question-circle"></i>Phys Condition</a></li>
-                <li><a href="/SWPClubManegement/MeetingSchedulePlayer"><i class="fas fa-qrcode"></i>Meeting Schedule</a></li>
-                <li><a href="/SWPClubManegement/MatchSchedulePlayer"><i class="fas fa-link"></i>Match Schedule</a></li>
-                <li><a href="/SWPClubManegement/PLAYER/PlayerStatus"><i class="fas fa-stream"></i>Player Stats</a></li>
-                <li><a href="/SWPClubManegement/TrainingSchedulePlayer"><i class="fas fa-calendar-week"></i>Training Schedule</a></li>
-                <li><a href="/SWPClubManegement/PLAYER/DietPlan"><i class="far fa-question-circle"></i>Diet plan</a></li>
-                <li><a href="/SWPClubManegement/PLAYER/TreatmentChedule"><i class="far fa-question-circle"></i>Treatment</a></li>
-                <li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-sliders-h"></i>Back Home</a></li>
-                <!--<li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-sliders-h"></i>Logout</a></li>-->
+                <li><a href="/SWPClubManegement/PLAYER/PlayerDashboard"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                <li><a href="/SWPClubManegement/PLAYER/PhysicalConditions"><i class="fas fa-heartbeat"></i>Phys Condition</a></li>
+                <li><a href="/SWPClubManegement/MeetingSchedulePlayer"><i class="fas fa-calendar-alt"></i>Meeting Schedule</a></li>
+                <li><a href="/SWPClubManegement/MatchSchedulePlayer"><i class="fas fa-futbol"></i>Match Schedule</a></li>
+                <li><a href="/SWPClubManegement/PLAYER/PlayerStatus"><i class="fas fa-chart-line"></i>Player Stats</a></li>
+                <li><a href="/SWPClubManegement/TrainingSchedulePlayer"><i class="fas fa-dumbbell"></i>Training Schedule</a></li>
+                <li><a href="/SWPClubManegement/PLAYER/DietPlan"><i class="fas fa-utensils"></i>Diet Plan</a></li>
+                <li><a href="/SWPClubManegement/PLAYER/TreatmentChedule"><i class="fas fa-notes-medical"></i>Treatment</a></li>
+<!--                <li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-home"></i>Back Home</a></li>-->
+                <!--<li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-sign-out-alt"></i>Logout</a></li>-->
             </ul>
         </div>
         <section>
