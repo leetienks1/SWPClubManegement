@@ -61,6 +61,7 @@
                         <th>Match Location</th>
                         <th>Tournament</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,6 +85,8 @@
                                     </c:otherwise>
                                 </c:choose>
                             </td>
+                            <td><a href="./HOME/DetailMatch?mid=${match.matchID}">Detail</a></td>
+
                         </tr>
                     </c:forEach>
                 </tbody>
