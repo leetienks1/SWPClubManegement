@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
-
     <!-- Filters -->
     <filter>
         <filter-name>StoreJerseyFiller</filter-name>
@@ -18,7 +17,6 @@
         <filter-name>MedicalFilter</filter-name>
         <filter-class>Filter.MedicalFilter</filter-class>
     </filter>
-
     <!-- Filter Mappings -->
     <filter-mapping>
         <filter-name>MedicalFilter</filter-name>
@@ -39,7 +37,6 @@
         <filter-name>StoreJerseyFiller</filter-name>
         <url-pattern>/STORE/*</url-pattern>
     </filter-mapping>
-
     <!-- Servlets -->
     <servlet>
         <servlet-name>EditProfileServlet</servlet-name>
@@ -161,8 +158,11 @@
         <servlet-name>PlayerListServlet</servlet-name>
         <servlet-class>Controller.PlayerListServlet</servlet-class>
     </servlet>
-
     <!-- Servlet Mappings -->
+    <servlet>
+        <servlet-name>JerseyServlet</servlet-name>
+        <servlet-class>Controller.JerseyServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/EditProfileServlet</url-pattern>
@@ -283,12 +283,14 @@
         <servlet-name>PlayerListServlet</servlet-name>
         <url-pattern>/Players</url-pattern>
     </servlet-mapping>
-
     <!-- Session Configuration -->
+    <servlet-mapping>
+        <servlet-name>JerseyServlet</servlet-name>
+        <url-pattern>/JerseyServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-
     <!-- Welcome File List -->
     <welcome-file-list>
         <welcome-file>HOME/home.jsp</welcome-file>

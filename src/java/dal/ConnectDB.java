@@ -11,6 +11,7 @@ import static dal.DatabaseInfor.user;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,5 +40,23 @@ public class ConnectDB {
             instance = new ConnectDB();
         }
         return instance;
+    }
+    
+    
+    public void closeResources(Connection con, AutoCloseable...closeables) {
+        try {
+            if (Objects.nonNull(closeables)) {
+                for (AutoCloseable closeable : closeables) {
+                    if (Objects.nonNull(closeable)) {
+                        closeable.close();
+                    }
+                }
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

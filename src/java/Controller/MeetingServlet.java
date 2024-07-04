@@ -139,11 +139,19 @@ public class MeetingServlet extends HttpServlet {
     }
 
     private void UpdateMeeting(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        MeetingDAO tDAO = new MeetingDAO();
+        int MeetingID = Integer.parseInt(request.getParameter("cid"));
+        LocalDate MeetingDate = LocalDate.parse(request.getParameter("meetingDate"));
+        String MeetingTime = request.getParameter("meetingTime");
+        String Location = request.getParameter("location");
+        String Description = request.getParameter("description");
+        Meeting t = new Meeting(MeetingID, MeetingDate, MeetingTime, Location, Description);
+        tDAO.update(t);
+        ListMeeting(request, response);
     }
 
     private void DeleteMeeting(HttpServletRequest request, HttpServletResponse response) {
-        int cid = Integer.parseInt(request.getParameter("cid"));;
+        int cid = Integer.parseInt(request.getParameter("cid"));
         new MeetingDAO().delete(cid);
         ListMeeting(request, response);
     }

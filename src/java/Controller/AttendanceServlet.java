@@ -7,16 +7,22 @@ package Controller;
 import DAO.AttendanceDAO;
 import DAO.PlayerDAO;
 import DAO.TrainingScheduleDAO;
+import DAO.UserDAO;
 import Model.Attendance;
 import Model.Player;
 import Model.TrainingSchedule;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -79,11 +85,11 @@ public class AttendanceServlet extends HttpServlet {
                 case "ADD":
                     addAttendance(request, response);
                     break;
-                case "LOAD":
-
+                case "STATIS":
+                    StatisticsAttendance(request, response);
                     break;
                 case "UPDATE":
-                    updateAttendance(request,response);
+                    updateAttendance(request, response);
                     break;
                 case "DELETE":
 
@@ -134,7 +140,7 @@ public class AttendanceServlet extends HttpServlet {
         }
         for (Attendance a : listAtten) {
             for (String pID : playerID) {
-                if(a.getPlayerID() == Integer.parseInt(pID)){
+                if (a.getPlayerID() == Integer.parseInt(pID)) {
                     a.setIsPresent(true);
                 }
             }
@@ -165,19 +171,55 @@ public class AttendanceServlet extends HttpServlet {
         for (Attendance a : listAtten) {
             a.setIsPresent(false);
         }
-        if(playerID!=null){
-        for (Attendance a : listAtten) {
-            for (String pID : playerID) {
-                if(a.getPlayerID() == Integer.parseInt(pID)){
-                    a.setIsPresent(true);
+        if (playerID != null) {
+            for (Attendance a : listAtten) {
+                for (String pID : playerID) {
+                    if (a.getPlayerID() == Integer.parseInt(pID)) {
+                        a.setIsPresent(true);
+                    }
                 }
             }
-        }
         }
         for (Attendance attendance : listAtten) {
             aDAO.update(attendance);
         }
         ListAttendance(request, response);
+    }
+
+    private void StatisticsAttendance(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            AttendanceDAO attendanceDao = new AttendanceDAO();
+            PlayerDAO playerDao = new PlayerDAO();
+            UserDAO userDao = new UserDAO();
+            TrainingScheduleDAO trainingScheduleDao = new TrainingScheduleDAO();
+
+            Map<Integer, Map<Integer, Boolean>> attendanceData = attendanceDao.getAttendanceData();
+            Set<Integer> trainingIds = attendanceDao.getAllTrainingIds();
+            Map<Integer, Player> players = playerDao.getAllPlayers();
+            Map<Integer, String> userImages = userDao.getAllUserImages();
+            Map<Integer, LocalDate> trainingDates = trainingScheduleDao.getTrainingDates();
+
+            // Ensure attendanceData includes entries for all players and all training sessions
+            for (Integer playerId : players.keySet()) {
+                attendanceData.putIfAbsent(playerId, new HashMap<>());
+                Map<Integer, Boolean> playerAttendance = attendanceData.get(playerId);
+                for (Integer trainingId : trainingIds) {
+                    playerAttendance.putIfAbsent(trainingId, null); // null means no data
+                }
+            }
+
+            request.setAttribute("attendanceData", attendanceData);
+            request.setAttribute("trainingIds", trainingIds);
+            request.setAttribute("players", players);
+            request.setAttribute("userImages", userImages);
+            request.setAttribute("trainingDates", trainingDates);
+
+            request.getRequestDispatcher("COACH/StatisticsAttendance.jsp").forward(request, response);
+        } catch (Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Error in StatisticsAttendance", e);
+            response.sendRedirect("error.jsp");
+        }
     }
 
 }

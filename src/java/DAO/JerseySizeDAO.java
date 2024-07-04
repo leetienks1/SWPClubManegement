@@ -196,7 +196,7 @@ public class JerseySizeDAO extends dal.ConnectDB implements DAO<JerseySize> {
     @Override
     public void delete(int id) {
         try {
-            sql = "DELETE FROM [YourDatabaseName].[dbo].[YourTableName] WHERE [SizeID] = ?";
+            sql = "DELETE FROM [RealClub].[dbo].[JerseySizes] WHERE [SizeID] = ?";
             con = openConnection();
             st = con.prepareStatement(sql);
             st.setInt(1, id);

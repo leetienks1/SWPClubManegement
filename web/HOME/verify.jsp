@@ -20,7 +20,7 @@
     <body>
         <h1>Hello <%= u.getUserName() %></h1>
         
-        <form action="http://localhost:8080/SWPWedRealClubManagement/VerifyEmail" method="POST">
+        <form action="http://localhost:8080/SWPClubManegement/VerifyEmail" method="POST">
             
             <label for="name">OTP: </label>
             <input type="text" id="name" name="name" required>

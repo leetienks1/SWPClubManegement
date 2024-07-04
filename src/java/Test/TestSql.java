@@ -10,6 +10,7 @@ import DAO.JerseyDAO;
 import DAO.JerseySizeDAO;
 import DAO.MatchScheduleDAO;
 import DAO.MatchStatisticDAO;
+import DAO.MeetingDAO;
 import DAO.NewsDAO;
 import DAO.OrderDAO;
 import DAO.OrderJerseyDetailsDAO;
@@ -19,8 +20,10 @@ import DAO.TrainingScheduleDAO;
 import DAO.UserDAO;
 import Model.Coach;
 import Model.JerseySize;
+import Model.JerseySizeEnum;
 import Model.MatchSchedule;
 import Model.MatchStatistic;
+import Model.Meeting;
 import Model.News;
 import Model.OrderJersey;
 import Model.OrderJerseyDetails;
@@ -50,11 +53,9 @@ public class TestSql {
     
 
     public static void main(String[] args) throws ParseException {
-        MatchScheduleDAO mDao = new MatchScheduleDAO();
-        System.out.println(mDao.getAll());
-        
-
-        PlayerDAO pdao = new PlayerDAO();
-        System.out.println(pdao.getBySearch(""));
+        JerseySizeDAO s = new JerseySizeDAO();
+        JerseySizeEnum size = JerseySizeEnum.valueOf("XL");
+        JerseySize l = new JerseySize(47, 11, size, 3);
+        s.update(l);
     }
 }

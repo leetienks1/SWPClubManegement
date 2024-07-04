@@ -115,15 +115,14 @@ public class JerseyDAO extends dal.ConnectDB implements DAO<Jersey> {
     @Override
     public void save(Jersey t) {
         try {
-            sql = "INSERT INTO [RealClub].[dbo].[Jerseys] ([JerseyID], [JerseyName], [JerseyDescription], [JerseyPrice], [JerseyImage]) "
-                    + "VALUES (?, ?, ?, ?, ?)";
+            sql = "INSERT INTO [RealClub].[dbo].[Jerseys] ([JerseyName], [JerseyDescription], [JerseyPrice], [JerseyImage]) "
+                    + "VALUES (?, ?, ?, ?)";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, t.getJerseyID());
-            st.setString(2, t.getJerseyName());
-            st.setString(3, t.getJerseyDescription());
-            st.setDouble(4, t.getJerseyPrice());
-            st.setString(5, t.getJerseyImage());
+            st.setString(1, t.getJerseyName());
+            st.setString(2, t.getJerseyDescription());
+            st.setDouble(3, t.getJerseyPrice());
+            st.setString(4, t.getJerseyImage());
 
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {

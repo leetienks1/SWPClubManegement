@@ -137,11 +137,12 @@ public class TrainingServlet extends HttpServlet {
         String Description = request.getParameter("description");
         TrainingSchedule t = new TrainingSchedule(TrainingDate, TrainingTime, Location, Description);
         tDAO.save(t);
+        
         ListTraining(request, response);
     }
 
     private void DeleteTraining(HttpServletRequest request, HttpServletResponse response) {
-        int cid = Integer.parseInt(request.getParameter("cid"));;
+        int cid = Integer.parseInt(request.getParameter("cid"));
         new TrainingScheduleDAO().delete(cid);
         ListTraining(request, response);
     }

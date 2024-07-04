@@ -12,10 +12,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,7 +72,6 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
         return list;
     }
 
-    
     public List<Attendance> getAttendance(int id) {
         List<Attendance> list = new ArrayList<>();
         sql = "SELECT [AttendanceID]\n"
@@ -167,7 +171,7 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(TrainingScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         } finally {
             // Đóng các tài nguyên
@@ -210,6 +214,50 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
 
     @Override
     public Optional<Attendance> get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
+    }
+
+    public Map<Integer, Map<Integer, Boolean>> getAttendanceData() {
+        Map<Integer, Map<Integer, Boolean>> attendanceData = new TreeMap<>();
+        sql = "SELECT PlayerID, TrainingID, IsPresent FROM AttendanceCheck ORDER BY PlayerID, TrainingID";
+
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                int playerId = rs.getInt("PlayerID");
+                int trainingId = rs.getInt("TrainingID");
+                boolean isPresent = rs.getBoolean("IsPresent");
+
+                attendanceData.computeIfAbsent(playerId, k -> new TreeMap<>()).put(trainingId, isPresent);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, "Error getting attendance data", e);
+        } finally {
+            closeResources();
+        }
+        return attendanceData;
+    }
+
+    public Set<Integer> getAllTrainingIds() {
+        Set<Integer> trainingIds = new TreeSet<>();
+        sql = "SELECT DISTINCT TrainingID FROM AttendanceCheck ORDER BY TrainingID";
+
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                trainingIds.add(rs.getInt("TrainingID"));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, "Error getting training IDs", e);
+        } finally {
+            closeResources();
+        }
+        return trainingIds;
     }
 }

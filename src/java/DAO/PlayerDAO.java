@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -446,4 +448,32 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         }
         return stats;
     }
+    
+    public Map<Integer, Player> getAllPlayers() {
+        Map<Integer, Player> players = new HashMap<>();
+        sql = "SELECT PlayerID, Name, UserID FROM [RealClub].[dbo].[Player]";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                int playerId = rs.getInt("PlayerID");
+                String playerName = rs.getString("Name");
+                int userId = rs.getInt("UserID");
+                Player player = new Player();
+                player.setPlayerID(playerId);
+                player.setName(playerName);
+                player.setUserID(userId);
+                players.put(playerId, player);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, "Error getting players", e);
+        } finally {
+            closeResources();
+        }
+        return players;
+    }
+
+    
+    
 }

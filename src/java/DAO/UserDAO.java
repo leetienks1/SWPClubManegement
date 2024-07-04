@@ -15,8 +15,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -781,6 +783,38 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    
+    public Map<Integer, String> getAllUserImages() {
+        Map<Integer, String> userImages = new HashMap<>();
+        sql = "SELECT UserID, Image FROM [RealClub].[dbo].[User]";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                int userId = rs.getInt("UserID");
+                String image = rs.getString("Image");
+                if (image != null) {
+                    userImages.put(userId, image.trim());
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, "Error getting user images", e);
+        } finally {
+            closeResources();
+        }
+        return userImages;
+    }
+
+    private void closeResources() {
+        try {
+            if (rs != null) rs.close();
+            if (st != null) st.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
