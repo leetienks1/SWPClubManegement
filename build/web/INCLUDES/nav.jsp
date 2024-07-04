@@ -11,9 +11,11 @@
                     <a class="nav-click">About </a>
                     <a class="nav-click">Match Centre</a>
                     <a class="nav-click">News</a>
+
                     <a class="nav-click" href="../Players">Player List</a>
                     <a class="nav-click" href="/SWPClubManegement/PLAYER/PlayerStatus">Player page</a>
                     <a href="${pageContext.request.contextPath}/ticket" class="nav-click">Ticket</a>
+
                     <a href="/SWPClubManegement/ShopJerseyServlet" class="nav-click">Store</a>
                     <a class="nav-click" href="../CreateMatchScheduleServlet">Match</a>
 

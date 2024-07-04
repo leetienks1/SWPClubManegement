@@ -52,6 +52,8 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("/SWPClubManegement/HOME/medical.jsp ");
                 } else if (Role.Coach.equals(account.getRole())) {
                     response.sendRedirect("/SWPClubManegement/COACH/CoachWelcome.jsp");
+                } else if (Role.Player.equals(account.getRole())) {
+                    response.sendRedirect("/SWPClubManegement/PLAYER/PlayerDashboard");
                 } else {
                     response.sendRedirect("/SWPClubManegement/HomeServlet ");
                 }

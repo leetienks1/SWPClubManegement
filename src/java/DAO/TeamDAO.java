@@ -55,7 +55,7 @@ public class TeamDAO extends ConnectDB implements DAO<Team> {
     @Override
     public Optional<Team> get(int id) {
         Optional<Team> team = Optional.empty();
-        sql = "SELECT [TeamID], [TeamName] FROM [RealClub].[dbo].[Teams] WHERE [TeamID] = ?";
+        sql = "SELECT [TeamID], [TeamName],flag FROM [RealClub].[dbo].[Teams] WHERE [TeamID] = ?";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -65,6 +65,7 @@ public class TeamDAO extends ConnectDB implements DAO<Team> {
                 Team t = new Team();
                 t.setTeamID(rs.getInt("TeamID"));
                 t.setTeamName(rs.getString("TeamName"));
+                t.setFlag(rs.getString("flag"));
                 team = Optional.of(t);
             }
         } catch (SQLException | ClassNotFoundException e) {

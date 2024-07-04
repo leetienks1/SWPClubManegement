@@ -53,9 +53,6 @@ public class TestSql {
     
 
     public static void main(String[] args) throws ParseException {
-        JerseySizeDAO s = new JerseySizeDAO();
-        JerseySizeEnum size = JerseySizeEnum.valueOf("XL");
-        JerseySize l = new JerseySize(47, 11, size, 3);
-        s.update(l);
+
     }
 }

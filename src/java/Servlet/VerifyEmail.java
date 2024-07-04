@@ -55,7 +55,7 @@ public class VerifyEmail extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Verify Succesfuly</h1>");
             out.println("<h2>Hello "+u.getUserName()+"</h2>");
-            out.println("<a href='http://localhost:8080/SWPWedRealClubManagement/HOME/home.jsp'>go to home</a>");
+            out.println("<a href='http://localhost:8080/SWPClubManegement/HOME/home.jsp'>go to home</a>");
             out.println("</body>");
             out.println("</html>");
                 
