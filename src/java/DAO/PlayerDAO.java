@@ -3,7 +3,7 @@ package DAO;
 import Model.Player;
 import Model.PlayerStat;
 import Model.Position;
-import Model.TrainingSchedule;
+import Model.*;
 import dal.ConnectDB;
 
 import java.sql.Connection;
@@ -253,6 +253,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         return false;
     }
 
+
     public List<PlayerStat> getPlayerStats(int playerID) {
         List<PlayerStat> stats = new ArrayList<>();
         sql = "SELECT TOP (1000) [PerformanceID]\n"
@@ -287,6 +288,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         }
         return stats;
     }
+
 
 //    public List<MatchSchedule> getMatchSchedules(int playerID) {
 //        List<MatchSchedule> schedules = new ArrayList<>();
@@ -365,5 +367,117 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+     public List<PlayerStat> getPlayerStats(int playerID) {
+        List<PlayerStat> stats = new ArrayList<>();
+        sql = "SELECT  [PlayerID], [YellowCards], [RedCards],GoalsScored FROM [RealClub].[dbo].[PlayerPerformance] WHERE [PlayerID] = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                //  int statID = rs.getInt("StatID");
+                // LocalDate date = rs.getDate("Date").toLocalDate();
+                int goalsScored = rs.getInt("GoalsScored");
+                //  int assists = rs.getInt("Assists");
+                int yellowCards = rs.getInt("YellowCards");
+                int redCards = rs.getInt("RedCards");
+
+                // Create a new PlayerStat object using the constructor
+                PlayerStat stat = new PlayerStat(1, new Date(2024, 04, 06).toLocalDate(), goalsScored, 0, yellowCards, redCards);
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
+
+    public List<PhysicalCondition> getPlayerCondition(int playerID) {
+        List<PhysicalCondition> stats = new ArrayList<>();
+        sql = "SELECT *  FROM [RealClub].[dbo].[PlayerPhysicalCondition] where PlayerID = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                // Create a new PlayerStat object using the constructor
+                PhysicalCondition stat = new PhysicalCondition(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDate(4));
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
+
+    public List<DietPlans> getDietPlans(int playerID) {
+        List<DietPlans> stats = new ArrayList<>();
+        sql = "SELECT *  FROM [RealClub].[dbo].[DietPlan] where PlayerID = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                // Create a new PlayerStat object using the constructor
+                DietPlans stat = new DietPlans(rs.getInt(1), rs.getInt(2), rs.getString(3));
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
+
+    public List<Treatment> getTreatment(int playerID) {
+        List<Treatment> stats = new ArrayList<>();
+        sql = "SELECT * FROM [TreatmentSchedule] where PlayerID = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Treatment stat = new Treatment(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
+
+    public List<DietPlanDetail> getDietPlansDetail(String id) {
+        List<DietPlanDetail> stats = new ArrayList<>();
+        sql = "  select f.*,d.PortionSize from Foods f join DietPlanFoods d on f.FoodID = d.FoodID where f.FoodID = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setString(1, id);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                // Create a new PlayerStat object using the constructor
+                DietPlanDetail stat = new DietPlanDetail(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
     }
 }

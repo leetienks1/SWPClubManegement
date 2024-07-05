@@ -481,11 +481,16 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <img src="/SWPClubManegement/IMAGE/HOME/REALFC.png" alt="alt"/>
+
+                                      <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href='/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
+
                 </div>
 
                 <ul class="list-unstyled components">
                     <h3 >ADMIN</h3>
+                     <li>
+                        <a href="/SWPClubManegement/DietPlanController"> <img src="../IMAGE/HOME/logo 1.png"  width="28px" height="28px"/> MEDICAL</a>
+                    </li>
                     <li class="active">
                         <a href="/SWPClubManegement/BanAccountController"> <img src="/SWPClubManegement/IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
                     </li>
@@ -503,9 +508,11 @@
                     <li  >
                         <a href="/SWPClubManegement/MatchStatisticController"> <img src="/SWPClubManegement/IMAGE/HOME/user.png"  width="32px" height="32px"/> List Match stats</a>
                     </li>
+
                      <li >
                          <a href="/SWPClubManegement/ADMIN/teamList.jsp"><img src="/SWPClubManegement/IMAGE/HOME/football-club.png" width="32px" height="32px" alt="alt"/> CRU Team</a>
                     </li> 
+
                     <li>
                         <a href="/SWPClubManegement/LogoutServlet"> <img src="/SWPClubManegement/IMAGE/HOME/logout.png"  width="28px" height="28px"/> Log Out</a>
                     </li>

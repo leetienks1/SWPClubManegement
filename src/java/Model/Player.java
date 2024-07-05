@@ -23,12 +23,15 @@ public class Player implements Serializable{
     private double weight;
     private int height;
 
+
     
     @SerializedName("age")
     private String ageString;
 
+
     private String image;
     
+
 
     public Player(Position position, String name, LocalDate age, double weight, int height) {
         this.position = position;

@@ -364,6 +364,7 @@ public class PlayerController extends HttpServlet {
 
     }
 
+
     public void SendErrorMessage(PrintWriter out, String message) {
         Map<String, String> errors = new HashMap<>();
 
@@ -377,4 +378,6 @@ public class PlayerController extends HttpServlet {
 
     }
 
+
 }
+

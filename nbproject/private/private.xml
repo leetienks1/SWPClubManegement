@@ -1,9 +1,14 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/editMatch.jsp</file>
+            <file>file:/E:/SWPClubManegement/src/java/dal/ReadExcel.java</file>
+            <file>file:/E:/SWPClubManegement/src/java/dal/DatabaseInfor.java</file>
+            <file>file:/E:/SWPClubManegement/web/ADMIN/adminListAccounts.jsp</file>
+            <file>file:/E:/SWPClubManegement/src/java/dal/ConnectDB.java</file>
+             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/editMatch.jsp</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/ADMIN/listMatchStatistics.jsp</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/src/java/Test/TestSql.java</file>
             <file>file:/C:/Users/Desktop/Documents/NetBeansProjects/SWPClubManegement/web/PLAYER/playerList.jsp</file>
@@ -24,3 +29,4 @@
         </group>
     </open-files>
 </project-private>
+

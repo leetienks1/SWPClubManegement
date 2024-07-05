@@ -76,11 +76,11 @@
         top: 60px;
         right: 10px;
         bottom: 0;
-        z-index: 900; /* ??m b?o left-bar n?m trên các ph?n t? khác */
+        z-index: 900; /* ??m b?o left-bar n?m trï¿½n cï¿½c ph?n t? khï¿½c */
         width: 250px; /* ?i?u ch?nh ?? r?ng c?a left-bar */
         height: 250px;
-        background-color: #FFFFFF; /* Màu n?n c?a left-bar */
-        padding: 20px; /* Kho?ng cách gi?a các ph?n t? trong left-bar */
+        background-color: #FFFFFF; /* Mï¿½u n?n c?a left-bar */
+        padding: 20px; /* Kho?ng cï¿½ch gi?a cï¿½c ph?n t? trong left-bar */
         overflow-y: auto;
         border-radius: 20px;
         align-items: center;
@@ -243,6 +243,7 @@
 
 </style>
 <div class="nav" style="position: fixed; width: 100% ; top: 0; z-index: 300">
+
     <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="/SWPClubManegement/IMAGE/HOME/logo 1.png" alt="alt"/> </div>
     <div class="nav-elements">
         <a class="nav-click">About </a>
@@ -253,7 +254,8 @@
         <a href="/SWPClubManegement/ShopJerseyServlet" class="nav-click">Store</a>
         <a class="nav-click" href="../CreateMatchScheduleServlet">Match</a>
 
-    </div>
+
+                </div>
     <div class="nav-icons">
 
         <div class="nav-user">

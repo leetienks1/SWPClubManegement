@@ -809,8 +809,6 @@
 
 
 
-
-
                                                     let itemExists = false;
                                                     for (let i = 0; i < cart.length; i++) {
                                                         let item = cart[i];
