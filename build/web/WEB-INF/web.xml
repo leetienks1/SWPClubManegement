@@ -116,7 +116,9 @@
     </servlet>
     <servlet>
         <servlet-name>BanAccountController</servlet-name>
+
         <servlet-class>Controller.BanAccountController</servlet-class>
+
     </servlet>
     <servlet>
         <servlet-name>MatchScheduleController</servlet-name>
@@ -153,10 +155,14 @@
     <servlet>
         <servlet-name>UploadExcelServlet</servlet-name>
         <servlet-class>Servlet.UploadExcelServlet</servlet-class>
+
+
+
     </servlet>
     <servlet>
         <servlet-name>PlayerListServlet</servlet-name>
         <servlet-class>Controller.PlayerListServlet</servlet-class>
+
     </servlet>
     <!-- Servlet Mappings -->
     <servlet>
@@ -292,14 +298,26 @@
         <url-pattern>/ajaxServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
+
+
+        <servlet-name>PlayerListServlet</servlet-name>
+        <url-pattern>/Players</url-pattern>
+
+        <servlet-name>UploadExcelServlet</servlet-name>
+        <url-pattern>/UploadExcelServlet</url-pattern>
+
+
+
         <servlet-name>UploadExcelServlet</servlet-name>
         <url-pattern>/UploadExcelServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PlayerListServlet</servlet-name>
         <url-pattern>/Players</url-pattern>
-    </servlet-mapping>
 
+
+    </servlet-mapping>
     <servlet>
         <servlet-name>DietPlanController</servlet-name>
         <servlet-class>Controller.DietPlanController</servlet-class>
@@ -344,6 +362,8 @@
         <servlet-name>TreatmentScheduleController</servlet-name>
         <url-pattern>/TreatmentScheduleController</url-pattern>
 
+
+    </servlet-mapping>
     <!-- Session Configuration -->
     <servlet-mapping>
         <servlet-name>LineupServlet</servlet-name>
@@ -369,6 +389,7 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+
 
     <!-- Welcome File List -->
     <welcome-file-list>

@@ -414,8 +414,12 @@
 
 
     </body>
-    <
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
+
 
 
     <script>
@@ -523,6 +527,7 @@
                                         sessionStorage.removeItem('itemTrue');
 
 
+
                                         let cartRemove = decryptData(localStorage.getItem('usercart_' + user), "swp" + user);
 
 
@@ -538,6 +543,7 @@
                                         const encryptedCart = encryptData(cartRemove, "swp" + user);
 
                                         localStorage.setItem('usercart_' + user, encryptedCart);
+
 
 //            let cart = JSON.parse(sessionStorage.getItem('usercart' + user));
 //            console.log("after" + sessionStorage.getItem('usercart' + user));
