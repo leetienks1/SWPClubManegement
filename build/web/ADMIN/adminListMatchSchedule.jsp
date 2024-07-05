@@ -370,11 +370,15 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <img src="../IMAGE/HOME/REALFC.png" alt="alt"/>
+                    <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
+
                 </div>
 
                 <ul class="list-unstyled components">
                     <h3 >ADMIN</h3>
+                    <li>
+                        <a href="/SWPClubManegement/DietPlanController"> <img src="../IMAGE/HOME/logo 1.png"  width="28px" height="28px"/> MEDICAL</a>
+                    </li>
                     <li >
                         <a href="/SWPClubManegement/BanAccountController"> <img src="../IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
                     </li>
@@ -489,193 +493,193 @@
     <script>
 
 
-        function SubmitForm(event, method) {
-            event.preventDefault(); // Prevent the default form submission
+                        function SubmitForm(event, method) {
+                            event.preventDefault(); // Prevent the default form submission
 
-            // Your form handling logic here
-            method();
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelector(".search").addEventListener('input', ListMatches);
-
-        });
-
-        function showLoading() {
-            const loadingElement = document.getElementById('loading');
-            console.log(loadingElement);
-
-            if (loadingElement) {
-                loadingElement.style.display = 'block';
-            }
-        }
-
-
-        function hideLoading() {
-            const loadingElement = document.getElementById('loading');
-            console.log(loadingElement);
-            if (loadingElement) {
-                loadingElement.style.display = 'none';
-            }
-        }
-        function ListMatches() {
-            var input = document.querySelector(".search").value;
-            console.log(input);
-            var url = '/SWPClubManegement/MatchScheduleController?search=' + input;
-            console.log(url);
-
-            fetch(url, {method: 'POST'})
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
+                            // Your form handling logic here
+                            method();
                         }
-                        return response.text(); // Get response as text
-                    })
-                    .then(text => {
-                        try {
-                            var data = JSON.parse(text); // Convert text to JSON
-                            console.log(data);
-                            if (data.error) {
-                                console.error('Server Error:', data.error);
+
+                        document.addEventListener('DOMContentLoaded', function () {
+                            document.querySelector(".search").addEventListener('input', ListMatches);
+
+                        });
+
+                        function showLoading() {
+                            const loadingElement = document.getElementById('loading');
+                            console.log(loadingElement);
+
+                            if (loadingElement) {
+                                loadingElement.style.display = 'block';
+                            }
+                        }
+
+
+                        function hideLoading() {
+                            const loadingElement = document.getElementById('loading');
+                            console.log(loadingElement);
+                            if (loadingElement) {
+                                loadingElement.style.display = 'none';
+                            }
+                        }
+                        function ListMatches() {
+                            var input = document.querySelector(".search").value;
+                            console.log(input);
+                            var url = '/SWPClubManegement/MatchScheduleController?search=' + input;
+                            console.log(url);
+
+                            fetch(url, {method: 'POST'})
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.text(); // Get response as text
+                                    })
+                                    .then(text => {
+                                        try {
+                                            var data = JSON.parse(text); // Convert text to JSON
+                                            console.log(data);
+                                            if (data.error) {
+                                                console.error('Server Error:', data.error);
+                                                return;
+                                            }
+                                            // Call the function to update the table
+                                            ListMatchesSchedule(data);
+                                            hideLoading();
+                                        } catch (error) {
+                                            console.error('Error parsing JSON', error);
+                                            console.log('Response Text:', text);
+                                        }
+                                    })
+                                    .catch(error => console.error('Error:', error));
+
+
+                        }
+
+
+                        function deleteMatch(mid)
+                        {
+                            var url = '/SWPClubManegement/MatchScheduleController?command=DELETE&mid=' + mid;
+                            console.log("URL = " + url);
+                            fetch(url, {method: 'delete'}).then(response => {
+                                if (!response.ok) {
+                                    throw new Error("Network response was not ok");
+                                }
+                                return response.text();
+                            }).then(text => {
+                                var data = JSON.parse(text);
+                                console.log("delete " + text);
+                                if (text.trim() !== '"fail"')
+                                {
+                                    var success = document.getElementById('successMessage');
+                                    success.style.display = "flex";
+                                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Delete operation successful';
+                                    setTimeout(function () {
+                                        success.style.display = "none";
+                                    }, 1000);
+                                } else {
+                                    alert("Please Remove MatchID: " + mid + " in matchStats after remove this");
+                                }
+
+                            })
+                                    .catch(error => {
+                                        console.error('Error', error);
+                                        alert("delete fail");
+                                    })
+                                    .finally(() => {
+                                        ListMatches();
+                                    });
+
+
+                        }
+                        function addMatch()
+                        {
+                            var awayTeam = document.querySelector('select[name="awayteam"]').value;
+                            var homeTeam = document.querySelector('select[name="hometeam"]').value;
+                            var location = document.querySelector('input[name="location"]').value;
+                            var matchDate = document.querySelector('input[name="matchdate"]').value;
+                            var tournament = document.querySelector('select[name="tour"]').value;
+
+                            if (!awayTeam || !homeTeam || !location || !matchDate) {
+                                console.error('Missing required input value');
                                 return;
                             }
-                            // Call the function to update the table
-                            ListMatchesSchedule(data);
-                            hideLoading();
-                        } catch (error) {
-                            console.error('Error parsing JSON', error);
-                            console.log('Response Text:', text);
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+                            var url = '/SWPClubManegement/MatchScheduleController?command=ADD&awayteam=' + awayTeam + "&hometeam=" + homeTeam + "&location=" + location + "&matchdate=" + matchDate + "&tour=" + tournament;
+                            console.log("URL = " + url);
+                            fetch(url, {method: 'GET'})
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error("Network response was not ok");
+                                        }
+
+                                        var success = document.getElementById('successMessage');
+                                        success.style.display = "flex";
+                                        successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Add operation successful';
+                                        setTimeout(function () {
+                                            success.style.display = "none";
+                                        }, 1000);
+                                        var addForm = document.getElementById('add-form');
+                                        addForm.style.display = 'none';
+
+                                        document.querySelector('select[name="awayteam"]').value = "";
+
+                                        document.querySelector('input[name="location"]').value = "";
+                                        document.querySelector('input[name="matchdate"]').value = "";
+                                    })
+                                    .catch(error => {
+                                        console.error('Error', error);
+                                        alert("Add fail");
+                                    })
+                                    .finally(() => {
+                                        ListMatches();
+                                    });
 
 
-        }
-
-
-        function deleteMatch(mid)
-        {
-            var url = '/SWPClubManegement/MatchScheduleController?command=DELETE&mid=' + mid;
-            console.log("URL = " + url);
-            fetch(url, {method: 'delete'}).then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.text();
-            }).then(text => {
-                var data = JSON.parse(text);
-                console.log("delete " + text);
-                if (text.trim() !== '"fail"')
-                {
-                    var success = document.getElementById('successMessage');
-                    success.style.display = "flex";
-                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Delete operation successful';
-                    setTimeout(function () {
-                        success.style.display = "none";
-                    }, 1000);
-                } else {
-                    alert("Please Remove MatchID: " + mid + " in matchStats after remove this");
-                }
-
-            })
-                    .catch(error => {
-                        console.error('Error', error);
-                        alert("delete fail");
-                    })
-                    .finally(() => {
-                        ListMatches();
-                    });
-
-
-        }
-        function addMatch()
-        {
-            var awayTeam = document.querySelector('select[name="awayteam"]').value;
-            var homeTeam = document.querySelector('select[name="hometeam"]').value;
-            var location = document.querySelector('input[name="location"]').value;
-            var matchDate = document.querySelector('input[name="matchdate"]').value;
-            var tournament = document.querySelector('select[name="tour"]').value;
-
-            if (!awayTeam || !homeTeam || !location || !matchDate) {
-                console.error('Missing required input value');
-                return;
-            }
-            var url = '/SWPClubManegement/MatchScheduleController?command=ADD&awayteam=' + awayTeam + "&hometeam=" + homeTeam + "&location=" + location + "&matchdate=" + matchDate + "&tour=" + tournament;
-            console.log("URL = " + url);
-            fetch(url, {method: 'GET'})
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
                         }
 
-                        var success = document.getElementById('successMessage');
-                        success.style.display = "flex";
-                        successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Add operation successful';
-                        setTimeout(function () {
-                            success.style.display = "none";
-                        }, 1000);
-                        var addForm = document.getElementById('add-form');
-                        addForm.style.display = 'none';
-
-                        document.querySelector('select[name="awayteam"]').value = "";
-
-                        document.querySelector('input[name="location"]').value = "";
-                        document.querySelector('input[name="matchdate"]').value = "";
-                    })
-                    .catch(error => {
-                        console.error('Error', error);
-                        alert("Add fail");
-                    })
-                    .finally(() => {
-                        ListMatches();
-                    });
-
-
-        }
 
 
 
 
+                        function UpdateMatch()
+                        {
+                            var Mid = document.querySelector('input[name="mid"]').value;
+                            var awayTeam = document.querySelector('select[name="awayteam1"]').value;
+                            var homeTeam = document.querySelector('select[name="hometeam1"]').value;
+                            var location = document.querySelector('input[name="matchlocation"]').value;
+                            var matchDate = document.querySelector('input[name="matchdate1"]').value;
+                            var tournament = document.querySelector('select[name="tour1"]').value;
 
-        function UpdateMatch()
-        {
-            var Mid = document.querySelector('input[name="mid"]').value;
-            var awayTeam = document.querySelector('select[name="awayteam1"]').value;
-            var homeTeam = document.querySelector('select[name="hometeam1"]').value;
-            var location = document.querySelector('input[name="matchlocation"]').value;
-            var matchDate = document.querySelector('input[name="matchdate1"]').value;
-            var tournament = document.querySelector('select[name="tour1"]').value;
+                            if (!awayTeam || !homeTeam || !location || !matchDate) {
+                                console.error('Missing required input value');
+                                return;
+                            }
+                            var url = '/SWPClubManegement/MatchScheduleController?command=UPDATE&awayteam1=' + awayTeam + "&hometeam1=" + homeTeam + "&matchlocation=" + location + "&matchdate1=" + matchDate + "&mid=" + Mid + "&tour1=" + tournament;
+                            console.log("URL = " + url);
+                            fetch(url, {method: 'GET'})
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error("Network response was not ok");
+                                        }
+                                        var success = document.getElementById('successMessage');
+                                        success.style.display = "flex";
+                                        successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Update operation successful';
+                                        setTimeout(function () {
+                                            success.style.display = "none";
+                                        }, 1000);
 
-            if (!awayTeam || !homeTeam || !location || !matchDate) {
-                console.error('Missing required input value');
-                return;
-            }
-            var url = '/SWPClubManegement/MatchScheduleController?command=UPDATE&awayteam1=' + awayTeam + "&hometeam1=" + homeTeam + "&matchlocation=" + location + "&matchdate1=" + matchDate + "&mid=" + Mid + "&tour1=" + tournament;
-            console.log("URL = " + url);
-            fetch(url, {method: 'GET'})
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
+                                    })
+                                    .catch(error => {
+                                        console.error('Error', error);
+                                        alert("Add fail");
+                                    })
+                                    .finally(() => {
+                                        ListMatches();
+                                    });
+                            var addForm = document.getElementById('edit-form');
+                            addForm.style.display = 'none';
+
                         }
-                        var success = document.getElementById('successMessage');
-                        success.style.display = "flex";
-                        successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Update operation successful';
-                        setTimeout(function () {
-                            success.style.display = "none";
-                        }, 1000);
-
-                    })
-                    .catch(error => {
-                        console.error('Error', error);
-                        alert("Add fail");
-                    })
-                    .finally(() => {
-                        ListMatches();
-                    });
-            var addForm = document.getElementById('edit-form');
-            addForm.style.display = 'none';
-
-        }
 
 
 
@@ -683,81 +687,81 @@
 
 
 
-        function ListMatchesSchedule(matches) {
+                        function ListMatchesSchedule(matches) {
 //                                if (!Array.isArray(matches)) {
 //                                    console.error('Expected array but got:', matches);
 //                                    return;
 //                                }
 
-            const tableBody = document.querySelector("#matchTableBody");
-            const content = document.querySelector("#content");
-            tableBody.innerHTML = "";
-            var matcheList = matches.matches;
-            var homeTeam = matches.homeTeam;
-            var awayTeam = matches.awayTeam;
-            var matchAlreadyStat = matches.matchAlreadyStats;
-            matcheList.forEach(m => {
-                const row = document.createElement('tr');
-                const matchIdCell = document.createElement('td');
-                matchIdCell.textContent = m.matchID;
-                row.appendChild(matchIdCell);
-                const awayTeamCell = document.createElement('td');
+                            const tableBody = document.querySelector("#matchTableBody");
+                            const content = document.querySelector("#content");
+                            tableBody.innerHTML = "";
+                            var matcheList = matches.matches;
+                            var homeTeam = matches.homeTeam;
+                            var awayTeam = matches.awayTeam;
+                            var matchAlreadyStat = matches.matchAlreadyStats;
+                            matcheList.forEach(m => {
+                                const row = document.createElement('tr');
+                                const matchIdCell = document.createElement('td');
+                                matchIdCell.textContent = m.matchID;
+                                row.appendChild(matchIdCell);
+                                const awayTeamCell = document.createElement('td');
 //                                    
-                const homeTeamCell = document.createElement('td');
+                                const homeTeamCell = document.createElement('td');
 //                                    
 
 
 
-                awayTeam.forEach(aw =>
-                {
-                    if (aw.teamID === m.awayTeamID)
-                    {
+                                awayTeam.forEach(aw =>
+                                {
+                                    if (aw.teamID === m.awayTeamID)
+                                    {
 //                                            homeTeamCell.textContent = hometime.teamName;
-                        awayTeamCell.textContent = aw.teamName;
-                        row.appendChild(awayTeamCell);
+                                        awayTeamCell.textContent = aw.teamName;
+                                        row.appendChild(awayTeamCell);
 //                                            row.appendChild(homeTeamCell);
-                    }
+                                    }
 
 
-                });
-                homeTeam.
-                        forEach(ho =>
-                        {
-                            if (ho.teamID === m.homeTeamID)
-                            {
-                                homeTeamCell.textContent = ho.teamName;
-                                row.appendChild(homeTeamCell);
-                            }
+                                });
+                                homeTeam.
+                                        forEach(ho =>
+                                        {
+                                            if (ho.teamID === m.homeTeamID)
+                                            {
+                                                homeTeamCell.textContent = ho.teamName;
+                                                row.appendChild(homeTeamCell);
+                                            }
 
 
-                        });
-                const locationCell = document.createElement('td');
-                locationCell.textContent = m.location;
-                row.appendChild(locationCell);
-                const tournament = document.createElement('td');
-                tournament.textContent = m.tournament;
-                row.appendChild(tournament);
-                const matchDateCell = document.createElement('td');
-                matchDateCell.textContent = m.matchDate;
-                row.appendChild(matchDateCell);
-                const Button = document.createElement('div');
-                Button.classList.add('button');
-                const iconUpdate = document.createElement('i');
-                iconUpdate.classList.add('update-button');
-                iconUpdate.classList.add('fas');
-                iconUpdate.classList.add('fa-edit', 'update-button');
-                const iconDelete = document.createElement('i');
-                iconDelete.classList.add('fas');
-                iconDelete.classList.add('fa-trash-alt', 'delete-button');
-                Button.appendChild(iconUpdate);
-                Button.appendChild(iconDelete);
-                const actionCell = document.createElement('td');
-                actionCell.appendChild(Button);
-                row.appendChild(actionCell);
-                tableBody.appendChild(row);
+                                        });
+                                const locationCell = document.createElement('td');
+                                locationCell.textContent = m.matchLocation;
+                                row.appendChild(locationCell);
+                                const tournament = document.createElement('td');
+                                tournament.textContent = m.tournament;
+                                row.appendChild(tournament);
+                                const matchDateCell = document.createElement('td');
+                                matchDateCell.textContent = m.matchDate;
+                                row.appendChild(matchDateCell);
+                                const Button = document.createElement('div');
+                                Button.classList.add('button');
+                                const iconUpdate = document.createElement('i');
+                                iconUpdate.classList.add('update-button');
+                                iconUpdate.classList.add('fas');
+                                iconUpdate.classList.add('fa-edit', 'update-button');
+                                const iconDelete = document.createElement('i');
+                                iconDelete.classList.add('fas');
+                                iconDelete.classList.add('fa-trash-alt', 'delete-button');
+                                Button.appendChild(iconUpdate);
+                                Button.appendChild(iconDelete);
+                                const actionCell = document.createElement('td');
+                                actionCell.appendChild(Button);
+                                row.appendChild(actionCell);
+                                tableBody.appendChild(row);
 
-                // update icon
-                iconUpdate.addEventListener('click', function () {
+                                // update icon
+                                iconUpdate.addEventListener('click', function () {
 //                    const homeTeamOptions = document.querySelectorAll('select[name="hometeam1"] option');
 //                    homeTeamOptions.forEach(option => {
 //
@@ -766,172 +770,172 @@
 //                            option.selected = true;
 //                        }
 //                    });
-                    var checkAlreadyStats = false;
-                    const awayTeamOptions = document.querySelectorAll('select[name="awayteam1"] option');
-                    matchAlreadyStat.forEach(mal => {
-                        if (mal.matchID === m.matchID)
+                                    var checkAlreadyStats = false;
+                                    const awayTeamOptions = document.querySelectorAll('select[name="awayteam1"] option');
+                                    matchAlreadyStat.forEach(mal => {
+                                        if (mal.matchID === m.matchID)
+                                        {
+                                            checkAlreadyStats = true;
+                                        }
+                                    });
+
+
+                                    awayTeamOptions.forEach(option => {
+
+                                        if (option.textContent.trim() === awayTeamCell.textContent.trim()) {
+                                            option.selected = true;
+                                        }
+                                    });
+
+                                    const TournamentOptions = document.querySelectorAll('select[name="tour1"] option');
+                                    TournamentOptions.forEach(option => {
+
+                                        if (option.textContent.trim() === tournament.textContent.trim()) {
+                                            option.selected = true;
+                                        }
+                                    });
+                                    const midInput = document.querySelector('input[name="mid"]');
+                                    const locationInput = document.querySelector('input[name="matchlocation"]');
+                                    const matchDateInput = document.querySelector('input[name="matchdate1"]');
+                                    midInput.value = matchIdCell.textContent;
+                                    locationInput.value = locationCell.textContent;
+                                    matchDateInput.value = matchDateCell.textContent;
+
+
+
+
+                                    if (checkAlreadyStats === true)
+                                    {
+                                        const awayTeamOption = document.querySelector('select[name="awayteam1"] ');
+
+                                        const homeTeamOption = document.querySelector('select[name="hometeam1"]');
+                                        const matchLocationInput = document.querySelector('input[name="matchlocation"]');
+                                        console.log(matchLocationInput);
+                                        const matchDateInput = document.querySelector('input[name="matchdate1"]');
+                                        console.log(matchDateInput);
+
+                                        const tourOption = document.querySelector('select[name="tour1"]');
+                                        if (awayTeamOption)
+                                        {
+                                            awayTeamOption.disabled = true;
+                                        }
+
+                                        if (homeTeamOption) {
+                                            homeTeamOption.disabled = true; // disable the select element
+                                        }
+
+                                        if (matchLocationInput) {
+                                            matchLocationInput.readOnly = true; // make the input read-only
+                                        }
+
+                                        if (matchDateInput) {
+                                            matchDateInput.readOnly = true; // make the input read-only
+                                        }
+
+                                        if (tourOption) {
+                                            tourOption.disabled = true; // disable the select element
+                                        }
+                                    } else
+                                    {
+                                        const awayTeamOption = document.querySelector('select[name="awayteam1"] ');
+
+                                        const homeTeamOption = document.querySelector('select[name="hometeam1"]');
+                                        const matchLocationInput = document.querySelector('input[name="matchlocation"]');
+                                        console.log(matchLocationInput);
+                                        const matchDateInput = document.querySelector('input[name="matchdate1"]');
+                                        console.log(matchDateInput);
+
+                                        const tourOption = document.querySelector('select[name="tour1"]');
+                                        if (awayTeamOption)
+                                        {
+                                            awayTeamOption.disabled = false;
+                                        }
+
+                                        if (homeTeamOption) {
+                                            homeTeamOption.disabled = false; // disable the select element
+                                        }
+
+                                        if (matchLocationInput) {
+                                            matchLocationInput.readOnly = false; // make the input read-only
+                                        }
+
+                                        if (matchDateInput) {
+                                            matchDateInput.readOnly = false; // make the input read-only
+                                        }
+
+                                        if (tourOption) {
+                                            tourOption.disabled = false; // disable the select element
+                                        }
+                                    }
+                                });
+
+
+                                // delete 
+
+                                iconDelete.addEventListener('click', function () {
+                                    deleteMatch(m.matchID);
+                                });
+                            }
+                            );
+
+
+                        }
+
+                        function readonlyUpdate(matchAlreadystats)
                         {
-                            checkAlreadyStats = true;
-                        }
-                    });
 
-
-                    awayTeamOptions.forEach(option => {
-
-                        if (option.textContent.trim() === awayTeamCell.textContent.trim()) {
-                            option.selected = true;
-                        }
-                    });
-
-                    const TournamentOptions = document.querySelectorAll('select[name="tour1"] option');
-                    TournamentOptions.forEach(option => {
-
-                        if (option.textContent.trim() === tournament.textContent.trim()) {
-                            option.selected = true;
-                        }
-                    });
-                    const midInput = document.querySelector('input[name="mid"]');
-                    const locationInput = document.querySelector('input[name="matchlocation"]');
-                    const matchDateInput = document.querySelector('input[name="matchdate1"]');
-                    midInput.value = matchIdCell.textContent;
-                    locationInput.value = locationCell.textContent;
-                    matchDateInput.value = matchDateCell.textContent;
-
-
-
-
-                    if (checkAlreadyStats === true)
-                    {
-                        const awayTeamOption = document.querySelector('select[name="awayteam1"] ');
-
-                        const homeTeamOption = document.querySelector('select[name="hometeam1"]');
-                        const matchLocationInput = document.querySelector('input[name="matchlocation"]');
-                        console.log(matchLocationInput);
-                        const matchDateInput = document.querySelector('input[name="matchdate1"]');
-                        console.log(matchDateInput);
-
-                        const tourOption = document.querySelector('select[name="tour1"]');
-                        if (awayTeamOption)
-                        {
-                            awayTeamOption.disabled = true;
                         }
 
-                        if (homeTeamOption) {
-                            homeTeamOption.disabled = true; // disable the select element
+
+                        document.addEventListener('click', function (event) {
+
+                            if (event.target.classList.contains('update-button')) {
+
+                                const updateButton = document.getElementById('edit-form');
+                                console.log(updateButton);
+                                updateButton.style.display = 'block';
+                            }
+                        });
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Gọi hàm ListMatches ngay khi trang web tải xong
+                            ListMatches();
+                        });
+                        $(document).ready(function () {
+                            $('#sidebarCollapse').on('click', function () {
+                                $('#sidebar').toggleClass('active');
+                                $(this).toggleClass('active');
+                            });
+                            function toggleCloseAddform() {
+                                $("#add-form").toggle();
+                            }
+
+                            function toggleOpenAdd() {
+                                $("#add-form").toggle();
+                            }
+
+
+
+                            function toggleOpenEdit() {
+                                $("#edit-form").toggle();
+                            }
+                            function toggleCloseEdit() {
+                                $("#edit-form").toggle();
+                            }
+
+                            $("#add-close").click(function () {
+                                toggleCloseAddform();
+                            });
+                            $("#add-button").click(function () {
+                                toggleOpenAdd();
+                            });
+                            $(".update-button").click(function () {
+                                toggleOpenEdit();
+                            });
+                            $("#close-edit").click(function () {
+                                toggleCloseEdit();
+                            });
                         }
-
-                        if (matchLocationInput) {
-                            matchLocationInput.readOnly = true; // make the input read-only
-                        }
-
-                        if (matchDateInput) {
-                            matchDateInput.readOnly = true; // make the input read-only
-                        }
-
-                        if (tourOption) {
-                            tourOption.disabled = true; // disable the select element
-                        }
-                    } else
-                    {
-                        const awayTeamOption = document.querySelector('select[name="awayteam1"] ');
-
-                        const homeTeamOption = document.querySelector('select[name="hometeam1"]');
-                        const matchLocationInput = document.querySelector('input[name="matchlocation"]');
-                        console.log(matchLocationInput);
-                        const matchDateInput = document.querySelector('input[name="matchdate1"]');
-                        console.log(matchDateInput);
-
-                        const tourOption = document.querySelector('select[name="tour1"]');
-                        if (awayTeamOption)
-                        {
-                            awayTeamOption.disabled = false;
-                        }
-
-                        if (homeTeamOption) {
-                            homeTeamOption.disabled = false; // disable the select element
-                        }
-
-                        if (matchLocationInput) {
-                            matchLocationInput.readOnly = false; // make the input read-only
-                        }
-
-                        if (matchDateInput) {
-                            matchDateInput.readOnly = false; // make the input read-only
-                        }
-
-                        if (tourOption) {
-                            tourOption.disabled = false; // disable the select element
-                        }
-                    }
-                });
-
-
-                // delete 
-
-                iconDelete.addEventListener('click', function () {
-                    deleteMatch(m.matchID);
-                });
-            }
-            );
-
-
-        }
-
-        function readonlyUpdate(matchAlreadystats)
-        {
-
-        }
-
-
-        document.addEventListener('click', function (event) {
-
-            if (event.target.classList.contains('update-button')) {
-
-                const updateButton = document.getElementById('edit-form');
-                console.log(updateButton);
-                updateButton.style.display = 'block';
-            }
-        });
-        document.addEventListener('DOMContentLoaded', function () {
-            // Gọi hàm ListMatches ngay khi trang web tải xong
-            ListMatches();
-        });
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-                $(this).toggleClass('active');
-            });
-            function toggleCloseAddform() {
-                $("#add-form").toggle();
-            }
-
-            function toggleOpenAdd() {
-                $("#add-form").toggle();
-            }
-
-
-
-            function toggleOpenEdit() {
-                $("#edit-form").toggle();
-            }
-            function toggleCloseEdit() {
-                $("#edit-form").toggle();
-            }
-
-            $("#add-close").click(function () {
-                toggleCloseAddform();
-            });
-            $("#add-button").click(function () {
-                toggleOpenAdd();
-            });
-            $(".update-button").click(function () {
-                toggleOpenEdit();
-            });
-            $("#close-edit").click(function () {
-                toggleCloseEdit();
-            });
-        }
-        );
+                        );
 
     </script>         
 </html>

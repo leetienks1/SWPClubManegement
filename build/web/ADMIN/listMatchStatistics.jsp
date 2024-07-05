@@ -361,15 +361,19 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <img src="../IMAGE/HOME/REALFC.png" alt="alt"/>
+                    <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
+
                 </div>
 
                 <ul class="list-unstyled components">
                     <h3 >ADMIN</h3>
-                     <li >
+                     <li>
+                        <a href="/SWPClubManegement/DietPlanController"> <img src="../IMAGE/HOME/logo 1.png"  width="28px" height="28px"/> MEDICAL</a>
+                    </li>
+                    <li >
                         <a href="/SWPClubManegement/BanAccountController"> <img src="../IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
                     </li>
-                   
+
                     <li >
                         <a href="/SWPClubManegement/PlayerController"><img src="../IMAGE/HOME/soccer-player.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
                     </li>                    
@@ -379,8 +383,8 @@
                     <li>
                         <a href="/SWPClubManegement/MatchScheduleController"> <img src="../IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD Match Schedule</a>
                     </li>
-                    
-                     <li  class="active">
+
+                    <li  class="active">
                         <a href="/SWPClubManegement/MatchStatisticController"> <img src="../IMAGE/HOME/user.png"  width="32px" height="32px"/> List Match stats</a>
                     </li>
                     <li>
@@ -449,7 +453,7 @@
                                 <th>
                                     Corner Kicks
                                 </th>
-                                
+
                                 <th>
                                     Passes
                                 </th>
@@ -870,8 +874,8 @@
                                 deleteMatch(m.matchStatisticID);
                             });
                         });
-                        
-                        
+
+
                         // xử lý select match chỉ hiện ra những trận đang có và chưa có thống kê cho trận đó
                         const matchOptions = document.querySelector('select[name="match"]')
                         var hometeam;
@@ -879,34 +883,34 @@
                         while (matchOptions.firstChild) {
                             matchOptions.removeChild(matchOptions.firstChild);
                         }
-                        if(matchUn.length!==0)
+                        if (matchUn.length !== 0)
                         {
                             matchUn.forEach(m => {
 
-                            teams.forEach(t => {
-                                if (m.awayTeamID === t.teamID)
-                                {
-                                    hometeam = t.teamName;
-                                }
-                                if (m.homeTeamID === t.teamID)
-                                {
-                                    awayteam = t.teamName;
-                                }
-                            });
+                                teams.forEach(t => {
+                                    if (m.awayTeamID === t.teamID)
+                                    {
+                                        hometeam = t.teamName;
+                                    }
+                                    if (m.homeTeamID === t.teamID)
+                                    {
+                                        awayteam = t.teamName;
+                                    }
+                                });
 
-                            const option = document.createElement('option');
-                            option.value = m.matchID;
-                            option.textContent = hometeam + " vs " + awayteam + "(" + m.matchDate + ")";
-                            matchOptions.appendChild(option);
-                        });
-                        }else{
+                                const option = document.createElement('option');
+                                option.value = m.matchID;
+                                option.textContent = hometeam + " vs " + awayteam + "(" + m.matchDate + ")";
+                                matchOptions.appendChild(option);
+                            });
+                        } else {
                             const option = document.createElement('option');
                             option.value = "";
                             option.textContent = "There are no match without stat";
                             matchOptions.appendChild(option);
-                            
+
                         }
-                        
+
                     }
 
 
@@ -930,8 +934,8 @@
                             InputTeam();
                         });
                     });
-                    
-                    
+
+
                     // hiển thị team liên quan đến trận đấu được chọn
                     function InputTeam()
                     {
@@ -954,7 +958,7 @@
                                     while (teamSelect.firstChild) {
                                         teamSelect.removeChild(teamSelect.firstChild);
                                     }
-                                    
+
                                     teams.forEach(t => {
                                         const option = document.createElement('option');
                                         option.value = t.teamID;

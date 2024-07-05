@@ -7,16 +7,17 @@
 
 <div class="nav" style="position: fixed; width: 100% ; top: 0; z-index: 300">
     <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href='/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
-    <div class="nav-elements">
-        <a class="nav-click">About </a>
-        <a class="nav-click">Match Centre</a>
-        <a class="nav-click">News</a>
-        <a class="nav-click" href="../Players">Player</a>
-        <a class="nav-click">Ticket</a>
-        <a href="/SWPClubManegement/ShopJerseyServlet" class="nav-click">Store</a>
-        <a class="nav-click" href="../CreateMatchScheduleServlet">Match</a>
+     <div class="nav-elements">
+                    <a class="nav-click">About </a>
+                    <a class="nav-click">Match Centre</a>
+                    <a class="nav-click">News</a>
+                    <a class="nav-click" href="../Players">Player</a>
+<!--                    <a class="nav-click" href="/SWPClubManegement/PLAYER/PlayerStatus">Player page</a>-->
+                    <a class="nav-click">Ticket</a>
+                    <a href="/SWPClubManegement/ShopJerseyServlet" class="nav-click">Store</a>
+                    <a class="nav-click" href="../CreateMatchScheduleServlet">Match</a>
 
-    </div>
+                </div>
     <div class="nav-icons">
         <div class="nav-search">
             <i class="fas fa-search icon"></i>
