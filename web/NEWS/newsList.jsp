@@ -4,28 +4,181 @@
     Author     : Desktop
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Model.News"%>
+<%@page import="DAO.NewsDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="../CSS/NAV/nav.css"/>
+
         <style>
+            body
+            {
+                position: relative;
+
+                /*background-image: url('https://www.fcbarcelona.com/photo-resources/2024/06/27/bd74349a-2501-44f3-b63e-120938f48524/1080-1920.jpg?width=1200&height=525');*/
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            .bg-image {
+                position: relative;
+                width: 100%;
+                padding-top: 56.25%; /* 16:9 aspect ratio */
+                overflow: hidden;
+                border-radius: 5px;
+                margin-bottom: 1rem;
+            }
+
+            .news-image {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* This ensures the image covers the container without stretching */
+                border-radius: 5px;
+            }
+            .title
+            {
+                text-align: center;
+
+            }
+            .container
+            {
+                position: relative;
+                border-radius: 25px;
+                z-index: 200;
+                background-color: white;
+                padding: 2rem;
+
+            }
+            .header {
+                position: fixed;
+                text-align: center;
+                color: #fdc52c;
+                top: 4.5rem;
+                width: 100vw;
+                height: 100vh;
+                font-family: fcb-extra-bold, Arial, Helvetica Neue, Helvetica, sans-serif;
+                font-weight: 500;
+                font-size: 2rem;
+                
+            }
+
+            .header-image {
+                width: 100%;
+                height: auto;
+            }
+
             
-           
+
+            .header-content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .header-content h1 {
+                font-family: fantasy;
+                font-size: 2.5em;
+                margin: 0;
+                padding: 0;
+            }
+            .news-card
+            {
+                max-height: 19rem;
+                height: 19rem;
+                overflow: hidden;
+                position: relative;
+            }
+            .news-card:hover .news-title
+            {
+                display: block;
+                bottom: 5rem;
+
+            }
+            .news-card:hover .description
+            {
+                display: inline-block;
+            }
+
+            .news-title
+            {
+                width: 100%;
+                background: rgba(255,255,255,0.5);
+                max-height: 5.5rem;
+                bottom: 0;
+                position: absolute;
+                transition: 0.4s ;
+            }
+            .news-title h5
+            {
+                font-family:  fcb-extra-bold, Arial, "Helvetica Neue", Helvetica, sans-serif;
+                font-weight: 400px;
+            }
+            .description
+            {
+                display: none;
+
+            }
         </style> 
     </head>
     <body>
-        
+
         <%@include file="../INCLUDES/head.jsp" %>
-        <div class="container" style="margin-top: 100px ">
-            <!--Section: News of the day-->
+        <%@include file="../INCLUDES/nav.jsp" %>
+
+        <%
+            NewsDAO ndao = new NewsDAO();
+            News news = ndao.getAll().getFirst();
+            if (news != null) {
+                request.getSession().setAttribute("n", news);
+
+            }
+//            request.getSession().setAttribute("listNews", ndao.getAll());
+
+            int pageNumber = 1;
+            int rowsPerPage = 6;
+
+            if (request.getParameter("page") != null) {
+                pageNumber = Integer.parseInt(request.getParameter("page"));
+            }
+
+//            int offset = (pageNumber - 1) * rowsPerPage;
+            List<News> newsList = ndao.getNewsByPage(pageNumber, rowsPerPage);
+
+            int totalNews = ndao.getAll().size();
+            int totalPages = (int) Math.ceil((double) totalNews / rowsPerPage);
+
+            request.setAttribute("listNews", newsList);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", pageNumber);
+
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("newsList.jsp");
+//            dispatcher.forward(request, response);
+        %>
+
+        <header class="header">
+            <img src="https://www.fcbarcelona.com/photo-resources/2024/03/19/5cc063cf-1608-4302-8f8e-34610354cf9c/202403_USA_Summer_Tour_Web_Nota_Premsa_3200x2000_01-1-1-.jpg?width=1200&height=525" alt="Barça on Tour 2024" class="header-image">
+            <div class="header-content">
+                <h1>Real FC News</h1>
+            </div>
+        </header>
+        <div class="container" style="margin-top: 500px;">
+
+
             <section class="section1 border-bottom pb-4 mb-5">
                 <div class="row gx-5">
                     <div class="col-md-6 mb-4">
                         <div class="bg-image hover-overlay ripple shadow-2-strong rounded-5" data-mdb-ripple-color="light">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/slides/080.webp" class="img-fluid" />
-                            <a href="#!">
+                            <img src="/SWPClubManegement/IMAGE/NEWS/${n.newsImageDescription}" class="img-fluid news-image" />
+                            <a href="/SWPClubManegement/NEWS/newsDetails.jsp?nid=${n.newsId}">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                             </a>
                         </div>
@@ -33,13 +186,11 @@
 
                     <div class="col-md-6 mb-4">
                         <span class="badge bg-danger px-2 py-1 shadow-1-strong mb-3">News of the day</span>
-                        <h4><strong>Facilis consequatur eligendi</strong></h4>
+                        <h4><strong>${n.newsTitle}</strong></h4>
                         <p class="text-muted">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis consequatur
-                            eligendi quisquam doloremque vero ex debitis veritatis placeat unde animi laborum
-                            sapiente illo possimus, commodi dignissimos obcaecati illum maiores corporis.
+                            ${n.description}
                         </p>
-                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Read more</button>
+                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary" onclick="window.location.href = '/SWPClubManegement/NEWS/newsDetails.jsp?nid=${n.newsId}'">Read more</button>
                     </div>
                 </div>
             </section>
@@ -48,337 +199,49 @@
             <!--Section: Content-->
             <section>
                 <div class="row gx-lg-5">
-                    <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-                        <!-- News block -->
-                        <div>
-                            <!-- Featured image -->
-                            <div class="bg-image hover-overlay shadow-1-strong ripple rounded-5 mb-4"
-                                 data-mdb-ripple-color="light">
-                                <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/113.webp" class="img-fluid" />
-                                <a href="#!">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                </a>
-                            </div>
+                    <c:forEach var="n" items="${listNews}">
 
-                            <!-- Article data -->
-                            <div class="row mb-3">
-                                <div class="col-6">
-                                    <a href="" class="text-info">
-                                        <i class="fas fa-plane"></i>
-                                        Travels
+                        <div class="col-lg-4 col-md-12  " style="margin-bottom: 6rem;">
+                            <!-- News block -->
+                            <div class="news-card" style="cursor: pointer;" onclick="window.location.href = '/SWPClubManegement/NEWS/newsDetails.jsp?nid=${n.newsId}'">
+                                <!-- Featured image -->
+                                <div class="bg-image hover-overlay shadow-1-strong ripple rounded-5 mb-4" data-mdb-ripple-color="light">
+                                    <img src="/SWPClubManegement/IMAGE/NEWS/${n.newsImageDescription}" class="img-fluid news-image" />
+                                    <a href="/SWPClubManegement/NEWS/newsDetails.jsp?nid=${n.newsId}">
+                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                                     </a>
                                 </div>
 
-                                <div class="col-6 text-end">
-                                    <u> 15.07.2020</u>
+                                <!-- Article data -->
+                                <div class="news-content  mb-3">
+
+
+                                    <div class="news-title">
+                                        <div class="row mb-3">
+                                            <div class="col-6">
+                                                RealClub News
+                                            </div>
+
+                                            <div class="col-6 text-end">
+                                                <u> ${n.datePosted}</u>
+                                            </div>
+                                        </div>
+
+                                        <h5>${n.newsTitle}</h5>
+
+                                        <p class="description">
+                                            ${n.description}
+                                        </p>
+
+                                    </div>
                                 </div>
+
                             </div>
-
-                            <!-- Article title and description -->
-                            <a href="" class="text-dark">
-                                <h5>This is title of the news</h5>
-
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, iste aliquid. Sed
-                                    id nihil magni, sint vero provident esse numquam perferendis ducimus dicta
-                                    adipisci iusto nam temporibus modi animi laboriosam?
-                                </p>
-                            </a>
-
-                            <hr />
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Hollywood Sign on The Hill" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/042.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Palm Springs Road" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/043.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Los Angeles Skyscrapers" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Skyscrapers" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
+                            <!-- News block -->
                         </div>
-                        <!-- News block -->
-                    </div>
+                    </c:forEach>
 
-                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                        <!-- News block -->
-                        <div>
-                            <!-- Featured image -->
-                            <div class="bg-image hover-overlay shadow-1-strong rounded-5 ripple mb-4"
-                                 data-mdb-ripple-color="light">
-                                <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/011.webp" class="img-fluid"
-                                     alt="Brooklyn Bridge" />
-                                <a href="#!">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                </a>
-                            </div>
 
-                            <!-- Article data -->
-                            <div class="row mb-3">
-                                <div class="col-6">
-                                    <a href="" class="text-danger">
-                                        <i class="fas fa-chart-pie"></i>
-                                        Business
-                                    </a>
-                                </div>
-
-                                <div class="col-6 text-end">
-                                    <u> 15.07.2020</u>
-                                </div>
-                            </div>
-
-                            <!-- Article title and description -->
-                            <a href="" class="text-dark">
-                                <h5>This is title of the news</h5>
-
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, iste aliquid. Sed
-                                    id nihil magni, sint vero provident esse numquam perferendis ducimus dicta
-                                    adipisci iusto nam temporibus modi animi laboriosam?
-                                </p>
-                            </a>
-
-                            <hr />
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/031.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Five Lands National Park" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/032.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Paris - Eiffel Tower" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/033.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Louvre" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/034.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Times Square" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- News block -->
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                        <!-- News block -->
-                        <div>
-                            <!-- Featured image -->
-                            <div class="bg-image hover-overlay shadow-1-strong rounded-5 ripple mb-4"
-                                 data-mdb-ripple-color="light">
-                                <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/018.webp" class="img-fluid"
-                                     alt="Golden Gate National Recreation Area" />
-                                <a href="#!">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                </a>
-                            </div>
-
-                            <!-- Article data -->
-                            <div class="row mb-3">
-                                <div class="col-6">
-                                    <a href="" class="text-warning">
-                                        <i class="fas fa-code"></i>
-                                        Technology
-                                    </a>
-                                </div>
-
-                                <div class="col-6 text-end">
-                                    <u> 15.07.2020</u>
-                                </div>
-                            </div>
-
-                            <!-- Article title and description -->
-                            <a href="" class="text-dark">
-                                <h5>This is title of the news</h5>
-
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, iste aliquid. Sed
-                                    id nihil magni, sint vero provident esse numquam perferendis ducimus dicta
-                                    adipisci iusto nam temporibus modi animi laboriosam?
-                                </p>
-                            </a>
-
-                            <hr />
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/011.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Brooklyn Bridge" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/012.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Hamilton Park" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/013.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Perdana Botanical Garden Kuala Lumpur" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <!-- News -->
-                            <a href="" class="text-dark">
-                                <div class="row mb-4 border-bottom pb-2">
-                                    <div class="col-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/014.webp"
-                                             class="img-fluid shadow-1-strong rounded" alt="Perdana Botanical Garden" />
-                                    </div>
-
-                                    <div class="col-9">
-                                        <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                                        <p>
-                                            <u> 15.07.2020</u>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- News block -->
-                    </div>
                 </div>
             </section>
             <!--Section: Content-->
@@ -386,17 +249,23 @@
             <!-- Pagination -->
             <nav class="my-4" aria-label="...">
                 <ul class="pagination pagination-circle justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
+                    <c:if test="${currentPage > 1}">
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${currentPage - 1}" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                    </c:if>
+
+                    <c:forEach begin="1" end="${totalPages}" var="page">
+                        <li class="page-item ${page == currentPage ? 'active' : ''}">
+                            <a class="page-link" href="?page=${page}">${page} <c:if test="${page == currentPage}"><span class="sr-only">(current)</span></c:if></a>
+                            </li>
+                    </c:forEach>
+
+                    <c:if test="${currentPage < totalPages}">
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${currentPage + 1}">Next</a>
+                        </li>
+                    </c:if>
                 </ul>
             </nav>
         </div>

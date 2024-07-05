@@ -21,8 +21,12 @@
     <style>
         body{
             margin-top:20px;
-            background-color:#f2f6fc;
+            
             color:#69707a;
+             background-image: url('https://culers.fcbarcelona.com/assets/images/backgrounds/home_culer_profile.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
         .img-account-profile {
             width: 200px;
@@ -108,14 +112,15 @@
         }
         .con
         {
-            margin-top: 3rem;
+            margin-top: 4rem;
+           
         }
         footer a
-            {
-                text-decoration: none;
-                color: white;
+        {
+            text-decoration: none;
+            color: white;
 
-            }
+        }
     </style>
     <body>
         <%
@@ -127,10 +132,12 @@
 
         <div class="container-xl px-4  con">
             <!-- Account page navigation-->
-            <nav class="nav nav-borders">
-                <a class="nav-link active ms-0" href="http://localhost:8080/SWPClubManegement/EditProfileServlet" target="__blank">Profile</a>
-                <a class="nav-link" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" target="__blank">Change Password</a>
-                
+            <nav class="nav nav-borders" style="background-color:  white;">
+                <a class="nav-link active ms-0" href="/SWPClubManegement/EditProfileServlet" target="__blank">Profile</a>
+                <a class="nav-link" href="/SWPClubManegement/ChangePasswordServlet" target="__blank">Change Password</a>
+                <a class="nav-link" href="/SWPClubManegement/P/historyPayment.jsp" target="__blank">History Payment</a>
+
+
             </nav>
             <hr class="mt-0 mb-4">
 
@@ -213,10 +220,10 @@
                 </div>
             </form>
 
-            
+
 
         </div>
-                                <%@include file="../INCLUDES/footer.jsp" %>
+        <%--<%@include file="../INCLUDES/footer.jsp" %>--%>
         <script>
             function displayFileName() {
                 var input = document.getElementById('imageUpload');

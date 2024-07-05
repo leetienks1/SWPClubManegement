@@ -97,17 +97,92 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
         return null;
     }
 
+    public List<News> getNewsByPage(int offset, int rowsPerPage) {
+        try {
+            List listNews = new ArrayList<>();
+            sql = "DECLARE @PageNumber AS INT, @RowsPerPage AS INT\n"
+                    + "SET @PageNumber = ?\n"
+                    + "SET @RowsPerPage = ?\n"
+                    + "\n"
+                    + "SELECT \n"
+                    + "    [NewsID],\n"
+                    + "    [NewsTitle],\n"
+                    + "    [NewsImageDescription],\n"
+                    + "    [NewsContent],\n"
+                    + "    [DatePosted],\n"
+                    + "    [Description]\n"
+                    + "FROM [RealClub].[dbo].[TeamNews]\n"
+                    + "ORDER BY [DatePosted] DESC\n"
+                    + "OFFSET (@PageNumber - 1) * @RowsPerPage ROWS\n"
+                    + "FETCH NEXT @RowsPerPage ROWS ONLY;";
+
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            st.setInt(1, offset);
+            st.setInt(2, rowsPerPage);
+
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                News n = new News();
+                n.setNewsId(rs.getInt(1));
+                n.setNewsTitle(rs.getString(2));
+                String images = rs.getString(3);
+                n.setNewsImageDescription(images);
+                String contents = rs.getString(4);
+                n.setNewsContent(contents);
+                Date sqlDate = rs.getDate(5);
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    n.setDatePosted(localDate);
+                }
+                n.setDescription(rs.getString(6));
+
+                listNews.add(n);
+            }
+            return listNews;
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     @Override
     public List<News> getAll() {
         try {
             List listNews = new ArrayList<>();
-            sql = "SELECT TOP (1000) [NewsID]\n"
-                    + "      ,[NewsTitle]\n"
-                    + "      ,[NewsImageDescription]\n"
-                    + "      ,[NewsContent]\n"
-                    + "      ,[DatePosted]\n"
-                    + ",[Description]"
-                    + "  FROM [RealClub].[dbo].[TeamNews]";
+            sql = "SELECT TOP (1000) \n"
+                    + "    [NewsID],\n"
+                    + "    [NewsTitle],\n"
+                    + "    [NewsImageDescription],\n"
+                    + "    [NewsContent],\n"
+                    + "    [DatePosted],\n"
+                    + "    [Description]\n"
+                    + "FROM [RealClub].[dbo].[TeamNews]\n"
+                    + "ORDER BY [DatePosted] DESC;";
 
             try {
                 con = this.openConnection();

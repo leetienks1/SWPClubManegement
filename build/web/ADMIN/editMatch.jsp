@@ -17,7 +17,7 @@
         <div id="edit-form" style="display: none;" >
 
             <div class="overlay">
-                <form class="card card-on card-add-form mx-auto" onsubmit="SubmitForm(event, UpdateMatch())"  style="transition: ease-in 0.5s" >
+                <form class="card card-on card-add-form mx-auto" onsubmit="UpdateMatchSchedule(event)"  style="transition: ease-in 0.5s" >
                     <i id="close-edit" class="add-player-close fas fa-times"></i>
                     <h3 class="form-heading">Edit News</h3>
                     <input type="hidden" name="command" value="UPDATE" />
@@ -51,13 +51,15 @@
 
                     <div class="form-group">
                         <label for="Location"> Location</label>
-                        <input type="text" name="matchlocation"  placeholder="News Description"  required="You are not fill"/>
+                        <select type="text" name="matchlocation"  placeholder="News Description"  required="You are not fill">
+                            
+                        </select>
 
                     </div>
 
                     <div class="form-group">
                         <label for="course_price"> Match Date</label>
-                        <input type="date" name="matchdate1"  placeholder=""  min="${today}" max="${maxDateString}"/>
+                        <input type="date" name="matchdate1"  placeholder=""  min="${yesterday}" max="${maxDateString}"/>
                     </div>
 
                     <div class="form-group">

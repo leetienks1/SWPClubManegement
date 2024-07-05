@@ -11,37 +11,62 @@ import java.time.LocalDate;
  * @author quangminh
  */
 public class PlayerStat {
-    private int playerId;
-    private LocalDate date;
+
+    private int statId;
+    private int playerID;
+    private int matchID;
+
     private int goalsScored;
     private int assists;
     private int yellowCards;
     private int redCards;
 
-    public PlayerStat(int playerId, LocalDate date, int goalsScored, int assists, int yellowCards, int redCards) {
-        this.playerId = playerId;
-        this.date = date;
+    public PlayerStat(int statId, int playerID, int matchID, int goalsScored, int assists, int yellowCards, int redCards) {
+        this.statId = statId;
+        this.playerID = playerID;
+        this.matchID = matchID;
         this.goalsScored = goalsScored;
         this.assists = assists;
         this.yellowCards = yellowCards;
         this.redCards = redCards;
     }
 
-    public int getPlayerId() {
-        return playerId;
+    public PlayerStat(int playerID, int matchID, int goalsScored, int assists, int yellowCards, int redCards) {
+        this.playerID = playerID;
+        this.matchID = matchID;
+        this.goalsScored = goalsScored;
+        this.assists = assists;
+        this.yellowCards = yellowCards;
+        this.redCards = redCards;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
+    public int getPlayerID() {
+        return playerID;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public int getMatchID() {
+        return matchID;
     }
+
+    public void setMatchID(int matchID) {
+        this.matchID = matchID;
+    }
+
+   
+    
+    public int getStatId() {
+        return statId;
+    }
+
+    public void setStatId(int statId) {
+        this.statId = statId;
+    }
+
+   
 
     public int getGoalsScored() {
         return goalsScored;
@@ -77,13 +102,8 @@ public class PlayerStat {
 
     @Override
     public String toString() {
-        return "PlayerStat{" +
-                "playerId=" + playerId +
-                ", date=" + date +
-                ", goalsScored=" + goalsScored +
-                ", assists=" + assists +
-                ", yellowCards=" + yellowCards +
-                ", redCards=" + redCards +
-                '}';
+        return "PlayerStat{" + "statId=" + statId + ", playerID=" + playerID + ", matchID=" + matchID + ", goalsScored=" + goalsScored + ", assists=" + assists + ", yellowCards=" + yellowCards + ", redCards=" + redCards + '}';
     }
+
+   
 }

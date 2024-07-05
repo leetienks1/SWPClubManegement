@@ -172,6 +172,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
     object-fit: cover;
     
 }
+.avatar:hover
+{
+    border: wheat 1px solid;
+}
 .login-block
 {
     display: flex;

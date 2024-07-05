@@ -4,6 +4,8 @@
  */
 package DAO;
 
+import Model.JerseySizeEnum;
+import Model.OrderJerseyTemp;
 import Model.User;
 import dal.ConnectDB;
 import java.sql.Connection;
@@ -108,6 +110,69 @@ public class UserDAO extends ConnectDB implements DAO<User> {
         return null;
     }
 
+    public List<OrderJerseyTemp> getAllOrder(int uid) {
+        try {
+            List<OrderJerseyTemp> listOrderJerseys = new ArrayList<>();
+            sql = "SELECT o.OrderID, o.OrderDate, o.OrderTotal, o.Phone, o.Address, "
+                    + "j.JerseyName, j.JerseyDescription, j.JerseyPrice, js.JerseySize, ojd.JerseyQuantity "
+                    + "FROM Orders o "
+                    + "INNER JOIN OrderJerseyDetails ojd ON o.OrderID = ojd.OrderID "
+                    + "INNER JOIN Jerseys j ON ojd.JerseyID = j.JerseyID "
+                    + "INNER JOIN JerseySizes js ON ojd.JerseySizeID = js.SizeID "
+                    + "WHERE o.UserID = ? "
+                    + "ORDER BY o.OrderDate DESC";
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            st.setInt(1, uid);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                int orderId = rs.getInt("OrderID");
+                LocalDate orderDate = rs.getDate("OrderDate").toLocalDate();
+                double orderTotal = rs.getDouble("OrderTotal");
+                String phone = rs.getString("Phone");
+                String address = rs.getString("Address");
+                String jerseyName = rs.getString("JerseyName");
+                String jerseyDesc = rs.getString("JerseyDescription");
+                double jerseyPrice = rs.getDouble("JerseyPrice");
+                JerseySizeEnum jerseySize = JerseySizeEnum.valueOf(rs.getString("JerseySize"));
+                int jerseyQuantity = rs.getInt("JerseyQuantity");
+
+                OrderJerseyTemp order = new OrderJerseyTemp(orderId, uid, orderDate, orderTotal, phone, address,
+                        jerseyName, jerseyDesc, jerseyPrice, jerseySize, jerseyQuantity);
+
+                listOrderJerseys.add(order);
+            }
+            return listOrderJerseys;
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public List<User> getListSearchAccount(String searchTerm) {
         try {
             String searchValue = "%" + searchTerm + "%";
@@ -128,7 +193,6 @@ public class UserDAO extends ConnectDB implements DAO<User> {
                     + "     OR [Email] LIKE ?\n"
                     + "     OR [Role] LIKE ?\n"
                     + "     OR [Name] LIKE ?\n"
-                    
                     + "     OR [Status] LIKE ?"
                     + "     OR [UserID] LIKE ?;";
             try {
@@ -551,10 +615,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
             }
         }
     }
-   
-    
-    
-    
+
     public Boolean saveBool(User t) {
         try {
 
@@ -617,6 +678,7 @@ public class UserDAO extends ConnectDB implements DAO<User> {
         }
         return false;
     }
+
     @Override
     public void update(User t) {
         try {

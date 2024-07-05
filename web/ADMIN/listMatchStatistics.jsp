@@ -367,28 +367,32 @@
 
                 <ul class="list-unstyled components">
                     <h3 >ADMIN</h3>
-                     <li>
-                        <a href="/SWPClubManegement/DietPlanController"> <img src="../IMAGE/HOME/logo 1.png"  width="28px" height="28px"/> MEDICAL</a>
-                    </li>
-                    <li >
-                        <a href="/SWPClubManegement/BanAccountController"> <img src="../IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
+
+                     <li >
+                        <a href="/SWPClubManegement/BanAccountController"> <img src="/SWPClubManegement/IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
+
                     </li>
 
                     <li >
-                        <a href="/SWPClubManegement/PlayerController"><img src="../IMAGE/HOME/soccer-player.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
+                        <a href="/SWPClubManegement/PlayerController"><img src="/SWPClubManegement/IMAGE/HOME/soccer-player.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
                     </li>                    
                     <li >
-                        <a href="/SWPClubManegement/NewsController"> <img src="../IMAGE/HOME/news.png"  width="28px" height="28px"/> CRUD News</a>
+                        <a href="/SWPClubManegement/NewsController"> <img src="/SWPClubManegement/IMAGE/HOME/news.png"  width="28px" height="28px"/> CRUD News</a>
                     </li>
-                    <li>
-                        <a href="/SWPClubManegement/MatchScheduleController"> <img src="../IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD Match Schedule</a>
+                    <li >
+                        <a href="/SWPClubManegement/MatchScheduleController"> <img src="/SWPClubManegement/IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD Match Schedule</a>
                     </li>
 
-                    <li  class="active">
-                        <a href="/SWPClubManegement/MatchStatisticController"> <img src="../IMAGE/HOME/user.png"  width="32px" height="32px"/> List Match stats</a>
+                    <li class="active" >
+                        <a href="/SWPClubManegement/MatchStatisticController"> <img src="/SWPClubManegement/IMAGE/HOME/user.png"  width="32px" height="32px"/> List Match stats</a>
                     </li>
+                     <li >
+                         <a href="/SWPClubManegement/ADMIN/teamList.jsp"><img src="/SWPClubManegement/IMAGE/HOME/football-club.png" width="32px" height="32px" alt="alt"/> CRU Team</a>
+                    </li> 
                     <li>
-                        <a href="/SWPClubManegement/LogoutServlet"> <img src="../IMAGE/HOME/logout.png"  width="28px" height="28px"/> Log Out</a>
+
+                        <a href="/SWPClubManegement/LogoutServlet"> <img src="/SWPClubManegement/IMAGE/HOME/logout.png"  width="28px" height="28px"/> Log Out</a>
+
                     </li>
 
                 </ul>

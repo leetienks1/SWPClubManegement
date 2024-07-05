@@ -210,9 +210,7 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
         }
         return Optional.empty();
     }
-    public static void main(String[] args) {
-        System.out.println(new MatchStatisticDAO().get(1));
-    }
+    
     @Override
     public void save(MatchStatistic t) {
         String sql = "INSERT INTO [dbo].[MatchStatistic] ([MatchID], [TeamID], [Score], [YellowCards], [RedCards], [TotalShots], [CornerKicks], [BallPossession], [Passes]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";

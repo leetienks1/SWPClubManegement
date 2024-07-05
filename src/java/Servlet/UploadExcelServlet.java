@@ -250,7 +250,7 @@ public class UploadExcelServlet extends HttpServlet {
 
         // Đường dẫn đầy đủ đến tệp đầu ra
         String outputFilePath = path + File.separator + fileName;
-        String pa =request.getContextPath()+"\\IMAGE\\PLAYER\\"+fileName;
+        String pa =request.getContextPath()+"//IMAGE//PLAYER//"+fileName;
         // Ghi dữ liệu hình ảnh ra tệp
         FileOutputStream fileOutputStream = new FileOutputStream(outputFilePath);
         fileOutputStream.write(pictureBytes);
