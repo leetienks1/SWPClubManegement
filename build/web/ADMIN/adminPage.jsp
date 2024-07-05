@@ -396,12 +396,14 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href='/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
+                    <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
                 </div>
 
                 <ul class="list-unstyled components">
                     <h3 >ADMIN</h3>
-
+                    <li>
+                        <a href="/SWPClubManegement/DietPlanController"> <img src="../IMAGE/HOME/logo 1.png"  width="28px" height="28px"/> MEDICAL</a>
+                    </li>
                     <li >
                         <a href="/SWPClubManegement/BanAccountController"> <img src="../IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
                     </li>

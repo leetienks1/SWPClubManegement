@@ -283,12 +283,54 @@
         <servlet-name>PlayerListServlet</servlet-name>
         <url-pattern>/Players</url-pattern>
     </servlet-mapping>
-
-    <!-- Session Configuration -->
+    <servlet>
+        <servlet-name>DietPlanController</servlet-name>
+        <servlet-class>Controller.DietPlanController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DietPlanController</servlet-name>
+        <url-pattern>/DietPlanController</url-pattern>
+    </servlet-mapping>
+  
+    <servlet>
+        <servlet-name>DietPlanFoodController</servlet-name>
+        <servlet-class>Controller.DietPlanFoodController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DietPlanFoodController</servlet-name>
+        <url-pattern>/DietPlanFoodController</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>FoodController</servlet-name>
+        <servlet-class>Controller.FoodController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FoodController</servlet-name>
+        <url-pattern>/FoodController</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>PlayerPhysicalConditionController</servlet-name>
+        <servlet-class>Controller.PlayerPhysicalConditionController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PlayerPhysicalConditionController</servlet-name>
+        <url-pattern>/PlayerPhysicalConditionController</url-pattern>
+    </servlet-mapping>
+    
+     <servlet>
+        <servlet-name>TreatmentScheduleController</servlet-name>
+        <servlet-class>Controller.TreatmentScheduleController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TreatmentScheduleController</servlet-name>
+        <url-pattern>/TreatmentScheduleController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-
+    <!-- Session Configuration -->
     <!-- Welcome File List -->
     <welcome-file-list>
         <welcome-file>HOME/home.jsp</welcome-file>

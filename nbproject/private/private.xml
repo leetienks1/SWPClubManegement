@@ -3,28 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/INCLUDES/nav.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Email/OTP.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Servlet/VerifyEmail.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/MatchStatisticController.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Model/MatchSchedule.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/signUp.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Model/Team.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/match.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/DAO/UserDAO.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/DetailMatch.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/DAO/TeamDAO.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/verify.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/home.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/ADMIN/listMatchStatistics.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/ADMIN/adminPage.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/playerList.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Model/MatchStatistic.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/CreateMatchScheduleServlet.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/EditNewsServlet.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Servlet/LoginServlet.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/PLAYER/siderbar.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/matchdetail.jsp</file>
+            <file>file:/E:/SWPClubManegement/src/java/dal/ReadExcel.java</file>
+            <file>file:/E:/SWPClubManegement/src/java/dal/DatabaseInfor.java</file>
+            <file>file:/E:/SWPClubManegement/web/ADMIN/adminListAccounts.jsp</file>
+            <file>file:/E:/SWPClubManegement/src/java/dal/ConnectDB.java</file>
         </group>
     </open-files>
 </project-private>
