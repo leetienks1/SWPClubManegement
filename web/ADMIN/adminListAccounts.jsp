@@ -488,9 +488,7 @@
 
                 <ul class="list-unstyled components">
                     <h3 >ADMIN</h3>
-                     <li>
-                        <a href="/SWPClubManegement/DietPlanController"> <img src="../IMAGE/HOME/logo 1.png"  width="28px" height="28px"/> MEDICAL</a>
-                    </li>
+                     
                     <li class="active">
                         <a href="/SWPClubManegement/BanAccountController"> <img src="/SWPClubManegement/IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
                     </li>
