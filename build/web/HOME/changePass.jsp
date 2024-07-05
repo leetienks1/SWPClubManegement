@@ -11,10 +11,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="../CSS/HOMECSS/changePass.css"/>
-        <link rel="stylesheet" href="../CSS/FOOTER/footer.css"/>
-
+        <!--<link rel="stylesheet" href="../CSS/FOOTER/footer.css"/>-->
+        <%@include file="../INCLUDES/head.jsp" %> 
+        <link rel="stylesheet" href="../CSS/NAV/nav.css"/>
+        <!--<link rel="stylesheet" href="../CSS/FOOTER/footer.css"/>-->
 
         <style>
+            .mainDiv{
+                background-image: url('https://culers.fcbarcelona.com/assets/images/backgrounds/home_culer_profile.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
             .nav-borders {
                 background-color: white;
                 border-bottom: 1px solid #dee2e6;
@@ -45,22 +53,25 @@
                 color: white;
 
             }
-            
+          
+
         </style>
         <%@include file="../INCLUDES/head.jsp" %> 
     </head>
     <body>
-        <div class="container">
-            <nav class="nav nav-borders">
-                <a class="nav-link " href="http://localhost:8080/SWPClubManegement/EditProfileServlet" target="__blank">Profile</a>
-                <a class="nav-link active ms-0" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" target="__blank">Change Password</a>
-               
+        <%@include file="../INCLUDES/nav.jsp" %>
+
+        <div class="container" style="margin-top: 4rem">
+            <nav class="nav nav-borders" style="background-color:  white;">
+                <a class="nav-link " href="/SWPClubManegement/EditProfileServlet" target="__blank">Profile</a>
+                <a class="nav-link active ms-0" href="/SWPClubManegement/ChangePasswordServlet" target="__blank">Change Password</a>
+                <a class="nav-link " href="/SWPClubManegement/P/historyPayment.jsp" target="__blank">History Payment</a>
             </nav>
         </div>
         <div class="mainDiv">
 
             <div class="cardStyle">
-                <form action="http://localhost:8080/SWPClubManegement/ChangePasswordServlet?uid=${user.userId}" method="post" name="signupForm" id="signupForm">
+                <form action="/SWPClubManegement/ChangePasswordServlet?uid=${user.userId}" method="post" name="signupForm" id="signupForm">
 
                     <img src="" id="signupLogo"/>
 

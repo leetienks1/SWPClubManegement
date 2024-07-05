@@ -3,6 +3,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
 */
 /* 
+    Created on : Jul 1, 2024, 4:54:23 PM
+    Author     : Desktop
+*/
+
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
     Created on : May 19, 2024, 9:21:49 AM
     Author     : Desktop
 */
@@ -102,7 +111,8 @@ a
     width: 20vw;
     height: 20vh;
     border-radius: 30px;
-    padding: 10px 20px 10px 20px
+    padding: 10px 20px 10px 20px;
+        
 }
 .match-card-1
 {
@@ -125,6 +135,31 @@ a
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+.match-card-4
+{
+    background-image:url(https://img.uefa.com/imgml/uefacom/wucl/matchday/thumbnail.jpg) ;
+    color: white;
+}
+.match-card-5
+{
+    background-image:url(https://img.uefa.com/imgml/uefacom/wucl/matchday/thumbnail.jpg) ;
+    color: white;
+}
+.match-card-6
+{
+    background-image:url(https://img.uefa.com/imgml/uefacom/wucl/matchday/thumbnail.jpg) ;
+    color: white;
+}
+.match-card-7
+{
+    background-image:url(https://img.uefa.com/imgml/uefacom/wucl/matchday/thumbnail.jpg) ;
+    color: white;
+}
+.match-card-8
+{
+    background-image:url(https://img.uefa.com/imgml/uefacom/wucl/matchday/thumbnail.jpg) ;
+    color: white;
 }
 .card-button
 {
@@ -193,8 +228,8 @@ a
 {
     display: flex;
     align-items: end;
-        
-    border-radius: 40px; 
+
+    border-radius: 40px;
     margin-top: 100px;
     width: 23vw;
     height: 70vh;
@@ -205,23 +240,24 @@ a
 
 }
 .news-card:hover
-{    transform: scale(1.1);
+{
+    transform: scale(1.1);
 }
 .news-card-title
-{ 
+{
     margin: 0 0 10px 10px;
     white-space: normal;
     overflow-wrap: anywhere;
     color: white;
 }
 .news-title
-{ 
+{
     margin-top: 100px;
     margin-left: 30px;
     color: white;
 }
 .sub-news-description
 {
-  opacity: 0.5;
-  color: white;
+    opacity: 0.5;
+    color: white;
 }

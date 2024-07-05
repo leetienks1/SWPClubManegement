@@ -31,6 +31,137 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
     private PreparedStatement st;
     private ResultSet rs;
 
+    public List<MatchSchedule> getMatchFinishByAwayteamID(int awayTeamId) {
+        try {
+            List<MatchSchedule> listMatches = new ArrayList<>();
+            sql = "SELECT ms.MatchID, ms.AwayTeamID, ms.HomeTeamID, ms.MatchDate, ms.MatchLocation, ms.Tournament\n"
+                    + "FROM [RealClub].[dbo].[MatchSchedule] ms\n"
+                    + "LEFT JOIN (\n"
+                    + "    SELECT MatchID, COUNT(*) AS StatisticCount\n"
+                    + "    FROM [RealClub].[dbo].[MatchStatistic]\n"
+                    + "    GROUP BY MatchID\n"
+                    + ") msd ON ms.MatchID = msd.MatchID\n"
+                    + "WHERE msd.StatisticCount = 2 and AwayTeamID =? \n"
+                    + "Order by ms.MatchDate desc";
+
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            st.setInt(1, awayTeamId);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                MatchSchedule m = new MatchSchedule();
+                m.setMatchID(rs.getInt(1));
+                m.setAwayTeamID(rs.getInt(2));
+                m.setHomeTeamID(rs.getInt(3));
+                Date sqlDate = rs.getDate(4);
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    m.setMatchDate(localDate);
+                }
+                m.setMatchLocation(rs.getString(5));
+                String tour = rs.getString(6);
+                if (tour != null) {
+                    m.setTournament(m.getTournament().valueOf(rs.getString(6).trim()));
+                }
+                listMatches.add(m);
+            }
+            return listMatches;
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<MatchSchedule> getTop2MatchFinish() {
+        try {
+            List<MatchSchedule> listMatches = new ArrayList<>();
+            sql = "SELECT top 2 ms.MatchID, ms.AwayTeamID, ms.HomeTeamID, ms.MatchDate, ms.MatchLocation, ms.Tournament\n"
+                    + "FROM [RealClub].[dbo].[MatchSchedule] ms\n"
+                    + "LEFT JOIN (\n"
+                    + "    SELECT MatchID, COUNT(*) AS StatisticCount\n"
+                    + "    FROM [RealClub].[dbo].[MatchStatistic]\n"
+                    + "    GROUP BY MatchID\n"
+                    + ") msd ON ms.MatchID = msd.MatchID\n"
+                    + "WHERE msd.StatisticCount = 2 \n" 
+                    +            "Order by ms.MatchDate desc";
+
+
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                MatchSchedule m = new MatchSchedule();
+                m.setMatchID(rs.getInt(1));
+                m.setAwayTeamID(rs.getInt(2));
+                m.setHomeTeamID(rs.getInt(3));
+                Date sqlDate = rs.getDate(4);
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    m.setMatchDate(localDate);
+                }
+                m.setMatchLocation(rs.getString(5));
+                String tour = rs.getString(6);
+                if (tour != null) {
+                    m.setTournament(m.getTournament().valueOf(rs.getString(6).trim()));
+                }
+                listMatches.add(m);
+            }
+            return listMatches;
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public List<MatchSchedule> getMatchAlreadyStatistic() {
         try {
             List<MatchSchedule> listMatches = new ArrayList<>();
@@ -119,6 +250,84 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
                     + "WHERE \n"
                     + "    (msd.MatchID IS NULL OR msd.StatisticCount < 2)\n"
                     + "    AND ms.MatchDate < GETDATE();";
+
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                MatchSchedule m = new MatchSchedule();
+                m.setMatchID(rs.getInt(1));
+                m.setAwayTeamID(rs.getInt(2));
+                m.setHomeTeamID(rs.getInt(3));
+                Date sqlDate = rs.getDate(4);
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    m.setMatchDate(localDate);
+                }
+                m.setMatchLocation(rs.getString(5));
+                String tour = rs.getString(6);
+                if (tour != null) {
+                    m.setTournament(m.getTournament().valueOf(rs.getString(6).trim()));
+                }
+                listMatches.add(m);
+            }
+            return listMatches;
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<MatchSchedule> getMatchNotYetTakePlace() {
+        try {
+            List<MatchSchedule> listMatches = new ArrayList<>();
+            sql = "SELECT \n"
+                    + "    ms.MatchID,\n"
+                    + "    ms.AwayTeamID,\n"
+                    + "    ms.HomeTeamID,\n"
+                    + "    ms.MatchDate,\n"
+                    + "    ms.MatchLocation,\n"
+                    + "    ms.Tournament,\n"
+                    + "    ISNULL(ex.MatchCount, 0) AS MatchCount\n"
+                    + "FROM \n"
+                    + "    [RealClub].[dbo].[MatchSchedule] ms\n"
+                    + "LEFT JOIN \n"
+                    + "    (\n"
+                    + "        SELECT \n"
+                    + "            MatchID, \n"
+                    + "            COUNT(*) AS MatchCount\n"
+                    + "        FROM \n"
+                    + "            [dbo].[ExpectedLineups]\n"
+                    + "        GROUP BY \n"
+                    + "            MatchID\n"
+                    + "    ) ex ON ms.MatchID = ex.MatchID\n"
+                    + "WHERE \n"
+                    + "    ms.MatchDate > GETDATE() \n"
+                    + "    AND ISNULL(ex.MatchCount, 0) < 1;";
 
             try {
                 con = this.openConnection();
@@ -282,6 +491,63 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
         return Optional.empty();
     }
 
+    public Optional<MatchSchedule> getMatchByTour(String search) {
+        try {
+            String valueParam = "%" + search + "%";
+            sql = "SELECT TOP 1 [MatchID]\n"
+                    + "      ,[AwayTeamID]\n"
+                    + "      ,[HomeTeamID]\n"
+                    + "      ,[MatchDate]\n"
+                    + "      ,[MatchLocation]\n"
+                    + "      ,[Tournament]\n"
+                    + "  FROM [RealClub].[dbo].[MatchSchedule]\n"
+                    + "  WHERE [Tournament] LIKE ?\n"
+                    + "    AND [MatchDate] > GETDATE()\n"
+                    + "  ORDER BY [MatchDate] ASC;";
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setString(1, valueParam);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                MatchSchedule m = new MatchSchedule();
+                m.setMatchID(rs.getInt("MatchID"));
+                m.setAwayTeamID(rs.getInt("AwayTeamID"));
+                m.setHomeTeamID(rs.getInt("HomeTeamID"));
+                Date sqlDate = rs.getDate("MatchDate");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    m.setMatchDate(localDate);
+                }
+                m.setMatchLocation(rs.getString("MatchLocation"));
+                String tour = rs.getString(6);
+                if (tour != null) {
+                    m.setTournament(m.getTournament().valueOf(tour.trim()));
+                }
+
+                return Optional.of(m);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Optional.empty();
+    }
+
     @Override
     public void save(MatchSchedule t) {
         try {
@@ -403,42 +669,43 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
         }
         return false;
     }
+
     public void add(MatchSchedule match) {
-    try {
-        // Tạo câu lệnh SQL để chèn một trận đấu mới vào cơ sở dữ liệu
-        String sql = "INSERT INTO [RealClub].[dbo].[MatchSchedule] ([AwayTeamID], [HomeTeamID], [MatchDate], [MatchLocation], [Tournament]) VALUES (?, ?, ?, ?, ?)";
-
-        // Mở kết nối đến cơ sở dữ liệu
-        con = this.openConnection();
-
-        // Tạo một PreparedStatement từ kết nối với câu lệnh SQL
-        st = con.prepareStatement(sql);
-
-        // Đặt các tham số cho câu lệnh SQL từ đối tượng MatchSchedule được truyền vào
-        st.setInt(1, match.getAwayTeamID());
-        st.setInt(2, match.getHomeTeamID());
-        st.setDate(3, Date.valueOf(match.getMatchDate()));
-        st.setString(4, match.getMatchLocation());
-        st.setString(5, match.getTournament().toString());
-
-        // Thực thi câu lệnh SQL
-        st.executeUpdate();
-    } catch (SQLException | ClassNotFoundException e) {
-        e.printStackTrace();
-    } finally {
-        // Đóng các tài nguyên
         try {
-            if (st != null) {
-                st.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException e) {
+            // Tạo câu lệnh SQL để chèn một trận đấu mới vào cơ sở dữ liệu
+            String sql = "INSERT INTO [RealClub].[dbo].[MatchSchedule] ([AwayTeamID], [HomeTeamID], [MatchDate], [MatchLocation], [Tournament]) VALUES (?, ?, ?, ?, ?)";
+
+            // Mở kết nối đến cơ sở dữ liệu
+            con = this.openConnection();
+
+            // Tạo một PreparedStatement từ kết nối với câu lệnh SQL
+            st = con.prepareStatement(sql);
+
+            // Đặt các tham số cho câu lệnh SQL từ đối tượng MatchSchedule được truyền vào
+            st.setInt(1, match.getAwayTeamID());
+            st.setInt(2, match.getHomeTeamID());
+            st.setDate(3, Date.valueOf(match.getMatchDate()));
+            st.setString(4, match.getMatchLocation());
+            st.setString(5, match.getTournament().toString());
+
+            // Thực thi câu lệnh SQL
+            st.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
-}
 
     public List<MatchSchedule> SearchMatch(String valueSearch) {
         try {

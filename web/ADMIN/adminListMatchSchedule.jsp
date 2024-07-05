@@ -376,24 +376,27 @@
                 <ul class="list-unstyled components">
                     <h3 >ADMIN</h3>
                     <li >
-                        <a href="/SWPClubManegement/BanAccountController"> <img src="../IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
+                        <a href="/SWPClubManegement/BanAccountController"> <img src="/SWPClubManegement/IMAGE/HOME/friend.png"  width="28px" height="28px"/> List Accounts</a>
                     </li>
 
                     <li >
-                        <a href="/SWPClubManegement/PlayerController"><img src="../IMAGE/HOME/soccer-player.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
+                        <a href="/SWPClubManegement/PlayerController"><img src="/SWPClubManegement/IMAGE/HOME/soccer-player.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
                     </li>                    
                     <li >
-                        <a href="/SWPClubManegement/NewsController"> <img src="../IMAGE/HOME/news.png"  width="28px" height="28px"/> CRUD News</a>
+                        <a href="/SWPClubManegement/NewsController"> <img src="/SWPClubManegement/IMAGE/HOME/news.png"  width="28px" height="28px"/> CRUD News</a>
                     </li>
                     <li class="active">
-                        <a href="/SWPClubManegement/MatchScheduleController"> <img src="../IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD Match Schedule</a>
+                        <a href="/SWPClubManegement/MatchScheduleController"> <img src="/SWPClubManegement/IMAGE/HOME/soccer.png"  width="28px" height="28px"/> CRUD Match Schedule</a>
                     </li>
 
                     <li  >
-                        <a href="/SWPClubManegement/MatchStatisticController"> <img src="../IMAGE/HOME/user.png"  width="32px" height="32px"/> List Match stats</a>
+                        <a href="/SWPClubManegement/MatchStatisticController"> <img src="/SWPClubManegement/IMAGE/HOME/user.png"  width="32px" height="32px"/> List Match stats</a>
                     </li>
+                    <li >
+                        <a href="/SWPClubManegement/ADMIN/teamList.jsp"><img src="/SWPClubManegement/IMAGE/HOME/football-club.png" width="32px" height="32px" alt="alt"/> CRU Team</a>
+                    </li> 
                     <li>
-                        <a href="/SWPClubManegement/LogoutServlet"> <img src="../IMAGE/HOME/logout.png"  width="28px" height="28px"/> Log Out</a>
+                        <a href="/SWPClubManegement/LogoutServlet"> <img src="/SWPClubManegement/IMAGE/HOME/logout.png"  width="28px" height="28px"/> Log Out</a>
                     </li>
 
                 </ul>
@@ -487,8 +490,8 @@
 
     </body>
     <script>
-
-
+        var hometeamData;
+        var awayteamData;
         function SubmitForm(event, method) {
             event.preventDefault(); // Prevent the default form submission
 
@@ -498,6 +501,91 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelector(".search").addEventListener('input', ListMatches);
+
+
+            document.querySelector('select[name="awayteam1"]').addEventListener('input', function () {
+                const locationSelect = document.querySelector('select[name="matchlocation"]');
+                const selectedValue = document.querySelector('select[name="awayteam1"]').value;
+
+                // Xóa các tùy chọn hiện tại
+                locationSelect.innerHTML = '';
+
+                // Thêm tùy chọn mới dựa trên giá trị của awayteam
+                awayteamData.some(a => {
+                    if (a.teamID === parseInt(selectedValue)) {
+                        const option = document.createElement('option');
+                        option.value = a.stadium;
+                        option.textContent = a.stadium;
+                        locationSelect.appendChild(option);
+                        return true; // Stops the loop
+                    }
+                    return false;
+                });
+
+                // Bạn có thể thêm một tùy chọn khác từ hometeamData nếu cần
+                const hometeamOption = document.createElement('option');
+                hometeamOption.value = hometeamData[1].stadium; // Chọn hometeam nào bạn muốn lấy
+                hometeamOption.textContent = hometeamData[1].stadium;
+                locationSelect.appendChild(hometeamOption);
+            });
+
+
+
+
+
+
+            document.querySelector("#add-button").addEventListener('click', function ()
+            {
+                const locationSelect = document.querySelector('select[name="location"]');
+                const selectedValue = document.querySelector('select[name="awayteam"]').value;
+
+                locationSelect.innerHTML = '';
+
+                // Thêm tùy chọn mới dựa trên giá trị của awayteam
+                awayteamData.some(a => {
+                    if (a.teamID === parseInt(selectedValue)) {
+                        const option = document.createElement('option');
+                        option.value = a.stadium;
+                        option.textContent = a.stadium;
+                        locationSelect.appendChild(option);
+                        return true; // Stops the loop
+                    }
+                    return false;
+                });
+
+                // Bạn có thể thêm một tùy chọn khác từ hometeamData nếu cần
+                const hometeamOption = document.createElement('option');
+                hometeamOption.value = hometeamData[1].stadium; // Chọn hometeam nào bạn muốn lấy
+                hometeamOption.textContent = hometeamData[1].stadium;
+                locationSelect.appendChild(hometeamOption);
+
+            });
+
+            document.querySelector('select[name="awayteam"]').addEventListener('input', function () {
+                const locationSelect = document.querySelector('select[name="location"]');
+                const selectedValue = document.querySelector('select[name="awayteam"]').value;
+
+                // Xóa các tùy chọn hiện tại
+                locationSelect.innerHTML = '';
+
+                // Thêm tùy chọn mới dựa trên giá trị của awayteam
+                awayteamData.some(a => {
+                    if (a.teamID === parseInt(selectedValue)) {
+                        const option = document.createElement('option');
+                        option.value = a.stadium;
+                        option.textContent = a.stadium;
+                        locationSelect.appendChild(option);
+                        return true; // Stops the loop
+                    }
+                    return false;
+                });
+
+                // Bạn có thể thêm một tùy chọn khác từ hometeamData nếu cần
+                const hometeamOption = document.createElement('option');
+                hometeamOption.value = hometeamData[1].stadium; // Chọn hometeam nào bạn muốn lấy
+                hometeamOption.textContent = hometeamData[1].stadium;
+                locationSelect.appendChild(hometeamOption);
+            });
 
         });
 
@@ -588,11 +676,12 @@
 
 
         }
-        function addMatch()
+        function addMatchSchedule(event)
         {
+            event.preventDefault();
             var awayTeam = document.querySelector('select[name="awayteam"]').value;
             var homeTeam = document.querySelector('select[name="hometeam"]').value;
-            var location = document.querySelector('input[name="location"]').value;
+            var location = document.querySelector('select[name="location"]').value;
             var matchDate = document.querySelector('input[name="matchdate"]').value;
             var tournament = document.querySelector('select[name="tour"]').value;
 
@@ -619,7 +708,7 @@
 
                         document.querySelector('select[name="awayteam"]').value = "";
 
-                        document.querySelector('input[name="location"]').value = "";
+                        document.querySelector('select[name="location"]').value = "";
                         document.querySelector('input[name="matchdate"]').value = "";
                     })
                     .catch(error => {
@@ -637,12 +726,13 @@
 
 
 
-        function UpdateMatch()
+        function UpdateMatchSchedule(event)
         {
+            event.preventDefault();
             var Mid = document.querySelector('input[name="mid"]').value;
             var awayTeam = document.querySelector('select[name="awayteam1"]').value;
             var homeTeam = document.querySelector('select[name="hometeam1"]').value;
-            var location = document.querySelector('input[name="matchlocation"]').value;
+            var location = document.querySelector('select[name="matchlocation"]').value;
             var matchDate = document.querySelector('input[name="matchdate1"]').value;
             var tournament = document.querySelector('select[name="tour1"]').value;
 
@@ -694,7 +784,9 @@
             tableBody.innerHTML = "";
             var matcheList = matches.matches;
             var homeTeam = matches.homeTeam;
+            hometeamData = homeTeam;
             var awayTeam = matches.awayTeam;
+            awayteamData = awayTeam;
             var matchAlreadyStat = matches.matchAlreadyStats;
             matcheList.forEach(m => {
                 const row = document.createElement('tr');
@@ -790,11 +882,41 @@
                             option.selected = true;
                         }
                     });
+                    const locationSelect = document.querySelector('select[name="matchlocation"]');
+                    const selectedValue = document.querySelector('select[name="awayteam1"]').value;
+
+                    locationSelect.innerHTML = '';
+
+                    // Thêm tùy chọn mới dựa trên giá trị của awayteam
+                    awayteamData.some(a => {
+                        if (a.teamID === parseInt(selectedValue)) {
+                            const option = document.createElement('option');
+                            option.value = a.stadium;
+                            option.textContent = a.stadium;
+                            locationSelect.appendChild(option);
+                            return true; // Stops the loop
+                        }
+                        return false;
+                    });
+                    const hometeamOption = document.createElement('option');
+                    hometeamOption.value = hometeamData[1].stadium; // Chọn hometeam nào bạn muốn lấy
+                    hometeamOption.textContent = hometeamData[1].stadium;
+                    locationSelect.appendChild(hometeamOption);
+
+                    const locationInput = document.querySelectorAll('select[name="matchlocation"] option');
+                    locationInput.forEach(op =>
+                    {
+                        if (op.value.trim() === locationCell.textContent.trim())
+                        {
+                            console.log("lo" + op.value);
+
+                            op.selected = true;
+                        }
+                    });
                     const midInput = document.querySelector('input[name="mid"]');
-                    const locationInput = document.querySelector('input[name="matchlocation"]');
                     const matchDateInput = document.querySelector('input[name="matchdate1"]');
                     midInput.value = matchIdCell.textContent;
-                    locationInput.value = locationCell.textContent;
+//                    locationInput.value = locationCell.textContent;
                     matchDateInput.value = matchDateCell.textContent;
 
 
@@ -836,7 +958,7 @@
                         const awayTeamOption = document.querySelector('select[name="awayteam1"] ');
 
                         const homeTeamOption = document.querySelector('select[name="hometeam1"]');
-                        const matchLocationInput = document.querySelector('input[name="matchlocation"]');
+                        const matchLocationInput = document.querySelector('select[name="matchlocation"]');
                         console.log(matchLocationInput);
                         const matchDateInput = document.querySelector('input[name="matchdate1"]');
                         console.log(matchDateInput);

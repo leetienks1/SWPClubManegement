@@ -254,7 +254,7 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                 ;
             }
-           
+
 
             @keyframes shake {
                 0% {
@@ -300,34 +300,8 @@
                                     <figure><a  href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
                                 </div>
-                                <div id="rightBar">
-                                    <div class="login-block">
-                                        <c:choose >
-                                            <c:when test="${user.image==null}">
-                                                <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
-                                            </c:when>
-                                            <c:otherwise>
+                                <%@include file="../STORE/rightBarStore.jsp" %>
 
-
-                                                <img id="image-bar" class="avatar" src="${user.image}" alt="alt"/>
-
-                                            </c:otherwise>
-                                        </c:choose> 
-                                        <h5> ${user.name}</h5>
-                                        <div class="edit" >
-                                            <a href="../EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
-                                        </div>
-                                        <div  class="changepass">
-                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" > Change Password</a>
-                                        </div>
-                                        <div  class="logout">
-                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/LogoutServlet" > Logout</a>
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -440,173 +414,173 @@
 
 
     </body>
-<
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 
 
     <script>
-        const user = ${user.userId};
-        console.log(user);
+                                    const user = ${user.userId};
+                                    console.log(user);
 
 
-        function toggleRightBar() {
-            var rightBar = document.getElementById("rightBar");
-            rightBar.classList.toggle("showlog"); // Thêm hoặc loại bỏ lớp "show"
-        }
+                                    function toggleRightBar() {
+                                        var rightBar = document.getElementById("rightBar");
+                                        rightBar.classList.toggle("showlog"); // Thêm hoặc loại bỏ lớp "show"
+                                    }
 
-        function encryptData(data, key) {
-            const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
-            return encryptedData;
-        }
-        // lấy lại khi cần thiết
-        function decryptData(encryptedData, key) {
-            const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, key);
-            const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
-            return decryptedData;
-        }
-        function renderCart() {
-            const cartItems = document.getElementById('cart-items');
-            cartItems.innerHTML = '';
-            let total = 0;
+                                    function encryptData(data, key) {
+                                        const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
+                                        return encryptedData;
+                                    }
+                                    // lấy lại khi cần thiết
+                                    function decryptData(encryptedData, key) {
+                                        const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, key);
+                                        const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+                                        return decryptedData;
+                                    }
+                                    function renderCart() {
+                                        const cartItems = document.getElementById('cart-items');
+                                        cartItems.innerHTML = '';
+                                        let total = 0;
 
-            cart.forEach(item => {
+                                        cart.forEach(item => {
 
-                const itemTotal = parseFloat(item.price) * item.quantity;
-                total += itemTotal;
+                                            const itemTotal = parseFloat(item.price) * item.quantity;
+                                            total += itemTotal;
 
-                const row = document.createElement("div");
-                row.classList.add('sub-item');
-                row.innerHTML =
-                        '<img src="' + item.image + '">' +
-                        '<div class="cart-item-details">' +
-                        '<h5>' + item.name + '</h5>' +
-                        '<p>Size: ' + item.size + '</p>' +
-                        '<p>Price: ' + item.price + '</p>' +
-                        '<p>Quantity: ' + item.quantity + '</p>' +
-                        '<p>Total: $' + itemTotal.toFixed(2) + '</p>' +
-                        '</div>';
+                                            const row = document.createElement("div");
+                                            row.classList.add('sub-item');
+                                            row.innerHTML =
+                                                    '<img src="' + item.image + '">' +
+                                                    '<div class="cart-item-details">' +
+                                                    '<h5>' + item.name + '</h5>' +
+                                                    '<p>Size: ' + item.size + '</p>' +
+                                                    '<p>Price: ' + item.price + '</p>' +
+                                                    '<p>Quantity: ' + item.quantity + '</p>' +
+                                                    '<p>Total: $' + itemTotal.toFixed(2) + '</p>' +
+                                                    '</div>';
 
-                cartItems.appendChild(row);
-            });
+                                            cartItems.appendChild(row);
+                                        });
 
-            document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
-        }
+                                        document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+                                    }
 
-        function completePurchase() {
-            alert('Purchase Complete!');
-            // Implement further purchase logic here
-        }
-        function loadCart() {
-            const storedCart = sessionStorage.getItem('orderItem' + user);
-            if (storedCart) {
-                cart = JSON.parse(storedCart);
-                renderCart();
-            } else
-            {
-                alert('empty');
-            }
-            console.log(cart);
-        }
+                                    function completePurchase() {
+                                        alert('Purchase Complete!');
+                                        // Implement further purchase logic here
+                                    }
+                                    function loadCart() {
+                                        const storedCart = sessionStorage.getItem('orderItem' + user);
+                                        if (storedCart) {
+                                            cart = JSON.parse(storedCart);
+                                            renderCart();
+                                        } else
+                                        {
+                                            alert('empty');
+                                        }
+                                        console.log(cart);
+                                    }
 
-        window.onload = function () {
+                                    window.onload = function () {
 
-            loadCart();
-            // Thêm s? ki?n input ?? ki?m tra ??u vào
-            const phoneInput = document.getElementById('phone');
-            phoneInput.addEventListener('input', function (e) {
-                const value = e.target.value;
-                e.target.value = value.replace(/[^0-9]/g, '').slice(0, 10); // Ch? cho phép s? và gi?i h?n ?? dài 10 ký t?
-            });
-            // Lấy giá trị của tổng từ phần tử <span>
-            const totalElement = document.getElementById('cart-total');
-            if (totalElement) {
-                const totalValue = totalElement.textContent.slice(1).trim();
-                console.log("Total Value: " + parseFloat(totalValue * 22000).toFixed(0)); // Debugging: Kiểm tra giá trị của totalValue
+                                        loadCart();
+                                        // Thêm s? ki?n input ?? ki?m tra ??u vào
+                                        const phoneInput = document.getElementById('phone');
+                                        phoneInput.addEventListener('input', function (e) {
+                                            const value = e.target.value;
+                                            e.target.value = value.replace(/[^0-9]/g, '').slice(0, 10); // Ch? cho phép s? và gi?i h?n ?? dài 10 ký t?
+                                        });
+                                        // Lấy giá trị của tổng từ phần tử <span>
+                                        const totalElement = document.getElementById('cart-total');
+                                        if (totalElement) {
+                                            const totalValue = totalElement.textContent.slice(1).trim();
+                                            console.log("Total Value: " + parseFloat(totalValue * 22000).toFixed(0)); // Debugging: Kiểm tra giá trị của totalValue
 
-                // Tìm phần tử <a> cần gán giá trị
-                const payLink = document.querySelector('a[href="/SWPClubManegement/VNPAY/vnpay_pay.jsp"]');
-                var payValue = parseFloat(totalValue * 22000).toFixed(0);
-                // Gán giá trị vào thuộc tính href của thẻ <a>
-                if (payLink) {
-                    payLink.href += '?total=' + payValue;
-                    console.log("Updated href: " + payLink.href); // Debugging: Kiểm tra giá trị của href mới
-                }
+                                            // Tìm phần tử <a> cần gán giá trị
+                                            const payLink = document.querySelector('a[href="/SWPClubManegement/VNPAY/vnpay_pay.jsp"]');
+                                            var payValue = parseFloat(totalValue * 22000).toFixed(0);
+                                            // Gán giá trị vào thuộc tính href của thẻ <a>
+                                            if (payLink) {
+                                                payLink.href += '?total=' + payValue;
+                                                console.log("Updated href: " + payLink.href); // Debugging: Kiểm tra giá trị của href mới
+                                            }
 
-            } else {
-                console.error("Không tìm thấy phần tử có id 'cart-total'");
-            }
+                                        } else {
+                                            console.error("Không tìm thấy phần tử có id 'cart-total'");
+                                        }
 
-            const pElement = document.querySelector('.status');
-            if (pElement && pElement.textContent.trim() === 'Success') {
-                paySubmit();
-            }
-
-
-        };
-
-        function removeAfterFinish()
-        {
-            sessionStorage.removeItem('itemTrue');
+                                        const pElement = document.querySelector('.status');
+                                        if (pElement && pElement.textContent.trim() === 'Success') {
+                                            paySubmit();
+                                        }
 
 
-            let cartRemove = decryptData(localStorage.getItem('usercart_' + user), "swp"+user);
+                                    };
+
+                                    function removeAfterFinish()
+                                    {
+                                        sessionStorage.removeItem('itemTrue');
 
 
-            console.log("before" + cartRemove);
-            cartRemove.forEach((item, index) => {
-                if (item.selected === true)
-                {
-                    cartRemove.splice(index, 1);
-                }
-            });
+                                        let cartRemove = decryptData(localStorage.getItem('usercart_' + user), "swp" + user);
 
 
-            const encryptedCart = encryptData(cartRemove, "swp"+user);
+                                        console.log("before" + cartRemove);
+                                        cartRemove.forEach((item, index) => {
+                                            if (item.selected === true)
+                                            {
+                                                cartRemove.splice(index, 1);
+                                            }
+                                        });
 
-            localStorage.setItem('usercart_' + user, encryptedCart);
+
+                                        const encryptedCart = encryptData(cartRemove, "swp" + user);
+
+                                        localStorage.setItem('usercart_' + user, encryptedCart);
 
 //            let cart = JSON.parse(sessionStorage.getItem('usercart' + user));
 //            console.log("after" + sessionStorage.getItem('usercart' + user));
 
-        }
+                                    }
 
-        function paySubmit()
-        {
-
-
-            const total = document.querySelector('#cart-total').textContent.slice(1);
-            const address = encodeURIComponent(document.getElementById('address').value);
-            const phone = encodeURIComponent(document.getElementById('phone').value);
-            console.log(total);
-            const url = '/SWPClubManegement/JerseyPaymentServlet?address=' + address + '&phone=' + phone + '&money=' + total;
+                                    function paySubmit()
+                                    {
 
 
-            {
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(cart)
-                })
-                        .then(response => {
-                            if (!response.ok) {
-                                alert("Network not okay");
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log(data);
-                            removeAfterFinish();
-                            loadCart();
-                        })
-                        .catch(error => {
-                            alert(error);
-                            throw new Error(error);
-                        });
-            }
-        }
+                                        const total = document.querySelector('#cart-total').textContent.slice(1);
+                                        const address = encodeURIComponent(document.getElementById('address').value);
+                                        const phone = encodeURIComponent(document.getElementById('phone').value);
+                                        console.log(total);
+                                        const url = '/SWPClubManegement/JerseyPaymentServlet?address=' + address + '&phone=' + phone + '&money=' + total;
+
+
+                                        {
+                                            fetch(url, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(cart)
+                                            })
+                                                    .then(response => {
+                                                        if (!response.ok) {
+                                                            alert("Network not okay");
+                                                            throw new Error('Network response was not ok');
+                                                        }
+                                                        return response.json();
+                                                    })
+                                                    .then(data => {
+                                                        console.log(data);
+                                                        removeAfterFinish();
+                                                        loadCart();
+                                                    })
+                                                    .catch(error => {
+                                                        alert(error);
+                                                        throw new Error(error);
+                                                    });
+                                        }
+                                    }
 
 
 

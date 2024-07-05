@@ -32,7 +32,7 @@ public class CreateMatchScheduleServlet extends HttpServlet {
         MatchStatisticDAO msdao = new MatchStatisticDAO();
         TeamDAO tdao = new TeamDAO();
         List<MatchSchedule> matches = null;
-        matches = mdao.getAll();
+        matches = mdao.getMatchNotYetTakePlace();
         for (MatchSchedule m : matches) {
             Optional<Team> homeTeam = tdao.get(m.getHomeTeamID());
             Team homeTeams = homeTeam.orElse(null);

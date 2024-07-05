@@ -4,6 +4,7 @@
     Author     : Desktop
 --%>
 
+<%@page import="java.util.Calendar"%>
 <%@page import="Model.Tournament"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
@@ -38,8 +39,17 @@
             java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
             String maxDateString = dateFormat.format(maxDate);
             java.util.Date currentDate = new java.util.Date();
-
+            
+            calendar.setTime(currentDate);
             String today = dateFormat.format(currentDate);
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+
+            // Lấy ngày trước đó
+            java.util.Date previousDate = calendar.getTime();
+
+            // Định dạng ngày trước đó
+            String yesterday = dateFormat.format(previousDate);
+            request.getSession().setAttribute("yesterday", yesterday);
 
             request.getSession().setAttribute("today", today);
             request.getSession().setAttribute("maxDateString", maxDateString);
@@ -49,7 +59,7 @@
         <div id="add-form" style="display: none" >
 
             <div class="overlay">
-                <form class="card card-on card-add-form mx-auto" onsubmit="SubmitForm(event, addMatch())"  style="transition: ease-in 0.5s" >
+                <form class="card card-on card-add-form mx-auto" onsubmit="addMatchSchedule(event)"  style="transition: ease-in 0.5s" >
                     <i id="add-close" class="add-player-close fas fa-times"></i>
                     <h3 class="form-heading">Add Match Schedule</h3>
                     <input type="hidden" name="command" value="ADD" />
@@ -81,7 +91,9 @@
 
                     <div class="form-group">
                         <label for="location"> Location</label>
-                        <input type="text" name="location"  placeholder="Location" class="location" value="" required="You are not fill"/>
+                        <select type="text" name="location"  placeholder="Location" class="location" value="" required="You are not fill">
+
+                        </select>
 
                     </div>
                     <div class="form-group">

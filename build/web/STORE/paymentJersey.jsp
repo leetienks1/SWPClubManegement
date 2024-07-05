@@ -210,7 +210,7 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                 ;
             }
-            
+
 
             /* Responsive Design */
             @media (max-width: 768px) {
@@ -256,34 +256,8 @@
                                     <figure><a href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
                                 </div>
-                                <div id="rightBar">
-                                    <div class="login-block">
-                                        <c:choose >
-                                            <c:when test="${user.image==null}">
-                                                <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
-                                            </c:when>
-                                            <c:otherwise>
+                                <%@include file="../STORE/rightBarStore.jsp" %>
 
-
-                                                <img id="image-bar" class="avatar" src="${user.image}" alt="alt"/>
-
-                                            </c:otherwise>
-                                        </c:choose> 
-                                        <h5> ${user.name}</h5>
-                                        <div class="edit" >
-                                            <a href="../EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
-                                        </div>
-                                        <div  class="changepass">
-                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" > Change Password</a>
-                                        </div>
-                                        <div  class="logout">
-                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/LogoutServlet" > Logout</a>
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -398,135 +372,135 @@
     <link href="https://pay.vnpay.vn/lib/vnpay/vnpay.css" rel="stylesheet" />
     <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
     <script>
-        let cart = [];
-        const user = ${user.userId};
-        console.log(user);
-        function saveCart()
-        {
-            sessionStorage.setItem('usercart' + user, JSON.stringify(cart));
-        }
-        function renderCart() {
-            const cartItems = document.getElementById('cart-items');
-            cartItems.innerHTML = '';
-            let total = 0;
+                                    let cart = [];
+                                    const user = ${user.userId};
+                                    console.log(user);
+                                    function saveCart()
+                                    {
+                                        sessionStorage.setItem('usercart' + user, JSON.stringify(cart));
+                                    }
+                                    function renderCart() {
+                                        const cartItems = document.getElementById('cart-items');
+                                        cartItems.innerHTML = '';
+                                        let total = 0;
 
-            cart.forEach(item => {
+                                        cart.forEach(item => {
 
-                const itemTotal = parseFloat(item.price) * item.quantity;
-                total += itemTotal;
+                                            const itemTotal = parseFloat(item.price) * item.quantity;
+                                            total += itemTotal;
 
-                const row = document.createElement("div");
-                row.classList.add('sub-item');
-                row.innerHTML =
-                        '<img src="' + item.image + '">' +
-                        '<div class="cart-item-details">' +
-                        '<h5>' + item.name + '</h5>' +
-                        '<p>Size: ' + item.size + '</p>' +
-                        '<p>Price: ' + item.price + '</p>' +
-                        '<p>Quantity: ' + item.quantity + '</p>' +
-                        '<p>Total: $' + itemTotal.toFixed(2) + '</p>' +
-                        '</div>';
+                                            const row = document.createElement("div");
+                                            row.classList.add('sub-item');
+                                            row.innerHTML =
+                                                    '<img src="' + item.image + '">' +
+                                                    '<div class="cart-item-details">' +
+                                                    '<h5>' + item.name + '</h5>' +
+                                                    '<p>Size: ' + item.size + '</p>' +
+                                                    '<p>Price: ' + item.price + '</p>' +
+                                                    '<p>Quantity: ' + item.quantity + '</p>' +
+                                                    '<p>Total: $' + itemTotal.toFixed(2) + '</p>' +
+                                                    '</div>';
 
-                cartItems.appendChild(row);
-            });
+                                            cartItems.appendChild(row);
+                                        });
 
-            document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
-        }
-        function toggleRightBar() {
-            var rightBar = document.getElementById("rightBar");
-            rightBar.classList.toggle("showlog"); // Thêm ho?c lo?i b? l?p "show"
-        }
-        function completePurchase() {
-            alert('Purchase Complete!');
-            // Implement further purchase logic here
-        }
-        function loadCart() {
-            const storedCart = sessionStorage.getItem('itemTrue' + user);
-            if (storedCart) {
-                cart = JSON.parse(storedCart);
-                renderCart();
-            } else
-            {
-                alert('empty');
-            }
-            sessionStorage.setItem('orderItem' + user, JSON.stringify(cart));
-            console.log(cart);
-            console.log(sessionStorage.getItem('orderItem' + user));
-        }
+                                        document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+                                    }
+                                    function toggleRightBar() {
+                                        var rightBar = document.getElementById("rightBar");
+                                        rightBar.classList.toggle("showlog"); // Thêm ho?c lo?i b? l?p "show"
+                                    }
+                                    function completePurchase() {
+                                        alert('Purchase Complete!');
+                                        // Implement further purchase logic here
+                                    }
+                                    function loadCart() {
+                                        const storedCart = sessionStorage.getItem('itemTrue' + user);
+                                        if (storedCart) {
+                                            cart = JSON.parse(storedCart);
+                                            renderCart();
+                                        } else
+                                        {
+                                            alert('empty');
+                                        }
+                                        sessionStorage.setItem('orderItem' + user, JSON.stringify(cart));
+                                        console.log(cart);
+                                        console.log(sessionStorage.getItem('orderItem' + user));
+                                    }
 
-        window.onload = function () {
+                                    window.onload = function () {
 
-            loadCart();
-            // Thêm s? ki?n input ?? ki?m tra ??u vào
-            const phoneInput = document.getElementById('phone');
-            phoneInput.addEventListener('input', function (e) {
-                const value = e.target.value;
-                e.target.value = value.replace(/[^0-9]/g, '').slice(0, 10); // Ch? cho phép s? và gi?i h?n ?? dài 10 ký t?
-            });
-        };
-        function removeAfterFinish()
-        {
-            sessionStorage.removeItem('itemTrue');
+                                        loadCart();
+                                        // Thêm s? ki?n input ?? ki?m tra ??u vào
+                                        const phoneInput = document.getElementById('phone');
+                                        phoneInput.addEventListener('input', function (e) {
+                                            const value = e.target.value;
+                                            e.target.value = value.replace(/[^0-9]/g, '').slice(0, 10); // Ch? cho phép s? và gi?i h?n ?? dài 10 ký t?
+                                        });
+                                    };
+                                    function removeAfterFinish()
+                                    {
+                                        sessionStorage.removeItem('itemTrue');
 
-            let cartRemove = JSON.parse(sessionStorage.getItem('usercart' + user));
-            cartRemove.forEach((item, index) => {
-                if (item.selected === true) {
-                    removeItem(index);
-                }
-            });
-        }
-        function removeItem(index) {
-            cart.splice(index, 1);
-            renderCart();
-            saveCart();
-        }
-        function paySubmit(event)
-        {
-            event.preventDefault();
-            const moneyInput = document.querySelector('input[name="money"]').value;
-            const total = document.querySelector('#cart-total').textContent.slice(1);
-            const address = encodeURIComponent(document.getElementById('address').value);
-            const phone = encodeURIComponent(document.getElementById('phone').value);
-            console.log(total);
-            const url = '/SWPClubManegement/JerseyPaymentServlet?address=' + address + '&phone=' + phone + '&money=' + moneyInput;
+                                        let cartRemove = JSON.parse(sessionStorage.getItem('usercart' + user));
+                                        cartRemove.forEach((item, index) => {
+                                            if (item.selected === true) {
+                                                removeItem(index);
+                                            }
+                                        });
+                                    }
+                                    function removeItem(index) {
+                                        cart.splice(index, 1);
+                                        renderCart();
+                                        saveCart();
+                                    }
+                                    function paySubmit(event)
+                                    {
+                                        event.preventDefault();
+                                        const moneyInput = document.querySelector('input[name="money"]').value;
+                                        const total = document.querySelector('#cart-total').textContent.slice(1);
+                                        const address = encodeURIComponent(document.getElementById('address').value);
+                                        const phone = encodeURIComponent(document.getElementById('phone').value);
+                                        console.log(total);
+                                        const url = '/SWPClubManegement/JerseyPaymentServlet?address=' + address + '&phone=' + phone + '&money=' + moneyInput;
 
-            if (parseFloat(moneyInput) !== parseFloat(total))
-            {
-                alert('please pay enough money');
-                return;
-            } else
-            {
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(cart)
-                })
-                        .then(response => {
-                            if (!response.ok) {
-                                alert("Network not okay");
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log(data);
-                            if (data.status === 'error')
-                            {
+                                        if (parseFloat(moneyInput) !== parseFloat(total))
+                                        {
+                                            alert('please pay enough money');
+                                            return;
+                                        } else
+                                        {
+                                            fetch(url, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(cart)
+                                            })
+                                                    .then(response => {
+                                                        if (!response.ok) {
+                                                            alert("Network not okay");
+                                                            throw new Error('Network response was not ok');
+                                                        }
+                                                        return response.json();
+                                                    })
+                                                    .then(data => {
+                                                        console.log(data);
+                                                        if (data.status === 'error')
+                                                        {
 
 
-                                alert(data.message);
-                                return;
-                            }
-                            removeAfterFinish();
-                        })
-                        .catch(error => {
-                            alert(error);
-                            throw new Error(error);
-                        });
-            }
-        }
+                                                            alert(data.message);
+                                                            return;
+                                                        }
+                                                        removeAfterFinish();
+                                                    })
+                                                    .catch(error => {
+                                                        alert(error);
+                                                        throw new Error(error);
+                                                    });
+                                        }
+                                    }
 
     </script>
 </html>

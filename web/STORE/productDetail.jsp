@@ -430,38 +430,8 @@
                                     <figure><a href="javascript:void(0);"><img src="${user.image}" alt="image description"></a></figure>
                                     <span>${user.userName}</span>
                                 </div>
-                                <div id="rightBar">
+                                                                     <%@include file="../STORE/rightBarStore.jsp" %>
 
-
-
-
-                                    <div class="login-block">
-                                        <c:choose >
-                                            <c:when test="${user.image==null}">
-                                                <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="alt"/>
-                                            </c:when>
-                                            <c:otherwise>
-
-
-                                                <img id="image-bar" class="avatar" src="${user.image}" alt="alt"/>
-
-                                            </c:otherwise>
-                                        </c:choose> 
-                                        <h5> ${user.name}</h5>
-                                        <div class="edit" >
-                                            <a href="../EditProfileServlet" style=" color: Black; text-decoration:none ;font-size: 12px;text-height: 500">Edit Profile</a>
-                                        </div>
-                                        <div  class="changepass">
-                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/ChangePasswordServlet" > Change Password</a>
-                                        </div>
-                                        <div  class="logout">
-                                            <a style="color: black; text-decoration:none; font-size: 12px;text-height: 500" href="http://localhost:8080/SWPClubManegement/LogoutServlet" > Logout</a>
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
                             </div>
                         </div>
                     </div>

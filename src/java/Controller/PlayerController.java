@@ -264,9 +264,19 @@ public class PlayerController extends HttpServlet {
 
                             }
                             //fileItem .getName() tra ve 1 tẹp tin day du   file. get nen thi chi tra ve namefile
-                            file_name = new File(fileItem.getName()).getName()+System.currentTimeMillis();
+                            file_name = new File(fileItem.getName()).getName();
 
                             String path = request.getServletContext().getRealPath("IMAGE\\PLAYER");
+                            String originalFileName = fileItem.getName();
+                            String fileExtension = "";
+
+                            int dotIndex = originalFileName.lastIndexOf('.');
+                            if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
+                                fileExtension = originalFileName.substring(dotIndex);
+                            }
+                            //fileItem .getName() tra ve 1 tẹp tin day du   file. get nen thi chi tra ve namefile
+                            file_name = new File(originalFileName).getName();
+                            file_name = file_name.substring(0, dotIndex) + System.currentTimeMillis() + fileExtension;
                             String filePath = path + "\\" + file_name;
 
 //                        String filePath = "SWPWedRealClubManagement\\web\\IMAGE/AVATAR\\" + file_name;
@@ -297,7 +307,7 @@ public class PlayerController extends HttpServlet {
                 User u = udao.getUserByEmail(formFields.get("email1"));
                 if (file_name != null && u != null) {
 
-                    u.setImage(request.getContextPath() + "\\IMAGE\\PLAYER\\" + file_name);
+                    u.setImage(request.getContextPath() + "//IMAGE//PLAYER//" + file_name);
                     udao.update(u);
                 }
 

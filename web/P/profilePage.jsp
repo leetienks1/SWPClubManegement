@@ -15,6 +15,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+                <%@include file="../INCLUDES/head.jsp" %> 
+
         <style>/* Định dạng các div chứa thông tin */
             div {
                 margin-bottom: 20px; /* Khoảng cách giữa các div */
@@ -205,7 +207,7 @@
                         </c:choose>
                     </div>
                 </div>
-                <a href="http://localhost:8080/SWPWedRealClubManagement/HomeServlet"> go gome</a>
+                <a href="/SWPWedRealClubManagement/HomeServlet"> go gome</a>
             </div>
 
         </div>
