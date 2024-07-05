@@ -369,33 +369,33 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         }
     }
     
-     public List<PlayerStat> getPlayerStats(int playerID) {
-        List<PlayerStat> stats = new ArrayList<>();
-        sql = "SELECT  [PlayerID], [YellowCards], [RedCards],GoalsScored FROM [RealClub].[dbo].[PlayerPerformance] WHERE [PlayerID] = ?";
-        try {
-            con = this.openConnection();
-            st = con.prepareStatement(sql);
-            st.setInt(1, playerID);
-            rs = st.executeQuery();
-            while (rs.next()) {
-                //  int statID = rs.getInt("StatID");
-                // LocalDate date = rs.getDate("Date").toLocalDate();
-                int goalsScored = rs.getInt("GoalsScored");
-                //  int assists = rs.getInt("Assists");
-                int yellowCards = rs.getInt("YellowCards");
-                int redCards = rs.getInt("RedCards");
-
-                // Create a new PlayerStat object using the constructor
-                PlayerStat stat = new PlayerStat(1, new Date(2024, 04, 06).toLocalDate(), goalsScored, 0, yellowCards, redCards);
-                stats.add(stat);
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
-        } finally {
-            closeResources();
-        }
-        return stats;
-    }
+//     public List<PlayerStat> getPlayerStats(int playerID) {
+//        List<PlayerStat> stats = new ArrayList<>();
+//        sql = "SELECT  [PlayerID], [YellowCards], [RedCards],GoalsScored FROM [RealClub].[dbo].[PlayerPerformance] WHERE [PlayerID] = ?";
+//        try {
+//            con = this.openConnection();
+//            st = con.prepareStatement(sql);
+//            st.setInt(1, playerID);
+//            rs = st.executeQuery();
+//            while (rs.next()) {
+//                //  int statID = rs.getInt("StatID");
+//                // LocalDate date = rs.getDate("Date").toLocalDate();
+//                int goalsScored = rs.getInt("GoalsScored");
+//                //  int assists = rs.getInt("Assists");
+//                int yellowCards = rs.getInt("YellowCards");
+//                int redCards = rs.getInt("RedCards");
+//
+//                // Create a new PlayerStat object using the constructor
+//                PlayerStat stat = new PlayerStat(1, new Date(2024, 04, 06).toLocalDate(), goalsScored, 0, yellowCards, redCards);
+//                stats.add(stat);
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+//        } finally {
+//            closeResources();
+//        }
+//        return stats;
+//    }
 
     public List<PhysicalCondition> getPlayerCondition(int playerID) {
         List<PhysicalCondition> stats = new ArrayList<>();

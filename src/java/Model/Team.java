@@ -10,11 +10,11 @@ import java.io.Serializable;
  *
  * @author Desktop
  */
-public class Team implements Serializable{
-     private int teamID;
+public class Team implements Serializable {
+
+    private int teamID;
     private String teamName;
     private String flag;
-
 
     public Team(int teamID, String teamName, String flag) {
         this.teamID = teamID;
@@ -29,33 +29,17 @@ public class Team implements Serializable{
     public void setFlag(String flag) {
         this.flag = flag;
     }
-    
-
 
     private String stadium;
 
     public Team() {
     }
 
-    public Team(int teamID, String teamName,String stadium) {
-        this.teamID = teamID;
-        this.teamName = teamName;
-        this.stadium = stadium;
-    }
-
-    public Team(int teamID, String teamName, String flag,String stadium) {
+    public Team(int teamID, String teamName, String flag, String stadium) {
         this.teamID = teamID;
         this.teamName = teamName;
         this.flag = flag;
         this.stadium = stadium;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
     }
 
     public String getStadium() {
@@ -65,8 +49,6 @@ public class Team implements Serializable{
     public void setStadium(String stadium) {
         this.stadium = stadium;
     }
-    
-    
 
     public Team(String teamName) {
         this.teamName = teamName;
@@ -92,6 +74,5 @@ public class Team implements Serializable{
     public String toString() {
         return "Team{" + "teamID=" + teamID + ", teamName=" + teamName + '}';
     }
-    
-    
+
 }
