@@ -47,15 +47,18 @@
                     labels: [
                         'Total Red Cards',
                         'Total Yellow Cards',
-                        'Total Goals'
+                        'Total Goals',
+                        'Total Assists'
+                        
                     ],
                     datasets: [{
                             label: 'Player Statistics',
-                            data: [${a.totalRed}, ${a.totalYellow}, ${a.totalGoals}],
+                            data: [${a.totalRed}, ${a.totalYellow}, ${a.totalGoals},${a.totalAssists}],
                             backgroundColor: [
                                 'rgb(255, 99, 132)',
                                 'rgb(255, 205, 86)',
-                                'rgb(201, 203, 207)'
+                                'rgb(201, 203, 207)',
+                                'rgb(54, 162, 235)' 
                             ]
                         }]
                 },

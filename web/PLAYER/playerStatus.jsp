@@ -29,8 +29,9 @@
                         <th>
                             Player Name
                         </th>
+
                         <th>
-                            date
+                            Match ID
                         </th>
                         <th>
                             Goals Scored
@@ -53,7 +54,7 @@
 
                         <tr>
                             <td>${sessionScope.user.userName}</td>
-                            <td>${c.date}</td>
+                            <td>${c.matchID}</td>
                             <td>${c.goalsScored}</td>
                             <td>${c.assists}</td>
                             <td>${c.yellowCards}</td>

@@ -15,7 +15,7 @@ public class Team implements Serializable {
     private int teamID;
     private String teamName;
     private String flag;
-
+ private String stadium;
     public Team(int teamID, String teamName, String flag) {
         this.teamID = teamID;
         this.teamName = teamName;
@@ -30,7 +30,7 @@ public class Team implements Serializable {
         this.flag = flag;
     }
 
-    private String stadium;
+    
 
     public Team() {
     }

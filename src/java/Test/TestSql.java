@@ -57,7 +57,7 @@ public class TestSql {
       MatchScheduleDAO mdao = new MatchScheduleDAO();
       
 
-//       edao.save(new ExpectedLineups(80,1,"2",Position.CAM,24.2,44.2));
-        System.out.println( mdao.getMatchFinishByAwayteamID(1));
+// 
+        System.out.println( pdao.getPlayerStats(1));
     }
 }

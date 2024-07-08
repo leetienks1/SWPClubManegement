@@ -234,7 +234,7 @@
             <c:forEach var="player" items="${listPlayer}">
                 <c:if test="${player.position == 'GK'}">
                     <div class="col-lg-3 col-md-6">
-                        <div class="member" onclick="window.location.href = '/SWPClubManegement/PLAYER/playerDetail.jsp?pid=${player.playerID}'">
+                        <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
                             <div class="member-img">
                                 <img src="${player.image}" class="img-fluid" alt="${player.name}">
                             </div>
@@ -261,7 +261,7 @@
             <c:forEach var="player" items="${listPlayer}">
                 <c:if test="${player.position == 'LB' || player.position == 'LCB' || player.position == 'RCB' || player.position == 'RB'}">
                     <div class="col-lg-3 col-md-6">
-                        <div class="member" onclick="window.location.href = '/SWPClubManegement/PLAYER/playerDetail.jsp?pid=${player.playerID}'">
+                        <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
                             <div class="member-img">
                                 <img src="${player.image}" class="img-fluid" alt="${player.name}">
                             </div>
@@ -288,7 +288,7 @@
             <c:forEach var="player" items="${listPlayer}">
                 <c:if test="${player.position == 'CM' || player.position == 'CAM' || player.position == 'CDM' || player.position == 'LM' || player.position == 'RM'}">
                     <div class="col-lg-3 col-md-6">
-                        <div class="member" onclick="window.location.href = '/SWPClubManegement/PLAYER/playerDetail.jsp?pid=${player.playerID}'">
+                        <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
                             <div class="member-img">
                                 <img src="${player.image}" class="img-fluid" alt="${player.name}">
                             </div>
@@ -315,7 +315,7 @@
             <c:forEach var="player" items="${listPlayer}">
                 <c:if test="${player.position == 'CF' || player.position == 'LW' || player.position == 'RW' || player.position == 'ST'}">
                     <div class="col-lg-3 col-md-6">
-                        <div class="member" onclick="window.location.href = '/SWPClubManegement/PLAYER/playerDetail.jsp?pid=${player.playerID}'">
+                        <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
                             <div class="member-img">
                                 <img src="${player.image}" class="img-fluid" alt="${player.name}">
                             </div>

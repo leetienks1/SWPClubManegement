@@ -24,6 +24,36 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
     private Connection con;
     private PreparedStatement st;
     private ResultSet rs;
+    
+    
+    public List<PlayerStat> getAllPlayerStats() {
+    List<PlayerStat> stats = new ArrayList<>();
+    String sql = "SELECT TOP (1000) [PerformanceID], [PlayerID], [MatchID], [GoalsScored], [YellowCards], [RedCards], [Assists] FROM [RealClub].[dbo].[PlayerPerformance]";
+    try {
+        con = this.openConnection();
+        st = con.prepareStatement(sql);
+        rs = st.executeQuery();
+        while (rs.next()) {
+            int statID = rs.getInt("PerformanceID");
+            int playerID = rs.getInt("PlayerID");
+            int matchID = rs.getInt("MatchID");
+            int goalsScored = rs.getInt("GoalsScored");
+            int assists = rs.getInt("Assists");
+            int yellowCards = rs.getInt("YellowCards");
+            int redCards = rs.getInt("RedCards");
+
+            // Create a new PlayerStat object using the constructor
+            PlayerStat stat = new PlayerStat(statID, playerID, matchID, goalsScored, assists, yellowCards, redCards);
+            stats.add(stat);
+        }
+    } catch (SQLException | ClassNotFoundException e) {
+        Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+    } finally {
+        closeResources();
+    }
+    return stats;
+}
+
 
     public List<Player> getBySearch(String searchValue) {
         String param = "%" + searchValue + "%";
@@ -263,7 +293,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
                 + "      ,[YellowCards]\n"
                 + "      ,[RedCards]\n"
                 + "      ,[Assists]\n"
-                + "  FROM [RealClub].[dbo].[PlayerPerformance] WHERE [PlayerID] = ?";
+                + "  FROM [RealClub].[dbo].[PlayerPerformance] WHERE [PlayerID] = (select PlayerID from Player where UserID = ? )";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
