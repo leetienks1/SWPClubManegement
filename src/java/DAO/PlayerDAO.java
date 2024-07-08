@@ -429,7 +429,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 
     public List<PhysicalCondition> getPlayerCondition(int playerID) {
         List<PhysicalCondition> stats = new ArrayList<>();
-        sql = "SELECT *  FROM [RealClub].[dbo].[PlayerPhysicalCondition] where PlayerID = ?";
+        sql = "SELECT *  FROM [RealClub].[dbo].[PlayerPhysicalCondition] where  [PlayerID] = (select PlayerID from Player where UserID = ? )";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -450,7 +450,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 
     public List<DietPlans> getDietPlans(int playerID) {
         List<DietPlans> stats = new ArrayList<>();
-        sql = "SELECT *  FROM [RealClub].[dbo].[DietPlan] where PlayerID = ?";
+        sql = "SELECT *  FROM [RealClub].[dbo].[DietPlan] where  [PlayerID] = (select PlayerID from Player where UserID = ? )";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -471,7 +471,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 
     public List<Treatment> getTreatment(int playerID) {
         List<Treatment> stats = new ArrayList<>();
-        sql = "SELECT * FROM [TreatmentSchedule] where PlayerID = ?";
+        sql = "SELECT * FROM [TreatmentSchedule] where  [PlayerID] = (select PlayerID from Player where UserID = ? )";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
