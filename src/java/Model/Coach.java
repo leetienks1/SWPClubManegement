@@ -3,13 +3,12 @@ package Model;
 import java.io.Serializable;
 
 /**
- *
  * @author Desktop
  */
 public class Coach implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private int coachID;
     private int userID;
     private String coachName;
@@ -17,7 +16,11 @@ public class Coach implements Serializable {
     public Coach() {
     }
 
-    public Coach(int coachID, int userID, String coachName) {
+    public Coach(
+        int coachID,
+        int userID,
+        String coachName
+    ) {
         this.coachID = coachID;
         this.userID = userID;
         this.coachName = coachName;

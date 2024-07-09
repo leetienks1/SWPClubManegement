@@ -7,23 +7,45 @@ package Model;
 import java.io.Serializable;
 
 /**
- *
  * @author Desktop
  */
-public class Team implements Serializable{
-     private int teamID;
+public class Team implements Serializable {
+    private int teamID;
     private String teamName;
+    private String flag;
+
+    public Team(
+        int teamID,
+        String teamName,
+        String flag
+    ) {
+        this.teamID = teamID;
+        this.teamName = teamName;
+        this.flag = flag;
+    }
 
     public Team() {
     }
 
-    public Team(int teamID, String teamName) {
+    public Team(
+        int teamID,
+        String teamName
+    ) {
         this.teamID = teamID;
         this.teamName = teamName;
     }
 
+
     public Team(String teamName) {
         this.teamName = teamName;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
     public int getTeamID() {
@@ -46,6 +68,6 @@ public class Team implements Serializable{
     public String toString() {
         return "Team{" + "teamID=" + teamID + ", teamName=" + teamName + '}';
     }
-    
-    
+
+
 }

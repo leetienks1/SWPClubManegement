@@ -10,31 +10,20 @@ import Model.Player;
 import Model.Position;
 import Model.Role;
 import Model.User;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import org.apache.poi.ss.usermodel.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.ss.usermodel.*;
+import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
- *
  * @author Desktop
  */
 @MultipartConfig
@@ -44,13 +33,15 @@ public class UploadExcelServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -67,32 +58,38 @@ public class UploadExcelServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         request.getSession().removeAttribute("emailValid");
-                request.getSession().removeAttribute("status");
+        request.getSession().removeAttribute("status");
 
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         // Get the file part from the request
@@ -113,7 +110,10 @@ public class UploadExcelServlet extends HttpServlet {
             // Xử lý hàng tiêu đề để điền vào bản đồ chỉ số cột
             Row rowHeader = sheet.getRow(0);
             for (Cell cell : rowHeader) {
-                columnIndices.put(cell.getStringCellValue().toLowerCase(), cell.getColumnIndex());
+                columnIndices.put(
+                    cell.getStringCellValue().toLowerCase(),
+                    cell.getColumnIndex()
+                );
                 System.out.println(columnIndices.get(cell.getStringCellValue().toLowerCase()));
             }
 
@@ -132,27 +132,52 @@ public class UploadExcelServlet extends HttpServlet {
                     break;
                 }
                 // Lấy thông tin cơ bản
-                String name = getStringCellValue(row, columnIndices.get("name"));
+                String name = getStringCellValue(
+                    row,
+                    columnIndices.get("name")
+                );
                 System.out.println("name " + name);
-                String password = getStringCellValue(row, columnIndices.get("password"));
+                String password = getStringCellValue(
+                    row,
+                    columnIndices.get("password")
+                );
                 if ("".equals(password)) {
-                    password = String.valueOf((int) getNumericCellValue(row, columnIndices.get("password")));
+                    password = String.valueOf((int) getNumericCellValue(
+                        row,
+                        columnIndices.get("password")
+                    ));
                 }
                 System.out.println("pass " + password);
-                String email = getStringCellValue(row, columnIndices.get("email"));
-                User uCheckvalid= udao.getUserByEmail(email);
-                if ( uCheckvalid == null) {
+                String email = getStringCellValue(
+                    row,
+                    columnIndices.get("email")
+                );
+                User uCheckvalid = udao.getUserByEmail(email);
+                if (uCheckvalid == null) {
                     System.out.println(email);
                     String image = "";
                     if (rowCount <= pictures.size() - 1) {
-                        image = SaveImagePlayer(request, pictures.get(rowCount), name);
+                        image = SaveImagePlayer(
+                            request,
+                            pictures.get(rowCount),
+                            name
+                        );
                     }
                     // Tạo đối tượng User
-                    User u = new User(name, image, password, email, Role.Player);
+                    User u = new User(
+                        name,
+                        image,
+                        password,
+                        email,
+                        Role.Player
+                    );
                     udao.save(u);
-                    
 
-                    String poString = getStringCellValue(row, columnIndices.get("position")).toUpperCase();
+
+                    String poString = getStringCellValue(
+                        row,
+                        columnIndices.get("position")
+                    ).toUpperCase();
 
                     Position position = null;
                     if (poString != null || poString != "") {
@@ -162,22 +187,38 @@ public class UploadExcelServlet extends HttpServlet {
                     }
 
                     // Lấy và kiểm tra ngày tháng năm sinh
-                    LocalDate age = getDateCellValue(row, columnIndices.get("dob"), formatter);
+                    LocalDate age = getDateCellValue(
+                        row,
+                        columnIndices.get("dob"),
+                        formatter
+                    );
 
                     // Lấy cân nặng và chiều cao
-                    double weight = getNumericCellValue(row, columnIndices.get("weight"));
-                    int height = (int) getNumericCellValue(row, columnIndices.get("height"));
+                    double weight = getNumericCellValue(
+                        row,
+                        columnIndices.get("weight")
+                    );
+                    int height = (int) getNumericCellValue(
+                        row,
+                        columnIndices.get("height")
+                    );
 
                     // Tạo đối tượng Player
-                    Player player = new Player(udao.getUserByEmail(email).getUserId(), position, name, age, weight, height);
+                    Player player = new Player(
+                        udao.getUserByEmail(email).getUserId(),
+                        position,
+                        name,
+                        age,
+                        weight,
+                        height
+                    );
 
                     // Lưu vào cơ sở dữ liệu (giả sử udao và pdao đã được triển khai đúng cách)
                     pdao.save(player);
                     // Thêm player vào danh sách
                     players.add(player);
 
-                }else
-                {
+                } else {
                     emailValid.add(email);
                 }
 
@@ -192,14 +233,18 @@ public class UploadExcelServlet extends HttpServlet {
             for (Player player : players) {
                 System.out.println(player);
             }
-            if(emailValid.isEmpty())
-            {
-                request.getSession().setAttribute("status", "1");
-            }else
-            {
-                request.getSession().setAttribute("emailValid", emailValid);
+            if (emailValid.isEmpty()) {
+                request.getSession().setAttribute(
+                    "status",
+                    "1"
+                );
+            } else {
+                request.getSession().setAttribute(
+                    "emailValid",
+                    emailValid
+                );
             }
-            
+
             response.sendRedirect("/SWPClubManegement/ADMIN/adminPage.jsp");
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,7 +253,10 @@ public class UploadExcelServlet extends HttpServlet {
     }
     // Helper method to safely retrieve string cell value
 
-    private String getStringCellValue(Row row, Integer columnIndex) {
+    private String getStringCellValue(
+        Row row,
+        Integer columnIndex
+    ) {
         Cell cell = row.getCell(columnIndex);
         if (cell != null && cell.getCellType() == CellType.STRING) {
             return cell.getStringCellValue();
@@ -216,8 +264,11 @@ public class UploadExcelServlet extends HttpServlet {
         return ""; // Return empty string if cell is null or not a string
     }
 
-// Helper method to safely retrieve numeric cell value
-    private double getNumericCellValue(Row row, Integer columnIndex) {
+    // Helper method to safely retrieve numeric cell value
+    private double getNumericCellValue(
+        Row row,
+        Integer columnIndex
+    ) {
         Cell cell = row.getCell(columnIndex);
         if (cell != null && cell.getCellType() == CellType.NUMERIC) {
             return cell.getNumericCellValue();
@@ -225,12 +276,19 @@ public class UploadExcelServlet extends HttpServlet {
         return 0.0; // Return 0.0 if cell is null or not numeric
     }
 
-// Helper method to safely retrieve date cell value
-    private LocalDate getDateCellValue(Row row, Integer columnIndex, DateTimeFormatter formatter) {
+    // Helper method to safely retrieve date cell value
+    private LocalDate getDateCellValue(
+        Row row,
+        Integer columnIndex,
+        DateTimeFormatter formatter
+    ) {
         Cell cell = row.getCell(columnIndex);
         if (cell != null) {
             if (cell.getCellType() == CellType.STRING) {
-                return LocalDate.parse(cell.getStringCellValue(), formatter);
+                return LocalDate.parse(
+                    cell.getStringCellValue(),
+                    formatter
+                );
             } else if (cell.getCellType() == CellType.NUMERIC) {
                 return cell.getLocalDateTimeCellValue().toLocalDate();
             }
@@ -238,19 +296,26 @@ public class UploadExcelServlet extends HttpServlet {
         return null; // Handle null or invalid date cell
     }
 
-    private String SaveImagePlayer(HttpServletRequest request, PictureData pictureData, String name) throws FileNotFoundException, IOException {
+    private String SaveImagePlayer(
+        HttpServletRequest request,
+        PictureData pictureData,
+        String name
+    ) throws IOException {
         String path = request.getServletContext().getRealPath("IMAGE\\PLAYER");
-//        String imageFilePath = "C:\\Users\\Desktop\\Documents\\NetBeansProjects\\SWPClubManegement\\web\\IMAGE\\PLAYER";
+        //        String imageFilePath = "C:\\Users\\Desktop\\Documents\\NetBeansProjects\\SWPClubManegement\\web\\IMAGE\\PLAYER";
 
         String ext = pictureData.suggestFileExtension();
         byte[] pictureBytes = pictureData.getData();
 
         // Tạo tên tệp dựa trên thời gian để tránh trùng lặp
-        String fileName = name.replace(" ", "_") + System.currentTimeMillis() + "." + ext;
+        String fileName = name.replace(
+            " ",
+            "_"
+        ) + System.currentTimeMillis() + "." + ext;
 
         // Đường dẫn đầy đủ đến tệp đầu ra
         String outputFilePath = path + File.separator + fileName;
-        String pa =request.getContextPath()+"\\IMAGE\\PLAYER\\"+fileName;
+        String pa = request.getContextPath() + "\\IMAGE\\PLAYER\\" + fileName;
         // Ghi dữ liệu hình ảnh ra tệp
         FileOutputStream fileOutputStream = new FileOutputStream(outputFilePath);
         fileOutputStream.write(pictureBytes);

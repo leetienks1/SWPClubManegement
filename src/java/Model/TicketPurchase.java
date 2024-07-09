@@ -12,6 +12,17 @@ public class TicketPurchase {
     private Integer status;
     private String paymentMethod;
 
+    public static TicketPurchase mappingDb(ResultSet resultSet) throws SQLException {
+        TicketPurchase ticketPurchase = new TicketPurchase();
+        ticketPurchase.setUserId(resultSet.getInt("UserID"));
+        ticketPurchase.setPaymentMethod(resultSet.getString("PaymentMethod"));
+        ticketPurchase.setTicketID(resultSet.getInt("TicketID"));
+        ticketPurchase.setPurchaseDate(resultSet.getDate("PurchaseDate"));
+        ticketPurchase.setPurchaseID(resultSet.getInt("PurchaseID"));
+        ticketPurchase.setStatus(resultSet.getInt("status"));
+        return ticketPurchase;
+    }
+
     public Integer getPurchaseID() {
         return purchaseID;
     }
@@ -58,16 +69,5 @@ public class TicketPurchase {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
-    }
-
-    public static TicketPurchase mappingDb(ResultSet resultSet) throws SQLException {
-        TicketPurchase ticketPurchase = new TicketPurchase();
-        ticketPurchase.setUserId(resultSet.getInt("UserID"));
-        ticketPurchase.setPaymentMethod(resultSet.getString("PaymentMethod"));
-        ticketPurchase.setTicketID(resultSet.getInt("TicketID"));
-        ticketPurchase.setPurchaseDate(resultSet.getDate("PurchaseDate"));
-        ticketPurchase.setPurchaseID(resultSet.getInt("PurchaseID"));
-        ticketPurchase.setStatus(resultSet.getInt("status"));
-        return ticketPurchase;
     }
 }

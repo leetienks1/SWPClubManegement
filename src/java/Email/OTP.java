@@ -7,7 +7,6 @@ package Email;
 import java.security.SecureRandom;
 
 /**
- *
  * @author Zanis
  */
 public class OTP {
@@ -30,8 +29,8 @@ public class OTP {
         }
         return otp.toString();
     }
-    
-    public static void main(String args[]) {
+
+    public static void main(String[] args) {
         String otp = generateOTP(6);
         System.out.println("Generated OTP: " + otp);
     }

@@ -5,14 +5,12 @@
 package DAO;
 
 import Model.Coach;
-import Model.Player;
 import dal.ConnectDB;
+
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Desktop
  */
 public class CoachDAO extends ConnectDB implements DAO<Coach> {
@@ -33,10 +30,7 @@ public class CoachDAO extends ConnectDB implements DAO<Coach> {
     @Override
     public List<Coach> getAll() {
         List<Coach> coaches = new ArrayList<>();
-        sql = "SELECT [CoachID]\n"
-                + "      ,[UserID]\n"
-                + "      ,[CoachName]\n"
-                + "  FROM [RealClub].[dbo].[Coach]";
+        sql = "SELECT [CoachID]\n" + "      ,[UserID]\n" + "      ,[CoachName]\n" + "  FROM [RealClub].[dbo].[Coach]";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -49,7 +43,11 @@ public class CoachDAO extends ConnectDB implements DAO<Coach> {
                 coaches.add(c);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -62,7 +60,10 @@ public class CoachDAO extends ConnectDB implements DAO<Coach> {
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             rs = st.executeQuery();
             if (rs.next()) {
                 Coach c = new Coach();
@@ -72,7 +73,11 @@ public class CoachDAO extends ConnectDB implements DAO<Coach> {
                 return Optional.of(c);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(CoachDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CoachDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -85,16 +90,26 @@ public class CoachDAO extends ConnectDB implements DAO<Coach> {
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, coach.getUserID());
-            st.setString(2, coach.getCoachName());
-           int rowsAffected = st.executeUpdate();
+            st.setInt(
+                1,
+                coach.getUserID()
+            );
+            st.setString(
+                2,
+                coach.getCoachName()
+            );
+            int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Player updated successfully.");
             } else {
                 System.out.println("Failed to update player.");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(CoachDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CoachDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -106,9 +121,18 @@ public class CoachDAO extends ConnectDB implements DAO<Coach> {
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, coach.getUserID());
-            st.setString(2, coach.getCoachName());
-            st.setInt(3, coach.getCoachID());
+            st.setInt(
+                1,
+                coach.getUserID()
+            );
+            st.setString(
+                2,
+                coach.getCoachName()
+            );
+            st.setInt(
+                3,
+                coach.getCoachID()
+            );
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Player updated successfully.");
@@ -116,7 +140,11 @@ public class CoachDAO extends ConnectDB implements DAO<Coach> {
                 System.out.println("Failed to update player.");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(CoachDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CoachDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -128,10 +156,17 @@ public class CoachDAO extends ConnectDB implements DAO<Coach> {
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(CoachDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CoachDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }

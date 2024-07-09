@@ -4,14 +4,10 @@ import DAO.TicketPurchaseDAO;
 import Model.TicketPurchase;
 import dto.GetPaymentResponse;
 import exception.NotFoundTransactionException;
-import java.util.ArrayList;
 import payment.IPaymentService;
 import payment.PaymentFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class ChangeStatusTicketPurchaseSchedule implements Runnable {
@@ -36,13 +32,19 @@ public class ChangeStatusTicketPurchaseSchedule implements Runnable {
                 final String paymentMethod = ticketPurchase.getPaymentMethod();
                 final IPaymentService paymentService = PaymentFactory.getPaymentService(paymentMethod);
                 Map<String, Object> map = new HashMap<>();
-                map.put(TicketPurchase.class.getName(), ticketPurchase);
-                map.put(Properties.class.getName(), this.properties);
+                map.put(
+                    TicketPurchase.class.getName(),
+                    ticketPurchase
+                );
+                map.put(
+                    Properties.class.getName(),
+                    this.properties
+                );
                 final GetPaymentResponse response = paymentService.query(map);
                 if (response.isSuccess()) {
                     ticketPurchase.setStatus(1);
                 }
-            } catch(NotFoundTransactionException ex) {
+            } catch (NotFoundTransactionException ex) {
                 deleteId.add(ticketPurchase.getPurchaseID());
             }
         }

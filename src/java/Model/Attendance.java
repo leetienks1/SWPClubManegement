@@ -7,23 +7,27 @@ package Model;
 import java.time.LocalDate;
 
 /**
- *
  * @author Zanis
  */
 public class Attendance {
 
+    LocalDate CheckDate;
+    boolean IsPresent;
     private int AttendanceID;
     private int PlayerID;
     private int TrainingID;
-    LocalDate CheckDate;
-    boolean IsPresent;
 
     public Attendance() {
     }
 
-    
-    
-    public Attendance(int AttendanceID, int PlayerID, int TrainingID, LocalDate CheckDate, boolean IsPresent) {
+
+    public Attendance(
+        int AttendanceID,
+        int PlayerID,
+        int TrainingID,
+        LocalDate CheckDate,
+        boolean IsPresent
+    ) {
         this.AttendanceID = AttendanceID;
         this.PlayerID = PlayerID;
         this.TrainingID = TrainingID;
@@ -31,14 +35,18 @@ public class Attendance {
         this.IsPresent = IsPresent;
     }
 
-    public Attendance(int PlayerID, int TrainingID, LocalDate CheckDate, boolean IsPresent) {
+    public Attendance(
+        int PlayerID,
+        int TrainingID,
+        LocalDate CheckDate,
+        boolean IsPresent
+    ) {
         this.PlayerID = PlayerID;
         this.TrainingID = TrainingID;
         this.CheckDate = CheckDate;
         this.IsPresent = IsPresent;
     }
-    
-    
+
 
     public int getAttendanceID() {
         return AttendanceID;
@@ -84,6 +92,6 @@ public class Attendance {
     public String toString() {
         return "Attendance{" + "AttendanceID=" + AttendanceID + ", PlayerID=" + PlayerID + ", TrainingID=" + TrainingID + ", CheckDate=" + CheckDate + ", IsPresent=" + IsPresent + '}';
     }
-    
-    
+
+
 }

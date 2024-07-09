@@ -4,39 +4,32 @@
  */
 package Controller;
 
-import DAO.NewsDAO;
 import DAO.PlayerDAO;
 import DAO.UserDAO;
-import Model.News;
 import Model.Player;
 import Model.Position;
 import Model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
  * @author Desktop
  */
 public class PlayerController extends HttpServlet {
@@ -45,13 +38,15 @@ public class PlayerController extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -68,17 +63,20 @@ public class PlayerController extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         try {
 
             String theCommand = request.getParameter("command");
@@ -90,16 +88,28 @@ public class PlayerController extends HttpServlet {
                     response.sendRedirect("/SWPClubManegement/ADMIN/adminPage.jsp");
                     break;
                 case "ADD":
-                    AddPlayer(request, response);
+                    AddPlayer(
+                        request,
+                        response
+                    );
                     break;
                 case "LOAD":
-                    ListPlayers(request, response);
+                    ListPlayers(
+                        request,
+                        response
+                    );
                     break;
                 case "UPDATE":
-                    UpdatePlayer(request, response);
+                    UpdatePlayer(
+                        request,
+                        response
+                    );
                     break;
                 case "DELETE":
-                    DeletePlayer(request, response);
+                    DeletePlayer(
+                        request,
+                        response
+                    );
                     break;
                 default:
 
@@ -107,22 +117,31 @@ public class PlayerController extends HttpServlet {
 
         } catch (Exception ex) {
 
-            Logger.getLogger(PlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerController.class.getName()).log(
+                Level.SEVERE,
+                null,
+                ex
+            );
         }
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        UpdatePlayer(request, response);
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+        UpdatePlayer(
+            request,
+            response
+        );
     }
 
     /**
@@ -135,7 +154,10 @@ public class PlayerController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void ListPlayers(HttpServletRequest request, HttpServletResponse response) {
+    public void ListPlayers(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         try {
             String search = request.getParameter("search");
             if (search == null) {
@@ -156,8 +178,14 @@ public class PlayerController extends HttpServlet {
             // Lặp qua tất cả các giá trị enum và thêm chúng vào danh sách
             Gson gson = new Gson();
             JsonObject json = new JsonObject();
-            json.add("players", gson.toJsonTree(players));
-            json.add("users", gson.toJsonTree(users));
+            json.add(
+                "players",
+                gson.toJsonTree(players)
+            );
+            json.add(
+                "users",
+                gson.toJsonTree(users)
+            );
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json.toString());
@@ -168,14 +196,20 @@ public class PlayerController extends HttpServlet {
 
     }
 
-    public void AddPlayer(HttpServletRequest request, HttpServletResponse response) {
+    public void AddPlayer(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         try {
             Player p = new Player();
             String playerName = request.getParameter("playerName");
 
             Position position = Position.valueOf(request.getParameter("position"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate age = LocalDate.parse(request.getParameter("dateOfBirth"), formatter);
+            LocalDate age = LocalDate.parse(
+                request.getParameter("dateOfBirth"),
+                formatter
+            );
 
             String formattedWeight = request.getParameter("weight");
             double weight = Double.parseDouble(formattedWeight);
@@ -212,7 +246,10 @@ public class PlayerController extends HttpServlet {
 
     }
 
-    public void UpdatePlayer(HttpServletRequest request, HttpServletResponse response) {
+    public void UpdatePlayer(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         try {
 
             String playerName = null;
@@ -230,19 +267,25 @@ public class PlayerController extends HttpServlet {
             boolean isMultipartContent = ServletFileUpload.isMultipartContent(request);
             if (!isMultipartContent) {
 
-                SendErrorMessage(out, "  Không chứa dữ liệu đa phần (enctype=multipart/form-data)");
+                SendErrorMessage(
+                    out,
+                    "  Không chứa dữ liệu đa phần (enctype=multipart/form-data)"
+                );
 
                 return;
             }
             FileItemFactory factory = new DiskFileItemFactory(); // Tạo factory chi dinh cach thuc de luu tru file dc tai len
-            ServletFileUpload upload = new ServletFileUpload(factory); // serveletFileUpload xử lý các cái yêu cầu từ http 
+            ServletFileUpload upload = new ServletFileUpload(factory); // serveletFileUpload xử lý các cái yêu cầu từ http
             //ServletFileUpload(factory) se tạo cac fileItem tu factory
             try {       // FileItem đại diện cho mỗi phần được tải lên( file , form-fields)
                 List<FileItem> fields = upload.parseRequest(request);  // phan tich cac yeu cau va tra ve 1 fileItem
                 Iterator<FileItem> it = fields.iterator();
 
                 if (!it.hasNext()) {
-                    SendErrorMessage(out, "  Không có FileItem nào");
+                    SendErrorMessage(
+                        out,
+                        "  Không có FileItem nào"
+                    );
 
                     return;
                 }
@@ -252,24 +295,30 @@ public class PlayerController extends HttpServlet {
                     if (fileItem.isFormField()) {
                         String fieldName = fileItem.getFieldName();
                         String value = fileItem.getString("UTF-8");
-                        formFields.put(fieldName, value);
+                        formFields.put(
+                            fieldName,
+                            value
+                        );
                     } else {
                         if (fileItem.getSize() > 0) {
                             String mimeType = fileItem.getContentType(); // get MINE (imgae/ png , image / jpg , application/ pdf)
                             if (mimeType == null || !mimeType.startsWith("image/")) {
 
-                                SendErrorMessage(out, "  Only upload image");
+                                SendErrorMessage(
+                                    out,
+                                    "  Only upload image"
+                                );
 
                                 return;
 
                             }
                             //fileItem .getName() tra ve 1 tẹp tin day du   file. get nen thi chi tra ve namefile
-                            file_name = new File(fileItem.getName()).getName()+System.currentTimeMillis();
+                            file_name = new File(fileItem.getName()).getName() + System.currentTimeMillis();
 
                             String path = request.getServletContext().getRealPath("IMAGE\\PLAYER");
                             String filePath = path + "\\" + file_name;
 
-//                        String filePath = "SWPWedRealClubManagement\\web\\IMAGE/AVATAR\\" + file_name;
+                            //                        String filePath = "SWPWedRealClubManagement\\web\\IMAGE/AVATAR\\" + file_name;
                             // Đảm bảo thư mục tồn tại
                             File directory = new File(filePath).getParentFile();
                             if (!directory.exists()) {
@@ -285,7 +334,10 @@ public class PlayerController extends HttpServlet {
                 playerName = formFields.get("playerName1");
                 position = Position.valueOf(formFields.get("position1"));
 
-                age = LocalDate.parse(formFields.get("dateOfBirth1"), formatter);
+                age = LocalDate.parse(
+                    formFields.get("dateOfBirth1"),
+                    formatter
+                );
                 formattedWeight = formFields.get("weight1");
                 weight = Double.parseDouble(formattedWeight);
                 roundedWeight = Math.round(weight * 10.0) / 10.0;
@@ -325,7 +377,10 @@ public class PlayerController extends HttpServlet {
 
     }
 
-    public void DeletePlayer(HttpServletRequest request, HttpServletResponse response) {
+    public void DeletePlayer(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         try {
             String playerName = request.getParameter("playerName");
 
@@ -333,7 +388,7 @@ public class PlayerController extends HttpServlet {
             Gson gson = new Gson();
             PlayerDAO pdao = new PlayerDAO();
             Player p = pdao.get(pid).orElse(null);
-            if (pdao.deleteBool(pid) == true) {
+            if (pdao.deleteBool(pid)) {
 
                 String json = gson.toJson(p);
                 response.setContentType("application/json");
@@ -354,11 +409,20 @@ public class PlayerController extends HttpServlet {
 
     }
 
-    public void SendErrorMessage(PrintWriter out, String message) {
+    public void SendErrorMessage(
+        PrintWriter out,
+        String message
+    ) {
         Map<String, String> errors = new HashMap<>();
 
-        errors.put("status", "error");
-        errors.put("message", message);
+        errors.put(
+            "status",
+            "error"
+        );
+        errors.put(
+            "message",
+            message
+        );
 
         Gson gson = new Gson();
 

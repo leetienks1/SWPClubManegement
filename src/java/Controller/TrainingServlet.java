@@ -6,21 +6,20 @@ package Controller;
 
 import DAO.TrainingScheduleDAO;
 import Model.TrainingSchedule;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
  * @author Zanis
  */
 public class TrainingServlet extends HttpServlet {
@@ -29,13 +28,15 @@ public class TrainingServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -52,17 +53,20 @@ public class TrainingServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         try {
 
             String theCommand = request.getParameter("command");
@@ -71,39 +75,63 @@ public class TrainingServlet extends HttpServlet {
             }
             switch (theCommand) {
                 case "LIST":
-                    ListTraining(request, response);
+                    ListTraining(
+                        request,
+                        response
+                    );
                     break;
                 case "ADD":
-                    AddTraining(request, response);
+                    AddTraining(
+                        request,
+                        response
+                    );
                     break;
                 case "UPDATE":
-                    UpdateTraining(request, response);
+                    UpdateTraining(
+                        request,
+                        response
+                    );
                     break;
                 case "DELETE":
-                    DeleteTraining(request, response);
+                    DeleteTraining(
+                        request,
+                        response
+                    );
                     break;
                 default:
-                    ListTraining(request, response);
+                    ListTraining(
+                        request,
+                        response
+                    );
             }
 
         } catch (Exception ex) {
 
-            Logger.getLogger(TrainingServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TrainingServlet.class.getName()).log(
+                Level.SEVERE,
+                null,
+                ex
+            );
         }
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+        processRequest(
+            request,
+            response
+        );
     }
 
     /**
@@ -116,38 +144,64 @@ public class TrainingServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void ListTraining(HttpServletRequest request, HttpServletResponse response) {
+    public void ListTraining(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         try {
             TrainingScheduleDAO tdao = new TrainingScheduleDAO();
             List<TrainingSchedule> list = tdao.getAll();
-            request.getSession().setAttribute("sessionlist", list);
+            request.getSession().setAttribute(
+                "sessionlist",
+                list
+            );
             response.sendRedirect("COACH/Training.jsp");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
 
-    public void AddTraining(HttpServletRequest request, HttpServletResponse response) {
+
+    public void AddTraining(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
         LocalDate TrainingDate = LocalDate.parse(request.getParameter("trainingDate"));
         String TrainingTime = request.getParameter("trainingTime");
         String Location = request.getParameter("location");
         String Description = request.getParameter("description");
-        TrainingSchedule t = new TrainingSchedule(TrainingDate, TrainingTime, Location, Description);
+        TrainingSchedule t = new TrainingSchedule(
+            TrainingDate,
+            TrainingTime,
+            Location,
+            Description
+        );
         tDAO.save(t);
-        
-        ListTraining(request, response);
+
+        ListTraining(
+            request,
+            response
+        );
     }
 
-    private void DeleteTraining(HttpServletRequest request, HttpServletResponse response) {
+    private void DeleteTraining(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         int cid = Integer.parseInt(request.getParameter("cid"));
         new TrainingScheduleDAO().delete(cid);
-        ListTraining(request, response);
+        ListTraining(
+            request,
+            response
+        );
     }
 
-    private void UpdateTraining(HttpServletRequest request, HttpServletResponse response) {
+    private void UpdateTraining(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         int cid = Integer.parseInt(request.getParameter("cid"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         TrainingScheduleDAO tDAO = new TrainingScheduleDAO();
@@ -161,7 +215,10 @@ public class TrainingServlet extends HttpServlet {
         t.setLocation(Location);
         t.setDescription(Description);
         tDAO.update(t);
-        ListTraining(request, response);
+        ListTraining(
+            request,
+            response
+        );
     }
 
 }

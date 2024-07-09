@@ -5,27 +5,16 @@
 package DAO;
 
 import Model.Attendance;
-import Model.TrainingSchedule;
 import dal.ConnectDB;
-import java.sql.Connection;
+
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Zanis
  */
 public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
@@ -41,12 +30,7 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
     @Override
     public List<Attendance> getAll() {
         List<Attendance> list = new ArrayList<>();
-        sql = "SELECT [AttendanceID]\n"
-                + "      ,[PlayerID]\n"
-                + "      ,[TrainingID]\n"
-                + "      ,[CheckDate]\n"
-                + "      ,[IsPresent]\n"
-                + "  FROM [RealClub].[dbo].[AttendanceCheck]";
+        sql = "SELECT [AttendanceID]\n" + "      ,[PlayerID]\n" + "      ,[TrainingID]\n" + "      ,[CheckDate]\n" + "      ,[IsPresent]\n" + "  FROM [RealClub].[dbo].[AttendanceCheck]";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -65,7 +49,11 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
                 list.add(t);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(TrainingScheduleDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TrainingScheduleDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -74,17 +62,14 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
 
     public List<Attendance> getAttendance(int id) {
         List<Attendance> list = new ArrayList<>();
-        sql = "SELECT [AttendanceID]\n"
-                + "      ,[PlayerID]\n"
-                + "      ,[TrainingID]\n"
-                + "      ,[CheckDate]\n"
-                + "      ,[IsPresent]\n"
-                + "  FROM [RealClub].[dbo].[AttendanceCheck]\n"
-                + "  WHERE [TrainingID] = ?;";
+        sql = "SELECT [AttendanceID]\n" + "      ,[PlayerID]\n" + "      ,[TrainingID]\n" + "      ,[CheckDate]\n" + "      ,[IsPresent]\n" + "  FROM [RealClub].[dbo].[AttendanceCheck]\n" + "  WHERE [TrainingID] = ?;";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             rs = st.executeQuery();
             while (rs.next()) {
                 Attendance t = new Attendance();
@@ -100,7 +85,11 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
                 list.add(t);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(TrainingScheduleDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TrainingScheduleDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -113,14 +102,29 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, t.getPlayerID());
-            st.setInt(2, t.getTrainingID());
+            st.setInt(
+                1,
+                t.getPlayerID()
+            );
+            st.setInt(
+                2,
+                t.getTrainingID()
+            );
             if (t.getCheckDate() != null) {
-                st.setDate(3, java.sql.Date.valueOf(t.getCheckDate()));
+                st.setDate(
+                    3,
+                    java.sql.Date.valueOf(t.getCheckDate())
+                );
             } else {
-                st.setDate(3, null);
+                st.setDate(
+                    3,
+                    null
+                );
             }
-            st.setBoolean(4, t.isIsPresent());
+            st.setBoolean(
+                4,
+                t.isIsPresent()
+            );
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Attendance updated successfully.");
@@ -128,7 +132,11 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
                 System.out.println("Failed to update attendance.");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(AttendanceDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -137,28 +145,45 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
     @Override
     public void update(Attendance t) {
         try {
-            sql = "UPDATE [dbo].[AttendanceCheck]\n"
-                    + "   SET [PlayerID] = (?)\n"
-                    + "      ,[TrainingID] = (?)\n"
-                    + "      ,[CheckDate] = (?)\n"
-                    + "      ,[IsPresent] = (?)\n"
-                    + " WHERE [AttendanceID]=?";
+            sql = "UPDATE [dbo].[AttendanceCheck]\n" + "   SET [PlayerID] = (?)\n" + "      ,[TrainingID] = (?)\n" + "      ,[CheckDate] = (?)\n" + "      ,[IsPresent] = (?)\n" + " WHERE [AttendanceID]=?";
 
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AttendanceDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
-            st.setInt(1, t.getPlayerID());
-            st.setInt(2, t.getTrainingID());
+            st.setInt(
+                1,
+                t.getPlayerID()
+            );
+            st.setInt(
+                2,
+                t.getTrainingID()
+            );
             if (t.getCheckDate() != null) {
-                st.setDate(3, java.sql.Date.valueOf(t.getCheckDate()));
+                st.setDate(
+                    3,
+                    java.sql.Date.valueOf(t.getCheckDate())
+                );
             } else {
-                st.setDate(3, null);
+                st.setDate(
+                    3,
+                    null
+                );
             }
-            st.setBoolean(4, t.isIsPresent());
-            st.setInt(5, t.getAttendanceID());
+            st.setBoolean(
+                4,
+                t.isIsPresent()
+            );
+            st.setInt(
+                5,
+                t.getAttendanceID()
+            );
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -171,7 +196,11 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AttendanceDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
         } finally {
             // Đóng các tài nguyên
@@ -231,10 +260,20 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
                 int trainingId = rs.getInt("TrainingID");
                 boolean isPresent = rs.getBoolean("IsPresent");
 
-                attendanceData.computeIfAbsent(playerId, k -> new TreeMap<>()).put(trainingId, isPresent);
+                attendanceData.computeIfAbsent(
+                    playerId,
+                    k -> new TreeMap<>()
+                ).put(
+                    trainingId,
+                    isPresent
+                );
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, "Error getting attendance data", e);
+            Logger.getLogger(AttendanceDAO.class.getName()).log(
+                Level.SEVERE,
+                "Error getting attendance data",
+                e
+            );
         } finally {
             closeResources();
         }
@@ -254,7 +293,11 @@ public class AttendanceDAO extends ConnectDB implements DAO<Attendance> {
                 trainingIds.add(rs.getInt("TrainingID"));
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(AttendanceDAO.class.getName()).log(Level.SEVERE, "Error getting training IDs", e);
+            Logger.getLogger(AttendanceDAO.class.getName()).log(
+                Level.SEVERE,
+                "Error getting training IDs",
+                e
+            );
         } finally {
             closeResources();
         }

@@ -44,8 +44,8 @@
     </style>
 </head>
 <body>
-    <h1>Player Attendance Statistics</h1>
-    
+    <div class="coach-fun-content">
+        <a href="COACH/CoachWelcome.jsp">back</a>
     <c:if test="${empty attendanceData}">
         <p>No attendance data available.</p>
     </c:if>
@@ -94,5 +94,6 @@
             </c:forEach>
         </table>
     </c:if>
+    </div>
 </body>
 </html>

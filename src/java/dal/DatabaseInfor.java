@@ -5,14 +5,11 @@
 package dal;
 
 /**
- *
  * @author Desktop
  */
 public interface DatabaseInfor {
     String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     String url = "jdbc:sqlserver://localhost:1433;databaseName=RealClub;";
     String user = "sa";
-
     String pass = "admin";
-
 }

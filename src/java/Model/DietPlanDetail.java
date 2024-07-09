@@ -5,7 +5,6 @@
 package Model;
 
 /**
- *
  * @author quangminh
  */
 public class DietPlanDetail {
@@ -19,7 +18,16 @@ public class DietPlanDetail {
     int Fats;
     int portionSize;
 
-    public DietPlanDetail(int FoodID, String FoodName, String Description, int Calo, int Proteins, int Carbohydrates, int Fats, int portionSize) {
+    public DietPlanDetail(
+        int FoodID,
+        String FoodName,
+        String Description,
+        int Calo,
+        int Proteins,
+        int Carbohydrates,
+        int Fats,
+        int portionSize
+    ) {
         this.FoodID = FoodID;
         this.FoodName = FoodName;
         this.Description = Description;

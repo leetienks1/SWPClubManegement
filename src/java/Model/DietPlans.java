@@ -5,7 +5,6 @@
 package Model;
 
 /**
- *
  * @author quangminh
  */
 public class DietPlans {
@@ -14,7 +13,11 @@ public class DietPlans {
     int PlayerID;
     String PlanDescription;
 
-    public DietPlans(int DietPlanID, int PlayerID, String PlanDescription) {
+    public DietPlans(
+        int DietPlanID,
+        int PlayerID,
+        String PlanDescription
+    ) {
         this.DietPlanID = DietPlanID;
         this.PlayerID = PlayerID;
         this.PlanDescription = PlanDescription;

@@ -7,11 +7,10 @@ package Model;
 import java.io.Serializable;
 
 /**
- *
  * @author Desktop
  */
-public class JerseySize implements Serializable{
-    
+public class JerseySize implements Serializable {
+
     private int sizeID;
     private int jerseyID;
     private JerseySizeEnum jerseySize;
@@ -22,13 +21,23 @@ public class JerseySize implements Serializable{
         // Default constructor
     }
 
-    public JerseySize(int sizeID, int jerseyID, JerseySizeEnum jerseySize, int jerseyQuantity) {
+    public JerseySize(
+        int sizeID,
+        int jerseyID,
+        JerseySizeEnum jerseySize,
+        int jerseyQuantity
+    ) {
         this.sizeID = sizeID;
         this.jerseyID = jerseyID;
         this.jerseySize = jerseySize;
         this.jerseyQuantity = jerseyQuantity;
     }
-    public JerseySize(int jerseyID, JerseySizeEnum jerseySize, int jerseyQuantity) {
+
+    public JerseySize(
+        int jerseyID,
+        JerseySizeEnum jerseySize,
+        int jerseyQuantity
+    ) {
         this.jerseyID = jerseyID;
         this.jerseySize = jerseySize;
         this.jerseyQuantity = jerseyQuantity;
@@ -70,12 +79,7 @@ public class JerseySize implements Serializable{
     // toString method
     @Override
     public String toString() {
-        return "JerseySize{" +
-                "sizeID=" + sizeID +
-                ", jerseyID=" + jerseyID +
-                ", jerseySize=" + jerseySize +
-                ", jerseyQuantity=" + jerseyQuantity +
-                '}';
+        return "JerseySize{" + "sizeID=" + sizeID + ", jerseyID=" + jerseyID + ", jerseySize=" + jerseySize + ", jerseyQuantity=" + jerseyQuantity + '}';
     }
 }
 

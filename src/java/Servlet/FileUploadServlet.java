@@ -4,20 +4,19 @@
  */
 package Servlet;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Desktop
  */
 @MultipartConfig
@@ -30,13 +29,15 @@ public class FileUploadServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -53,31 +54,39 @@ public class FileUploadServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+        processRequest(
+            request,
+            response
+        );
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
- protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
@@ -107,14 +116,21 @@ public class FileUploadServlet extends HttpServlet {
 
             // Check if fileUrl is created
             if (fileName.isEmpty() || fileUrl.isEmpty()) {
-                LOGGER.log(Level.SEVERE, "File URL or fileName is missing.");
+                LOGGER.log(
+                    Level.SEVERE,
+                    "File URL or fileName is missing."
+                );
                 out.print("{\"uploaded\": 0, \"error\": {\"message\": \"File URL or fileName is missing.\"}}");
             } else {
                 // Return valid JSON response to CKEditor
                 out.print("{\"uploaded\": 1, \"fileName\": \"" + fileName + "\", \"url\": \"" + fileUrl + "\"}");
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "File upload failed", e);
+            LOGGER.log(
+                Level.SEVERE,
+                "File upload failed",
+                e
+            );
             out.print("{\"uploaded\": 0, \"error\": {\"message\": \"Cannot write uploaded file to disk.\"}}");
         }
         out.flush();
@@ -127,8 +143,14 @@ public class FileUploadServlet extends HttpServlet {
             String[] items = contentDisposition.split(";");
             for (String item : items) {
                 if (item.trim().startsWith("filename")) {
-                    String fileName = item.substring(item.indexOf('=') + 2, item.length() - 1);
-                    fileName = fileName.replace("\\", "/");
+                    String fileName = item.substring(
+                        item.indexOf('=') + 2,
+                        item.length() - 1
+                    );
+                    fileName = fileName.replace(
+                        "\\",
+                        "/"
+                    );
                     int lastSlashIndex = fileName.lastIndexOf('/');
                     return fileName.substring(lastSlashIndex + 1);
                 }
@@ -136,6 +158,7 @@ public class FileUploadServlet extends HttpServlet {
         }
         return null;
     }
+
     /**
      * Returns a short description of the servlet.
      *

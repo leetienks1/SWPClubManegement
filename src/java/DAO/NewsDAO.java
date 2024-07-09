@@ -5,22 +5,16 @@
 package DAO;
 
 import Model.News;
-import java.lang.reflect.Array;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.sql.SQLException;
-import java.util.Arrays;
 
 /**
- *
  * @author Desktop
  */
 public class NewsDAO extends dal.ConnectDB implements DAO<News> {
@@ -34,23 +28,26 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
         String search = "%" + searchValue + "%";
         try {
             List listNews = new ArrayList<>();
-            sql = "SELECT TOP (1000) [NewsID]\n"
-                    + "      ,[NewsTitle]\n"
-                    + "      ,[NewsImageDescription]\n"
-                    + "      ,[NewsContent]\n"
-                    + "      ,[DatePosted]\n"
-                    + "      ,[Description]\n"
-                    + "  FROM [RealClub].[dbo].[TeamNews]\n"
-                    + "  where NewsID like ? or NewsTitle like ?";
+            sql = "SELECT TOP (1000) [NewsID]\n" + "      ,[NewsTitle]\n" + "      ,[NewsImageDescription]\n" + "      ,[NewsContent]\n" + "      ,[DatePosted]\n" + "      ,[Description]\n" + "  FROM [RealClub].[dbo].[TeamNews]\n" + "  where NewsID like ? or NewsTitle like ?";
 
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
-            st.setString(1, search);
-            st.setString(2, search);
+            st.setString(
+                1,
+                search
+            );
+            st.setString(
+                2,
+                search
+            );
 
             rs = st.executeQuery();
 
@@ -76,7 +73,11 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
         } finally {
             // Đóng các tài nguyên
@@ -101,18 +102,16 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
     public List<News> getAll() {
         try {
             List listNews = new ArrayList<>();
-            sql = "SELECT TOP (1000) [NewsID]\n"
-                    + "      ,[NewsTitle]\n"
-                    + "      ,[NewsImageDescription]\n"
-                    + "      ,[NewsContent]\n"
-                    + "      ,[DatePosted]\n"
-                    + ",[Description]"
-                    + "  FROM [RealClub].[dbo].[TeamNews]";
+            sql = "SELECT TOP (1000) [NewsID]\n" + "      ,[NewsTitle]\n" + "      ,[NewsImageDescription]\n" + "      ,[NewsContent]\n" + "      ,[DatePosted]\n" + ",[Description]" + "  FROM [RealClub].[dbo].[TeamNews]";
 
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
             rs = st.executeQuery();
@@ -139,7 +138,11 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
         } finally {
             // Đóng các tài nguyên
@@ -164,21 +167,22 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
     public Optional<News> get(int id) {
         try {
             News n = new News();
-            sql = "SELECT TOP (1000) [NewsID]\n"
-                    + "      ,[NewsTitle]\n"
-                    + "      ,[NewsImageDescription]\n"
-                    + "      ,[NewsContent]\n"
-                    + "      ,[DatePosted]\n"
-                    + ",[Description]"
-                    + "  FROM [RealClub].[dbo].[TeamNews] where NewsID=?";
+            sql = "SELECT TOP (1000) [NewsID]\n" + "      ,[NewsTitle]\n" + "      ,[NewsImageDescription]\n" + "      ,[NewsContent]\n" + "      ,[DatePosted]\n" + ",[Description]" + "  FROM [RealClub].[dbo].[TeamNews] where NewsID=?";
 
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             rs = st.executeQuery();
 
             while (rs.next()) {
@@ -201,7 +205,11 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
         } finally {
             // Đóng các tài nguyên
@@ -226,21 +234,38 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
     public void save(News t) {
         try {
             News n = new News();
-            sql = "INSERT INTO [dbo].[TeamNews] "
-                    + "([NewsTitle], [NewsImageDescription], [NewsContent], [DatePosted],[Description])"
-                    + "VALUES (?, ?, ?, ?, ?)";
+            sql = "INSERT INTO [dbo].[TeamNews] " + "([NewsTitle], [NewsImageDescription], [NewsContent], [DatePosted],[Description])" + "VALUES (?, ?, ?, ?, ?)";
 
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
-            st.setString(1, t.getNewsTitle());
-            st.setString(2, t.getNewsImageDescription());
-            st.setString(3, t.getNewsContent());
-            st.setDate(4, java.sql.Date.valueOf(t.getDatePosted()));
-            st.setString(5, t.getDescription());
+            st.setString(
+                1,
+                t.getNewsTitle()
+            );
+            st.setString(
+                2,
+                t.getNewsImageDescription()
+            );
+            st.setString(
+                3,
+                t.getNewsContent()
+            );
+            st.setDate(
+                4,
+                java.sql.Date.valueOf(t.getDatePosted())
+            );
+            st.setString(
+                5,
+                t.getDescription()
+            );
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
                 System.out.println("That bai");
@@ -252,7 +277,11 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
         } finally {
             // Đóng các tài nguyên
@@ -277,26 +306,42 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
     public void update(News t) {
         try {
             News n = new News();
-            sql = "UPDATE [dbo].[TeamNews]\n"
-                    + "   SET [NewsTitle] = (?)\n"
-                    + "      ,[NewsImageDescription] = (?)\n"
-                    + "      ,[NewsContent] = (?)\n"
-                    + "      ,[DatePosted] = (?)\n"
-                    + ",[Description] = (?)"
-                    + " WHERE [NewsID]=?";
+            sql = "UPDATE [dbo].[TeamNews]\n" + "   SET [NewsTitle] = (?)\n" + "      ,[NewsImageDescription] = (?)\n" + "      ,[NewsContent] = (?)\n" + "      ,[DatePosted] = (?)\n" + ",[Description] = (?)" + " WHERE [NewsID]=?";
 
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
-            st.setString(1, t.getNewsTitle());
-            st.setString(2, t.getNewsImageDescription());
-            st.setString(3, t.getNewsContent());
-            st.setDate(4, java.sql.Date.valueOf(t.getDatePosted()));
-            st.setString(5, t.getDescription());
-            st.setInt(6, t.getNewsId());
+            st.setString(
+                1,
+                t.getNewsTitle()
+            );
+            st.setString(
+                2,
+                t.getNewsImageDescription()
+            );
+            st.setString(
+                3,
+                t.getNewsContent()
+            );
+            st.setDate(
+                4,
+                java.sql.Date.valueOf(t.getDatePosted())
+            );
+            st.setString(
+                5,
+                t.getDescription()
+            );
+            st.setInt(
+                6,
+                t.getNewsId()
+            );
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -309,7 +354,11 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
         } finally {
             // Đóng các tài nguyên
@@ -333,16 +382,22 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
     public void delete(int id) {
         try {
             News n = new News();
-            sql = "DELETE FROM [dbo].[TeamNews]\n"
-                    + "      WHERE [NewsID]=?";
+            sql = "DELETE FROM [dbo].[TeamNews]\n" + "      WHERE [NewsID]=?";
 
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -355,7 +410,11 @@ public class NewsDAO extends dal.ConnectDB implements DAO<News> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
         } finally {
             // Đóng các tài nguyên

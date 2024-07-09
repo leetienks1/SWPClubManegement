@@ -5,9 +5,8 @@
 package Model;
 
 /**
- *
  * @author Desktop
  */
 public enum JerseySizeEnum {
-    S,M,L,XL,XXL;
+    S, M, L, XL, XXL
 }

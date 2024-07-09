@@ -6,7 +6,6 @@ import schedule.ChangeStatusTicketPurchaseSchedule;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 import java.util.concurrent.Executors;
@@ -32,16 +31,43 @@ public class StartupListener implements ServletContextListener {
     }
 
     private void loadConfig(ServletContextEvent servletContextEvent) {
-        this.properties.put("job.change-status-ticket-purchase.delay", "2M"); // 5 phut chayj 1 lan
-        this.properties.put("vnpay.pay-url", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html");
-        this.properties.put("vnpay.return-url", "http://localhost:8080/ticket/paid");
-        this.properties.put("vnpay.tmn-code", "771K20FE");
-        this.properties.put("vnpay.secret-key", "M62N9IZ05PMLD4Z4HXCVRUE6NUK0Y8EI");
-        this.properties.put("vnpay.api-url", "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction");
-        this.properties.put("vnpay.version", "2.1.0");
-        this.properties.put("vnpay.order-info-template", "THANH TOAN %s");
+        this.properties.put(
+            "job.change-status-ticket-purchase.delay",
+            "2M"
+        ); // 5 phut chayj 1 lan
+        this.properties.put(
+            "vnpay.pay-url",
+            "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
+        );
+        this.properties.put(
+            "vnpay.return-url",
+            "ticket/paid"
+        );
+        this.properties.put(
+            "vnpay.tmn-code",
+            "771K20FE"
+        );
+        this.properties.put(
+            "vnpay.secret-key",
+            "M62N9IZ05PMLD4Z4HXCVRUE6NUK0Y8EI"
+        );
+        this.properties.put(
+            "vnpay.api-url",
+            "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction"
+        );
+        this.properties.put(
+            "vnpay.version",
+            "2.1.0"
+        );
+        this.properties.put(
+            "vnpay.order-info-template",
+            "THANH TOAN %s"
+        );
 
-        servletContextEvent.getServletContext().setAttribute(AppConstant.APPLICATION_CONFIG_KEY, properties);
+        servletContextEvent.getServletContext().setAttribute(
+            AppConstant.APPLICATION_CONFIG_KEY,
+            properties
+        );
         logger.info("load application.properties successfully");
     }
 
@@ -49,7 +75,12 @@ public class StartupListener implements ServletContextListener {
         final String delayTime = this.properties.getProperty("job.change-status-ticket-purchase.delay");
         final Duration duration = Duration.parse("PT" + delayTime);
         final long millis = duration.toMillis();
-        scheduledExecutorService.scheduleAtFixedRate(new ChangeStatusTicketPurchaseSchedule(this.properties), millis, millis, TimeUnit.MILLISECONDS);
+        scheduledExecutorService.scheduleAtFixedRate(
+            new ChangeStatusTicketPurchaseSchedule(this.properties),
+            millis,
+            millis,
+            TimeUnit.MILLISECONDS
+        );
         logger.info("register ChangeStatusBillSchedule successfully");
     }
 }

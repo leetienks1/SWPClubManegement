@@ -7,7 +7,6 @@ package Model;
 import java.sql.Date;
 
 /**
- *
  * @author quangminh
  */
 public class PhysicalCondition {
@@ -17,7 +16,12 @@ public class PhysicalCondition {
     String ConditionDescription;
     Date DateRecorded;
 
-    public PhysicalCondition(int ConditionID, int PlayerID, String ConditionDescription, Date DateRecorded) {
+    public PhysicalCondition(
+        int ConditionID,
+        int PlayerID,
+        String ConditionDescription,
+        Date DateRecorded
+    ) {
         this.ConditionID = ConditionID;
         this.PlayerID = PlayerID;
         this.ConditionDescription = ConditionDescription;

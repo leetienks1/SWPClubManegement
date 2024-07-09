@@ -6,18 +6,15 @@ package Servlet;
 
 import DAO.UserDAO;
 import Model.User;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
- *
  * @author Desktop
  */
 public class ChangePasswordServlet extends HttpServlet {
@@ -26,13 +23,15 @@ public class ChangePasswordServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -49,47 +48,55 @@ public class ChangePasswordServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.sendRedirect("HOME/changePass.jsp");
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         try {
-             String confirm = request.getParameter("confirmPassword");
-        String password = request.getParameter("password");
-        int uid = Integer.parseInt(request.getParameter("uid"));
-        UserDAO udao = new UserDAO();
-        User u = udao.get(uid).get();
-        if (password.equals(confirm)) {
-            u.setPassword(confirm);
-            udao.update(u);
-            request.getSession().removeAttribute("notFit");
-            response.sendRedirect("HOME/home.jsp");
+            String confirm = request.getParameter("confirmPassword");
+            String password = request.getParameter("password");
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            UserDAO udao = new UserDAO();
+            User u = udao.get(uid).get();
+            if (password.equals(confirm)) {
+                u.setPassword(confirm);
+                udao.update(u);
+                request.getSession().removeAttribute("notFit");
+                response.sendRedirect("HOME/home.jsp");
 
-        } else {
-            request.getSession().setAttribute("notFit", "the password does not match");
-            response.sendRedirect("HOME/changePass.jsp");
-        }
+            } else {
+                request.getSession().setAttribute(
+                    "notFit",
+                    "the password does not match"
+                );
+                response.sendRedirect("HOME/changePass.jsp");
+            }
         } catch (Exception e) {
         }
     }

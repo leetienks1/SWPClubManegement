@@ -10,19 +10,19 @@ import DAO.TeamDAO;
 import Model.MatchSchedule;
 import Model.MatchStatistic;
 import Model.Team;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 /**
- *
  * @author quangminh
  */
 @WebServlet(name = "MatchSchedulePlayer", urlPatterns = {"/MatchSchedulePlayer"})
@@ -32,13 +32,15 @@ public class MatchScheduleController extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -55,17 +57,20 @@ public class MatchScheduleController extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         MatchScheduleDAO mdao = new MatchScheduleDAO();
         MatchStatisticDAO msdao = new MatchStatisticDAO();
         TeamDAO tdao = new TeamDAO();
@@ -80,33 +85,50 @@ public class MatchScheduleController extends HttpServlet {
             m.setAwayTeam(AwayTeam);
 
             //
-            Optional<MatchStatistic> homes = msdao.getByTeamIdAndMatchId(m.getHomeTeamID(), m.getMatchID());
+            Optional<MatchStatistic> homes = msdao.getByTeamIdAndMatchId(
+                m.getHomeTeamID(),
+                m.getMatchID()
+            );
             MatchStatistic home = homes.orElse(null);
             m.setMatchHomeTeam(home);
-            Optional<MatchStatistic> Aways = msdao.getByTeamIdAndMatchId(m.getAwayTeamID(), m.getMatchID());
+            Optional<MatchStatistic> Aways = msdao.getByTeamIdAndMatchId(
+                m.getAwayTeamID(),
+                m.getMatchID()
+            );
             MatchStatistic Away = Aways.orElse(null);
             m.setMatchAwayTeam(Away);
-//                    mstList.add(mstdao.get(m.getMatchID()).get());
+            //                    mstList.add(mstdao.get(m.getMatchID()).get());
         }
         System.out.println("---------------------------------");
         System.out.println(matches);
-        request.getSession().setAttribute("currentDate", LocalDate.now());
-        request.getSession().setAttribute("matchesssses", matches);
+        request.getSession().setAttribute(
+            "currentDate",
+            LocalDate.now()
+        );
+        request.getSession().setAttribute(
+            "matchesssses",
+            matches
+        );
         response.sendRedirect("PLAYER/matchSchedule.jsp");
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+        processRequest(
+            request,
+            response
+        );
     }
 
     /**

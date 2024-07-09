@@ -5,57 +5,21 @@
 package Test;
 
 
-import DAO.CoachDAO;
-import DAO.JerseyDAO;
-import DAO.JerseySizeDAO;
-import DAO.MatchScheduleDAO;
-import DAO.MatchStatisticDAO;
-import DAO.MeetingDAO;
-import DAO.NewsDAO;
-import DAO.OrderDAO;
-import DAO.OrderJerseyDetailsDAO;
-import DAO.PlayerDAO;
 import DAO.TeamDAO;
-import DAO.TrainingScheduleDAO;
-import DAO.UserDAO;
-import Model.Coach;
-import Model.JerseySize;
-import Model.JerseySizeEnum;
-import Model.MatchSchedule;
-import Model.MatchStatistic;
-import Model.Meeting;
-import Model.News;
-import Model.OrderJersey;
-import Model.OrderJerseyDetails;
-import Model.Player;
-import Model.Position;
-import Model.User;
-import Model.Role;
-import Model.Team;
-import Model.Tournament;
-import java.security.spec.MGF1ParameterSpec;
+import DAO.TicketDAO;
+import Model.Ticket;
+import java.math.BigDecimal;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-
 
 
 /**
- *
  * @author Desktop
  */
 public class TestSql {
-    
+
 
     public static void main(String[] args) throws ParseException {
-        JerseySizeDAO s = new JerseySizeDAO();
-        JerseySizeEnum size = JerseySizeEnum.valueOf("XL");
-        JerseySize l = new JerseySize(47, 11, size, 3);
-        s.update(l);
+        TicketDAO t =new TicketDAO();
+        System.out.println(t.getAll());
     }
 }

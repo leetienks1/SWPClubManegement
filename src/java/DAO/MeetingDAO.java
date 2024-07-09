@@ -6,11 +6,8 @@ package DAO;
 
 import Model.Meeting;
 import dal.ConnectDB;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Zanis
  */
 public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
@@ -32,12 +28,7 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
     @Override
     public List<Meeting> getAll() {
         List<Meeting> list = new ArrayList<>();
-        sql = "SELECT [MeetingID]\n"
-                + "      ,[MeetingDate]\n"
-                + "      ,[MeetingTime]\n"
-                + "      ,[Location]\n"
-                + "      ,[Description]\n"
-                + "  FROM [RealClub].[dbo].[MeetingSchedule]";
+        sql = "SELECT [MeetingID]\n" + "      ,[MeetingDate]\n" + "      ,[MeetingTime]\n" + "      ,[Location]\n" + "      ,[Description]\n" + "  FROM [RealClub].[dbo].[MeetingSchedule]";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -56,7 +47,11 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
                 list.add(t);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(MeetingDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -65,18 +60,15 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
 
     @Override
     public Optional<Meeting> get(int id) {
-        sql = "SELECT [MeetingID]\n"
-                + "      ,[MeetingDate]\n"
-                + "      ,[MeetingTime]\n"
-                + "      ,[Location]\n"
-                + "      ,[Description]\n"
-                + "  FROM [RealClub].[dbo].[MeetingSchedule]\n"
-                + "  WHERE [MeetingID] = ?;";
+        sql = "SELECT [MeetingID]\n" + "      ,[MeetingDate]\n" + "      ,[MeetingTime]\n" + "      ,[Location]\n" + "      ,[Description]\n" + "  FROM [RealClub].[dbo].[MeetingSchedule]\n" + "  WHERE [MeetingID] = ?;";
         Meeting t = new Meeting();
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             rs = st.executeQuery();
             if (rs.next()) {
                 t.setMeetingID(rs.getInt("MeetingID"));
@@ -91,7 +83,11 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
                 return Optional.of(t);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(MeetingDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -100,17 +96,26 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
 
     @Override
     public void save(Meeting t) {
-        sql = "INSERT INTO [RealClub].[dbo].[MeetingSchedule] ([MeetingDate]\n"
-                + "      ,[MeetingTime]\n"
-                + "      ,[Location]\n"
-                + "      ,[Description]) VALUES (?, ?, ?, ?)";
+        sql = "INSERT INTO [RealClub].[dbo].[MeetingSchedule] ([MeetingDate]\n" + "      ,[MeetingTime]\n" + "      ,[Location]\n" + "      ,[Description]) VALUES (?, ?, ?, ?)";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setDate(1, Date.valueOf(t.getMeetingDate()));
-            st.setString(2, t.getMeetingTime());
-            st.setString(3, t.getLocation());
-            st.setString(4, t.getDescription());
+            st.setDate(
+                1,
+                Date.valueOf(t.getMeetingDate())
+            );
+            st.setString(
+                2,
+                t.getMeetingTime()
+            );
+            st.setString(
+                3,
+                t.getLocation()
+            );
+            st.setString(
+                4,
+                t.getDescription()
+            );
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("MeetingSchedule saved successfully.");
@@ -118,7 +123,11 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
                 System.out.println("Failed to save MeetingSchedule.");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(MeetingDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -128,24 +137,38 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
     @Override
     public void update(Meeting t) {
         try {
-            sql = "UPDATE [dbo].[MeetingSchedule]\n"
-                    + "   SET [MeetingDate] = (?)\n"
-                    + "      ,[MeetingTime] = (?)\n"
-                    + "      ,[Location] = (?)\n"
-                    + "      ,[Description] = (?)\n"
-                    + " WHERE [MeetingID]=?";
+            sql = "UPDATE [dbo].[MeetingSchedule]\n" + "   SET [MeetingDate] = (?)\n" + "      ,[MeetingTime] = (?)\n" + "      ,[Location] = (?)\n" + "      ,[Description] = (?)\n" + " WHERE [MeetingID]=?";
 
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MeetingDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
-            st.setDate(1, Date.valueOf(t.getMeetingDate()));
-            st.setString(2, t.getMeetingTime());
-            st.setString(3, t.getLocation());
-            st.setString(4, t.getDescription());
-            st.setInt(5, t.getMeetingID());
+            st.setDate(
+                1,
+                Date.valueOf(t.getMeetingDate())
+            );
+            st.setString(
+                2,
+                t.getMeetingTime()
+            );
+            st.setString(
+                3,
+                t.getLocation()
+            );
+            st.setString(
+                4,
+                t.getDescription()
+            );
+            st.setInt(
+                5,
+                t.getMeetingID()
+            );
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -158,7 +181,11 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MeetingDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
         } finally {
             // Đóng các tài nguyên
@@ -182,16 +209,22 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
     public void delete(int id) {
         try {
             Meeting t = new Meeting();
-            sql = "DELETE FROM [dbo].[MeetingSchedule]\n"
-                    + "      WHERE [MeetingID]=?";
+            sql = "DELETE FROM [dbo].[MeetingSchedule]\n" + "      WHERE [MeetingID]=?";
 
             try {
                 con = this.openConnection();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(TrainingScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TrainingScheduleDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected == 0) {
@@ -204,7 +237,11 @@ public class MeetingDAO extends ConnectDB implements DAO<Meeting> {
             try {
                 throw e;
             } catch (SQLException ex) {
-                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
         } finally {
             // Đóng các tài nguyên

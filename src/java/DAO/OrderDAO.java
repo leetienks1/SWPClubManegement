@@ -5,23 +5,19 @@
 package DAO;
 
 import Model.OrderJersey;
-/**
- *
- * @author Desktop
- */
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Desktop
  */
 public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
@@ -35,12 +31,15 @@ public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
     public List<OrderJersey> getAll() {
         List<OrderJersey> orderList = new ArrayList<>();
         try {
-            sql = "SELECT [OrderID], [UserID], [OrderDate], [OrderTotal], [Phone], [Address] "
-                    + "FROM [RealClub].[dbo].[Orders]";
+            sql = "SELECT [OrderID], [UserID], [OrderDate], [OrderTotal], [Phone], [Address] " + "FROM [RealClub].[dbo].[Orders]";
             try {
                 con = openConnection(); // Giả sử bạn đã có phương thức getConnection() để mở kết nối đến cơ sở dữ liệu
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OrderDAO.class.getName()).log(
+                    Level.SEVERE,
+                    null,
+                    ex
+                );
             }
             st = con.prepareStatement(sql);
             rs = st.executeQuery();
@@ -48,12 +47,20 @@ public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
             while (rs.next()) {
                 int orderID = rs.getInt("OrderID");
                 int userID = rs.getInt("UserID");
-                LocalDate orderDate = rs.getDate("OrderDate").toLocalDate(); // Chuyển đổi từ java.sql.Date sang LocalDate
+                LocalDate orderDate = rs.getDate("OrderDate")
+                    .toLocalDate(); // Chuyển đổi từ java.sql.Date sang LocalDate
                 double orderTotal = rs.getDouble("OrderTotal");
                 String phone = rs.getString("Phone");
                 String address = rs.getString("Address");
 
-                OrderJersey order = new OrderJersey(orderID, userID, orderDate, orderTotal, phone, address);
+                OrderJersey order = new OrderJersey(
+                    orderID,
+                    userID,
+                    orderDate,
+                    orderTotal,
+                    phone,
+                    address
+                );
                 orderList.add(order);
             }
         } catch (SQLException e) {
@@ -68,13 +75,13 @@ public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
     public Optional<OrderJersey> getLatestOrderByUID(int id) {
         Optional<OrderJersey> result = Optional.empty();
         try {
-            sql = "SELECT TOP 1 [OrderID], [UserID], [OrderDate], [OrderTotal], [Phone], [Address]\n"
-                    + "FROM [RealClub].[dbo].[Orders]\n"
-                    + "WHERE [UserID] = ?\n"
-                    + "ORDER BY [OrderDate] DESC, [OrderID] DESC ";
+            sql = "SELECT TOP 1 [OrderID], [UserID], [OrderDate], [OrderTotal], [Phone], [Address]\n" + "FROM [RealClub].[dbo].[Orders]\n" + "WHERE [UserID] = ?\n" + "ORDER BY [OrderDate] DESC, [OrderID] DESC ";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             rs = st.executeQuery();
 
             if (rs.next()) {
@@ -85,7 +92,14 @@ public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
                 String phone = rs.getString("Phone");
                 String address = rs.getString("Address");
 
-                OrderJersey order = new OrderJersey(orderID, userID, orderDate, orderTotal, phone, address);
+                OrderJersey order = new OrderJersey(
+                    orderID,
+                    userID,
+                    orderDate,
+                    orderTotal,
+                    phone,
+                    address
+                );
                 result = Optional.of(order);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -100,11 +114,13 @@ public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
     public Optional<OrderJersey> get(int id) {
         Optional<OrderJersey> result = Optional.empty();
         try {
-            sql = "SELECT [OrderID], [UserID], [OrderDate], [OrderTotal], [Phone], [Address] "
-                    + "FROM [RealClub].[dbo].[Orders] WHERE [OrderID] = ?";
+            sql = "SELECT [OrderID], [UserID], [OrderDate], [OrderTotal], [Phone], [Address] " + "FROM [RealClub].[dbo].[Orders] WHERE [OrderID] = ?";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             rs = st.executeQuery();
 
             if (rs.next()) {
@@ -115,7 +131,14 @@ public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
                 String phone = rs.getString("Phone");
                 String address = rs.getString("Address");
 
-                OrderJersey order = new OrderJersey(orderID, userID, orderDate, orderTotal, phone, address);
+                OrderJersey order = new OrderJersey(
+                    orderID,
+                    userID,
+                    orderDate,
+                    orderTotal,
+                    phone,
+                    address
+                );
                 result = Optional.of(order);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -129,15 +152,29 @@ public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
     @Override
     public void save(OrderJersey order) {
         try {
-            sql = "INSERT INTO [RealClub].[dbo].[Orders] ([UserID], [OrderDate], [OrderTotal], [Phone], [Address]) "
-                    + "VALUES (?, ?, ?, ?, ?)";
+            sql = "INSERT INTO [RealClub].[dbo].[Orders] ([UserID], [OrderDate], [OrderTotal], [Phone], [Address]) " + "VALUES (?, ?, ?, ?, ?)";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, order.getUserID());
-            st.setDate(2, java.sql.Date.valueOf(order.getOrderDate()));
-            st.setDouble(3, order.getOrderTotal());
-            st.setString(4, order.getPhone());
-            st.setString(5, order.getAddress());
+            st.setInt(
+                1,
+                order.getUserID()
+            );
+            st.setDate(
+                2,
+                java.sql.Date.valueOf(order.getOrderDate())
+            );
+            st.setDouble(
+                3,
+                order.getOrderTotal()
+            );
+            st.setString(
+                4,
+                order.getPhone()
+            );
+            st.setString(
+                5,
+                order.getAddress()
+            );
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -149,16 +186,33 @@ public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
     @Override
     public void update(OrderJersey order) {
         try {
-            sql = "UPDATE [RealClub].[dbo].[Orders] SET [UserID] = ?, [OrderDate] = ?, [OrderTotal] = ?, "
-                    + "[Phone] = ?, [Address] = ? WHERE [OrderID] = ?";
+            sql = "UPDATE [RealClub].[dbo].[Orders] SET [UserID] = ?, [OrderDate] = ?, [OrderTotal] = ?, " + "[Phone] = ?, [Address] = ? WHERE [OrderID] = ?";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, order.getUserID());
-            st.setDate(2, java.sql.Date.valueOf(order.getOrderDate()));
-            st.setDouble(3, order.getOrderTotal());
-            st.setString(4, order.getPhone());
-            st.setString(5, order.getAddress());
-            st.setInt(6, order.getOrderID());
+            st.setInt(
+                1,
+                order.getUserID()
+            );
+            st.setDate(
+                2,
+                java.sql.Date.valueOf(order.getOrderDate())
+            );
+            st.setDouble(
+                3,
+                order.getOrderTotal()
+            );
+            st.setString(
+                4,
+                order.getPhone()
+            );
+            st.setString(
+                5,
+                order.getAddress()
+            );
+            st.setInt(
+                6,
+                order.getOrderID()
+            );
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -173,7 +227,10 @@ public class OrderDAO extends dal.ConnectDB implements DAO<OrderJersey> {
             sql = "DELETE FROM [RealClub].[dbo].[Orders] WHERE [OrderID] = ?";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

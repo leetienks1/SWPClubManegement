@@ -7,21 +7,19 @@ package Controller;
 import DAO.UserDAO;
 import Email.Email;
 import Model.User;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.google.gson.Gson;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- *
  * @author Desktop
  */
 public class BanAccountController extends HttpServlet {
@@ -30,13 +28,15 @@ public class BanAccountController extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -53,17 +53,20 @@ public class BanAccountController extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         try {
 
             String theCommand = request.getParameter("command");
@@ -72,19 +75,31 @@ public class BanAccountController extends HttpServlet {
             }
             switch (theCommand) {
                 case "LIST":
-                    ListAccounts(request, response);
+                    ListAccounts(
+                        request,
+                        response
+                    );
                     break;
                 case "ADD":
 
                     break;
                 case "SEND":
-                    SendMessageBan(request, response);
+                    SendMessageBan(
+                        request,
+                        response
+                    );
                     break;
                 case "SEARCH":
-                    SearchAccount(request, response);
+                    SearchAccount(
+                        request,
+                        response
+                    );
                     break;
                 case "UPDATE":
-                    UpdateStatus(request, response);
+                    UpdateStatus(
+                        request,
+                        response
+                    );
                     break;
                 case "DELETE":
 
@@ -97,7 +112,10 @@ public class BanAccountController extends HttpServlet {
 
             ex.printStackTrace();
             // Ghi lại lỗi vào log
-            log("An error occurred in SearchAccount", ex);
+            log(
+                "An error occurred in SearchAccount",
+                ex
+            );
             // Gửi phản hồi lỗi về cho client
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
@@ -109,15 +127,20 @@ public class BanAccountController extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        SearchAccount(request, response);
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+        SearchAccount(
+            request,
+            response
+        );
     }
 
     /**
@@ -130,25 +153,33 @@ public class BanAccountController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void SendMessageBan(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void SendMessageBan(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         if (request.getParameter("uid") != null) {
             String message = request.getParameter("message");
-            if(message == null || message =="")
-            {
-                message=" đã mở khóa tài khoản";
-            }else
-            {
-                message = "đã khóa tải khoản với lý do: "+message;
+            if (message == null || message == "") {
+                message = " đã mở khóa tài khoản";
+            } else {
+                message = "đã khóa tải khoản với lý do: " + message;
             }
             UserDAO udao = new UserDAO();
             int id = Integer.parseInt(request.getParameter("uid"));
             User u = udao.get(id).orElse(null);
-            Email.sendEmail(u.getEmail(), "Ban your email at wedsite RealFC", "kính gửi tài khoản: "+u.getEmail()+" "+message);
+            Email.sendEmail(
+                u.getEmail(),
+                "Ban your email at wedsite RealFC",
+                "kính gửi tài khoản: " + u.getEmail() + " " + message
+            );
 
         } else {
-            SendErrorMessage(out, "Send email Fail");
+            SendErrorMessage(
+                out,
+                "Send email Fail"
+            );
         }
         Gson gson = new Gson();
 
@@ -157,11 +188,17 @@ public class BanAccountController extends HttpServlet {
 
     }
 
-    public void ListAccounts(HttpServletRequest request, HttpServletResponse response) {
+    public void ListAccounts(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         try {
             UserDAO udao = new UserDAO();
             List<User> accounts = udao.getAll();
-            request.getSession().setAttribute("listAccounts", accounts);
+            request.getSession().setAttribute(
+                "listAccounts",
+                accounts
+            );
 
             response.sendRedirect("ADMIN/adminListAccounts.jsp");
         } catch (Exception e) {
@@ -169,7 +206,10 @@ public class BanAccountController extends HttpServlet {
         }
     }
 
-    public void UpdateStatus(HttpServletRequest request, HttpServletResponse response) {
+    public void UpdateStatus(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         try {
             int uid = Integer.parseInt(request.getParameter("uid"));
             Boolean status = Boolean.parseBoolean(request.getParameter("status"));
@@ -178,14 +218,20 @@ public class BanAccountController extends HttpServlet {
             account.setStatus(status);
             udao.update(account);
 
-            ListAccounts(request, response);
+            ListAccounts(
+                request,
+                response
+            );
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void SearchAccount(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void SearchAccount(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
         try {
             String searchValue = request.getParameter("search");
             if (searchValue == null || searchValue.isEmpty()) {
@@ -224,11 +270,20 @@ public class BanAccountController extends HttpServlet {
         }
     }
 
-    public void SendErrorMessage(PrintWriter out, String message) {
+    public void SendErrorMessage(
+        PrintWriter out,
+        String message
+    ) {
         Map<String, String> errors = new HashMap<>();
 
-        errors.put("status", "error");
-        errors.put("message", message);
+        errors.put(
+            "status",
+            "error"
+        );
+        errors.put(
+            "message",
+            message
+        );
 
         Gson gson = new Gson();
 

@@ -7,7 +7,6 @@ package Model;
 import java.time.LocalDate;
 
 /**
- *
  * @author quangminh
  */
 public class PlayerStat {
@@ -18,7 +17,14 @@ public class PlayerStat {
     private int yellowCards;
     private int redCards;
 
-    public PlayerStat(int playerId, LocalDate date, int goalsScored, int assists, int yellowCards, int redCards) {
+    public PlayerStat(
+        int playerId,
+        LocalDate date,
+        int goalsScored,
+        int assists,
+        int yellowCards,
+        int redCards
+    ) {
         this.playerId = playerId;
         this.date = date;
         this.goalsScored = goalsScored;
@@ -77,13 +83,6 @@ public class PlayerStat {
 
     @Override
     public String toString() {
-        return "PlayerStat{" +
-                "playerId=" + playerId +
-                ", date=" + date +
-                ", goalsScored=" + goalsScored +
-                ", assists=" + assists +
-                ", yellowCards=" + yellowCards +
-                ", redCards=" + redCards +
-                '}';
+        return "PlayerStat{" + "playerId=" + playerId + ", date=" + date + ", goalsScored=" + goalsScored + ", assists=" + assists + ", yellowCards=" + yellowCards + ", redCards=" + redCards + '}';
     }
 }

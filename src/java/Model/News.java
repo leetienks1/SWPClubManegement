@@ -5,15 +5,14 @@
 package Model;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
- *
  * @author Desktop
  */
-public class News implements Serializable{
+public class News implements Serializable {
 
     private int newsId;
     private String newsTitle;
@@ -21,29 +20,45 @@ public class News implements Serializable{
     private String newsImageDescription;
     private String newsContent;
     private transient LocalDate datePosted;
-    
-    
+
+
     @SerializedName("datePosted")
     private String datePostedString;
+
     public News() {
     }
 
-    public News(int newsId, String newsTitle, String newsImageDescription, String newsContent) {
+    public News(
+        int newsId,
+        String newsTitle,
+        String newsImageDescription,
+        String newsContent
+    ) {
         this.newsId = newsId;
         this.newsTitle = newsTitle;
         this.newsImageDescription = newsImageDescription;
         this.newsContent = newsContent;
         this.datePosted = LocalDate.now();
     }
-    
-    public News(String newsTitle, String newsImageDescription, String newsContent) {
+
+    public News(
+        String newsTitle,
+        String newsImageDescription,
+        String newsContent
+    ) {
         this.newsTitle = newsTitle;
         this.newsImageDescription = newsImageDescription;
         this.newsContent = newsContent;
         this.datePosted = LocalDate.now();
     }
 
-    public News(String newsTitle, String description, String newsImageDescription, String newsContent, LocalDate datePosted) {
+    public News(
+        String newsTitle,
+        String description,
+        String newsImageDescription,
+        String newsContent,
+        LocalDate datePosted
+    ) {
         this.newsTitle = newsTitle;
         this.description = description;
         this.newsImageDescription = newsImageDescription;
@@ -51,7 +66,14 @@ public class News implements Serializable{
         this.datePosted = datePosted;
     }
 
-    public News(int newsId, String newsTitle, String description, String newsImageDescription, String newsContent, LocalDate datePosted) {
+    public News(
+        int newsId,
+        String newsTitle,
+        String description,
+        String newsImageDescription,
+        String newsContent,
+        LocalDate datePosted
+    ) {
         this.newsId = newsId;
         this.newsTitle = newsTitle;
         this.description = description;
@@ -59,10 +81,8 @@ public class News implements Serializable{
         this.newsContent = newsContent;
         this.datePosted = datePosted;
     }
-    
-    
-    
-    
+
+
     public int getNewsId() {
         return newsId;
     }
@@ -117,9 +137,5 @@ public class News implements Serializable{
         return "News{" + "newsId=" + newsId + ", newsTitle=" + newsTitle + ", description=" + description + ", newsImageDescription=" + newsImageDescription + ", newsContent=" + newsContent + ", datePosted=" + datePosted + '}';
     }
 
-    
-    
-    
-    
-    
+
 }

@@ -7,7 +7,6 @@ package Model;
 import java.time.LocalDate;
 
 /**
- *
  * @author Zanis
  */
 public class Meeting {
@@ -21,7 +20,13 @@ public class Meeting {
     public Meeting() {
     }
 
-    public Meeting(int MeetingID, LocalDate MeetingDate, String MeetingTime, String Location, String Description) {
+    public Meeting(
+        int MeetingID,
+        LocalDate MeetingDate,
+        String MeetingTime,
+        String Location,
+        String Description
+    ) {
         this.MeetingID = MeetingID;
         this.MeetingDate = MeetingDate;
         this.MeetingTime = MeetingTime;
@@ -29,13 +34,18 @@ public class Meeting {
         this.Description = Description;
     }
 
-    public Meeting(LocalDate MeetingDate, String MeetingTime, String Location, String Description) {
+    public Meeting(
+        LocalDate MeetingDate,
+        String MeetingTime,
+        String Location,
+        String Description
+    ) {
         this.MeetingDate = MeetingDate;
         this.MeetingTime = MeetingTime;
         this.Location = Location;
         this.Description = Description;
     }
-    
+
 
     public int getMeetingID() {
         return MeetingID;
@@ -81,6 +91,6 @@ public class Meeting {
     public String toString() {
         return "Meeting{" + "MeetingID=" + MeetingID + ", MeetingDate=" + MeetingDate + ", MeetingTime=" + MeetingTime + ", Location=" + Location + ", Description=" + Description + '}';
     }
-    
-    
+
+
 }

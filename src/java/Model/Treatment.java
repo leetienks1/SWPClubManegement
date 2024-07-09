@@ -4,10 +4,7 @@
  */
 package Model;
 
-import java.util.Date;
-
 /**
- *
  * @author quangminh
  */
 public class Treatment {
@@ -18,7 +15,13 @@ public class Treatment {
     String TreatmentTime;
     String TreatmentDescription;
 
-    public Treatment(int TreatmentID, int PlayerID, String TreatmentDate, String TreatmentTime, String TreatmentDescription) {
+    public Treatment(
+        int TreatmentID,
+        int PlayerID,
+        String TreatmentDate,
+        String TreatmentTime,
+        String TreatmentDescription
+    ) {
         this.TreatmentID = TreatmentID;
         this.PlayerID = PlayerID;
         this.TreatmentDate = TreatmentDate;

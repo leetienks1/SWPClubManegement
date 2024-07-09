@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.util.Map;
 
 public interface IPaymentService {
-    PaymentResponse payment(HttpServletRequest req, HttpServletResponse resp) throws IOException;
+    PaymentResponse payment(
+        HttpServletRequest req,
+        HttpServletResponse resp
+    ) throws IOException;
 
     GetPaymentResponse query(Map<String, Object> header);
 }

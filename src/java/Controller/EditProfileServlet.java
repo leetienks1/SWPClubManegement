@@ -5,104 +5,34 @@
 package Controller;
 
 import DAO.UserDAO;
-import Model.Role;
 import Model.User;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 /**
- *
  * @author Desktop
  */
 public class EditProfileServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EditProfileServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EditProfileServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        response.sendRedirect("P/editPage.jsp");
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        handleUpload(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-    public static void handleUpload(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public static void handleUpload(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException, ServletException {
         String file_name = null;
         String uid = null;
         String username = null;
@@ -118,7 +48,7 @@ public class EditProfileServlet extends HttpServlet {
             return;
         }
         FileItemFactory factory = new DiskFileItemFactory(); // Tạo factory chi dinh cach thuc de luu tru file dc tai len
-        ServletFileUpload upload = new ServletFileUpload(factory); // serveletFileUpload xử lý các cái yêu cầu từ http 
+        ServletFileUpload upload = new ServletFileUpload(factory); // serveletFileUpload xử lý các cái yêu cầu từ http
         //ServletFileUpload(factory) se tạo cac fileItem tu factory
         try {       // FileItem đại diện cho mỗi phần được tải lên( file , form-fields)
             List<FileItem> fields = upload.parseRequest(request);  // phan tich cac yeu cau va tra ve 1 fileItem
@@ -134,12 +64,18 @@ public class EditProfileServlet extends HttpServlet {
                 if (fileItem.isFormField()) {
                     String fieldName = fileItem.getFieldName();
                     String value = fileItem.getString("UTF-8");
-                    formFields.put(fieldName, value);
+                    formFields.put(
+                        fieldName,
+                        value
+                    );
                 } else {
                     if (fileItem.getSize() > 0) {
                         String mimeType = fileItem.getContentType(); // get MINE (imgae/ png , image / jpg , application/ pdf)
                         if (mimeType == null || !mimeType.startsWith("image/")) {
-                            request.getSession().setAttribute("errorMessage", "Only upload image");
+                            request.getSession().setAttribute(
+                                "errorMessage",
+                                "Only upload image"
+                            );
                             response.sendRedirect("P/editPage.jsp");
 
                             return;
@@ -151,7 +87,7 @@ public class EditProfileServlet extends HttpServlet {
                         String path = request.getServletContext().getRealPath("IMAGE\\AVATAR");
                         String filePath = path + "\\" + file_name;
 
-//                        String filePath = "SWPWedRealClubManagement\\web\\IMAGE/AVATAR\\" + file_name;
+                        //                        String filePath = "SWPWedRealClubManagement\\web\\IMAGE/AVATAR\\" + file_name;
                         // Đảm bảo thư mục tồn tại
                         File directory = new File(filePath).getParentFile();
                         if (!directory.exists()) {
@@ -180,14 +116,16 @@ public class EditProfileServlet extends HttpServlet {
             }
             u.setUserName(username);
             u.setName(fullname);
-            if(file_name != null)
-            {
+            if (file_name != null) {
                 u.setImage("http://localhost:8080/SWPClubManegement/IMAGE/AVATAR/" + file_name);
             }
             u.setAbout(about);
 
             udao.update(u);
-            request.getSession().setAttribute("user", u);
+            request.getSession().setAttribute(
+                "user",
+                u
+            );
             request.getSession().removeAttribute("errorMessage");
         } catch (Exception e) {
 
@@ -197,4 +135,81 @@ public class EditProfileServlet extends HttpServlet {
         response.sendRedirect("P/editPage.jsp");
 
     }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet EditProfileServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet EditProfileServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
+    @Override
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+
+        response.sendRedirect("P/editPage.jsp");
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
+    @Override
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+
+        handleUpload(
+            request,
+            response
+        );
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 }

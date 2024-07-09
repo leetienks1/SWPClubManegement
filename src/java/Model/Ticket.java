@@ -10,6 +10,34 @@ public class Ticket {
     private String seatNumber;
     private BigDecimal price;
 
+    public static Ticket mappingDb(ResultSet resultSet) throws SQLException {
+        Ticket ticket = new Ticket();
+        ticket.setTicketId(resultSet.getInt("TicketID"));
+        ticket.setMatchId(resultSet.getInt("MatchID"));
+        ticket.setPrice(resultSet.getBigDecimal("Price"));
+        ticket.setSeatNumber(resultSet.getString("SeatNumber"));
+        return ticket;
+    }
+
+    public Ticket(Integer ticketId, Integer matchId, String seatNumber, BigDecimal price) {
+        this.ticketId = ticketId;
+        this.matchId = matchId;
+        this.seatNumber = seatNumber;
+        this.price = price;
+    }
+
+    public Ticket(Integer matchId, String seatNumber, BigDecimal price) {
+        this.matchId = matchId;
+        this.seatNumber = seatNumber;
+        this.price = price;
+    }
+
+    private Ticket() {
+        }
+
+    
+    
+
     public Integer getTicketId() {
         return ticketId;
     }
@@ -40,14 +68,5 @@ public class Ticket {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public static Ticket mappingDb(ResultSet resultSet) throws SQLException {
-        Ticket ticket = new Ticket();
-        ticket.setTicketId(resultSet.getInt("TicketID"));
-        ticket.setMatchId(resultSet.getInt("MatchID"));
-        ticket.setPrice(resultSet.getBigDecimal("Price"));
-        ticket.setSeatNumber(resultSet.getString("SeatNumber"));
-        return ticket;
     }
 }

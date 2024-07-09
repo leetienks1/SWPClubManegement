@@ -7,10 +7,9 @@ package Model;
 import java.io.Serializable;
 
 /**
- *
  * @author Desktop
  */
-public class MatchStatistic implements Serializable{
+public class MatchStatistic implements Serializable {
     private int matchStatisticID;
     private int matchID;
     private int teamID;
@@ -25,7 +24,17 @@ public class MatchStatistic implements Serializable{
     public MatchStatistic() {
     }
 
-    public MatchStatistic(int matchID, int teamID, int score, int yellowCards, int redCards, int totalShots, int cornerKicks, double ballPossession, int passes) {
+    public MatchStatistic(
+        int matchID,
+        int teamID,
+        int score,
+        int yellowCards,
+        int redCards,
+        int totalShots,
+        int cornerKicks,
+        double ballPossession,
+        int passes
+    ) {
         this.matchID = matchID;
         this.teamID = teamID;
         this.score = score;
@@ -37,7 +46,18 @@ public class MatchStatistic implements Serializable{
         this.passes = passes;
     }
 
-    public MatchStatistic(int matchStatisticID, int matchID, int teamID, int score, int yellowCards, int redCards, int totalShots, int cornerKicks, double ballPossession, int passes) {
+    public MatchStatistic(
+        int matchStatisticID,
+        int matchID,
+        int teamID,
+        int score,
+        int yellowCards,
+        int redCards,
+        int totalShots,
+        int cornerKicks,
+        double ballPossession,
+        int passes
+    ) {
         this.matchStatisticID = matchStatisticID;
         this.matchID = matchID;
         this.teamID = teamID;
@@ -134,6 +154,6 @@ public class MatchStatistic implements Serializable{
     public String toString() {
         return "MatchStatistic{" + "matchStatisticID=" + matchStatisticID + ", matchID=" + matchID + ", teamID=" + teamID + ", score=" + score + ", yellowCards=" + yellowCards + ", redCards=" + redCards + ", totalShots=" + totalShots + ", cornerKicks=" + cornerKicks + ", ballPossession=" + ballPossession + ", passes=" + passes + '}';
     }
-    
-    
+
+
 }

@@ -5,37 +5,20 @@
 package Controller;
 
 import DAO.NewsDAO;
-import DAO.PlayerDAO;
-import DAO.UserDAO;
 import Model.News;
-import Model.Player;
-import Model.Position;
-import Model.User;
 import com.google.gson.Gson;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
  * @author Desktop
  */
 public class NewsController extends HttpServlet {
@@ -44,13 +27,15 @@ public class NewsController extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -67,17 +52,20 @@ public class NewsController extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         try {
 
             String theCommand = request.getParameter("command");
@@ -86,7 +74,10 @@ public class NewsController extends HttpServlet {
             }
             switch (theCommand) {
                 case "LIST":
-                    ListNews(request, response);
+                    ListNews(
+                        request,
+                        response
+                    );
                     break;
                 case "ADD":
 
@@ -98,7 +89,10 @@ public class NewsController extends HttpServlet {
 
                     break;
                 case "DELETE":
-                    DeleteNews(request, response);
+                    DeleteNews(
+                        request,
+                        response
+                    );
                     break;
                 default:
 
@@ -106,21 +100,27 @@ public class NewsController extends HttpServlet {
 
         } catch (Exception ex) {
 
-            Logger.getLogger(PlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerController.class.getName()).log(
+                Level.SEVERE,
+                null,
+                ex
+            );
         }
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         try {
             NewsDAO ndao = new NewsDAO();
             String search = request.getParameter("search");
@@ -128,12 +128,12 @@ public class NewsController extends HttpServlet {
             List<News> listNews = null;
             listNews = ndao.getNewsBySearch(search);
 
-//            if (search != null && search != "") {
-//                listNews = ndao.getAll();
-//
-//            } else {
-//                listNews = ndao.getNewsBySearch(search);
-//            }
+            //            if (search != null && search != "") {
+            //                listNews = ndao.getAll();
+            //
+            //            } else {
+            //                listNews = ndao.getNewsBySearch(search);
+            //            }
 
             Gson gson = new Gson();
             String json = gson.toJson(listNews);
@@ -148,23 +148,29 @@ public class NewsController extends HttpServlet {
         }
     }
 
-    public void ListNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void ListNews(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
         response.sendRedirect("/SWPClubManegement/ADMIN/adminNewsList.jsp");
     }
 
-    public void DeleteNews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void DeleteNews(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
         try {
 
             int nid = Integer.parseInt(request.getParameter("nid"));
 
             NewsDAO ndao = new NewsDAO();
             ndao.delete(nid);
-            
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 
     /**

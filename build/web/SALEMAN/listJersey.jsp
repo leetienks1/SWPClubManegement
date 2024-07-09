@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="../CSS/COACH/list.css"/>
     </head>
     <body>
+        <div class="coach-fun-content">
         <table class="table-course" border="1">
             <thead class="thead-form" style="background-color: #0d6efd;">
                 <tr>
@@ -82,7 +83,7 @@
         <%@include file="addJersey.jsp" %>
         <%@include file="updateJersey.jsp" %>
 
-
+        </div>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>

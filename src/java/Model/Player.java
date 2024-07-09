@@ -6,14 +6,14 @@
 package Model;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- *
  * @author quangminh
  */
-public class Player implements Serializable{
+public class Player implements Serializable {
 
     private int playerID;
     private Integer userID;
@@ -23,14 +23,20 @@ public class Player implements Serializable{
     private double weight;
     private int height;
 
-    
+
     @SerializedName("age")
     private String ageString;
 
     private String image;
-    
 
-    public Player(Position position, String name, LocalDate age, double weight, int height) {
+
+    public Player(
+        Position position,
+        String name,
+        LocalDate age,
+        double weight,
+        int height
+    ) {
         this.position = position;
         this.name = name;
         this.age = age;
@@ -38,8 +44,15 @@ public class Player implements Serializable{
         this.height = height;
     }
 
-     public Player( int userID, Position position, String name, LocalDate age, double weight, int height) {
-        
+    public Player(
+        int userID,
+        Position position,
+        String name,
+        LocalDate age,
+        double weight,
+        int height
+    ) {
+
         this.userID = userID;
         this.position = position;
         this.name = name;
@@ -47,8 +60,17 @@ public class Player implements Serializable{
         this.weight = weight;
         this.height = height;
     }
+
     // Constructor
-    public Player(int playerID, int userID, Position position, String name, LocalDate age, double weight, int height) {
+    public Player(
+        int playerID,
+        int userID,
+        Position position,
+        String name,
+        LocalDate age,
+        double weight,
+        int height
+    ) {
         this.playerID = playerID;
         this.userID = userID;
         this.position = position;
@@ -56,11 +78,20 @@ public class Player implements Serializable{
         this.age = age;
         this.weight = weight;
         this.height = height;
-        this.image=image;
+        this.image = image;
     }
 
- 
-    public Player(int playerID, int userID, Position position, String name, LocalDate age , double weight, int height,String image) {
+
+    public Player(
+        int playerID,
+        int userID,
+        Position position,
+        String name,
+        LocalDate age,
+        double weight,
+        int height,
+        String image
+    ) {
         this.playerID = playerID;
         this.userID = userID;
         this.position = position;
@@ -68,8 +99,13 @@ public class Player implements Serializable{
         this.age = age;
         this.weight = weight;
         this.height = height;
-        this.image=image;
+        this.image = image;
     }
+
+    // Default Constructor
+    public Player() {
+    }
+
     public String getImage() {
         return image;
     }
@@ -77,9 +113,6 @@ public class Player implements Serializable{
     public void setImage(String image) {
         this.image = image;
     }
-
-    // Default Constructor
-    public Player() {}
 
     // Getters and Setters
     public int getPlayerID() {
@@ -112,7 +145,7 @@ public class Player implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-        
+
     }
 
     public LocalDate getAge() {
@@ -121,7 +154,7 @@ public class Player implements Serializable{
 
     public void setAge(LocalDate age) {
         this.age = age;
-        this.ageString= age.toString();
+        this.ageString = age.toString();
     }
 
     public double getWeight() {
@@ -129,10 +162,11 @@ public class Player implements Serializable{
     }
 
     public void setWeight(double weight) {
-        if(weight<0)
-            this.weight=65;
-        else
+        if (weight < 0) {
+            this.weight = 65;
+        } else {
             this.weight = weight;
+        }
     }
 
     public int getHeight() {
@@ -140,10 +174,11 @@ public class Player implements Serializable{
     }
 
     public void setHeight(int height) {
-        if(height<0)
-            this.height=165;
-        else
+        if (height < 0) {
+            this.height = 165;
+        } else {
             this.height = height;
+        }
     }
 
     @Override
@@ -151,5 +186,5 @@ public class Player implements Serializable{
         return "Player{" + "playerID=" + playerID + ", userID=" + userID + ", position=" + position + ", name=" + name + ", age=" + age + ", weight=" + weight + ", height=" + height + ", ageString=" + ageString + '}';
     }
 
-    
+
 }

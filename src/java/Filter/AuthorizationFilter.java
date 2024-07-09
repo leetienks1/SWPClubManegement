@@ -6,24 +6,19 @@ package Filter;
 
 import Model.Role;
 import Model.User;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Desktop
  */
 public class AuthorizationFilter implements Filter {
@@ -39,8 +34,24 @@ public class AuthorizationFilter implements Filter {
     public AuthorizationFilter() {
     }
 
-    private void doBeforeProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
+    public static String getStackTrace(Throwable t) {
+        String stackTrace = null;
+        try {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            t.printStackTrace(pw);
+            pw.close();
+            sw.close();
+            stackTrace = sw.getBuffer().toString();
+        } catch (Exception ex) {
+        }
+        return stackTrace;
+    }
+
+    private void doBeforeProcessing(
+        ServletRequest request,
+        ServletResponse response
+    ) throws IOException, ServletException {
         if (debug) {
             log("AuthorizationFilter:DoBeforeProcessing");
         }
@@ -67,8 +78,10 @@ public class AuthorizationFilter implements Filter {
          */
     }
 
-    private void doAfterProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
+    private void doAfterProcessing(
+        ServletRequest request,
+        ServletResponse response
+    ) throws IOException, ServletException {
         if (debug) {
             log("AuthorizationFilter:DoAfterProcessing");
         }
@@ -76,7 +89,7 @@ public class AuthorizationFilter implements Filter {
         // Write code here to process the request and/or response after
         // the rest of the filter chain is invoked.
         // For example, a logging filter might log the attributes on the
-        // request object after the request has been processed. 
+        // request object after the request has been processed.
         /*
 	for (Enumeration en = request.getAttributeNames(); en.hasMoreElements(); ) {
 	    String name = (String)en.nextElement();
@@ -93,33 +106,47 @@ public class AuthorizationFilter implements Filter {
     }
 
     /**
-     *
-     * @param request The servlet request we are processing
+     * @param request  The servlet request we are processing
      * @param response The servlet response we are creating
-     * @param chain The filter chain we are processing
-     *
-     * @exception IOException if an input/output error occurs
-     * @exception ServletException if a servlet error occurs
+     * @param chain    The filter chain we are processing
+     * @throws IOException      if an input/output error occurs
+     * @throws ServletException if a servlet error occurs
      */
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    public void doFilter(
+        ServletRequest request,
+        ServletResponse response,
+        FilterChain chain
+    ) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession(false);
         String requestURI = httpRequest.getRequestURI();
 
         // Debugging output
-        LOGGER.log(Level.INFO, "AuthorizationFilter: Request URI is {0}", requestURI);
+        LOGGER.log(
+            Level.INFO,
+            "AuthorizationFilter: Request URI is {0}",
+            requestURI
+        );
 
-        User user = (session != null) ? (User) session.getAttribute("user") : null;
+        User user = (session != null)
+            ? (User) session.getAttribute("user")
+            : null;
 
         if (user == null) {
             LOGGER.info("AuthorizationFilter: No user in session, redirecting to accessDenied.jsp");
         } else {
-            LOGGER.log(Level.INFO, "AuthorizationFilter: User role is {0}", user.getRole());
+            LOGGER.log(
+                Level.INFO,
+                "AuthorizationFilter: User role is {0}",
+                user.getRole()
+            );
         }
 
-        if (user == null || !isAuthorized(user.getRole(), requestURI)) {
+        if (user == null || !isAuthorized(
+            user.getRole(),
+            requestURI
+        )) {
             LOGGER.warning("AuthorizationFilter: Unauthorized access attempt");
 
             if (!httpResponse.isCommitted()) {
@@ -133,15 +160,25 @@ public class AuthorizationFilter implements Filter {
         }
 
         // Proceed with the next filter or servlet in the chain
-        chain.doFilter(request, response);
+        chain.doFilter(
+            request,
+            response
+        );
     }
 
-    private boolean isAuthorized(Role role, String requestURI) {
+    private boolean isAuthorized(
+        Role role,
+        String requestURI
+    ) {
         if (role == Role.Admin) {
             return true; // Admins have access to everything
         } else if (role == Role.User) {
             boolean authorized = !requestURI.contains("/ADMIN");
-            LOGGER.log(Level.INFO, "AuthorizationFilter: Authorization for user role is {0}", authorized);
+            LOGGER.log(
+                Level.INFO,
+                "AuthorizationFilter: Authorization for user role is {0}",
+                authorized
+            );
             return authorized; // Users cannot access admin pages
         }
         return false;
@@ -189,13 +226,14 @@ public class AuthorizationFilter implements Filter {
         if (filterConfig == null) {
             return ("AuthorizationFilter()");
         }
-        StringBuffer sb = new StringBuffer("AuthorizationFilter(");
-        sb.append(filterConfig);
-        sb.append(")");
-        return (sb.toString());
+        String sb = "AuthorizationFilter(" + filterConfig + ")";
+        return (sb);
     }
 
-    private void sendProcessingError(Throwable t, ServletResponse response) {
+    private void sendProcessingError(
+        Throwable t,
+        ServletResponse response
+    ) {
         String stackTrace = getStackTrace(t);
 
         if (stackTrace != null && !stackTrace.equals("")) {
@@ -223,20 +261,6 @@ public class AuthorizationFilter implements Filter {
             } catch (Exception ex) {
             }
         }
-    }
-
-    public static String getStackTrace(Throwable t) {
-        String stackTrace = null;
-        try {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            t.printStackTrace(pw);
-            pw.close();
-            sw.close();
-            stackTrace = sw.getBuffer().toString();
-        } catch (Exception ex) {
-        }
-        return stackTrace;
     }
 
     public void log(String msg) {

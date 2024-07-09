@@ -4,32 +4,31 @@
  */
 package DAO;
 
-import Model.JerseySize;
 import Model.OrderJerseyDetails;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.sql.SQLException;
 
 /**
- *
  * @author Desktop
  */
-public class OrderJerseyDetailsDAO extends dal.ConnectDB implements DAO<OrderJerseyDetails>{
- private String sql;
+public class OrderJerseyDetailsDAO extends dal.ConnectDB implements DAO<OrderJerseyDetails> {
+    private String sql;
     private Connection con;
     private PreparedStatement st;
     private ResultSet rs;
-   @Override
+
+    @Override
     public List<OrderJerseyDetails> getAll() {
         List<OrderJerseyDetails> orderJerseyDetailsList = new ArrayList<>();
-        sql = "SELECT [OrderDetailID], [OrderID], [JerseySizeID], [JerseyID], [JerseyQuantity] "
-                + "FROM [RealClub].[dbo].[OrderJerseyDetails]";
+        sql = "SELECT [OrderDetailID], [OrderID], [JerseySizeID], [JerseyID], [JerseyQuantity] " + "FROM [RealClub].[dbo].[OrderJerseyDetails]";
         try {
             con = openConnection(); // Mở kết nối đến cơ sở dữ liệu
             st = con.prepareStatement(sql);
@@ -42,11 +41,21 @@ public class OrderJerseyDetailsDAO extends dal.ConnectDB implements DAO<OrderJer
                 int jerseyID = rs.getInt("JerseyID");
                 int jerseyQuantity = rs.getInt("JerseyQuantity");
 
-                OrderJerseyDetails orderDetail = new OrderJerseyDetails(orderDetailID, orderID, jerseySizeID, jerseyID, jerseyQuantity);
+                OrderJerseyDetails orderDetail = new OrderJerseyDetails(
+                    orderDetailID,
+                    orderID,
+                    jerseySizeID,
+                    jerseyID,
+                    jerseyQuantity
+                );
                 orderJerseyDetailsList.add(orderDetail);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -56,12 +65,14 @@ public class OrderJerseyDetailsDAO extends dal.ConnectDB implements DAO<OrderJer
     @Override
     public Optional<OrderJerseyDetails> get(int id) {
         Optional<OrderJerseyDetails> result = Optional.empty();
-        sql = "SELECT [OrderDetailID], [OrderID], [JerseySizeID], [JerseyID], [JerseyQuantity] "
-                + "FROM [RealClub].[dbo].[OrderJerseyDetails] WHERE [OrderDetailID] = ?";
+        sql = "SELECT [OrderDetailID], [OrderID], [JerseySizeID], [JerseyID], [JerseyQuantity] " + "FROM [RealClub].[dbo].[OrderJerseyDetails] WHERE [OrderDetailID] = ?";
         try {
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             rs = st.executeQuery();
 
             if (rs.next()) {
@@ -71,11 +82,21 @@ public class OrderJerseyDetailsDAO extends dal.ConnectDB implements DAO<OrderJer
                 int jerseyID = rs.getInt("JerseyID");
                 int jerseyQuantity = rs.getInt("JerseyQuantity");
 
-                OrderJerseyDetails orderDetail = new OrderJerseyDetails(orderDetailID, orderID, jerseySizeID, jerseyID, jerseyQuantity);
+                OrderJerseyDetails orderDetail = new OrderJerseyDetails(
+                    orderDetailID,
+                    orderID,
+                    jerseySizeID,
+                    jerseyID,
+                    jerseyQuantity
+                );
                 result = Optional.of(orderDetail);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -84,18 +105,33 @@ public class OrderJerseyDetailsDAO extends dal.ConnectDB implements DAO<OrderJer
 
     @Override
     public void save(OrderJerseyDetails orderDetail) {
-        sql = "INSERT INTO [RealClub].[dbo].[OrderJerseyDetails] ([OrderID], [JerseySizeID], [JerseyID], [JerseyQuantity]) "
-                + "VALUES (?, ?, ?, ?)";
+        sql = "INSERT INTO [RealClub].[dbo].[OrderJerseyDetails] ([OrderID], [JerseySizeID], [JerseyID], [JerseyQuantity]) " + "VALUES (?, ?, ?, ?)";
         try {
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, orderDetail.getOrderID());
-            st.setInt(2, orderDetail.getJerseySizeID());
-            st.setInt(3, orderDetail.getJerseyID());
-            st.setInt(4, orderDetail.getJerseyQuantity());
+            st.setInt(
+                1,
+                orderDetail.getOrderID()
+            );
+            st.setInt(
+                2,
+                orderDetail.getJerseySizeID()
+            );
+            st.setInt(
+                3,
+                orderDetail.getJerseyID()
+            );
+            st.setInt(
+                4,
+                orderDetail.getJerseyQuantity()
+            );
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -103,19 +139,37 @@ public class OrderJerseyDetailsDAO extends dal.ConnectDB implements DAO<OrderJer
 
     @Override
     public void update(OrderJerseyDetails orderDetail) {
-        sql = "UPDATE [RealClub].[dbo].[OrderJerseyDetails] "
-                + "SET [OrderID] = ?, [JerseySizeID] = ?, [JerseyID] = ?, [JerseyQuantity] = ? WHERE [OrderDetailID] = ?";
+        sql = "UPDATE [RealClub].[dbo].[OrderJerseyDetails] " + "SET [OrderID] = ?, [JerseySizeID] = ?, [JerseyID] = ?, [JerseyQuantity] = ? WHERE [OrderDetailID] = ?";
         try {
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, orderDetail.getOrderID());
-            st.setInt(2, orderDetail.getJerseySizeID());
-            st.setInt(3, orderDetail.getJerseyID());
-            st.setInt(4, orderDetail.getJerseyQuantity());
-            st.setInt(5, orderDetail.getOrderDetailID());
+            st.setInt(
+                1,
+                orderDetail.getOrderID()
+            );
+            st.setInt(
+                2,
+                orderDetail.getJerseySizeID()
+            );
+            st.setInt(
+                3,
+                orderDetail.getJerseyID()
+            );
+            st.setInt(
+                4,
+                orderDetail.getJerseyQuantity()
+            );
+            st.setInt(
+                5,
+                orderDetail.getOrderDetailID()
+            );
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -127,10 +181,17 @@ public class OrderJerseyDetailsDAO extends dal.ConnectDB implements DAO<OrderJer
         try {
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -148,8 +209,12 @@ public class OrderJerseyDetailsDAO extends dal.ConnectDB implements DAO<OrderJer
                 con.close();
             }
         } catch (SQLException e) {
-            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(OrderJerseyDetailsDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         }
     }
-    
+
 }

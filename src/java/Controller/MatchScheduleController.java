@@ -1,32 +1,34 @@
 package Controller;
 
 import DAO.MatchScheduleDAO;
-import DAO.MatchStatisticDAO;
 import DAO.TeamDAO;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import Model.MatchSchedule;
-import Model.MatchStatistic;
 import Model.Team;
 import Model.Tournament;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import utils.DateUtils;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MatchScheduleController extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
@@ -42,8 +44,10 @@ public class MatchScheduleController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         try {
             String theCommand = request.getParameter("command");
             if (theCommand == null) {
@@ -54,38 +58,68 @@ public class MatchScheduleController extends HttpServlet {
                     response.sendRedirect("/SWPClubManegement/ADMIN/adminListMatchSchedule.jsp");
                     break;
                 case "ADD":
-                    AddMatch(request, response);
+                    AddMatch(
+                        request,
+                        response
+                    );
                     break;
                 case "UPDATE":
-                    UpdateMatch(request, response);
+                    UpdateMatch(
+                        request,
+                        response
+                    );
                     break;
                 case "DELETE":
-                    DeleteMatch(request, response);
+                    DeleteMatch(
+                        request,
+                        response
+                    );
                     break;
                 default:
             }
         } catch (Exception ex) {
-            Logger.getLogger(PlayerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayerController.class.getName()).log(
+                Level.SEVERE,
+                null,
+                ex
+            );
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        ListMatch(request, response);
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
+        ListMatch(
+            request,
+            response
+        );
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doDelete(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         try {
-            DeleteMatch(request, response);
+            DeleteMatch(
+                request,
+                response
+            );
         } catch (SQLServerException ex) {
-            Logger.getLogger(MatchScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MatchScheduleController.class.getName()).log(
+                Level.SEVERE,
+                null,
+                ex
+            );
         }
     }
 
-    public void ListMatch(HttpServletRequest request, HttpServletResponse response) {
+    public void ListMatch(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         try {
             MatchScheduleDAO mdao = new MatchScheduleDAO();
             TeamDAO tdao = new TeamDAO();
@@ -108,10 +142,22 @@ public class MatchScheduleController extends HttpServlet {
 
             Gson gson = new Gson();
             JsonObject json = new JsonObject();
-            json.add("matches", gson.toJsonTree(matches));
-            json.add("homeTeam", gson.toJsonTree(homeTeam));
-            json.add("awayTeam", gson.toJsonTree(awayTeam));
-            json.add("matchAlreadyStats", gson.toJsonTree(matchesAlreadyStats));
+            json.add(
+                "matches",
+                gson.toJsonTree(matches)
+            );
+            json.add(
+                "homeTeam",
+                gson.toJsonTree(homeTeam)
+            );
+            json.add(
+                "awayTeam",
+                gson.toJsonTree(awayTeam)
+            );
+            json.add(
+                "matchAlreadyStats",
+                gson.toJsonTree(matchesAlreadyStats)
+            );
 
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
@@ -123,7 +169,10 @@ public class MatchScheduleController extends HttpServlet {
         }
     }
 
-    public void AddMatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void AddMatch(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
         try {
             MatchScheduleDAO mdao = new MatchScheduleDAO();
             MatchSchedule ms = new MatchSchedule();
@@ -133,13 +182,16 @@ public class MatchScheduleController extends HttpServlet {
             String location = request.getParameter("location");
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate matchDate = LocalDate.parse(request.getParameter("matchdate"), formatter);
+            LocalDate matchDate = LocalDate.parse(
+                request.getParameter("matchdate"),
+                formatter
+            );
             Tournament tour = Tournament.valueOf(request.getParameter("tour"));
 
             ms.setAwayTeamID(awayTeam);
             ms.setHomeTeamID(homeTeam);
             ms.setMatchLocation(location); // Set the match location
-            ms.setMatchDate(matchDate);
+            ms.setMatchDate(DateUtils.localDateToDate(matchDate));
             ms.setTournament(tour);
 
             mdao.save(ms);
@@ -149,7 +201,10 @@ public class MatchScheduleController extends HttpServlet {
         }
     }
 
-    public void UpdateMatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void UpdateMatch(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
         try {
             MatchScheduleDAO mdao = new MatchScheduleDAO();
             MatchSchedule ms = new MatchSchedule();
@@ -160,14 +215,17 @@ public class MatchScheduleController extends HttpServlet {
             String location = request.getParameter("matchlocation");
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate matchDate = LocalDate.parse(request.getParameter("matchdate1"), formatter);
+            LocalDate matchDate = LocalDate.parse(
+                request.getParameter("matchdate1"),
+                formatter
+            );
             Tournament tour = Tournament.valueOf(request.getParameter("tour1"));
 
             ms.setMatchID(matchID);
             ms.setAwayTeamID(awayTeam);
             ms.setHomeTeamID(homeTeam);
             ms.setMatchLocation(location); // Set the match location
-            ms.setMatchDate(matchDate);
+            ms.setMatchDate(DateUtils.localDateToDate(matchDate));
             ms.setTournament(tour);
 
             mdao.update(ms);
@@ -177,7 +235,10 @@ public class MatchScheduleController extends HttpServlet {
         }
     }
 
-    public void DeleteMatch(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLServerException {
+    public void DeleteMatch(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException, SQLServerException {
         try {
             int matchID = Integer.parseInt(request.getParameter("mid"));
             Gson gson = new Gson();

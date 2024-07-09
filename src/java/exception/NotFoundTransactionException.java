@@ -5,9 +5,8 @@
 package exception;
 
 /**
- *
  * @author admin
  */
 public class NotFoundTransactionException extends RuntimeException {
-    
+
 }

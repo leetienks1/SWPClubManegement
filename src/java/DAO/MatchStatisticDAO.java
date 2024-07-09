@@ -4,9 +4,9 @@
  */
 package DAO;
 
-import Model.Coach;
 import Model.MatchStatistic;
 import dal.ConnectDB;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Desktop
  */
 public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> {
@@ -28,37 +27,21 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
     private PreparedStatement st;
     private ResultSet rs;
 
+    public static void main(String[] args) {
+        System.out.println(new MatchStatisticDAO().get(1));
+    }
+
     public List<MatchStatistic> SearchByTimeName(String searchParam) {
         String searchValue = "%" + searchParam + "%";
         List<MatchStatistic> matchStatistics = new ArrayList<>();
-        sql = "SELECT\n"
-                + "    MS.MatchStatisticID,\n"
-                + "    MS.MatchID,\n"
-                + "    MS.TeamID,\n"
-                + "    MS.Score,\n"
-                + "    MS.YellowCards,\n"
-                + "    MS.RedCards,\n"
-                + "    MS.TotalShots,\n"
-                + "    MS.CornerKicks,\n"
-                + "    MS.BallPossession,\n"
-                + "    MS.Passes,\n"
-                + "   \n"
-                + "    T1.TeamName AS HomeTeamName,\n"
-                + "    T2.TeamName AS AwayTeamName\n"
-                + "FROM\n"
-                + "    [RealClub].[dbo].[MatchStatistic] AS MS\n"
-                + "INNER JOIN\n"
-                + "    [RealClub].[dbo].[MatchSchedule] AS MSc ON MS.MatchID = MSc.MatchID\n"
-                + "INNER JOIN\n"
-                + "    [RealClub].[dbo].[Teams] AS T1 ON MSc.HomeTeamID = T1.TeamID\n"
-                + "INNER JOIN\n"
-                + "    [RealClub].[dbo].[Teams] AS T2 ON MSc.AwayTeamID = T2.TeamID\n"
-                + "\n"
-                + "WHERE( T2.TeamName LIKE ?)";
+        sql = "SELECT\n" + "    MS.MatchStatisticID,\n" + "    MS.MatchID,\n" + "    MS.TeamID,\n" + "    MS.Score,\n" + "    MS.YellowCards,\n" + "    MS.RedCards,\n" + "    MS.TotalShots,\n" + "    MS.CornerKicks,\n" + "    MS.BallPossession,\n" + "    MS.Passes,\n" + "   \n" + "    T1.TeamName AS HomeTeamName,\n" + "    T2.TeamName AS AwayTeamName\n" + "FROM\n" + "    [RealClub].[dbo].[MatchStatistic] AS MS\n" + "INNER JOIN\n" + "    [RealClub].[dbo].[MatchSchedule] AS MSc ON MS.MatchID = MSc.MatchID\n" + "INNER JOIN\n" + "    [RealClub].[dbo].[Teams] AS T1 ON MSc.HomeTeamID = T1.TeamID\n" + "INNER JOIN\n" + "    [RealClub].[dbo].[Teams] AS T2 ON MSc.AwayTeamID = T2.TeamID\n" + "\n" + "WHERE( T2.TeamName LIKE ?)";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setString(1, searchValue);
+            st.setString(
+                1,
+                searchValue
+            );
             rs = st.executeQuery();
             while (rs.next()) {
                 MatchStatistic m = new MatchStatistic();
@@ -75,7 +58,11 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
                 matchStatistics.add(m);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -85,18 +72,7 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
     @Override
     public List<MatchStatistic> getAll() {
         List<MatchStatistic> matchStatistics = new ArrayList<>();
-        sql = "SELECT [MatchStatisticID]\n"
-                + "      ,[MatchID]\n"
-                + "      ,[TeamID]\n"
-                + "      ,[Score]\n"
-                + "      ,[YellowCards]\n"
-                + "      ,[RedCards]\n"
-                + "      ,[TotalShots]\n"
-                + "      ,[CornerKicks]\n"
-                + "      ,[BallPossession]\n"
-                + "      ,[Passes]\n"
-                + "  FROM [dbo].[MatchStatistic]"
-                + " order by MatchID asc";
+        sql = "SELECT [MatchStatisticID]\n" + "      ,[MatchID]\n" + "      ,[TeamID]\n" + "      ,[Score]\n" + "      ,[YellowCards]\n" + "      ,[RedCards]\n" + "      ,[TotalShots]\n" + "      ,[CornerKicks]\n" + "      ,[BallPossession]\n" + "      ,[Passes]\n" + "  FROM [dbo].[MatchStatistic]" + " order by MatchID asc";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -116,18 +92,34 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
                 matchStatistics.add(m);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
         return matchStatistics;
     }
-    
-    public Optional<MatchStatistic> getMatchStatByTeamID(int id, int matchID) {
+
+    public Optional<MatchStatistic> getMatchStatByTeamID(
+        int id,
+        int matchID
+    ) {
         String sql = "SELECT [MatchStatisticID], [MatchID], [TeamID], [Score], [YellowCards], [RedCards], [TotalShots], [CornerKicks], [BallPossession], [Passes] FROM [dbo].[MatchStatistic] WHERE [TeamID] = ? AND [MatchID]=?";
-        try (Connection con = openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
-            st.setInt(1, id);
-            st.setInt(2, matchID);
+        try (
+            Connection con = openConnection();
+            PreparedStatement st = con.prepareStatement(sql)
+        ) {
+            st.setInt(
+                1,
+                id
+            );
+            st.setInt(
+                2,
+                matchID
+            );
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
                     MatchStatistic m = new MatchStatistic();
@@ -145,18 +137,28 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
         return Optional.empty();
     }
-    
+
     @Override
     public Optional<MatchStatistic> get(int id) {
         String sql = "SELECT [MatchStatisticID], [MatchID], [TeamID], [Score], [YellowCards], [RedCards], [TotalShots], [CornerKicks], [BallPossession], [Passes] FROM [dbo].[MatchStatistic] WHERE [MatchStatisticID] = ?";
-        try (Connection con = openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
-            st.setInt(1, id);
+        try (
+            Connection con = openConnection();
+            PreparedStatement st = con.prepareStatement(sql)
+        ) {
+            st.setInt(
+                1,
+                id
+            );
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
                     MatchStatistic m = new MatchStatistic();
@@ -174,19 +176,34 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
         return Optional.empty();
     }
-    
-    public Optional<MatchStatistic> getByTeamIdAndMatchId(int tid, int mid) {
-        String sql = "SELECT [MatchStatisticID], [MatchID], [TeamID], [Score], [YellowCards], [RedCards], [TotalShots], [CornerKicks], [BallPossession], [Passes] FROM [dbo].[MatchStatistic]"
-                + " WHERE  [TeamID] = ? and  [MatchID] = ?";
-        try (Connection con = openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
-            st.setInt(1, tid);
-            st.setInt(2, mid);
+
+    public Optional<MatchStatistic> getByTeamIdAndMatchId(
+        int tid,
+        int mid
+    ) {
+        String sql = "SELECT [MatchStatisticID], [MatchID], [TeamID], [Score], [YellowCards], [RedCards], [TotalShots], [CornerKicks], [BallPossession], [Passes] FROM [dbo].[MatchStatistic]" + " WHERE  [TeamID] = ? and  [MatchID] = ?";
+        try (
+            Connection con = openConnection();
+            PreparedStatement st = con.prepareStatement(sql)
+        ) {
+            st.setInt(
+                1,
+                tid
+            );
+            st.setInt(
+                2,
+                mid
+            );
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
                     MatchStatistic m = new MatchStatistic();
@@ -204,35 +221,71 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
         return Optional.empty();
     }
-    public static void main(String[] args) {
-        System.out.println(new MatchStatisticDAO().get(1));
-    }
+
     @Override
     public void save(MatchStatistic t) {
         String sql = "INSERT INTO [dbo].[MatchStatistic] ([MatchID], [TeamID], [Score], [YellowCards], [RedCards], [TotalShots], [CornerKicks], [BallPossession], [Passes]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection con = openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
+        try (
+            Connection con = openConnection();
+            PreparedStatement st = con.prepareStatement(sql)
+        ) {
             if (!canInsert(t.getMatchID())) {
                 throw new SQLException("1 match is not contain over 2 team");
             }
 
-            st.setInt(1, t.getMatchID());
-            st.setInt(2, t.getTeamID());
-            st.setInt(3, t.getScore());
-            st.setInt(4, t.getYellowCards());
-            st.setInt(5, t.getRedCards());
-            st.setInt(6, t.getTotalShots());
-            st.setInt(7, t.getCornerKicks());
-            st.setDouble(8, t.getBallPossession());
-            st.setInt(9, t.getPasses());
+            st.setInt(
+                1,
+                t.getMatchID()
+            );
+            st.setInt(
+                2,
+                t.getTeamID()
+            );
+            st.setInt(
+                3,
+                t.getScore()
+            );
+            st.setInt(
+                4,
+                t.getYellowCards()
+            );
+            st.setInt(
+                5,
+                t.getRedCards()
+            );
+            st.setInt(
+                6,
+                t.getTotalShots()
+            );
+            st.setInt(
+                7,
+                t.getCornerKicks()
+            );
+            st.setDouble(
+                8,
+                t.getBallPossession()
+            );
+            st.setInt(
+                9,
+                t.getPasses()
+            );
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -241,22 +294,59 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
     @Override
     public void update(MatchStatistic t) {
         String sql = "UPDATE [dbo].[MatchStatistic] SET [MatchID] = ?, [TeamID] = ?, [Score] = ?, [YellowCards] = ?, [RedCards] = ?, [TotalShots] = ?, [CornerKicks] = ?, [BallPossession] = ?, [Passes] = ? WHERE [MatchStatisticID] = ?";
-        try (Connection con = openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
+        try (
+            Connection con = openConnection();
+            PreparedStatement st = con.prepareStatement(sql)
+        ) {
 
-            st.setInt(1, t.getMatchID());
-            st.setInt(2, t.getTeamID());
-            st.setInt(3, t.getScore());
-            st.setInt(4, t.getYellowCards());
-            st.setInt(5, t.getRedCards());
-            st.setInt(6, t.getTotalShots());
-            st.setInt(7, t.getCornerKicks());
-            st.setDouble(8, t.getBallPossession());
-            st.setInt(9, t.getPasses());
-            st.setInt(10, t.getMatchStatisticID());
+            st.setInt(
+                1,
+                t.getMatchID()
+            );
+            st.setInt(
+                2,
+                t.getTeamID()
+            );
+            st.setInt(
+                3,
+                t.getScore()
+            );
+            st.setInt(
+                4,
+                t.getYellowCards()
+            );
+            st.setInt(
+                5,
+                t.getRedCards()
+            );
+            st.setInt(
+                6,
+                t.getTotalShots()
+            );
+            st.setInt(
+                7,
+                t.getCornerKicks()
+            );
+            st.setDouble(
+                8,
+                t.getBallPossession()
+            );
+            st.setInt(
+                9,
+                t.getPasses()
+            );
+            st.setInt(
+                10,
+                t.getMatchStatisticID()
+            );
             st.executeUpdate();
 
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -265,11 +355,21 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM [dbo].[MatchStatistic] WHERE [MatchStatisticID] = ?";
-        try (Connection con = openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
-            st.setInt(1, id);
+        try (
+            Connection con = openConnection();
+            PreparedStatement st = con.prepareStatement(sql)
+        ) {
+            st.setInt(
+                1,
+                id
+            );
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -277,9 +377,15 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
 
     public List<MatchStatistic> GetByMatchID(int id) {
         String sql = "SELECT [MatchStatisticID], [MatchID], [TeamID], [Score], [YellowCards], [RedCards], [TotalShots], [CornerKicks], [BallPossession], [Passes] FROM [dbo].[MatchStatistic] WHERE [MatchID] = ?";
-        try (Connection con = openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
+        try (
+            Connection con = openConnection();
+            PreparedStatement st = con.prepareStatement(sql)
+        ) {
             List<MatchStatistic> mstList = new ArrayList<>();
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     MatchStatistic m = new MatchStatistic();
@@ -298,7 +404,11 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
                 return mstList;
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PlayerDAO.class.getName()).log(
+                Level.SEVERE,
+                null,
+                e
+            );
         } finally {
             closeResources();
         }
@@ -324,8 +434,13 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
     public boolean canInsert(int matchID) throws SQLException, ClassNotFoundException {
         sql = "SELECT COUNT( TeamID) AS teamCount FROM MatchStatistic WHERE MatchID = ?";
         try (
-                Connection con = openConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, matchID);
+            Connection con = openConnection();
+            PreparedStatement ps = con.prepareStatement(sql)
+        ) {
+            ps.setInt(
+                1,
+                matchID
+            );
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     int teamCount = rs.getInt("teamCount");
@@ -339,8 +454,13 @@ public class MatchStatisticDAO extends ConnectDB implements DAO<MatchStatistic> 
     public boolean canUpdate(int matchID) throws SQLException, ClassNotFoundException {
         sql = "SELECT COUNT( TeamID) AS teamCount FROM MatchStatistic WHERE MatchID = ?";
         try (
-                Connection con = openConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, matchID);
+            Connection con = openConnection();
+            PreparedStatement ps = con.prepareStatement(sql)
+        ) {
+            ps.setInt(
+                1,
+                matchID
+            );
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     int teamCount = rs.getInt("teamCount");

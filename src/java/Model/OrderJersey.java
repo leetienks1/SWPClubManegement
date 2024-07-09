@@ -1,4 +1,3 @@
-
 package Model;
 
 import java.time.LocalDate;
@@ -16,7 +15,13 @@ public class OrderJersey {
         this.orderDate = LocalDate.now();
     }
 
-    public OrderJersey(int orderID, int userID, double orderTotal, String phone, String address) {
+    public OrderJersey(
+        int orderID,
+        int userID,
+        double orderTotal,
+        String phone,
+        String address
+    ) {
         this.orderID = orderID;
         this.userID = userID;
         this.orderDate = LocalDate.now();
@@ -25,7 +30,14 @@ public class OrderJersey {
         this.address = address;
     }
 
-    public OrderJersey(int orderID, int userID, LocalDate orderDate, double orderTotal, String phone, String address) {
+    public OrderJersey(
+        int orderID,
+        int userID,
+        LocalDate orderDate,
+        double orderTotal,
+        String phone,
+        String address
+    ) {
         this.orderID = orderID;
         this.userID = userID;
         this.orderDate = orderDate;
@@ -33,7 +45,7 @@ public class OrderJersey {
         this.phone = phone;
         this.address = address;
     }
-    
+
     // Getters and Setters
     public int getOrderID() {
         return orderID;
@@ -86,13 +98,6 @@ public class OrderJersey {
     // toString method
     @Override
     public String toString() {
-        return "Order{" +
-                "orderID=" + orderID +
-                ", userID=" + userID +
-                ", orderDate=" + orderDate +
-                ", orderTotal=" + orderTotal +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+        return "Order{" + "orderID=" + orderID + ", userID=" + userID + ", orderDate=" + orderDate + ", orderTotal=" + orderTotal + ", phone='" + phone + '\'' + ", address='" + address + '\'' + '}';
     }
 }

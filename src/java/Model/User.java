@@ -5,17 +5,17 @@
 package Model;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- *
  * @author Desktop
  */
-public class User implements Serializable{
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private int userId;
     private String userName;
     private String image;
@@ -23,18 +23,24 @@ public class User implements Serializable{
     private String email;
     private Role role;
     private String name;
-     private transient LocalDate dateOfBirth;
+    private transient LocalDate dateOfBirth;
     private String about;
     private boolean status;
-    
-    
+
+
     @SerializedName("dateOfBirth")
     private String dateOfBirthString;
 
     public User() {
     }
 
-    public User(int userId, String userName, String password, String email, Role role) {
+    public User(
+        int userId,
+        String userName,
+        String password,
+        String email,
+        Role role
+    ) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -43,7 +49,12 @@ public class User implements Serializable{
         this.status = true;
     }
 
-    public User(String userName, String password, String email, Role role) {
+    public User(
+        String userName,
+        String password,
+        String email,
+        Role role
+    ) {
         this.userName = userName;
         this.password = password;
         this.email = email;
@@ -52,7 +63,14 @@ public class User implements Serializable{
 
     }
 
-    public User(int userId, String userName, String image, String password, String email, Role role) {
+    public User(
+        int userId,
+        String userName,
+        String image,
+        String password,
+        String email,
+        Role role
+    ) {
         this.userId = userId;
         this.userName = userName;
         this.image = image;
@@ -62,7 +80,13 @@ public class User implements Serializable{
         this.status = true;
     }
 
-    public User(String userName, String image, String password, String email, Role role) {
+    public User(
+        String userName,
+        String image,
+        String password,
+        String email,
+        Role role
+    ) {
         this.userName = userName;
         this.image = image;
         this.password = password;
@@ -71,7 +95,17 @@ public class User implements Serializable{
         this.status = true;
     }
 
-    public User(int userId, String userName, String image, String password, String email, Role role, String name, LocalDate dateOfBirth, String about) {
+    public User(
+        int userId,
+        String userName,
+        String image,
+        String password,
+        String email,
+        Role role,
+        String name,
+        LocalDate dateOfBirth,
+        String about
+    ) {
         this.userId = userId;
         this.userName = userName;
         this.image = image;
@@ -84,7 +118,16 @@ public class User implements Serializable{
         this.status = true;
     }
 
-    public User(String userName, String image, String password, String email, Role role, String name, LocalDate dateOfBirth, String about) {
+    public User(
+        String userName,
+        String image,
+        String password,
+        String email,
+        Role role,
+        String name,
+        LocalDate dateOfBirth,
+        String about
+    ) {
         this.userName = userName;
         this.image = image;
         this.password = password;
@@ -95,16 +138,17 @@ public class User implements Serializable{
         this.about = about;
         this.status = true;
 
-    }
-    
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfBirthString = dateOfBirth.toString(); // Convert LocalDate to string for serialization
     }
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirthString = dateOfBirth.toString(); // Convert LocalDate to string for serialization
+    }
+
     public String getName() {
         return name;
     }
@@ -113,13 +157,13 @@ public class User implements Serializable{
         this.name = name;
     }
 
-//    public LocalDate getDateOfBirth() {
-//        return dateOfBirth;
-//    }
-//
-//    public void setDateOfBirth(LocalDate dateOfBirth) {
-//        this.dateOfBirth = dateOfBirth;
-//    }
+    //    public LocalDate getDateOfBirth() {
+    //        return dateOfBirth;
+    //    }
+    //
+    //    public void setDateOfBirth(LocalDate dateOfBirth) {
+    //        this.dateOfBirth = dateOfBirth;
+    //    }
 
     public Role getRole() {
         return role;
@@ -181,17 +225,13 @@ public class User implements Serializable{
         return status;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-
     public boolean isStatus() {
         return status;
     }
 
-    
-    
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {

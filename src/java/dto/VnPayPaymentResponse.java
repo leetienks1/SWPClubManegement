@@ -46,7 +46,7 @@ public class VnPayPaymentResponse extends GetPaymentResponse {
     private String transactionStatus;
 
     @SerializedName("vnp_PromotionCode")
-    private Integer  promotionCode;
+    private Integer promotionCode;
 
     @SerializedName("vnp_PromotionAmount")
     private Integer promotionAmount;
@@ -186,6 +186,6 @@ public class VnPayPaymentResponse extends GetPaymentResponse {
     public void setSecureHash(String secureHash) {
         this.secureHash = secureHash;
     }
-    
-    
+
+
 }

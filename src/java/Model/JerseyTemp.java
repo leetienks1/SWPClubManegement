@@ -5,7 +5,6 @@
 package Model;
 
 /**
- *
  * @author Desktop
  */
 public class JerseyTemp {
@@ -17,7 +16,15 @@ public class JerseyTemp {
     private boolean selected;
     private String size;
 
-    public JerseyTemp(int id, String image, String name, double price, int quantity, boolean selected, String size) {
+    public JerseyTemp(
+        int id,
+        String image,
+        String name,
+        double price,
+        int quantity,
+        boolean selected,
+        String size
+    ) {
         this.id = id;
         this.image = image;
         this.name = name;
@@ -27,7 +34,14 @@ public class JerseyTemp {
         this.size = size;
     }
 
-    public JerseyTemp(int id, String image, String name, double price, int quantity, String size) {
+    public JerseyTemp(
+        int id,
+        String image,
+        String name,
+        double price,
+        int quantity,
+        String size
+    ) {
         this.id = id;
         this.image = image;
         this.name = name;
@@ -35,7 +49,7 @@ public class JerseyTemp {
         this.quantity = quantity;
         this.size = size;
     }
-    
+
 
     public int getId() {
         return id;
@@ -45,7 +59,6 @@ public class JerseyTemp {
         this.id = id;
     }
 
-    
 
     public String getImage() {
         return image;
@@ -99,6 +112,6 @@ public class JerseyTemp {
     public String toString() {
         return "JerseyTemp{" + "id=" + id + ", image=" + image + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ", selected=" + selected + ", size=" + size + '}';
     }
-    
-    
+
+
 }

@@ -4,68 +4,46 @@
  */
 package dal;
 
-import Model.Player;
-import Model.Position;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.openxml4j.opc.PackagePart;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.openxml4j.opc.PackagePart;
-import org.apache.poi.ss.formula.functions.Column;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import static org.apache.poi.ss.usermodel.CellType.BOOLEAN;
-import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
-import static org.apache.poi.ss.usermodel.CellType.STRING;
-import org.apache.poi.ss.usermodel.ClientAnchor;
-import org.apache.poi.ss.usermodel.PictureData;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.ss.util.CellAddress;
-import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
-import org.apache.poi.xssf.usermodel.XSSFDrawing;
-import org.apache.poi.xssf.usermodel.XSSFPicture;
-import org.apache.poi.xssf.usermodel.XSSFPictureData;
-import org.apache.poi.xssf.usermodel.XSSFShape;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.openxml4j.opc.PackageRelationship;
-import org.apache.poi.openxml4j.opc.PackageRelationshipCollection;
-import org.apache.poi.ss.usermodel.ClientAnchor.AnchorType;
-import org.apache.poi.ss.usermodel.Drawing;
-import org.apache.poi.ss.usermodel.Picture;
-import org.apache.poi.util.IOUtils;
+
 /**
- *
  * @author Desktop
  */
 public class ReadExcel {
 
     public static void main(String[] args) throws InvalidFormatException, IOException {
         ReadExcel reader = new ReadExcel();
-//
-       String excelFilePath = "C:\\Users\\Desktop\\Downloads\\Test.xlsx";
+        //
+        String excelFilePath = "C:\\Users\\Desktop\\Downloads\\Test.xlsx";
         String imageFilePath = "C:\\Users\\Desktop\\Documents\\NetBeansProjects\\SWPClubManegement\\web\\IMAGE\\PLAYER";
 
-          FileInputStream excelFileInputStream = new FileInputStream(excelFilePath);
+        FileInputStream excelFileInputStream = new FileInputStream(excelFilePath);
         Workbook workbook = new XSSFWorkbook(excelFileInputStream);
         Sheet sheet = workbook.getSheetAt(0); // Lấy sheet đầu tiên
 
         // Lấy ra danh sách tất cả các hình ảnh trong sheet
         List<? extends PictureData> pictures = workbook.getAllPictures();
         String[] players = {
-            "De Bruyne", "Messi", "Neymar", "Mbappe", "Salah",
-            "Ronaldo ", "Lewandowski", "Kane", "De Gea", "Kante"
+            "De Bruyne",
+            "Messi",
+            "Neymar",
+            "Mbappe",
+            "Salah",
+            "Ronaldo ",
+            "Lewandowski",
+            "Kane",
+            "De Gea",
+            "Kante"
         };
         int i = 1;
         for (PictureData pictureData : pictures) {
@@ -77,7 +55,10 @@ public class ReadExcel {
             byte[] pictureBytes = pictureData.getData();
 
             // Tạo tên tệp dựa trên thời gian để tránh trùng lặp
-            String fileName = cell.getStringCellValue().replace(" ", "_") + System.currentTimeMillis() + "." + ext;
+            String fileName = cell.getStringCellValue().replace(
+                " ",
+                "_"
+            ) + System.currentTimeMillis() + "." + ext;
 
             // Đường dẫn đầy đủ đến tệp đầu ra
             String outputFilePath = imageFilePath + File.separator + fileName;
@@ -93,12 +74,111 @@ public class ReadExcel {
 
         workbook.close();
         excelFileInputStream.close();
-        
-    
+
+
     }
 
-    public void readAndSaveImagesFromExcel(String excelFilePath, String outputFolder) throws InvalidFormatException {
-        try (FileInputStream fis = new FileInputStream(excelFilePath); OPCPackage pkg = OPCPackage.open(fis); XSSFWorkbook wb = new XSSFWorkbook(pkg)) {
+    public static void extractImagesFromSheet(
+        XSSFSheet sheet,
+        int sheetIndex,
+        String outputFolder
+    ) throws InvalidFormatException {
+        try {
+            // Get all parts from the sheet's package
+            XSSFDrawing drawing = sheet.getDrawingPatriarch();
+
+            if (drawing == null) {
+                System.out.println("No drawing found in the sheet.");
+                return;
+            }
+
+            // Iterate over all shapes in the drawing
+            for (XSSFShape shape : drawing.getShapes()) {
+                if (shape instanceof XSSFPicture picture) {
+                    ClientAnchor anchor = picture.getPreferredSize();
+
+                    // Get the cell row and column where the picture is anchored
+                    int pictureRow = anchor.getRow1();
+                    int pictureCol = anchor.getCol1();
+                    PictureData pictureData = picture.getPictureData();
+                    String contentType = pictureData.getMimeType();
+
+                    if (contentType.startsWith("image/")) {
+                        processImagePart(
+                            pictureData,
+                            sheetIndex,
+                            pictureRow,
+                            pictureCol,
+                            outputFolder
+                        );
+                    } else {
+                        System.out.println("Non-image content type: " + contentType);
+                    }
+                } else {
+                    System.out.println("Non-picture shape found: " + shape);
+                }
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private static void processImagePart(
+        PictureData pictureData,
+        int sheetIndex,
+        int targetRow,
+        int targetColumn,
+        String outputFolder
+    ) throws IOException {
+        System.out.println("Found image at row: " + targetRow + ", column: " + targetColumn);
+
+        // Extract image data
+        byte[] imageData = pictureData.getData();
+
+        // Determine the image file name based on sheet index, row, and column
+        String fileExtension = pictureData.suggestFileExtension();
+        String fileName = "image_" + sheetIndex + "_row_" + targetRow + "_col_" + targetColumn + "." + fileExtension;
+        File imageFile = new File(outputFolder + File.separator + fileName);
+
+        // Save the image file
+        saveImageFile(
+            imageFile,
+            imageData,
+            sheetIndex,
+            targetRow,
+            targetColumn
+        );
+    }
+
+    private static void saveImageFile(
+        File imageFile,
+        byte[] imageData,
+        int sheetIndex,
+        int targetRow,
+        int targetColumn
+    ) {
+        try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+            fos.write(imageData);
+            System.out.println("Saved image from Sheet " + sheetIndex + ", Row " + targetRow + ", Column " + targetColumn + ": " + imageFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Failed to save image: " + imageFile.getAbsolutePath());
+            e.printStackTrace();
+        }
+    }
+
+    public void readAndSaveImagesFromExcel(
+        String excelFilePath,
+        String outputFolder
+    ) throws InvalidFormatException {
+        try (
+            FileInputStream fis = new FileInputStream(excelFilePath);
+            OPCPackage pkg = OPCPackage.open(fis);
+            XSSFWorkbook wb = new XSSFWorkbook(pkg)
+        ) {
 
             System.out.println("Opening the Excel file: " + excelFilePath);
 
@@ -116,12 +196,14 @@ public class ReadExcel {
 
                         // Save image to output folder
                         String fileExtension = part.getContentType().split("/")[1];
-                        String fileName = "image_" + sheetIndex + "_row_" + part.getPartName().getName().hashCode() + "." + fileExtension;
+                        String fileName = "image_" + sheetIndex + "_row_" + part.getPartName().getName()
+                            .hashCode() + "." + fileExtension;
                         File imageFile = new File(outputFolder + File.separator + fileName);
 
                         try (FileOutputStream fos = new FileOutputStream(imageFile)) {
                             fos.write(imageData);
-                            System.out.println("Saved image from Sheet " + sheetIndex + ", Row " + part.getPartName().getName() + ": " + imageFile.getAbsolutePath());
+                            System.out.println("Saved image from Sheet " + sheetIndex + ", Row " + part.getPartName()
+                                .getName() + ": " + imageFile.getAbsolutePath());
                         } catch (IOException e) {
                             System.err.println("Failed to save image: " + imageFile.getAbsolutePath());
                             e.printStackTrace();
@@ -134,71 +216,6 @@ public class ReadExcel {
 
         } catch (IOException | InvalidFormatException e) {
             System.err.println("Error processing Excel file: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public static void extractImagesFromSheet(XSSFSheet sheet, int sheetIndex, String outputFolder) throws InvalidFormatException {
-        try {
-            // Get all parts from the sheet's package
-            XSSFDrawing drawing = sheet.getDrawingPatriarch();
-            
-            if (drawing == null) {
-                System.out.println("No drawing found in the sheet.");
-                return;
-            }
-
-            // Iterate over all shapes in the drawing
-            for (XSSFShape shape : drawing.getShapes()) {
-                if (shape instanceof XSSFPicture) {
-                    XSSFPicture picture = (XSSFPicture) shape;
-                    ClientAnchor anchor = picture.getPreferredSize();
-
-                    // Get the cell row and column where the picture is anchored
-                    int pictureRow = anchor.getRow1();
-                    int pictureCol = anchor.getCol1();
-                    PictureData pictureData = picture.getPictureData();
-                    String contentType = pictureData.getMimeType();
-
-                    if (contentType.startsWith("image/")) {
-                        processImagePart(pictureData, sheetIndex, pictureRow, pictureCol, outputFolder);
-                    } else {
-                        System.out.println("Non-image content type: " + contentType);
-                    }
-                } else {
-                    System.out.println("Non-picture shape found: " + shape);
-                }
-            }
-                                
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-                           
-
-    }
-
-    private static void processImagePart(PictureData pictureData, int sheetIndex, int targetRow, int targetColumn, String outputFolder) throws IOException {
-        System.out.println("Found image at row: " + targetRow + ", column: " + targetColumn);
-
-        // Extract image data
-        byte[] imageData = pictureData.getData();
-
-        // Determine the image file name based on sheet index, row, and column
-        String fileExtension = pictureData.suggestFileExtension();
-        String fileName = "image_" + sheetIndex + "_row_" + targetRow + "_col_" + targetColumn + "." + fileExtension;
-        File imageFile = new File(outputFolder + File.separator + fileName);
-
-        // Save the image file
-        saveImageFile(imageFile, imageData, sheetIndex, targetRow, targetColumn);
-    }
-
-    private static void saveImageFile(File imageFile, byte[] imageData, int sheetIndex, int targetRow, int targetColumn) {
-        try (FileOutputStream fos = new FileOutputStream(imageFile)) {
-            fos.write(imageData);
-            System.out.println("Saved image from Sheet " + sheetIndex + ", Row " + targetRow + ", Column " + targetColumn + ": " + imageFile.getAbsolutePath());
-        } catch (IOException e) {
-            System.err.println("Failed to save image: " + imageFile.getAbsolutePath());
             e.printStackTrace();
         }
     }

@@ -4,10 +4,6 @@
  */
 package dal;
 
-import static dal.DatabaseInfor.driverName;
-import static dal.DatabaseInfor.pass;
-import static dal.DatabaseInfor.url;
-import static dal.DatabaseInfor.user;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,35 +11,49 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static dal.DatabaseInfor.*;
+
 /**
- *
  * @author Desktop
  */
 public class ConnectDB {
-     private static ConnectDB instance;
-    
+    private static ConnectDB instance;
+    protected static Logger logger = Logger.getLogger(ConnectDB.class.getName());
+
+    public static ConnectDB getInstance() {
+        if (instance == null) {
+            synchronized (ConnectDB.class) {
+                if (instance == null) {
+                    instance = new ConnectDB();
+                }
+            }
+        }
+        return instance;
+    }
+    //get instance of databse only one time
 
     public Connection openConnection() throws ClassNotFoundException {
         try {
             Class.forName(driverName);
-            Connection con = DriverManager.getConnection(url, user, pass);
-            return con;
+            return DriverManager.getConnection(
+                url,
+                user,
+                pass
+            );
         } catch (SQLException ex) {
-            Logger.getLogger(ConnectDB.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(
+                Level.SEVERE,
+                ex.getMessage(),
+                ex
+            );
         }
         return null;
     }
-//get instance of databse only one time
 
-    public static ConnectDB getInstance() {
-        if (instance == null) {
-            instance = new ConnectDB();
-        }
-        return instance;
-    }
-    
-    
-    public void closeResources(Connection con, AutoCloseable...closeables) {
+    public void closeResources(
+        Connection con,
+        AutoCloseable... closeables
+    ) {
         try {
             if (Objects.nonNull(closeables)) {
                 for (AutoCloseable closeable : closeables) {
@@ -55,8 +65,12 @@ public class ConnectDB {
             if (con != null) {
                 con.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            logger.log(
+                Level.SEVERE,
+                ex.getMessage(),
+                ex
+            );
         }
     }
 }

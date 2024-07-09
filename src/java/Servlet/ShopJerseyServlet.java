@@ -6,26 +6,20 @@ package Servlet;
 
 import DAO.JerseyDAO;
 import Model.Jersey;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import com.google.gson.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Type;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
  * @author Desktop
  */
 public class ShopJerseyServlet extends HttpServlet {
@@ -34,13 +28,15 @@ public class ShopJerseyServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -57,17 +53,20 @@ public class ShopJerseyServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
 
         response.sendRedirect("/SWPClubManegement/STORE/product.jsp");
     }
@@ -75,14 +74,16 @@ public class ShopJerseyServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws ServletException, IOException {
 
         try {
             BufferedReader reader = request.getReader();
@@ -96,7 +97,10 @@ public class ShopJerseyServlet extends HttpServlet {
             // Parse JSON data into List<String> of price ranges
             Gson gson = new Gson();
 
-            JsonObject jsonObject = gson.fromJson(requestData, JsonObject.class);
+            JsonObject jsonObject = gson.fromJson(
+                requestData,
+                JsonObject.class
+            );
 
             // Extract priceRanges and nameSearch from JSON object
             JsonArray priceRangesJsonArray = jsonObject.getAsJsonArray("priceRanges");
@@ -115,16 +119,28 @@ public class ShopJerseyServlet extends HttpServlet {
             int currentPage = jsonObject.get("currentPage").getAsInt();
 
             // Example: Search jerseys by price ranges and/or name
-            List<Jersey> filteredJerseys = searchJerseysByPriceAndName(priceRanges, nameSearch);
+            List<Jersey> filteredJerseys = searchJerseysByPriceAndName(
+                priceRanges,
+                nameSearch
+            );
 
             int totalItems = filteredJerseys.size();
             int itemsPerPage = 8; // Fixed items per page
             int fromIndex = (currentPage - 1) * itemsPerPage;
-            int toIndex = Math.min(fromIndex + itemsPerPage, totalItems);
-            List<Jersey> paginatedJerseys = filteredJerseys.subList(fromIndex,toIndex);
+            int toIndex = Math.min(
+                fromIndex + itemsPerPage,
+                totalItems
+            );
+            List<Jersey> paginatedJerseys = filteredJerseys.subList(
+                fromIndex,
+                toIndex
+            );
             // Convert filtered results to JSON and send response
             JsonObject jsonResponse = new JsonObject();
-            jsonResponse.add("products", gson.toJsonTree(paginatedJerseys));
+            jsonResponse.add(
+                "products",
+                gson.toJsonTree(paginatedJerseys)
+            );
 
             response.setContentType("application/json");
             response.getWriter().write(gson.toJson(jsonResponse));
@@ -150,36 +166,36 @@ public class ShopJerseyServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private List<Jersey> searchJerseysByPriceAndName(List<String> priceRanges, String nameSearch) {
+    private List<Jersey> searchJerseysByPriceAndName(
+        List<String> priceRanges,
+        String nameSearch
+    ) {
         JerseyDAO jdao = new JerseyDAO();
         List<Jersey> allJerseys = jdao.getAll();
         List<Jersey> filteredByPrice;
         // Filter by price ranges
         if (!priceRanges.isEmpty()) {
-            filteredByPrice = allJerseys.stream()
-                    .filter(jersey -> {
-                        for (String range : priceRanges) {
-                            String[] limits = range.split("-");
-                            double minPrice = Double.parseDouble(limits[0]);
-                            double maxPrice = Double.parseDouble(limits[1]);
-                            if (jersey.getJerseyPrice() >= minPrice && jersey.getJerseyPrice() <= maxPrice) {
-                                return true;
-                            }
-                        }
-                        return false;
-                    })
-                    .collect(Collectors.toList());
+            filteredByPrice = allJerseys.stream().filter(jersey -> {
+                for (String range : priceRanges) {
+                    String[] limits = range.split("-");
+                    double minPrice = Double.parseDouble(limits[0]);
+                    double maxPrice = Double.parseDouble(limits[1]);
+                    if (jersey.getJerseyPrice() >= minPrice && jersey.getJerseyPrice() <= maxPrice) {
+                        return true;
+                    }
+                }
+                return false;
+            }).collect(Collectors.toList());
 
         } else {
             filteredByPrice = allJerseys;
         }
         // Filter by name if nameSearch is provided
         if (nameSearch != null && !nameSearch.isEmpty()) {
-            
+
             String lowerCaseSearch = nameSearch.toLowerCase();
-            filteredByPrice = filteredByPrice.stream()
-                    .filter(jersey -> jersey.getJerseyName().toLowerCase().contains(lowerCaseSearch))
-                    .collect(Collectors.toList());
+            filteredByPrice = filteredByPrice.stream().filter(jersey -> jersey.getJerseyName().toLowerCase()
+                .contains(lowerCaseSearch)).collect(Collectors.toList());
         }
 
         return filteredByPrice;

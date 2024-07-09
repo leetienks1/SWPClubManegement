@@ -396,7 +396,7 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <img src="../IMAGE/HOME/REALFC.png" alt="alt"/>
+                    <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href='/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
                 </div>
 
                 <ul class="list-unstyled components">
@@ -418,6 +418,7 @@
                     <li>
                         <a href="/SWPClubManegement/MatchStatisticController"> <img src="../IMAGE/HOME/user.png"  width="32px" height="32px"/> CRUD Match Stats</a>
                     </li>
+
 
                     <li>
                         <a href="/SWPClubManegement/LogoutServlet"> <img src="../IMAGE/HOME/logout.png"  width="28px" height="28px"/> Log Out</a>

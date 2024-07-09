@@ -7,9 +7,8 @@ package Model;
 import java.io.Serializable;
 
 /**
- *
  * @author Desktop
  */
-public enum Role implements Serializable{
-    Admin, Coach, Player, Medical,User;
+public enum Role implements Serializable {
+    Admin, Coach, Player, Medical, User
 }
