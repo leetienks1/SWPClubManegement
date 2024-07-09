@@ -255,7 +255,7 @@
 
             List<Player> players = pdao.getAll();
             List<User> users = udao.getAll();
-            List<PlayerStat> stats = pdao.getPlayerStats(pid);
+            List<PlayerStat> stats = pdao.getPlayerStatss(pid);
             int goals = 0;
             int assists = 0;
             int redCards = 0;

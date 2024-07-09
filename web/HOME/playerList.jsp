@@ -199,9 +199,9 @@
             }
 
         </style>
-        
-        
-            <%
+
+
+        <%
             int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
             int nextYear = currentYear + 1;
         %>
@@ -219,121 +219,129 @@
                 </div>
             </div>
         </section>
-           
-        
-     <section id="team" style="background-color: #fff">
-    <div class="container">
-        
-        <!-- Goalkeepers -->
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2>Goalkeepers</h2>
-            </div>
-        </div>
-        <div class="row">
-            <c:forEach var="player" items="${listPlayer}">
-                <c:if test="${player.position == 'GK'}">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
-                            <div class="member-img">
-                                <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                            </div>
-                            <h4>${player.name}</h4>
-                            <div class="member-info">
-                                <span>${player.position}</span>
-                                <span>Date of Birth: ${player.age}</span>
-                                <span>Weight: ${player.weight} kg</span>
-                                <span>Height: ${player.height} cm</span>
-                            </div>
-                        </div>
+
+
+        <section id="team" style="background-color: #fff">
+            <div class="container">
+
+                <!-- Goalkeepers -->
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Goalkeepers</h2>
                     </div>
-                </c:if>
-            </c:forEach>
-        </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'GK'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
 
-        <!-- Defenders -->
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2>Defenders</h2>
-            </div>
-        </div>
-        <div class="row">
-            <c:forEach var="player" items="${listPlayer}">
-                <c:if test="${player.position == 'LB' || player.position == 'LCB' || player.position == 'RCB' || player.position == 'RB'}">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
-                            <div class="member-img">
-                                <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                            </div>
-                            <h4>${player.name}</h4>
-                            <div class="member-info">
-                                <span>${player.position}</span>
-                                <span>Date of Birth: ${player.age}</span>
-                                <span>Weight: ${player.weight} kg</span>
-                                <span>Height: ${player.height} cm</span>
-                            </div>
-                        </div>
+                <!-- Defenders -->
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Defenders</h2>
                     </div>
-                </c:if>
-            </c:forEach>
-        </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'LB' || player.position == 'LCB' || player.position == 'RCB' || player.position == 'RB'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
 
-        <!-- Midfielders -->
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2>Midfielders</h2>
-            </div>
-        </div>
-        <div class="row">
-            <c:forEach var="player" items="${listPlayer}">
-                <c:if test="${player.position == 'CM' || player.position == 'CAM' || player.position == 'CDM' || player.position == 'LM' || player.position == 'RM'}">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
-                            <div class="member-img">
-                                <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                            </div>
-                            <h4>${player.name}</h4>
-                            <div class="member-info">
-                                <span>${player.position}</span>
-                                <span>Date of Birth: ${player.age}</span>
-                                <span>Weight: ${player.weight} kg</span>
-                                <span>Height: ${player.height} cm</span>
-                            </div>
-                        </div>
+                <!-- Midfielders -->
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Midfielders</h2>
                     </div>
-                </c:if>
-            </c:forEach>
-        </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'CM' || player.position == 'CAM' || player.position == 'CDM' || player.position == 'LM' || player.position == 'RM'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
 
-        <!-- Forwards -->
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2>Forwards</h2>
-            </div>
-        </div>
-        <div class="row">
-            <c:forEach var="player" items="${listPlayer}">
-                <c:if test="${player.position == 'CF' || player.position == 'LW' || player.position == 'RW' || player.position == 'ST'}">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
-                            <div class="member-img">
-                                <img src="${player.image}" class="img-fluid" alt="${player.name}">
-                            </div>
-                            <h4>${player.name}</h4>
-                            <div class="member-info">
-                                <span>${player.position}</span>
-                                <span>Date of Birth: ${player.age}</span>
-                                <span>Weight: ${player.weight} kg</span>
-                                <span>Height: ${player.height} cm</span>
-                            </div>
-                        </div>
+                <!-- Forwards -->
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Forwards</h2>
                     </div>
-                </c:if>
-            </c:forEach>
-        </div>
+                </div>
+                <div class="row">
+                    <c:forEach var="player" items="${listPlayer}">
+                        <c:if test="${player.position == 'CF' || player.position == 'LW' || player.position == 'RW' || player.position == 'ST'}">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="member" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${player.playerID}'">
+                                    <div class="member-img">
+                                        <img src="${player.image}" class="img-fluid" alt="${player.name}">
+                                    </div>
+                                    <h4>${player.name}</h4>
+                                    <div class="member-info">
+                                        <span>${player.position}</span>
+                                        <span>Date of Birth: ${player.age}</span>
+                                        <span>Weight: ${player.weight} kg</span>
+                                        <span>Height: ${player.height} cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+                <!-- Coaches -->
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2>Coaches</h2>
+                    </div>
+                </div>
+                
 
-    </div>
-</section>
 
-</body>
+            </div>
+        </section>
+
+    </body>
 </html>

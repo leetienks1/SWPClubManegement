@@ -346,6 +346,40 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 //        }
 //        return schedules;
 //    }
+     public List<PlayerStat> getPlayerStatss(int playerID) {
+        List<PlayerStat> stats = new ArrayList<>();
+        sql = "SELECT TOP (1000) [PerformanceID]\n"
+                + "      ,[PlayerID]\n"
+                + "      ,[MatchID]\n"
+                + "      ,[GoalsScored]\n"
+                + "      ,[YellowCards]\n"
+                + "      ,[RedCards]\n"
+                + "      ,[Assists]\n"
+                + "  FROM [RealClub].[dbo].[PlayerPerformance] WHERE [PlayerID] =  ? ";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                int statID = rs.getInt("PerformanceID");
+                int matchID = rs.getInt("MatchID");
+                int goalsScored = rs.getInt("GoalsScored");
+                int assists = rs.getInt("Assists");
+                int yellowCards = rs.getInt("YellowCards");
+                int redCards = rs.getInt("RedCards");
+
+                // Create a new PlayerStat object using the constructor
+                PlayerStat stat = new PlayerStat(statID, playerID, matchID, goalsScored, assists, yellowCards, redCards);
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
     public List<Player> getAllPlayersImage() {
         List<Player> players = new ArrayList<>();
         String sql = "SELECT p.[PlayerID], p.[UserID], p.[Position], p.[Name], p.[DOB], p.[Weight], p.[Height], u.[Image] "

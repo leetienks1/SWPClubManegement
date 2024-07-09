@@ -53,11 +53,12 @@ public class TestSql {
 
     public static void main(String[] args) throws ParseException {
         PlayerDAO pdao = new PlayerDAO();
+
         
-      MatchScheduleDAO mdao = new MatchScheduleDAO();
+      
       
 
 // 
-        System.out.println( pdao.getPlayerStats(1));
+        System.out.println(pdao.getAllPlayerStats());
     }
 }
