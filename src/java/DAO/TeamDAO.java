@@ -64,8 +64,9 @@ public class TeamDAO extends ConnectDB implements DAO<Team> {
         List<Team> teams = new ArrayList<>();
         sql = "SELECT TOP (1000) [TeamID]\n"
                 + "      ,[TeamName]\n"
-                + "      ,[flag] ,[Stadium]\n"
-                + "  FROM [RealClub].[dbo].[Teams]";
+                + "      ,[flag]"
+                + " ,[Stadium]\n"
+                + "  FROM [RealClub].[dbo].[Teams]\n";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -75,6 +76,7 @@ public class TeamDAO extends ConnectDB implements DAO<Team> {
                 t.setTeamID(rs.getInt(1));
                 t.setTeamName(rs.getString(2));
                 t.setFlag(rs.getString(3));
+                t.setStadium(rs.getString(4));
                 teams.add(t);
             }
         } catch (SQLException | ClassNotFoundException e) {

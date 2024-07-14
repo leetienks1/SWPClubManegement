@@ -4,6 +4,8 @@
     Author     : Zanis
 --%>
 
+<%@page import="java.util.Map"%>
+<%@page import="DAO.UserDAO"%>
 <%@page import="DAO.AttendanceDAO"%>
 <%@page import="Model.Attendance"%>
 <%@page import="DAO.TrainingScheduleDAO"%>
@@ -30,6 +32,8 @@
         List<Player> p = pDAO.getAll();
         request.setAttribute("p", p);
         request.setAttribute("a", listAtten);
+        UserDAO uDAO = new UserDAO();
+        request.setAttribute("img", uDAO.getAll());
 
     %>
     <div class="overlay">
@@ -40,25 +44,30 @@
             </div>
             <h3 class="form-heading" style="margin-bottom:  0">Check Attendance</h3>
             <input type="hidden" name="command" 
-                   <%
-                       if(listAtten.isEmpty()){
-                        out.print("value=\"ADD\"");
-                       }else{
-                       out.print("value=\"UPDATE\"");
+                   <%                       if (listAtten.isEmpty()) {
+                           out.print("value=\"ADD\"");
+                       } else {
+                           out.print("value=\"UPDATE\"");
                        }
                    %>
                    />
             <input type="hidden" name="cid" value="${train.getTrainingID()}" />
             <c:forEach var="c" items="${p}">
+
                 <div style="display: flex;align-items: center;">
                     <div style="width: 100%; font-size: 20px;">${c.getName()}</div>
-                    <img style="border: 5px solid black;" src="../IMAGE/HOME/25-arrizabalaga-0410085957.jpg" height="200" width="150" alt="alt"/>
+                    <c:forEach var="u" items="${img}">
+                        <c:if test="${c.getUserID() == u.getUserId()}">
+                            <img height="200" width="150" src="${u.getImage()}" alt="alt"/>
+
+                        </c:if>
+                    </c:forEach>
                     <input type="checkbox" name="check" value="${c.getPlayerID()}"
                            <c:forEach var="a" items="${a}">
-                           <c:if test="${c.getPlayerID()==a.getPlayerID()&&a.isIsPresent()}">
-                               checked=""
-                           </c:if>
-                               </c:forEach>
+                               <c:if test="${c.getPlayerID()==a.getPlayerID()&&a.isIsPresent()}">
+                                   checked=""
+                               </c:if>
+                           </c:forEach>
                            />
                 </div>
             </c:forEach>
