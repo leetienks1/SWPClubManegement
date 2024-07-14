@@ -28,10 +28,10 @@
                     <input type="hidden" name="command" value="ADD" />
 
 
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <label for="playerName">DietPlanID</label>
                         <input type="text" name="playerName" id="playerName" placeholder="DietPlanID" value="" required="You are not fill"/>
-                    </div>
+                    </div>-->
 
                     <div class="form-group">
                         <label for="Player">Player</label>

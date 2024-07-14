@@ -47,7 +47,7 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <img src="../IMAGE/HOME/REALFC.png" alt="alt"/>
+<div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
                 </div>
                 <ul class="list-unstyled components">
                     <h3 >MEDICAL</h3>
@@ -94,7 +94,7 @@
                                 STT
                             </th>
                             <th>
-                                DietPlanID
+                               Diet Description
                             </th>
                             <th>
                                 Food Name
@@ -122,7 +122,11 @@
 
                             <tr>
                                 <td><%= i++%></td>
-                                <td>${p2.dietPlanID}</td>
+                                <c:forEach var="obj" items="${dplan}">
+                                    <c:if test="${obj.dietPlanID == p2.dietPlanID}">
+                                        <td>${obj.planDescription}</td> 
+                                    </c:if>
+                                </c:forEach>
                                 <c:forEach var="obj" items="${foods}">
                                     <c:if test="${obj.foodID == p2.foodID}">
                                         <td>${obj.foodName}</td> 

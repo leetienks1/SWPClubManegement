@@ -20,6 +20,13 @@ public class Jersey implements Serializable{
     public Jersey() {
     }
 
+    public Jersey(String jerseyName, String jerseyDescription, double jerseyPrice, String jerseyImage) {
+        this.jerseyName = jerseyName;
+        this.jerseyDescription = jerseyDescription;
+        this.jerseyPrice = jerseyPrice;
+        this.jerseyImage = jerseyImage;
+    }
+
     
     public Jersey(int jerseyID, String jerseyName, String jerseyDescription, double jerseyPrice, String jerseyImage) {
         this.jerseyID = jerseyID;

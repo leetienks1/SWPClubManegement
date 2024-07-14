@@ -423,7 +423,7 @@
                         <a href="/SWPClubManegement/MatchStatisticController"> <img src="/SWPClubManegement/IMAGE/HOME/user.png"  width="32px" height="32px"/> List Match stats</a>
                     </li>
                      <li >
-                         <a href="/SWPClubManegement/teamList.jsp"><img src="/SWPClubManegement/IMAGE/HOME/football-club.png" width="32px" height="32px" alt="alt"/> CRUD Player</a>
+                         <a href="/SWPClubManegement/ADMIN/teamList.jsp"><img src="/SWPClubManegement/IMAGE/HOME/football-club.png" width="32px" height="32px" alt="alt"/> CRU Team</a>
                     </li> 
 
                     <li>

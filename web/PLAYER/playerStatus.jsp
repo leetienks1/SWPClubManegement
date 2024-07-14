@@ -27,10 +27,6 @@
                 <thead>
                     <tr>
                         <th>
-                            Player Name
-                        </th>
-
-                        <th>
                             Match ID
                         </th>
                         <th>
@@ -53,7 +49,6 @@
                     <c:forEach var="c" items="${pl}">
 
                         <tr>
-                            <td>${sessionScope.user.userName}</td>
                             <td>${c.matchID}</td>
                             <td>${c.goalsScored}</td>
                             <td>${c.assists}</td>

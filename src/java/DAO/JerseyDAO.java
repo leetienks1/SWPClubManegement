@@ -5,22 +5,17 @@
 package DAO;
 
 import Model.Jersey;
-import Model.News;
+
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.sql.SQLException;
 
 
 /**
- *
  * @author Desktop
  */
 public class JerseyDAO extends dal.ConnectDB implements DAO<Jersey> {
@@ -34,8 +29,7 @@ public class JerseyDAO extends dal.ConnectDB implements DAO<Jersey> {
     public List<Jersey> getAll() {
         List<Jersey> jerseyList = new ArrayList<>();
         try {
-            sql = "SELECT [JerseyID], [JerseyName], [JerseyDescription], [JerseyPrice], [JerseyImage] "
-                    + "FROM [RealClub].[dbo].[Jerseys]";
+            sql = "SELECT [JerseyID], [JerseyName], [JerseyDescription], [JerseyPrice], [JerseyImage] " + "FROM [RealClub].[dbo].[Jerseys]";
             con = this.openConnection();
             st = con.prepareStatement(sql);
             rs = st.executeQuery();
@@ -47,7 +41,13 @@ public class JerseyDAO extends dal.ConnectDB implements DAO<Jersey> {
                 double jerseyPrice = rs.getDouble("JerseyPrice");
                 String jerseyImage = rs.getString("JerseyImage");
 
-                Jersey jersey = new Jersey(jerseyID, jerseyName, jerseyDescription, jerseyPrice, jerseyImage);
+                Jersey jersey = new Jersey(
+                    jerseyID,
+                    jerseyName,
+                    jerseyDescription,
+                    jerseyPrice,
+                    jerseyImage
+                );
                 jerseyList.add(jersey);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -75,11 +75,13 @@ public class JerseyDAO extends dal.ConnectDB implements DAO<Jersey> {
     public Optional<Jersey> get(int id) {
         Jersey jersey = null;
         try {
-            sql = "SELECT [JerseyID], [JerseyName], [JerseyDescription], [JerseyPrice], [JerseyImage] "
-                    + "FROM [RealClub].[dbo].[Jerseys] WHERE [JerseyID] = ?";
+            sql = "SELECT [JerseyID], [JerseyName], [JerseyDescription], [JerseyPrice], [JerseyImage] " + "FROM [RealClub].[dbo].[Jerseys] WHERE [JerseyID] = ?";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
             rs = st.executeQuery();
 
             if (rs.next()) {
@@ -89,7 +91,13 @@ public class JerseyDAO extends dal.ConnectDB implements DAO<Jersey> {
                 double jerseyPrice = rs.getDouble("JerseyPrice");
                 String jerseyImage = rs.getString("JerseyImage");
 
-                jersey = new Jersey(jerseyID, jerseyName, jerseyDescription, jerseyPrice, jerseyImage);
+                jersey = new Jersey(
+                    jerseyID,
+                    jerseyName,
+                    jerseyDescription,
+                    jerseyPrice,
+                    jerseyImage
+                );
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -115,15 +123,25 @@ public class JerseyDAO extends dal.ConnectDB implements DAO<Jersey> {
     @Override
     public void save(Jersey t) {
         try {
-            sql = "INSERT INTO [RealClub].[dbo].[Jerseys] ([JerseyID], [JerseyName], [JerseyDescription], [JerseyPrice], [JerseyImage]) "
-                    + "VALUES (?, ?, ?, ?, ?)";
+            sql = "INSERT INTO [RealClub].[dbo].[Jerseys] ([JerseyName], [JerseyDescription], [JerseyPrice], [JerseyImage]) " + "VALUES (?, ?, ?, ?)";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, t.getJerseyID());
-            st.setString(2, t.getJerseyName());
-            st.setString(3, t.getJerseyDescription());
-            st.setDouble(4, t.getJerseyPrice());
-            st.setString(5, t.getJerseyImage());
+            st.setString(
+                1,
+                t.getJerseyName()
+            );
+            st.setString(
+                2,
+                t.getJerseyDescription()
+            );
+            st.setDouble(
+                3,
+                t.getJerseyPrice()
+            );
+            st.setString(
+                4,
+                t.getJerseyImage()
+            );
 
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
@@ -146,15 +164,29 @@ public class JerseyDAO extends dal.ConnectDB implements DAO<Jersey> {
     @Override
     public void update(Jersey t) {
         try {
-            sql = "UPDATE [RealClub].[dbo].[Jerseys] SET [JerseyName] = ?, [JerseyDescription] = ?, [JerseyPrice] = ?, [JerseyImage] = ? "
-                    + "WHERE [JerseyID] = ?";
+            sql = "UPDATE [RealClub].[dbo].[Jerseys] SET [JerseyName] = ?, [JerseyDescription] = ?, [JerseyPrice] = ?, [JerseyImage] = ? " + "WHERE [JerseyID] = ?";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setString(1, t.getJerseyName());
-            st.setString(2, t.getJerseyDescription());
-            st.setDouble(3, t.getJerseyPrice());
-            st.setString(4, t.getJerseyImage());
-            st.setInt(5, t.getJerseyID());
+            st.setString(
+                1,
+                t.getJerseyName()
+            );
+            st.setString(
+                2,
+                t.getJerseyDescription()
+            );
+            st.setDouble(
+                3,
+                t.getJerseyPrice()
+            );
+            st.setString(
+                4,
+                t.getJerseyImage()
+            );
+            st.setInt(
+                5,
+                t.getJerseyID()
+            );
 
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
@@ -180,7 +212,10 @@ public class JerseyDAO extends dal.ConnectDB implements DAO<Jersey> {
             sql = "DELETE FROM [RealClub].[dbo].[Jerseys] WHERE [JerseyID] = ?";
             con = openConnection();
             st = con.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(
+                1,
+                id
+            );
 
             st.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
