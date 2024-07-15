@@ -29,6 +29,13 @@ public class JerseySize implements Serializable{
         this.jerseyQuantity = jerseyQuantity;
     }
 
+    public JerseySize(int jerseyID, JerseySizeEnum jerseySize, int jerseyQuantity) {
+        this.jerseyID = jerseyID;
+        this.jerseySize = jerseySize;
+        this.jerseyQuantity = jerseyQuantity;
+    }
+    
+
     // Getters and Setters
     public int getSizeID() {
         return sizeID;

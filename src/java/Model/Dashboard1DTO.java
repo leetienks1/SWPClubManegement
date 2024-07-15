@@ -12,11 +12,27 @@ public class Dashboard1DTO {
     int totalGoals;
     int totalRed;
     int totalYellow;
+    int totalAssists;
 
     public Dashboard1DTO(int totalGoals, int totalRed, int totalYellow) {
         this.totalGoals = totalGoals;
         this.totalRed = totalRed;
         this.totalYellow = totalYellow;
+    }
+
+    public Dashboard1DTO(int totalGoals, int totalRed, int totalYellow, int totalAssists) {
+        this.totalGoals = totalGoals;
+        this.totalRed = totalRed;
+        this.totalYellow = totalYellow;
+        this.totalAssists = totalAssists;
+    }
+
+    public int getTotalAssists() {
+        return totalAssists;
+    }
+
+    public void setTotalAssists(int totalAssists) {
+        this.totalAssists = totalAssists;
     }
 
     public int getTotalGoals() {

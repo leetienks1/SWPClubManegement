@@ -11,5 +11,22 @@ import java.io.Serializable;
  * @author Desktop
  */
 public enum Role implements Serializable{
-    Admin, Coach, Player, Medical,User;
+    Admin("/BanAccountController"), 
+    Coach("/COACH/CoachWelcome.jsp"), 
+    Player("/PLAYER/PlayerDashboard"), 
+    Medical("/MEDICAL/medicalPage.jsp"),
+    User("/HomeServlet"),
+    SalesMan("/TicketServlet");
+    
+    Role(String homePage) {
+        this.homePage = homePage;
+    }
+    
+    private final String homePage;
+
+    
+    public String getHomePage() {
+        return this.homePage;
+    }
+    
 }

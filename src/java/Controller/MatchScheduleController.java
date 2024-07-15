@@ -94,7 +94,9 @@ public class MatchScheduleController extends HttpServlet {
             MatchScheduleDAO mdao = new MatchScheduleDAO();
             TeamDAO tdao = new TeamDAO();
             List<Team> homeTeam = new ArrayList<>();
-            List<Team> awayTeam = new ArrayList<>();
+            homeTeam.add(tdao.get(7).get());
+            List<Team> awayTeam = tdao.SearchTeam("");
+            awayTeam.remove(6);
             String searchValue = request.getParameter("search");
             List<MatchSchedule> matches;
             List<MatchSchedule> matchesAlreadyStats = mdao.getMatchAlreadyStatistic();
@@ -105,10 +107,10 @@ public class MatchScheduleController extends HttpServlet {
                 matches = mdao.SearchMatch(searchValue);
             }
 
-            for (MatchSchedule m : matches) {
-                homeTeam.add(tdao.get(m.getHomeTeamID()).get());
-                awayTeam.add(tdao.get(m.getAwayTeamID()).get());
-            }
+//            for (MatchSchedule m : matches) {
+//                homeTeam.add(tdao.get(m.getHomeTeamID()).get());
+////                awayTeam.add(tdao.get(m.getAwayTeamID()).get());
+//            }
 
             Gson gson = new Gson();
             JsonObject json = new JsonObject();

@@ -247,18 +247,22 @@
     <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="/SWPClubManegement/IMAGE/HOME/logo 1.png" alt="alt"/> </div>
     <div class="nav-elements">
         <a class="nav-click">About </a>
-        <a class="nav-click">Match Centre</a>
         <a href="/SWPClubManegement/NEWS/newsList.jsp" class="nav-click">News</a>
-        <a class="nav-click" href="../Players">Player</a>
-        <a class="nav-click">Ticket</a>
+        <a class="nav-click" href="/SWPClubManegement/Players">Player</a>
+        <a href="${pageContext.request.contextPath}/ticket" class="nav-click">Ticket</a>
         <a href="/SWPClubManegement/ShopJerseyServlet" class="nav-click">Store</a>
         <a class="nav-click" href="../CreateMatchScheduleServlet">Match</a>
 
 
-                </div>
+    </div>
     <div class="nav-icons">
 
         <div class="nav-user">
+            <c:if test="${user ne null}">
+                <a href="${pageContext.request.contextPath}/cart">
+                    <i class="fas fa-shopping-cart icon"></i>
+                </a>
+            </c:if>
             <c:choose>
                 <c:when test="${user == null}">
                     <i class="fas fa-user icon"></i>
@@ -271,7 +275,7 @@
                     </c:if>
                     <c:if test="${user.image != null}">
                         <i class="icon"><img style="height: 2rem; width: 2rem; border: black 1px solid; cursor: pointer" class="avatar"  src="${user.image}" alt="alt"/></i>
-                    </c:if>
+                        </c:if>
 
                 </c:otherwise>
             </c:choose>

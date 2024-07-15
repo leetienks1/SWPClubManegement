@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.math3.stat.inference.TTest;
 
 /**
  *
@@ -28,14 +29,14 @@ public class DashboardPlayerDAO extends ConnectDB {
     private ResultSet rs;
 
     public Dashboard1DTO getDashboard1DTO(int id) {
-        sql = " select sum([GoalsScored]) ttGoals,sum([YellowCards]) ttYellow,sum([RedCards]) ttRed from [PlayerPerformance] where PlayerID = " + id
+        sql = " select sum([GoalsScored]) ttGoals,sum([YellowCards]) ttYellow,sum([RedCards]) ttRed, sum([Assists]) ttAssists from [PlayerPerformance] where PlayerID = (select PlayerID from Player where UserID = "+ id + " ) " 
                 + "  group by PlayerID";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
             rs = st.executeQuery();
             while (rs.next()) {
-                Dashboard1DTO c = new Dashboard1DTO(rs.getInt(1), rs.getInt(2), rs.getInt(3));
+                Dashboard1DTO c = new Dashboard1DTO(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
                 return c;
             }
         } catch (SQLException | ClassNotFoundException e) {

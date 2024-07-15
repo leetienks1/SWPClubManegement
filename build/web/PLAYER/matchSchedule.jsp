@@ -44,9 +44,9 @@
                     <td>${match.matchID}</td>
 
                     <td>${match.matchDate}</td>
-                    <td>${match.homeTeam.teamName} &#127884</td>
+                    <td>${match.homeTeam.teamName}  <img src="${match.homeTeam.flag}" width="30px" height="40px" alt="alt"/></td>
                     <td>${match.matchHomeTeam.score}-${match.matchAwayTeam.score}</td>
-                    <td>${match.awayTeam.teamName} &#127884</td>
+                    <td>${match.awayTeam.teamName}  <img src="${match.awayTeam.flag}" width="30px" height="40px" alt="alt"/></td>
                     <td>${match.matchLocation}</td>
                     <td>${match.tournament}</td>
                     <td>

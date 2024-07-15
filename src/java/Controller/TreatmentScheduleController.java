@@ -96,7 +96,7 @@ public class TreatmentScheduleController extends HttpServlet {
     // Method to add a new TreatmentSchedule
     private void addTreatmentSchedule(HttpServletRequest request, HttpServletResponse response) {
         try {
-            int treatmentID = Integer.parseInt(request.getParameter("treatmentID"));
+//            int treatmentID = Integer.parseInt(request.getParameter("treatmentID"));
             int userID = Integer.parseInt(request.getParameter("userID"));
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -107,7 +107,7 @@ public class TreatmentScheduleController extends HttpServlet {
             String Description = request.getParameter("description");
             System.out.println(Description);
 
-            TreatmentSchedule treatmentSchedule = new TreatmentSchedule(treatmentID, userID, daterecorded, treatmentTime, Description);
+            TreatmentSchedule treatmentSchedule = new TreatmentSchedule(0, userID, daterecorded, treatmentTime, Description);
             TreatmentScheduleDAO treatmentScheduleDAO = new TreatmentScheduleDAO();
             treatmentScheduleDAO.save(treatmentSchedule);
             request.setAttribute("Message", "Diet Plan Food added successfully!");

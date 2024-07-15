@@ -84,7 +84,7 @@
                 background-color: #f3f3f3;
             }
             table#example tbody tr:hover {
-                background-color: #f1f1f1;
+background-color: #f1f1f1;
             }
             table#example tbody img {
                 width: 40px;
@@ -178,8 +178,7 @@
                 Real FC Schedule
             </div>
         </header>
-
-        <div class="container" style="background-color: #f2f2f2; ackground-color: #f2f2f2;
+<div class="container" style="background-color: #f2f2f2; ackground-color: #f2f2f2;
              padding: 10px;
              border-radius: 10px;
 
@@ -192,7 +191,7 @@
                 <tbody>
                     <c:set var="now" value="${currentDate}" />
                     <c:forEach items="${matches}" var="match">
-                        <tr onclick="window.location.href = '/SWPClubManegement/HOME/matchDetail.jsp?mid=${match.matchID}'">
+                        <tr onclick="window.location.href = '/SWPClubManegement/HOME/matchdetail.jsp?mid=${match.matchID}'">
 
                             <td>
                                 <fmt:parseDate value="${match.matchDate}" pattern="yyyy-MM-dd" var="parsedDate" />
@@ -240,7 +239,7 @@
             </table>
 
         </div>
-        <%@include file="../INCLUDES/footer.jsp" %>
+<%@include file="../INCLUDES/footer.jsp" %>
 
         <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>

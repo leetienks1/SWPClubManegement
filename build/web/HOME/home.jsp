@@ -611,7 +611,7 @@
                     <c:if test="${p.userID == u.userId}">
                         <div  class="player-card" style="background-image: url('${u.image}');">
 
-                            <div class="player-card-infor" style="background-color: rgba(0,0,0,0.5); text-align: center; cursor: pointer;" onclick="window.location.href = '/SWPClubManegement/PLAYER/playerDetail.jsp?pid=${p.playerID}'" >
+                            <div class="player-card-infor" style="background-color: rgba(0,0,0,0.5); text-align: center; cursor: pointer;" onclick="window.location.href = '/SWPClubManegement/HOME/playerDetail.jsp?pid=${p.playerID}'" >
                                 <p style="font-size: 2rem; font-weight: 500" class="player-name">${p.name}</p>
                                 <p style="font-size: 2.5rem;" class="player-position"> ${p.position}</p></div>
                         </div>

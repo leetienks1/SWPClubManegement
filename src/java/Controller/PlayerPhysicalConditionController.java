@@ -105,14 +105,14 @@ public class PlayerPhysicalConditionController extends HttpServlet {
     // Method to add a new playerPhysicalCondition
     private void addpPayerPhysicalCondition(HttpServletRequest request, HttpServletResponse response) {
         try {
-            int conditionID = Integer.parseInt(request.getParameter("conditionID"));
+//            int conditionID = Integer.parseInt(request.getParameter("conditionID"));
             int userID = Integer.parseInt(request.getParameter("userID"));
             String ConditionDescription = request.getParameter("conditionDescription");
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate daterecorded = LocalDate.parse(request.getParameter("daterecorded"), formatter);
 
-            PlayerPhysicalCondition playerPhysicalCondition = new PlayerPhysicalCondition(conditionID, userID, ConditionDescription, daterecorded);
+            PlayerPhysicalCondition playerPhysicalCondition = new PlayerPhysicalCondition(0, userID, ConditionDescription, daterecorded);
             PlayerPhysicalConditionDAO playerPhysicalConditionDAO = new PlayerPhysicalConditionDAO();
             playerPhysicalConditionDAO.save(playerPhysicalCondition);
             request.setAttribute("Message", "Diet Plan Food added successfully!");

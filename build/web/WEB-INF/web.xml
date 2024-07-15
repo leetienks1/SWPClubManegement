@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    
     <!-- Filters -->
     <filter>
         <filter-name>StoreJerseyFiller</filter-name>
@@ -17,6 +21,7 @@
         <filter-name>MedicalFilter</filter-name>
         <filter-class>Filter.MedicalFilter</filter-class>
     </filter>
+
     <!-- Filter Mappings -->
     <filter-mapping>
         <filter-name>MedicalFilter</filter-name>
@@ -37,6 +42,7 @@
         <filter-name>StoreJerseyFiller</filter-name>
         <url-pattern>/STORE/*</url-pattern>
     </filter-mapping>
+
     <!-- Servlets -->
     <servlet>
         <servlet-name>EditProfileServlet</servlet-name>
@@ -158,7 +164,26 @@
         <servlet-name>PlayerListServlet</servlet-name>
         <servlet-class>Controller.PlayerListServlet</servlet-class>
     </servlet>
-    <!-- Servlet Mappings -->
+    <servlet>
+        <servlet-name>DietPlanController</servlet-name>
+        <servlet-class>Controller.DietPlanController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DietPlanFoodController</servlet-name>
+        <servlet-class>Controller.DietPlanFoodController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FoodController</servlet-name>
+        <servlet-class>Controller.FoodController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PlayerPhysicalConditionController</servlet-name>
+        <servlet-class>Controller.PlayerPhysicalConditionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TreatmentScheduleController</servlet-name>
+        <servlet-class>Controller.TreatmentScheduleController</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>LineupServlet</servlet-name>
         <servlet-class>Controller.LineupServlet</servlet-class>
@@ -179,6 +204,8 @@
         <servlet-name>AddTeamServlet</servlet-name>
         <servlet-class>Servlet.AddTeamServlet</servlet-class>
     </servlet>
+
+    <!-- Servlet Mappings -->
     <servlet-mapping>
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/EditProfileServlet</url-pattern>
@@ -186,6 +213,18 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainingServlet</servlet-name>
+        <url-pattern>/TrainingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceServlet</servlet-name>
+        <url-pattern>/AttendanceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MeetingServlet</servlet-name>
+        <url-pattern>/MeetingServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
@@ -206,18 +245,6 @@
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/HomeServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TrainingServlet</servlet-name>
-        <url-pattern>/TrainingServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AttendanceServlet</servlet-name>
-        <url-pattern>/AttendanceServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MeetingServlet</servlet-name>
-        <url-pattern>/MeetingServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
@@ -299,52 +326,26 @@
         <servlet-name>PlayerListServlet</servlet-name>
         <url-pattern>/Players</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <servlet-name>DietPlanController</servlet-name>
-        <servlet-class>Controller.DietPlanController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>DietPlanController</servlet-name>
         <url-pattern>/DietPlanController</url-pattern>
     </servlet-mapping>
-  
-    <servlet>
-        <servlet-name>DietPlanFoodController</servlet-name>
-        <servlet-class>Controller.DietPlanFoodController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>DietPlanFoodController</servlet-name>
         <url-pattern>/DietPlanFoodController</url-pattern>
     </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>FoodController</servlet-name>
-        <servlet-class>Controller.FoodController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>FoodController</servlet-name>
         <url-pattern>/FoodController</url-pattern>
     </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>PlayerPhysicalConditionController</servlet-name>
-        <servlet-class>Controller.PlayerPhysicalConditionController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>PlayerPhysicalConditionController</servlet-name>
         <url-pattern>/PlayerPhysicalConditionController</url-pattern>
     </servlet-mapping>
-    
-     <servlet>
-        <servlet-name>TreatmentScheduleController</servlet-name>
-        <servlet-class>Controller.TreatmentScheduleController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>TreatmentScheduleController</servlet-name>
         <url-pattern>/TreatmentScheduleController</url-pattern>
-
-    <!-- Session Configuration -->
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LineupServlet</servlet-name>
         <url-pattern>/LineupServlet</url-pattern>
@@ -364,14 +365,16 @@
     <servlet-mapping>
         <servlet-name>AddTeamServlet</servlet-name>
         <url-pattern>/AddTeamServlet</url-pattern>
-
     </servlet-mapping>
+
+    <!-- Session Configuration -->
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>60</session-timeout>
     </session-config>
 
-    <!-- Welcome File List -->
+    <!-- Welcome Files -->
     <welcome-file-list>
-        <welcome-file>HOME/home.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

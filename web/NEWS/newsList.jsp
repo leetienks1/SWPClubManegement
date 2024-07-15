@@ -136,7 +136,7 @@
 
         <%
             NewsDAO ndao = new NewsDAO();
-            News news = ndao.getAll().getFirst();
+            News news = ndao.getAll().get(0);
             if (news != null) {
                 request.getSession().setAttribute("n", news);
 
