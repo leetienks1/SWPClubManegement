@@ -247,7 +247,6 @@
     <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="/SWPClubManegement/IMAGE/HOME/logo 1.png" alt="alt"/> </div>
     <div class="nav-elements">
         <a class="nav-click">About </a>
-        <a class="nav-click">Match Centre</a>
         <a href="/SWPClubManegement/NEWS/newsList.jsp" class="nav-click">News</a>
         <a class="nav-click" href="/SWPClubManegement/Players">Player</a>
         <a class="nav-click">Ticket</a>

@@ -30,7 +30,10 @@ public class DashboardPlayerDAO extends ConnectDB {
 
     public Dashboard1DTO getDashboard1DTO(int id) {
         sql = " select sum([GoalsScored]) ttGoals,sum([YellowCards]) ttYellow,sum([RedCards]) ttAssists,sum([YellowCards]) ttRed from [PlayerPerformance] where PlayerID = (select PlayerID from Player where UserID = "+ id + " ) " 
-                + "  group by PlayerID";
+                + "  group by PlayerID"; 
+        //lấy ra player tương ứng với userid truyền vào
+        // vẽ bằng chartjs,là 1 thư viện 
+        
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);

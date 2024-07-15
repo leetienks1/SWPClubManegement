@@ -59,6 +59,6 @@ public class TestSql {
       
 
 // 
-        System.out.println(pdao.getAllPlayerStats());
+        
     }
 }

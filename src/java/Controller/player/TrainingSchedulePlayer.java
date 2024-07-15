@@ -49,7 +49,7 @@ public class TrainingSchedulePlayer extends HttpServlet {
             out.println("<h1>Servlet TrainingSchedulePlayer at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        }
+        }   
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
