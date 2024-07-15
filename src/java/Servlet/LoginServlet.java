@@ -7,6 +7,7 @@ package Servlet;
 import DAO.UserDAO;
 import Model.Role;
 import Model.User;
+import constant.AppConstant;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -43,29 +44,17 @@ public class LoginServlet extends HttpServlet {
             User account = accountDAO.login(email, password);
 
             if (account != null && account.getStatus() == true) {
-
                 HttpSession session = request.getSession();
-                session.setAttribute("user", account);
-                if (Role.Admin.equals(account.getRole())) {
-                    response.sendRedirect("/SWPClubManegement/BanAccountController");
-                } else if (Role.Medical.equals(account.getRole())) {
-                    response.sendRedirect("/SWPClubManegement/MEDICAL/medicalPage.jsp");
-                } else if (Role.Coach.equals(account.getRole())) {
-                    response.sendRedirect("/SWPClubManegement/COACH/CoachWelcome.jsp");
-                } else if (Role.Player.equals(account.getRole())) {
-                    response.sendRedirect("/SWPClubManegement/PLAYER/PlayerDashboard");
-                } else {
-                    response.sendRedirect("/SWPClubManegement/HomeServlet ");
-                }
+                session.setAttribute(AppConstant.SESSION_KEY, account);
+                response.sendRedirect(request.getContextPath() + account.getRole().getHomePage());
             } else {
                 if (account != null && account.getStatus() != true) {
                     request.getSession().setAttribute("error", "Your account has been locked");
-                    response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
-                }else
-                {
+                    response.sendRedirect(request.getContextPath() + "/HOME/login.jsp");
+                }else {
                     if (account == null) {
                         request.getSession().setAttribute("error", "Invalid email or password. Please try again.");
-                        response.sendRedirect("http://localhost:8080/SWPClubManegement/HOME/login.jsp");
+                        response.sendRedirect(request.getContextPath() + "/HOME/login.jsp");
                     }
                 }
 

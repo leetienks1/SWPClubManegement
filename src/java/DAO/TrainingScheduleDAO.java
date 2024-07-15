@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -234,6 +236,35 @@ public class TrainingScheduleDAO extends ConnectDB implements DAO<TrainingSchedu
                 e.printStackTrace();
             }
         }
+    }
+    public Map<Integer, LocalDate> getTrainingDates() {
+        Map<Integer, LocalDate> trainingDates = new HashMap<>();
+        sql = "SELECT TrainingID, TrainingDate FROM [RealClub].[dbo].[TrainingSchedule]";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                int trainingId = rs.getInt("TrainingID");
+                Date sqlDate = rs.getDate("TrainingDate");
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    trainingDates.put(
+                        trainingId,
+                        localDate
+                    );
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(TrainingScheduleDAO.class.getName()).log(
+                Level.SEVERE,
+                "Error getting training dates",
+                e
+            );
+        } finally {
+            closeResources();
+        }
+        return trainingDates;
     }
 
 }

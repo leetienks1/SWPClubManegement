@@ -24,10 +24,10 @@
                     <input type="hidden" name="command" value="ADD" />
                     
                     <div class="form-group">
-                        <label for="dietPlanID">Diet PlanID</label>
+                        <label for="dietPlanID">Diet Description</label>
                         <select name="dietPlanID" id="dietPlanID" required="">
                             <c:forEach var="p1" items="${dplan}">
-                                <option value="${p1.dietPlanID}">  ${p1.dietPlanID}</option>
+                                <option value="${p1.dietPlanID}">  ${p1.planDescription}</option>
                             </c:forEach>
                         </select>
                     </div>

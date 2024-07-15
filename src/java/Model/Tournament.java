@@ -16,5 +16,6 @@ public enum Tournament {
     LIGUE_1,
     CHAMPIONS_LEAGUE,
     EUROPA_LEAGUE,
-    Friendly
+    Friendly;
+
 }

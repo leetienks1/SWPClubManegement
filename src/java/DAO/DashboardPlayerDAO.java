@@ -33,7 +33,9 @@ public class DashboardPlayerDAO extends ConnectDB {
                 + "  group by PlayerID"; 
         //lấy ra player tương ứng với userid truyền vào
         // vẽ bằng chartjs,là 1 thư viện 
-        
+
+        sql = " select sum([GoalsScored]) ttGoals,sum([YellowCards]) ttYellow,sum([RedCards]) ttRed, sum([Assists]) ttAssists from [PlayerPerformance] where PlayerID = (select PlayerID from Player where UserID = "+ id + " ) " 
+                + "  group by PlayerID";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);

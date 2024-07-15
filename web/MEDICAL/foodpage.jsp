@@ -24,7 +24,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="../CSS/ADMIN/admin.css"/>
         <link rel="stylesheet" href="../CSS/MEDICALS/medicalcss.css"/>
-     <style>
+        <style>
             body {
                 background-image: url('https://images.pexels.com/photos/114296/pexels-photo-114296.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
                 background-size: cover;
@@ -40,8 +40,11 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
+
                      <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
                 </div>
+
+<div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
                 <ul class="list-unstyled components">
                     <h3 >MEDICAL</h3>
 
@@ -83,8 +86,11 @@
 
                     <thead class="thead-form" style="background-color: #0d6efd;">
                         <tr>
-                            <th>
-                                FoodId
+                            <!--                            <th>
+                                                            FoodId
+                                                        </th>-->
+                             <th>
+                                STT
                             </th>
                             <th>
                                 FoodName
@@ -111,7 +117,9 @@
 
                     </thead>
                     <tbody>
-
+                        <%
+                            int i = 1;
+                        %>
                         <c:forEach var="p3"  items="${foods}">
                             <c:url var="deleteLink" value="../FoodController">
                                 <c:param name="command" value="DELETE"></c:param>
@@ -119,7 +127,8 @@
                             </c:url>
 
                             <tr>
-                                <td>${p3.foodID}</td>
+                                <td><%= i++%></td>
+                               <!--<td>${p3.foodID}</td>-->
                                 <td>${p3.foodName}</td>
                                 <td>${p3.description}</td>
                                 <td>${p3.calo}</td>

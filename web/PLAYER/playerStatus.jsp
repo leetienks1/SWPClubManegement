@@ -49,8 +49,10 @@
                     <c:forEach var="c" items="${pl}">
 
                         <tr>
+
                            
                             
+
                             <td>${c.matchID}</td>
                             <td>${c.goalsScored}</td>
                             <td>${c.assists}</td>

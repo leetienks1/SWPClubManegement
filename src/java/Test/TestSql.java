@@ -21,6 +21,7 @@ import DAO.UserDAO;
 import Model.Coach;
 import Model.ExpectedLineups;
 import Model.JerseySize;
+import Model.JerseySizeEnum;
 import Model.MatchSchedule;
 import Model.MatchStatistic;
 import Model.News;
@@ -52,13 +53,14 @@ public class TestSql {
     
 
     public static void main(String[] args) throws ParseException {
-        PlayerDAO pdao = new PlayerDAO();
-
-        
+       PlayerDAO p = new PlayerDAO();
       
+
       
 
 // 
         
+        System.out.println(p.getDietPlansDetail("1016"));
+
     }
 }

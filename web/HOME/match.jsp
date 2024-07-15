@@ -191,7 +191,7 @@ background-color: #f1f1f1;
                 <tbody>
                     <c:set var="now" value="${currentDate}" />
                     <c:forEach items="${matches}" var="match">
-                        <tr onclick="window.location.href = '/SWPClubManegement/HOME/DetailMatch?mid=${match.matchID}'">
+                        <tr onclick="window.location.href = '/SWPClubManegement/HOME/matchdetail.jsp?mid=${match.matchID}'">
 
                             <td>
                                 <fmt:parseDate value="${match.matchDate}" pattern="yyyy-MM-dd" var="parsedDate" />

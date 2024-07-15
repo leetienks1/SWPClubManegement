@@ -93,7 +93,7 @@ public class FoodController extends HttpServlet {
     // Method to add a new Food
     private void addFood(HttpServletRequest request, HttpServletResponse response) {
         try {
-            int foodID = Integer.parseInt(request.getParameter("foodID"));
+//            int foodID = Integer.parseInt(request.getParameter("foodID"));
             String foodName = request.getParameter("foodname");
             String description = request.getParameter("description");
             double calo = Double.parseDouble(request.getParameter("calo"));
@@ -101,7 +101,7 @@ public class FoodController extends HttpServlet {
             double Carbohydrates = Double.parseDouble(request.getParameter("carbohydrates"));
             double fats = Double.parseDouble(request.getParameter("fats"));
 
-            Food food = new Food(foodID, foodName, description, calo, proteins, Carbohydrates, fats);
+            Food food = new Food(0, foodName, description, calo, proteins, Carbohydrates, fats);
             FoodDAO foodDAO = new FoodDAO();
             foodDAO.save(food);
             request.setAttribute("Message", "Diet Plan Food added successfully!");

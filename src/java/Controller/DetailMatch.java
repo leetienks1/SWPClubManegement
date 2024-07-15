@@ -72,9 +72,9 @@ public class DetailMatch extends HttpServlet {
             }
 
             request.setAttribute("currentDate", LocalDate.now());
-            request.setAttribute("match", match);
+request.setAttribute("match", match);
 
-            request.getRequestDispatcher("matchDetail.jsp").forward(request, response);
+            request.getRequestDispatcher("matchdetail.jsp").forward(request, response);
         }
     }
 
