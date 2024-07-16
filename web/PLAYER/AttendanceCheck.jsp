@@ -20,24 +20,21 @@
         <div>
             <%@include file="../PLAYER/siderbar.jsp" %>
         </div>  
-         <div class="coach-fun-content" style="padding: 20px; background-color: white; box-shadow: 0 0 12px 12px lightblue;">
+        <div class="coach-fun-content" style="padding: 20px; background-color: white; box-shadow: 0 0 12px 12px lightblue;">
             <div style="width: 100%; height: 100px"></div>
             <h1 style="text-align: center; color: black;">Player Attendance </h1>
             <table id="example" class="table table-bordered"  style="color: black">
                 <thead>
                     <tr>
+
                         <th>
-                             ID
-                        </th>
-                        
-                        <th>
-                            Check  Date  
+                            Date  
                         </th>
                         <th>
                             Present
                         </th>
                         <th>
-                             Time
+                            Time
                         </th>
                         <th>
                             Location 
@@ -48,13 +45,13 @@
                 <tbody>
                     <c:forEach var="c" items="${pl}">
                         <tr>
-                    
-                            <td>${c.attendanceID}</td>
-                            
+
+
                             <td>${c.checkDate}</td>
                             <td>${c.present==true?"<p style='color: green;'>Present</p>":"<p style='color: red;'>Absent</p>"}</td>
                             <td>${c.time}</td>
-                            <td>${c.location}</td>
+                            <td style="color: red;">${c.location}</td>  <!-- Đổi màu chữ thành đỏ -->
+                            
                         </tr>
                     </c:forEach>
                 </tbody>

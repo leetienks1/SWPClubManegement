@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
         <style>
             body {
-                background-image: url('../IMAGE/HOME/stock-photo-modern-football-stadium-with-green-lawn-and-blue-spotlight-soccer-background-football-champions-2410554333.jpg');
+                background-image: url('../IMAGE/HOME/Dark Football Highlight Youtube Thumbnail.png');
                 background-size: cover; /* Ensures the image covers the entire background */
                 background-position: center; /* Centers the image */
                 background-repeat: no-repeat; /* Prevents image from repeating */
@@ -67,10 +67,20 @@
             }
             
         </style>
+            <style>
+        .username-display {
+            padding: 10px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+
     </head>
     <body>
         <div class="sidebar">
-            <header><a href="/SWPClubManegement/HOME/home.jsp">Player</a></header>
+            <header><a href="/SWPClubManegement/HOME/home.jsp"><td>${sessionScope.user.userName}</td></a></header>
             <ul>
                 <li><a href="/SWPClubManegement/PLAYER/PlayerDashboard"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/PhysicalConditions"><i class="fas fa-heartbeat"></i>Phys Condition</a></li>
