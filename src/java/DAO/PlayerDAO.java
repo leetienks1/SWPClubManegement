@@ -55,6 +55,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         return stats;
     }
 
+    
     public List<Player> getBySearch(String searchValue) {
         String param = "%" + searchValue + "%";
         List<Player> players = new ArrayList<>();
