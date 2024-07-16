@@ -30,6 +30,65 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
     private Connection con;
     private PreparedStatement st;
     private ResultSet rs;
+    public List<MatchSchedule> getMatchInLineUpByPlayerID(int playerID) {
+        try {
+            List<MatchSchedule> listMatches = new ArrayList<>();
+            sql = "SELECT ms.MatchID, ms.AwayTeamID, ms.HomeTeamID, ms.MatchDate, ms.MatchLocation, ms.Tournament\n"
+                    + "FROM RealClub.dbo.MatchSchedule ms\n"
+                    + "INNER JOIN RealClub.dbo.ExpectedLineups el ON ms.MatchID = el.MatchID\n"
+                    + "WHERE el.PlayerID = ? Order by ms.MatchDate";
+
+            try {
+                con = this.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            st = con.prepareStatement(sql);
+            st.setInt(1, playerID);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                MatchSchedule m = new MatchSchedule();
+                m.setMatchID(rs.getInt(1));
+                m.setAwayTeamID(rs.getInt(2));
+                m.setHomeTeamID(rs.getInt(3));
+                Date sqlDate = rs.getDate(4);
+                if (sqlDate != null) {
+                    LocalDate localDate = sqlDate.toLocalDate();
+                    m.setMatchDate(localDate);
+                }
+                m.setMatchLocation(rs.getString(5));
+                String tour = rs.getString(6);
+                if (tour != null) {
+                    m.setTournament(m.getTournament().valueOf(rs.getString(6).trim()));
+                }
+                listMatches.add(m);
+            }
+            return listMatches;
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
+            // Đóng các tài nguyên
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
     public List<MatchSchedule> getMatchFinishByAwayteamID(int awayTeamId) {
         try {

@@ -81,6 +81,9 @@
                 <li><a href="/SWPClubManegement/PLAYER/DietPlan"><i class="fas fa-utensils"></i>Diet Plan</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/TreatmentChedule"><i class="fas fa-notes-medical"></i>Treatment</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/ViewAttendence"><i class="fas fa-notes-medical"></i>ViewAttendence</a></li>
+                <li><a href="/SWPClubManegement/PLAYER/LineupView.jsp"><i class="fas fa-notes-medical"></i>LineupView</a></li>
+                <li><a href="/SWPClubManegement/LogoutServlet"><i class="fas fa-notes-medical"></i>Logout</a></li>
+
 <!--                <li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-home"></i>Back Home</a></li>-->
                 <!--<li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-sign-out-alt"></i>Logout</a></li>-->
             </ul>

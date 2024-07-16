@@ -29,9 +29,7 @@
                         <th>
                              ID
                         </th>
-                        <th>
-                             Username
-                        </th>
+                        
                         <th>
                             Check  Date  
                         </th>
@@ -52,7 +50,7 @@
                         <tr>
                     
                             <td>${c.attendanceID}</td>
-                            <td>${sessionScope.user.userName}</td>
+                            
                             <td>${c.checkDate}</td>
                             <td>${c.present==true?"<p style='color: green;'>Present</p>":"<p style='color: red;'>Absent</p>"}</td>
                             <td>${c.time}</td>
