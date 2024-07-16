@@ -80,6 +80,7 @@
                 <li><a href="/SWPClubManegement/TrainingSchedulePlayer"><i class="fas fa-dumbbell"></i>Training Schedule</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/DietPlan"><i class="fas fa-utensils"></i>Diet Plan</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/TreatmentChedule"><i class="fas fa-notes-medical"></i>Treatment</a></li>
+                <li><a href="/SWPClubManegement/PLAYER/ViewAttendence"><i class="fas fa-notes-medical"></i>ViewAttendence</a></li>
 <!--                <li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-home"></i>Back Home</a></li>-->
                 <!--<li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-sign-out-alt"></i>Logout</a></li>-->
             </ul>

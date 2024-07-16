@@ -20,48 +20,43 @@
         <div>
             <%@include file="../PLAYER/siderbar.jsp" %>
         </div>  
-        <div class="coach-fun-content" style="padding: 20px; background-color: white; box-shadow: 0 0 12px 12px lightblue;">
+         <div class="coach-fun-content" style="padding: 20px; background-color: white; box-shadow: 0 0 12px 12px lightblue;">
             <div style="width: 100%; height: 100px"></div>
-            <h1 style="text-align: center; color: black;">Player Status</h1>
+            <h1 style="text-align: center; color: black;">Player Attendance </h1>
             <table id="example" class="table table-bordered"  style="color: black">
                 <thead>
                     <tr>
                         <th>
-                            Match ID
+                             ID
                         </th>
                         <th>
-                            Team Name 
+                             Username
                         </th>
                         <th>
-                            Goals Scored
+                            Check  Date  
                         </th>
                         <th>
-                            Assists
+                            Present
                         </th>
                         <th>
-                            Yellow Cards
+                             Time
                         </th>
                         <th>
-                            Red Cards
+                            Location 
                         </th>
-
                     </tr>
 
                 </thead>
                 <tbody>
                     <c:forEach var="c" items="${pl}">
-
                         <tr>
-
-                           
-                            
-
-                            <td>${c.matchID}</td>
-                            <td>${c.matchSchedule.awayTeam.teamName}</td>
-                            <td>${c.goalsScored}</td>
-                            <td>${c.assists}</td>
-                            <td>${c.yellowCards}</td>
-                            <td>${c.redCards}</td>
+                    
+                            <td>${c.attendanceID}</td>
+                            <td>${sessionScope.user.userName}</td>
+                            <td>${c.checkDate}</td>
+                            <td>${c.present==true?"<p style='color: green;'>Present</p>":"<p style='color: red;'>Absent</p>"}</td>
+                            <td>${c.time}</td>
+                            <td>${c.location}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

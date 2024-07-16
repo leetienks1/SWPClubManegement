@@ -251,7 +251,7 @@
         <a class="nav-click" href="/SWPClubManegement/Players">Player</a>
         <a href="${pageContext.request.contextPath}/ticket" class="nav-click">Ticket</a>
         <a href="/SWPClubManegement/ShopJerseyServlet" class="nav-click">Store</a>
-        <a class="nav-click" href="../CreateMatchScheduleServlet">Match</a>
+        <a class="nav-click" href="/SWPClubManegement/CreateMatchScheduleServlet">Match</a>
 
 
     </div>

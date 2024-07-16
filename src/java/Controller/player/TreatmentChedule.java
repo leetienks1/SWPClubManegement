@@ -65,7 +65,8 @@ public class TreatmentChedule extends HttpServlet {
             User account = (User) session.getAttribute("user");
             request.setAttribute("pl", new PlayerDAO().getTreatment(account.getUserId()));
             request.getRequestDispatcher("treatment.jsp").forward(request, response);
-        }    } 
+        }
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
