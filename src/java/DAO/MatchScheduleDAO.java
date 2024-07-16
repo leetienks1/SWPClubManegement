@@ -456,6 +456,7 @@ public class MatchScheduleDAO extends dal.ConnectDB implements DAO<MatchSchedule
                 MatchSchedule m = new MatchSchedule();
                 m.setMatchID(rs.getInt("MatchID"));
                 m.setAwayTeamID(rs.getInt("AwayTeamID"));
+                m.setAwayTeam(new TeamDAO().get(m.getAwayTeamID()).get());
                 m.setHomeTeamID(rs.getInt("HomeTeamID"));
                 Date sqlDate = rs.getDate("MatchDate");
                 if (sqlDate != null) {

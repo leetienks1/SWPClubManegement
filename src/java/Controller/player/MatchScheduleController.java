@@ -92,7 +92,7 @@ public class MatchScheduleController extends HttpServlet {
         System.out.println(matches);
         request.getSession().setAttribute("currentDate", LocalDate.now());
         request.getSession().setAttribute("matchesssses", matches);
-        response.sendRedirect("PLAYER/matchSchedule.jsp");
+        response.sendRedirect("/SWPClubManegement/PLAYER/matchSchedule.jsp");
     }
 
     /**

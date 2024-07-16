@@ -24,7 +24,7 @@
             <h1 style="text-align: center; color: black;">Dashboard</h1>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" style="padding: 0">
                     <div>
                         <canvas id="combinedChart"></canvas>
                     </div>
@@ -101,8 +101,8 @@
                 options: {
                     plugins: {
                         customBarWidth: {
-                            totalBarWidth: 60, // Width for total columns
-                            defaultBarWidth: 30  // Default width for other columns
+                            totalBarWidth: 40, // Width for total columns
+                            defaultBarWidth: 20  // Default width for other columns
                         }
                     },
                     scales: {
