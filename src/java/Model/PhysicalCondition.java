@@ -16,6 +16,16 @@ public class PhysicalCondition {
     int PlayerID;
     String ConditionDescription;
     Date DateRecorded;
+    byte status;
+
+    public PhysicalCondition(int ConditionID, int PlayerID, String ConditionDescription, Date DateRecorded, byte status) {
+        this.ConditionID = ConditionID;
+        this.PlayerID = PlayerID;
+        this.ConditionDescription = ConditionDescription;
+        this.DateRecorded = DateRecorded;
+        this.status = status;
+    }
+    
 
     public PhysicalCondition(int ConditionID, int PlayerID, String ConditionDescription, Date DateRecorded) {
         this.ConditionID = ConditionID;
@@ -23,6 +33,15 @@ public class PhysicalCondition {
         this.ConditionDescription = ConditionDescription;
         this.DateRecorded = DateRecorded;
     }
+
+    public byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(byte status) {
+        this.status = status;
+    }
+    
 
     public int getConditionID() {
         return ConditionID;

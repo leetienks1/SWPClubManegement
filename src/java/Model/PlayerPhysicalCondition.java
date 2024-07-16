@@ -7,15 +7,17 @@ public class PlayerPhysicalCondition {
     private int playerID;
     private String conditionDescription;
     private LocalDate dateRecorded;
+    private byte status;
 
     public PlayerPhysicalCondition() {
     }
 
-    public PlayerPhysicalCondition(int conditionID, int playerID, String conditionDescription, LocalDate dateRecorded) {
+    public PlayerPhysicalCondition(int conditionID, int playerID, String conditionDescription, LocalDate dateRecorded,byte status) {
         this.conditionID = conditionID;
         this.playerID = playerID;
         this.conditionDescription = conditionDescription;
         this.dateRecorded = dateRecorded;
+        this.status = status;
     }
 
     public int getConditionID() {
@@ -48,6 +50,14 @@ public class PlayerPhysicalCondition {
 
     public void setDateRecorded(LocalDate dateRecorded) {
         this.dateRecorded = dateRecorded;
+    }
+    
+     public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(byte  status) {
+        this.status = status;
     }
 
     @Override

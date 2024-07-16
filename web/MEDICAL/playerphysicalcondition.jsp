@@ -43,7 +43,7 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-<div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
+                    <img src="../IMAGE/HOME/REALFC.png" alt="alt"/>
                 </div>
                 <ul class="list-unstyled components">
                     <h3 >MEDICAL</h3>
@@ -100,6 +100,9 @@
                             <th>
                                 DateRecorded
                             </th>
+                               <th>
+                                Status
+                            </th>
                             <th>
                                 Action
                             </th>
@@ -126,6 +129,7 @@
                                 </c:forEach>
                                 <td>${p4.conditionDescription}</td>
                                 <td>${p4.dateRecorded}</td>
+                                <td>${p4.status == 0 ? "Not yet treated": "Has been treated"}</td>
                                 <td>
                                     <a class="update-button" href="playerphysicalcondition.jsp?dip=${p4.conditionID}&uid=${p4.playerID}&open=openedit" onclick="event.handleLinkClick(event);"> <i class="fas fa-edit"></i></a>
                                         <c:if test="${not empty deleteLink}">
