@@ -4,79 +4,163 @@
     Author     : Zanis
 --%>
 
-<%@page import="DAO.TrainingScheduleDAO"%>
-<%@page import="Model.TrainingSchedule"%>
-<%@page import="DAO.PlayerDAO"%>
-<%@page import="Model.Player"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Dashboard1DTO"%>
+<%@page import="Model.PlayerStat"%>
+<%@page import="DAO.DashboardPlayerDAO"%>
 <%@page import="java.util.List"%>
-<%@page import="Model.Attendance"%>
-<%@page import="DAO.AttendanceDAO"%>
+<%@page import="Model.Player"%>
+<%@page import="DAO.PlayerDAO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="../CSS/COACH/list.css"/>
     </head>
     <body>
         <div>
             <%@include file="../COACH/CoachFun.jsp" %>
-        </div> 
-        <div id="update-course-form" class="hidden">
-    <%
-        int TrainingID = 0;
-        if (request.getParameter("cid") != null) {
-            TrainingID = Integer.parseInt(request.getParameter("cid"));
-            TrainingSchedule train = new TrainingScheduleDAO().get(TrainingID).get();
-            if (train != null) {
-                request.setAttribute("train", train);
-            }
-        }
-        AttendanceDAO aDAO = new AttendanceDAO();
-        List<Attendance> listAtten = aDAO.getAttendance(TrainingID);
-        PlayerDAO pDAO = new PlayerDAO();
-        List<Player> p = pDAO.getAll();
-        request.setAttribute("p", p);
-        request.setAttribute("a", listAtten);
+        </div>  
+        <div class="coach-fun-content">
+            <table class="table-course" border="1">
+                <thead class="thead-form" style="background-color: #0d6efd;">
+                    <tr>
+                        <th>
+                            Player Name
+                        </th>
+                        <th>
+                            GoalsScored
+                        </th>
+                        <th>
+                            YellowCards
+                        </th>
+                        <th>
+                            RedCards
+                        </th>
+                        <th>
+                            Assists
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
 
-    %>
-    <div class="overlay">
+                </thead>
+                <tbody>
+                    <%
+                        DashboardPlayerDAO dDAO = new DashboardPlayerDAO();
+                        PlayerDAO pDAO = new PlayerDAO();
+                        List<Player> all = pDAO.getAll();
+                        List<PlayerStat> lsPT = new ArrayList<PlayerStat>();
+                        for (Player p : all) {
+                            Dashboard1DTO db = dDAO.getDashboard1DTO(p.getUserID());
+                            if (db == null) {
+                                db = new Dashboard1DTO(0, 0, 0, 0);
+                            }
+                            PlayerStat ps = new PlayerStat(p.getPlayerID(), db.getTotalGoals(), db.getTotalAssists(), db.getTotalYellow(), db.getTotalRed());
+                            lsPT.add(ps);
+                        }
+                        request.setAttribute("playerstats", lsPT);
 
-        <form class="card card-on card-update-form  mx-auto" action="../AttendanceServlet" method="GET">
-            <div id="update-course-close" style="width: 20%">
-                <i class="add-course-button fas fa-times"></i>
-            </div>
-            <h3 class="form-heading" style="margin-bottom:  0">Check Attendance</h3>
-            <input type="hidden" name="command" 
-                   <%
-                       if(listAtten.isEmpty()){
-                        out.print("value=\"ADD\"");
-                       }else{
-                       out.print("value=\"UPDATE\"");
-                       }
-                   %>
-                   />
-            <input type="hidden" name="cid" value="${train.getTrainingID()}" />
-            <c:forEach var="c" items="${p}">
-                <div style="display: flex;align-items: center;">
-                    <div style="width: 100%; font-size: 20px;">${c.getName()}</div>
-                    <img style="border: 5px solid black;" src="../IMAGE/HOME/25-arrizabalaga-0410085957.jpg" height="200" width="150" alt="alt"/>
-                    <input type="checkbox" name="check" value="${c.getPlayerID()}"
-                           <c:forEach var="a" items="${a}">
-                           <c:if test="${c.getPlayerID()==a.getPlayerID()&&a.isIsPresent()}">
-                               checked=""
-                           </c:if>
-                               </c:forEach>
-                           />
-                </div>
-            </c:forEach>
-            <div class="button-choice" style="text-align: center;">
-                <button id="done-course-update" style="width: 20%" type="submit" class="save"><i class="fas fa-save"></i></button>
-            </div>
+                    %>
+                    <c:forEach var="a" items="${all}">
+                        <c:forEach var="p" items="${playerstats}">
+                            <c:if test="${a.getPlayerID()==p.getPlayerID()}">
+                                <tr>
+                                    <td>${a.getName()}</td>
+                                    <td>${p.getGoalsScored()}</td>
+                                    <td>${p.getYellowCards()}</td>
+                                    <td>${p.getRedCards()}</td>
+                                    <td>${p.getAssists()}</td>
+                                    <td>
+                                        <a class="update-course-button" href="StatsInfor.jsp?id=${a.getPlayerID()}" onclick="event.handleLinkClick(event);">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:if>
 
-        </form>
-    </div>
+                        </c:forEach>
 
-</div>
+                    </c:forEach>
+
+                </tbody>
+
+            </table>
+
+
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+                                        $(document).ready(function () {
+                                            // Ẩn left-bar mặc định khi trang được tải
+                                            $("#leftBar").hide();
+                                            //       
+                                            if (localStorage.getItem('updateCourseFormVisible') === 'true') {
+                                                $("#update-course-form").show();
+                                            } else {
+                                                $("#update-course-form").hide();
+                                            }
+
+                                            // Function to toggle update course form visibility
+                                            function toggleUpdateCourseForm() {
+                                                $("#update-course-form").toggle();
+                                                localStorage.setItem('updateCourseFormVisible', $("#update-course-form").is(":visible"));
+                                            }
+
+
+                                            // Xử lý sự kiện click trên nút cập nhật khóa học
+
+                                            // Function to toggle left bar visibility
+                                            function toggleLeftBar() {
+                                                $("#leftBar").toggle();
+                                            }
+                                            //
+                                            // Function to toggle login form visibility
+                                            function toggleLoginForm() {
+                                                $("#logInForm").toggle();
+                                            }
+                                            //
+                                            //        // Function to toggle add course form visibility
+                                            function toggleAddCourseForm() {
+                                                $("#add-course-form").toggle();
+                                            }
+                                            //
+                                            //
+                                            //        // Xử lý sự kiện click trên nút tắt/bật left-bar
+                                            $("#toggleLeftBarBtn").click(function () {
+                                                toggleLeftBar();
+                                            });
+                                            //
+                                            //        // Xử lý sự kiện click trên nút tắt/bật login form
+                                            $(".toggleCloseLoginForm").click(function () {
+                                                toggleLoginForm();
+                                            });
+                                            //
+                                            //        // Xử lý sự kiện click trên nút thêm khóa học
+                                            $("#add-course-button").click(function () {
+                                                toggleAddCourseForm();
+                                            });
+                                            $("#add-course-close").click(function () {
+                                                toggleAddCourseForm();
+                                            });
+                                            //
+                                            $(".update-course-button").click(function () {
+                                                toggleUpdateCourseForm();
+                                            });
+                                            $("#update-course-close").click(function () {
+                                                toggleUpdateCourseForm();
+                                            });
+                                            $("#done-course-update").click(function () {
+                                                toggleUpdateCourseForm();
+                                            });
+                                            //
+                                        });
+        </script>
+
     </body>
+
 </html>

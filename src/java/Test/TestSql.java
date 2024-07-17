@@ -6,6 +6,7 @@ package Test;
 
 
 import DAO.CoachDAO;
+import DAO.DashboardPlayerDAO;
 import DAO.ExpectedLineupDAO;
 import DAO.JerseyDAO;
 import DAO.JerseySizeDAO;
@@ -19,6 +20,7 @@ import DAO.TeamDAO;
 import DAO.TrainingScheduleDAO;
 import DAO.UserDAO;
 import Model.Coach;
+import Model.Dashboard1DTO;
 import Model.ExpectedLineups;
 import Model.JerseySize;
 import Model.JerseySizeEnum;
@@ -28,6 +30,7 @@ import Model.News;
 import Model.OrderJersey;
 import Model.OrderJerseyDetails;
 import Model.Player;
+import Model.PlayerStat;
 import Model.Position;
 import Model.User;
 import Model.Role;
@@ -38,6 +41,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +58,7 @@ public class TestSql {
 
     public static void main(String[] args) throws ParseException {
        PlayerDAO p = new PlayerDAO();
-      
-        System.out.println(p.getDietPlansDetail("1016"));
+       PlayerStat ps = new PlayerStat(1016, 1014, 1, 0, 0,1);
+        System.out.println(p.getPlayerStatss(1016));
     }
 }

@@ -40,6 +40,16 @@ public class PlayerStat {
         this.redCards = redCards;
     }
 
+    public PlayerStat(int playerID, int goalsScored, int assists, int yellowCards, int redCards) {
+        this.playerID = playerID;
+        this.goalsScored = goalsScored;
+        this.assists = assists;
+        this.yellowCards = yellowCards;
+        this.redCards = redCards;
+    }
+    
+    
+
     public int getPlayerID() {
         return playerID;
     }

@@ -55,10 +55,10 @@
             </div>
             <div class="form-group">
             <select name="zone" required="">
-                <<option value="A ">Zone A</option>
-                <<option value="B ">Zone B</option>
-                <<option value="C ">Zone C</option>
-                <<option value="D ">Zone D</option>
+                <option value="A ">Zone A</option>
+                <option value="B ">Zone B</option>
+                <option value="C ">Zone C</option>
+                <option value="D ">Zone D</option>
             </select>
             </div>
             <div class="form-group">

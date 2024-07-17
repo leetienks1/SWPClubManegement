@@ -26,36 +26,34 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
     private Connection con;
     private PreparedStatement st;
     private ResultSet rs;
-    
-    
+
     public List<PlayerStat> getAllPlayerStats() {
-    List<PlayerStat> stats = new ArrayList<>();
-    String sql = "SELECT TOP (1000) [PerformanceID], [PlayerID], [MatchID], [GoalsScored], [YellowCards], [RedCards], [Assists] FROM [RealClub].[dbo].[PlayerPerformance]";
-    try {
-        con = this.openConnection();
-        st = con.prepareStatement(sql);
-        rs = st.executeQuery();
-        while (rs.next()) {
-            int statID = rs.getInt("PerformanceID");
-            int playerID = rs.getInt("PlayerID");
-            int matchID = rs.getInt("MatchID");
-            int goalsScored = rs.getInt("GoalsScored");
-            int assists = rs.getInt("Assists");
-            int yellowCards = rs.getInt("YellowCards");
-            int redCards = rs.getInt("RedCards");
+        List<PlayerStat> stats = new ArrayList<>();
+        String sql = "SELECT TOP (1000) [PerformanceID], [PlayerID], [MatchID], [GoalsScored], [YellowCards], [RedCards], [Assists] FROM [RealClub].[dbo].[PlayerPerformance]";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                int statID = rs.getInt("PerformanceID");
+                int playerID = rs.getInt("PlayerID");
+                int matchID = rs.getInt("MatchID");
+                int goalsScored = rs.getInt("GoalsScored");
+                int assists = rs.getInt("Assists");
+                int yellowCards = rs.getInt("YellowCards");
+                int redCards = rs.getInt("RedCards");
 
-            // Create a new PlayerStat object using the constructor
-            PlayerStat stat = new PlayerStat(statID, playerID, matchID, goalsScored, assists, yellowCards, redCards);
-            stats.add(stat);
+                // Create a new PlayerStat object using the constructor
+                PlayerStat stat = new PlayerStat(statID, playerID, matchID, goalsScored, assists, yellowCards, redCards);
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
         }
-    } catch (SQLException | ClassNotFoundException e) {
-        Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
-    } finally {
-        closeResources();
+        return stats;
     }
-    return stats;
-}
-
 
     public List<Player> getBySearch(String searchValue) {
         String param = "%" + searchValue + "%";
@@ -285,7 +283,6 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         return false;
     }
 
-
     public List<PlayerStat> getPlayerStats(int playerID) {
         List<PlayerStat> stats = new ArrayList<>();
         sql = "SELECT TOP (1000) [PerformanceID]\n"
@@ -321,6 +318,33 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         return stats;
     }
 
+    public void savePlayerStats(PlayerStat ps) {
+
+        sql = "INSERT INTO [RealClub].[dbo].[PlayerPerformance]([PlayerID],[MatchID],[GoalsScored],[YellowCards],[RedCards],[Assists]) "
+                + "VALUES (?,?,?,?,?,?)";
+
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, ps.getPlayerID());
+            st.setInt(2, ps.getMatchID());
+            st.setInt(3, ps.getGoalsScored());
+            st.setInt(4, ps.getYellowCards());
+            st.setInt(5, ps.getRedCards());
+            st.setInt(6, ps.getAssists());
+
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Player stats saved successfully.");
+            } else {
+                System.out.println("Failed to save player stats.");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+    }
 
 //    public List<MatchSchedule> getMatchSchedules(int playerID) {
 //        List<MatchSchedule> schedules = new ArrayList<>();
@@ -348,7 +372,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 //        }
 //        return schedules;
 //    }
-     public List<PlayerStat> getPlayerStatss(int playerID) {
+    public List<PlayerStat> getPlayerStatss(int playerID) {
         List<PlayerStat> stats = new ArrayList<>();
         sql = "SELECT TOP (1000) [PerformanceID]\n"
                 + "      ,[PlayerID]\n"
@@ -382,6 +406,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         }
         return stats;
     }
+
     public List<Player> getAllPlayersImage() {
         List<Player> players = new ArrayList<>();
         String sql = "SELECT p.[PlayerID], p.[UserID], p.[Position], p.[Name], p.[DOB], p.[Weight], p.[Height], u.[Image] "
@@ -434,7 +459,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
             e.printStackTrace();
         }
     }
-    
+
 //     public List<PlayerStat> getPlayerStats(int playerID) {
 //        List<PlayerStat> stats = new ArrayList<>();
 //        sql = "SELECT  [PlayerID], [YellowCards], [RedCards],GoalsScored FROM [RealClub].[dbo].[PlayerPerformance] WHERE [PlayerID] = ?";
@@ -462,7 +487,6 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 //        }
 //        return stats;
 //    }
-
     public List<PhysicalCondition> getPlayerCondition(int playerID) {
         List<PhysicalCondition> stats = new ArrayList<>();
         sql = "SELECT *  FROM [RealClub].[dbo].[PlayerPhysicalCondition] where  [PlayerID] = (select PlayerID from Player where UserID = ? )";
@@ -546,6 +570,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         }
         return stats;
     }
+
     public Map<Integer, Player> getAllPlayers() {
         Map<Integer, Player> players = new HashMap<>();
         sql = "SELECT PlayerID, Name, UserID FROM [RealClub].[dbo].[Player]";
@@ -562,15 +587,15 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
                 player.setName(playerName);
                 player.setUserID(userId);
                 players.put(
-                    playerId,
-                    player
+                        playerId,
+                        player
                 );
             }
         } catch (SQLException | ClassNotFoundException e) {
             Logger.getLogger(PlayerDAO.class.getName()).log(
-                Level.SEVERE,
-                "Error getting players",
-                e
+                    Level.SEVERE,
+                    "Error getting players",
+                    e
             );
         } finally {
             closeResources();

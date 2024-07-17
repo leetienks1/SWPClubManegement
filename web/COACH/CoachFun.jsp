@@ -19,10 +19,11 @@
             <ul>
                 <li><a href="/SWPClubManegement/AttendanceServlet"><i class="fas fa-qrcode"></i>Attendance</a></li>
                 <li><a href="coachtest.jsp"><i class="fas fa-link"></i>Expected Lineups</a></li>
-                <li><a href="/SWPClubManegement/AttendanceServlet?command=STATIS"><i class="fas fa-stream"></i>Player Stats</a></li>
+                <li><a href="/SWPClubManegement/StatsServlet"><i class="fas fa-stream"></i>Player Stats</a></li>
                 <li><a href="/SWPClubManegement/TrainingServlet"><i class="fas fa-calendar-week"></i>Training Schedule</a></li>
                 <li><a href="/SWPClubManegement/MeetingServlet"><i class="far fa-question-circle"></i>Meeting Schedule</a></li>
                 <li><a href="/SWPClubManegement/LogoutServlet"><i class="fas fa-sliders-h"></i>Logout</a></li>
+                <li><a href="/SWPClubManegement/HomeServlet"><i class="fas fa-home"></i>Go Home</a></li>
             </ul>
         </div>
         <section></section>
