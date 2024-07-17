@@ -320,6 +320,37 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         return stats;
     }
 
+
+    public void savePlayerStats(PlayerStat ps) {
+
+        sql = "INSERT INTO [RealClub].[dbo].[PlayerPerformance]([PlayerID],[MatchID],[GoalsScored],[YellowCards],[RedCards],[Assists]) "
+                + "VALUES (?,?,?,?,?,?)";
+
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql);
+            st.setInt(1, ps.getPlayerID());
+            st.setInt(2, ps.getMatchID());
+            st.setInt(3, ps.getGoalsScored());
+            st.setInt(4, ps.getYellowCards());
+            st.setInt(5, ps.getRedCards());
+            st.setInt(6, ps.getAssists());
+
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Player stats saved successfully.");
+            } else {
+                System.out.println("Failed to save player stats.");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+    }
+
+
+
 //    public List<MatchSchedule> getMatchSchedules(int playerID) {
 //        List<MatchSchedule> schedules = new ArrayList<>();
 //        String sql = "SELECT [ScheduleID], [PlayerID], [MatchDate], [Opponent], [Venue] FROM [RealClub].[dbo].[MatchSchedule] WHERE [PlayerID] = ?";
