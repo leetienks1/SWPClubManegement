@@ -40,6 +40,10 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
+
+                     <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
+                </div>
+
 <div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
                 <ul class="list-unstyled components">
                     <h3 >MEDICAL</h3>

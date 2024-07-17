@@ -111,8 +111,8 @@ public class PlayerPhysicalConditionController extends HttpServlet {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate daterecorded = LocalDate.parse(request.getParameter("daterecorded"), formatter);
-
-            PlayerPhysicalCondition playerPhysicalCondition = new PlayerPhysicalCondition(0, userID, ConditionDescription, daterecorded);
+            byte status = 0;
+            PlayerPhysicalCondition playerPhysicalCondition = new PlayerPhysicalCondition(0, userID, ConditionDescription, daterecorded, status);
             PlayerPhysicalConditionDAO playerPhysicalConditionDAO = new PlayerPhysicalConditionDAO();
             playerPhysicalConditionDAO.save(playerPhysicalCondition);
             request.setAttribute("Message", "Diet Plan Food added successfully!");
@@ -132,8 +132,12 @@ public class PlayerPhysicalConditionController extends HttpServlet {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate daterecorded = LocalDate.parse(request.getParameter("daterecorded"), formatter);
-
-            PlayerPhysicalCondition playerPhysicalCondition = new PlayerPhysicalCondition(conditionID, userID, ConditionDescription, daterecorded);
+            String strStatus= request.getParameter("status");
+            byte status = 0;
+            if( strStatus != null && strStatus.equals("true")) {
+               status =  1 ; 
+            }
+            PlayerPhysicalCondition playerPhysicalCondition = new PlayerPhysicalCondition(conditionID, userID, ConditionDescription, daterecorded,status);
             PlayerPhysicalConditionDAO playerPhysicalConditionDAO = new PlayerPhysicalConditionDAO();
             playerPhysicalConditionDAO.update(playerPhysicalCondition);
             request.setAttribute("Message", "Diet Plan Food updated successfully!");

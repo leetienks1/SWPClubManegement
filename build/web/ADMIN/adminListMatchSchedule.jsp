@@ -524,8 +524,8 @@
 
                 // Bạn có thể thêm một tùy chọn khác từ hometeamData nếu cần
                 const hometeamOption = document.createElement('option');
-                hometeamOption.value = hometeamData[1].stadium; // Chọn hometeam nào bạn muốn lấy
-                hometeamOption.textContent = hometeamData[1].stadium;
+                hometeamOption.value = hometeamData[0].stadium; // Chọn hometeam nào bạn muốn lấy
+                hometeamOption.textContent = hometeamData[0].stadium;
                 locationSelect.appendChild(hometeamOption);
             });
 
@@ -555,8 +555,8 @@
 
                 // Bạn có thể thêm một tùy chọn khác từ hometeamData nếu cần
                 const hometeamOption = document.createElement('option');
-                hometeamOption.value = hometeamData[1].stadium; // Chọn hometeam nào bạn muốn lấy
-                hometeamOption.textContent = hometeamData[1].stadium;
+                hometeamOption.value = hometeamData[0].stadium; // Chọn hometeam nào bạn muốn lấy
+                hometeamOption.textContent = hometeamData[0].stadium;
                 locationSelect.appendChild(hometeamOption);
 
             });
@@ -582,8 +582,8 @@
 
                 // Bạn có thể thêm một tùy chọn khác từ hometeamData nếu cần
                 const hometeamOption = document.createElement('option');
-                hometeamOption.value = hometeamData[1].stadium; // Chọn hometeam nào bạn muốn lấy
-                hometeamOption.textContent = hometeamData[1].stadium;
+                hometeamOption.value = hometeamData[0].stadium; // Chọn hometeam nào bạn muốn lấy
+                hometeamOption.textContent = hometeamData[0].stadium;
                 locationSelect.appendChild(hometeamOption);
             });
 
@@ -899,8 +899,8 @@
                         return false;
                     });
                     const hometeamOption = document.createElement('option');
-                    hometeamOption.value = hometeamData[1].stadium; // Chọn hometeam nào bạn muốn lấy
-                    hometeamOption.textContent = hometeamData[1].stadium;
+                    hometeamOption.value = hometeamData[0].stadium; // Chọn hometeam nào bạn muốn lấy
+                    hometeamOption.textContent = hometeamData[0].stadium;
                     locationSelect.appendChild(hometeamOption);
 
                     const locationInput = document.querySelectorAll('select[name="matchlocation"] option');

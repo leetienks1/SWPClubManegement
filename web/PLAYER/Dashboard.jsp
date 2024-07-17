@@ -19,20 +19,14 @@
         <div>
             <%@include file="../PLAYER/siderbar.jsp" %>
         </div>  
-        <div class="coach-fun-content" style="padding: 20px; background-color: white; box-shadow: 0 0 12px 12px lightblue;">
+        <div class="coach-fun-content" style="padding: 20px; background-color: white; box-shadow: 0 0 15px 15px lightblue;">
             <div style="width: 100%; height: 100px"></div>
             <h1 style="text-align: center; color: black;">Dashboard</h1>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12" style="padding: 0">
                     <div>
-                        <canvas id="myChart"></canvas>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div>
-                        <canvas id="myChart1"></canvas>
-                        <canvas id="myChart2"></canvas>
+                        <canvas id="combinedChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -40,65 +34,82 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const ctx = document.getElementById('myChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'polarArea',
+            // Plugin to change bar width
+            const customBarWidthPlugin = {
+                id: 'customBarWidth',
+                beforeDatasetsDraw(chart, args, options) {
+                    const ctx = chart.ctx;
+                    chart.data.datasets.forEach((dataset, datasetIndex) => {
+                        const meta = chart.getDatasetMeta(datasetIndex);
+                        meta.data.forEach((bar, index) => {
+                            // Increase width for specific bars
+                            if (index < 4) {
+                                bar.width = options.totalBarWidth || 60; // Total columns
+                            } else {
+                                bar.width = options.defaultBarWidth || 30; // Monthly data columns
+                            }
+                        });
+                    });
+                }
+            };
+
+            Chart.register(customBarWidthPlugin);
+
+            const combinedCtx = document.getElementById('combinedChart').getContext('2d');
+            new Chart(combinedCtx, {
+                type: 'bar',
                 data: {
                     labels: [
-                        'Total Red Cards',
-                        'Total Yellow Cards',
-                        'Total Goals',
-                        'Total Assists'
-                        
+                        'Total Red Cards', 'Total Yellow Cards', 'Total Goals', 'Total Assists', 
+                        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
                     ],
-                    datasets: [{
+                    datasets: [
+                        {
                             label: 'Player Statistics',
-                            data: [${a.totalRed}, ${a.totalYellow}, ${a.totalGoals},${a.totalAssists}],
+                            data: [${a.totalRed}, ${a.totalYellow}, ${a.totalGoals}, ${a.totalAssists}, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                             backgroundColor: [
                                 'rgb(255, 99, 132)',
                                 'rgb(255, 205, 86)',
                                 'rgb(201, 203, 207)',
-                                'rgb(54, 162, 235)' 
+                                'rgb(54, 162, 235)',
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)', // Transparent for months
+                                'rgba(0, 0, 0, 0)'  // Transparent for months
                             ]
-                        }]
+                        },
+                        {
+                            label: 'Monthly Treatment Data',
+                            data: [0, 0, 0, 0, ${nm.get(0)}, ${nm.get(1)}, ${nm.get(2)}, ${nm.get(3)}, ${nm.get(4)}, ${nm.get(5)}, ${nm.get(6)}, ${nm.get(7)}, ${nm.get(8)}, ${nm.get(9)}, ${nm.get(10)}, ${nm.get(11)}],
+                            backgroundColor: 'rgb(75, 192, 192)'
+                        },
+                        {
+                            label: 'Monthly Meeting Data',
+                            data: [0, 0, 0, 0, ${n.get(0)}, ${n.get(1)}, ${n.get(2)}, ${n.get(3)}, ${n.get(4)}, ${n.get(5)}, ${n.get(6)}, ${n.get(7)}, ${n.get(8)}, ${n.get(9)}, ${n.get(10)}, ${n.get(11)}],
+                            backgroundColor: 'rgb(153, 102, 255)'
+                        }
+                    ]
                 },
                 options: {
+                    plugins: {
+                        customBarWidth: {
+                            totalBarWidth: 40, // Width for total columns
+                            defaultBarWidth: 20  // Default width for other columns
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true
                         }
                     }
-                }
-            });
-
-            const ctx12 = document.getElementById('myChart1').getContext('2d');
-            const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            new Chart(ctx12, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                            label: 'Monthly Treatment Data',
-                            data: [${nm.get(0)}, ${nm.get(1)}, ${nm.get(2)}, ${nm.get(3)}, ${nm.get(4)}, ${nm.get(5)}, ${nm.get(6)}, ${nm.get(7)}, ${nm.get(8)}, ${nm.get(9)}, ${nm.get(10)}, ${nm.get(11)}],
-                            fill: false,
-                            borderColor: 'rgb(75, 192, 192)',
-                            tension: 0.1
-                        }]
-                }
-            });
-
-            const ctx2 = document.getElementById('myChart2').getContext('2d');
-            new Chart(ctx2, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                            label: 'Monthly Meeting Data',
-                            data: [${n.get(0)}, ${n.get(1)}, ${n.get(2)}, ${n.get(3)}, ${n.get(4)}, ${n.get(5)}, ${n.get(6)}, ${n.get(7)}, ${n.get(8)}, ${n.get(9)}, ${n.get(10)}, ${n.get(11)}],
-                            fill: false,
-                            borderColor: 'rgb(75, 192, 192)',
-                            tension: 0.1
-                        }]
                 }
             });
         </script>
@@ -112,3 +123,4 @@
         </script>
     </body>
 </html>
+    

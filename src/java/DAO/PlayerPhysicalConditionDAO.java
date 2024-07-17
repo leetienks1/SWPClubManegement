@@ -19,7 +19,7 @@ public class PlayerPhysicalConditionDAO extends ConnectDB implements DAO<PlayerP
     @Override
     public List<PlayerPhysicalCondition> getAll() {
         List<PlayerPhysicalCondition> conditions = new ArrayList<>();
-        String sql = "SELECT [ConditionID], [PlayerID], [ConditionDescription], [DateRecorded] FROM [RealClub].[dbo].[PlayerPhysicalCondition]";
+        String sql = "SELECT [ConditionID], [PlayerID], [ConditionDescription], [DateRecorded], [status] FROM [RealClub].[dbo].[PlayerPhysicalCondition]";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -29,8 +29,8 @@ public class PlayerPhysicalConditionDAO extends ConnectDB implements DAO<PlayerP
                 int playerID = rs.getInt("PlayerID");
                 String conditionDescription = rs.getString("ConditionDescription");
                 Date dateRecorded = rs.getDate("DateRecorded");
-
-                PlayerPhysicalCondition condition = new PlayerPhysicalCondition(conditionID, playerID, conditionDescription, dateRecorded.toLocalDate());
+                byte status = rs.getByte("status");
+                PlayerPhysicalCondition condition = new PlayerPhysicalCondition(conditionID, playerID, conditionDescription, dateRecorded.toLocalDate(), status);
                 conditions.add(condition);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -43,7 +43,7 @@ public class PlayerPhysicalConditionDAO extends ConnectDB implements DAO<PlayerP
 
     @Override
     public Optional<PlayerPhysicalCondition> get(int conditionID) {
-        String sql = "SELECT [PlayerID], [ConditionDescription], [DateRecorded] FROM [RealClub].[dbo].[PlayerPhysicalCondition] WHERE [ConditionID] = ?";
+        String sql = "SELECT [PlayerID], [ConditionDescription], [DateRecorded], [status] FROM [RealClub].[dbo].[PlayerPhysicalCondition] WHERE [ConditionID] = ?";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
@@ -53,8 +53,8 @@ public class PlayerPhysicalConditionDAO extends ConnectDB implements DAO<PlayerP
                 int playerID = rs.getInt("PlayerID");
                 String conditionDescription = rs.getString("ConditionDescription");
                 Date dateRecorded = rs.getDate("DateRecorded");
-
-                PlayerPhysicalCondition condition = new PlayerPhysicalCondition(conditionID, playerID, conditionDescription, dateRecorded.toLocalDate());
+                byte status = rs.getByte("status");
+                PlayerPhysicalCondition condition = new PlayerPhysicalCondition(conditionID, playerID, conditionDescription, dateRecorded.toLocalDate(), status);
                 return Optional.of(condition);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -89,14 +89,15 @@ public class PlayerPhysicalConditionDAO extends ConnectDB implements DAO<PlayerP
 
     @Override
     public void update(PlayerPhysicalCondition condition) {
-        String sql = "UPDATE [RealClub].[dbo].[PlayerPhysicalCondition] SET [PlayerID] = ?, [ConditionDescription] = ?, [DateRecorded] = ? WHERE [ConditionID] = ?";
+        String sql = "UPDATE [RealClub].[dbo].[PlayerPhysicalCondition] SET [PlayerID] = ?, [ConditionDescription] = ?, [DateRecorded] = ?, [status] = ? WHERE [ConditionID] = ?";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
             st.setInt(1, condition.getPlayerID());
             st.setString(2, condition.getConditionDescription());
             st.setDate(3, Date.valueOf(condition.getDateRecorded()));
-            st.setInt(4, condition.getConditionID());
+            st.setByte(4, (byte) condition.getStatus());
+            st.setInt(5, condition.getConditionID());
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Player Physical Condition updated successfully.");

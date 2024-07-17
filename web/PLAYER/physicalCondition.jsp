@@ -38,7 +38,9 @@
                         <th>
                             Description
                         </th>
-
+                        <th>
+                            Status
+                        </th>
                     </tr>
 
                 </thead>
@@ -50,6 +52,7 @@
                             <td>${sessionScope.user.userName}</td>
                             <td>${c.dateRecorded}</td>
                             <td>${c.conditionDescription}</td>
+                             <td>${c.status == 0 ? "Not yet treated": "Has been treated"}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

@@ -55,6 +55,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         return stats;
     }
 
+    
     public List<Player> getBySearch(String searchValue) {
         String param = "%" + searchValue + "%";
         List<Player> players = new ArrayList<>();
@@ -285,7 +286,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 
     public List<PlayerStat> getPlayerStats(int playerID) {
         List<PlayerStat> stats = new ArrayList<>();
-        sql = "SELECT TOP (1000) [PerformanceID]\n"
+        sql = "SELECT [PerformanceID]\n"
                 + "      ,[PlayerID]\n"
                 + "      ,[MatchID]\n"
                 + "      ,[GoalsScored]\n"
@@ -308,6 +309,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
 
                 // Create a new PlayerStat object using the constructor
                 PlayerStat stat = new PlayerStat(statID, playerID, matchID, goalsScored, assists, yellowCards, redCards);
+                stat.setMatchSchedule(new MatchScheduleDAO().get(matchID).get());
                 stats.add(stat);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -317,6 +319,7 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         }
         return stats;
     }
+
 
     public void savePlayerStats(PlayerStat ps) {
 
@@ -345,6 +348,8 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
             closeResources();
         }
     }
+
+
 
 //    public List<MatchSchedule> getMatchSchedules(int playerID) {
 //        List<MatchSchedule> schedules = new ArrayList<>();
@@ -549,18 +554,38 @@ public class PlayerDAO extends ConnectDB implements DAO<Player> {
         return stats;
     }
 
-    public List<DietPlanDetail> getDietPlansDetail(String id) {
-        List<DietPlanDetail> stats = new ArrayList<>();
-        sql = "  select f.*,d.PortionSize from Foods f join DietPlanFoods d on f.FoodID = d.FoodID where f.FoodID = ?";
+    public List<AttendanceCheck> getAttendanceCheck(int playerID) {
+        List<AttendanceCheck> stats = new ArrayList<>();
+        sql = "   select * from AttendanceCheck a join TrainingSchedule t on a.TrainingID = t.TrainingID where  a.[PlayerID] = (select PlayerID from Player where UserID = ? ) ";
         try {
             con = this.openConnection();
             st = con.prepareStatement(sql);
-            st.setString(1, id);
+            st.setInt(1, playerID);
             rs = st.executeQuery();
+            while (rs.next()) {
+                AttendanceCheck stat = new AttendanceCheck(rs.getInt(1), rs.getDate("CheckDate"), rs.getBoolean(5), rs.getString(9), rs.getString(10));
+                stats.add(stat);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            closeResources();
+        }
+        return stats;
+    }
+
+    public List<DietPlanDetail> getDietPlansDetail(String id) {
+        List<DietPlanDetail> stats = new ArrayList<>(); //khởi tạo danh sách 
+        sql = "  select f.*,d.PortionSize from Foods f join DietPlanFoods d on f.FoodID = d.FoodID where f.FoodID = ?";
+        try {
+            con = this.openConnection();
+            st = con.prepareStatement(sql); //chuẩn bị câu lệnh
+            st.setString(1, id); //set biến vào vị trí cụ thể
+            rs = st.executeQuery();   // thực thi câu lệnh
             while (rs.next()) {
                 // Create a new PlayerStat object using the constructor
                 DietPlanDetail stat = new DietPlanDetail(rs.getInt(1), rs.getString(2), rs.getString(3),
-                        rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+                        rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8)); //khởi tạo mới 1 đối tượng
                 stats.add(stat);
             }
         } catch (SQLException | ClassNotFoundException e) {

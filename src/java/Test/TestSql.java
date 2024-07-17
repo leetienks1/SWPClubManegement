@@ -58,7 +58,6 @@ public class TestSql {
 
     public static void main(String[] args) throws ParseException {
        PlayerDAO p = new PlayerDAO();
-       PlayerStat ps = new PlayerStat(1016, 1014, 1, 0, 0,1);
-        System.out.println(p.getPlayerStatss(1016));
+
     }
 }

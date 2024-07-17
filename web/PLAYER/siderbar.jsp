@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
         <style>
             body {
-                background-image: url('../IMAGE/HOME/stock-photo-modern-football-stadium-with-green-lawn-and-blue-spotlight-soccer-background-football-champions-2410554333.jpg');
+                background-image: url('../IMAGE/HOME/Dark Football Highlight Youtube Thumbnail.png');
                 background-size: cover; /* Ensures the image covers the entire background */
                 background-position: center; /* Centers the image */
                 background-repeat: no-repeat; /* Prevents image from repeating */
@@ -67,10 +67,20 @@
             }
             
         </style>
+            <style>
+        .username-display {
+            padding: 10px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+
     </head>
     <body>
         <div class="sidebar">
-            <header><a href="/SWPClubManegement/HOME/home.jsp">Player</a></header>
+            <header><a href="/SWPClubManegement/HOME/home.jsp"><td>${sessionScope.user.userName}</td></a></header>
             <ul>
                 <li><a href="/SWPClubManegement/PLAYER/PlayerDashboard"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/PhysicalConditions"><i class="fas fa-heartbeat"></i>Phys Condition</a></li>
@@ -80,6 +90,10 @@
                 <li><a href="/SWPClubManegement/TrainingSchedulePlayer"><i class="fas fa-dumbbell"></i>Training Schedule</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/DietPlan"><i class="fas fa-utensils"></i>Diet Plan</a></li>
                 <li><a href="/SWPClubManegement/PLAYER/TreatmentChedule"><i class="fas fa-notes-medical"></i>Treatment</a></li>
+                <li><a href="/SWPClubManegement/PLAYER/ViewAttendence"><i class="fas fa-notes-medical"></i>ViewAttendence</a></li>
+                <li><a href="/SWPClubManegement/PLAYER/LineupView.jsp"><i class="fas fa-notes-medical"></i>LineupView</a></li>
+                <li><a href="/SWPClubManegement/LogoutServlet"><i class="fas fa-notes-medical"></i>Logout</a></li>
+
 <!--                <li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-home"></i>Back Home</a></li>-->
                 <!--<li><a href="/SWPClubManegement/HOME/home.jsp"><i class="fas fa-sign-out-alt"></i>Logout</a></li>-->
             </ul>

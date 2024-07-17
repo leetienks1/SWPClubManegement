@@ -20,6 +20,7 @@ public class PlayerStat {
     private int assists;
     private int yellowCards;
     private int redCards;
+  private  MatchSchedule matchSchedule;
 
     public PlayerStat(int statId, int playerID, int matchID, int goalsScored, int assists, int yellowCards, int redCards) {
         this.statId = statId;
@@ -56,6 +57,14 @@ public class PlayerStat {
 
     public void setPlayerID(int playerID) {
         this.playerID = playerID;
+    }
+
+    public MatchSchedule getMatchSchedule() {
+        return matchSchedule;
+    }
+
+    public void setMatchSchedule(MatchSchedule matchSchedule) {
+        this.matchSchedule = matchSchedule;
     }
 
     public int getMatchID() {

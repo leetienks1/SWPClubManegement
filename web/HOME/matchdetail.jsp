@@ -387,27 +387,35 @@
 
                                 <tbody>
 
+
                                 <c:forEach items="${matches}" var="m">
                                     <tr onclick="window.location.href='/SWPClubManegement/HOME/matchStat.jsp?mid=${m.matchID}'">
 
 
 
 
+
                                         <td style="width: 40%">
                                             <div class="team-infor">
+
                                                 <img src="${m.homeTeam.flag}" width="30px" height="40px" alt="alt"/>  <div>${m.homeTeam.teamName}</div> 
+
                                             </div>
                                         </td>
                                         <td style="width: 20%">
                                             <div class="match-result">
+
                                                 <label>${m.tournament}</label>
                                                 <div>
                                                     ${m.matchHomeTeam.score} - ${m.matchAwayTeam.score}
+
                                                 </div>
                                             </div>
                                         </td>
                                         <td style="width: 40%"> <div class="team-infor">
+
                                                 <img src="${m.awayTeam.flag}" width="30px" height="40px" alt="alt"/><div>${m.awayTeam.teamName}</div>
+
                                             </div> 
                                         </td>
 
