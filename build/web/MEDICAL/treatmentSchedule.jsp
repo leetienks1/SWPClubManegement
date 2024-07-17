@@ -43,8 +43,7 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <img src="../IMAGE/HOME/REALFC.png" alt="alt"/>
-                </div>
+<div class="nav-logo" style="cursor: pointer" onclick=" window.location.href = '/SWPClubManegement/HomeServlet'"> <img src="../IMAGE/HOME/logo 1.png" alt="alt"/> </div>
                 <ul class="list-unstyled components">
                     <h3 >MEDICAL</h3>
 
@@ -86,8 +85,11 @@
 
                     <thead class="thead-form" style="background-color: #0d6efd;">
                         <tr>
+                            <!--                            <th>
+                                                            TreatmentID
+                                                        </th>-->
                             <th>
-                                TreatmentID
+                                STT
                             </th>
                             <th>
                                 Player Name
@@ -108,7 +110,9 @@
 
                     </thead>
                     <tbody>
-
+                        <%
+                            int i = 1;
+                        %>
                         <c:forEach var="p3"  items="${treatmentSchedules}">
                             <c:url var="deleteLink" value="../TreatmentScheduleController">
                                 <c:param name="command" value="DELETE"></c:param>
@@ -116,7 +120,8 @@
                             </c:url>
 
                             <tr>
-                                <td>${p3.treatmentID}</td>
+                                <!--<td>${p3.treatmentID}</td>-->
+                                <td><%= i++%></td>
                                 <c:forEach var="obj" items="${players}">
                                     <c:if test="${obj.playerID == p3.playerID}">
                                         <td>${obj.name}</td> 

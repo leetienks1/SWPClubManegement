@@ -60,12 +60,26 @@
                 </tbody>
 
             </table>
+            <a style="display: inline-block;
+               padding: 10px 20px;
+               font-size: 16px;
+               font-weight: bold;
+               color: white;
+               background-color: #4CAF50; /* Green background */
+               border: none;
+               border-radius: 5px;
+               text-align: center;
+               text-decoration: none;
+               cursor: pointer;
+               transition: background-color 0.3s;
+               margin-top: 10px"
+               href="/SWPClubManegement/AttendanceServlet?command=STATIS">Statistic</a>
             <%@include file="CheckAttendance.jsp" %>
 
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                    
+
 
                                     $(document).ready(function () {
                                         // Ẩn left-bar mặc định khi trang được tải

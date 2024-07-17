@@ -30,6 +30,9 @@
                             Match ID
                         </th>
                         <th>
+                            Team Name 
+                        </th>
+                        <th>
                             Goals Scored
                         </th>
                         <th>
@@ -49,9 +52,12 @@
                     <c:forEach var="c" items="${pl}">
 
                         <tr>
+
                            
                             
+
                             <td>${c.matchID}</td>
+                            <td>${c.matchSchedule.awayTeam.teamName}</td>
                             <td>${c.goalsScored}</td>
                             <td>${c.assists}</td>
                             <td>${c.yellowCards}</td>

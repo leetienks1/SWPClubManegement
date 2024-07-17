@@ -85,8 +85,11 @@
 
                     <thead class="thead-form" style="background-color: #0d6efd;">
                         <tr>
+                            <!--                            <th>
+                                                            ConditionID
+                                                        </th>-->
                             <th>
-                                ConditionID
+                                STT
                             </th>
                             <th>
                                 Player Name
@@ -97,6 +100,9 @@
                             <th>
                                 DateRecorded
                             </th>
+                               <th>
+                                Status
+                            </th>
                             <th>
                                 Action
                             </th>
@@ -104,7 +110,9 @@
 
                     </thead>
                     <tbody>
-
+                        <%
+                            int i = 1;
+                        %>
                         <c:forEach var="p4"  items="${playerPhysicalConditions}">
                             <c:url var="deleteLink" value="../PlayerPhysicalConditionController">
                                 <c:param name="command" value="DELETE"></c:param>
@@ -112,7 +120,8 @@
                             </c:url>
 
                             <tr>
-                                <td>${p4.conditionID}</td>
+                                <!--<td>${p4.conditionID}</td>-->
+                                <td><%= i++%></td>
                                 <c:forEach var="obj" items="${players}">
                                     <c:if test="${obj.playerID == p4.playerID}">
                                         <td>${obj.name}</td> 
@@ -120,6 +129,7 @@
                                 </c:forEach>
                                 <td>${p4.conditionDescription}</td>
                                 <td>${p4.dateRecorded}</td>
+                                <td>${p4.status == 0 ? "Not yet treated": "Has been treated"}</td>
                                 <td>
                                     <a class="update-button" href="playerphysicalcondition.jsp?dip=${p4.conditionID}&uid=${p4.playerID}&open=openedit" onclick="event.handleLinkClick(event);"> <i class="fas fa-edit"></i></a>
                                         <c:if test="${not empty deleteLink}">

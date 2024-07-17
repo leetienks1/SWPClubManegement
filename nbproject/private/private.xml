@@ -3,35 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/PlayerListServlet.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/player/PlayerDashboard.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/playerDetail.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/player/TrainingSchedulePlayer.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Model/Coach.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/player/PlayerStatus.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/player/DietPlan.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/ADMIN/adminListMatchSchedule.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/player/DetailNutrients.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/MEDICAL/foodpage.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/player/MeetingSchedulePlayer.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Model/Dashboard1DTO.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/player/PhysicalConditions.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/MatchScheduleController.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/player/TreatmentChedule.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/PLAYER/Dashboard.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Model/User.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/player/MatchScheduleController.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/matchDetail.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/match.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/DetailMatch.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/DAO/DashboardPlayerDAO.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/HOME/playerList.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/ADMIN/adminPage.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/MEDICAL/medicalPage.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/Controller/CreateMatchScheduleServlet.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/PLAYER/playerStatus.jsp</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/src/java/DAO/PlayerDAO.java</file>
-            <file>file:/C:/Users/satth/Documents/GitHub/SWPClubManegement/web/PLAYER/siderbar.jsp</file>
+            <file>file:/D:/Documents/GitHub/SWPClubManegement/web/COACH/PlayerStats.jsp</file>
         </group>
     </open-files>
 </project-private>
